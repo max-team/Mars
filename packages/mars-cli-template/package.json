@@ -1,0 +1,16 @@
+{
+  "name": "@marsjs/cli-template",
+  "version": "0.1.3",
+  "bin": {
+    "mars-cli-service": "./bin/mars-cli-service.js"
+  },
+  "dependencies": {
+    "@vue/cli-service": "^3.5.1",
+    "chalk": "^2.4.2",
+    "fs-extra": "^7.0.1",
+    "globby": "^9.1.0"
+  },
+  "engines": {
+    "node": ">=8"
+  }
+}

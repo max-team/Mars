@@ -1,0 +1,7 @@
+{
+    "eslint": {
+        "rules": {
+            "fecs-export-on-declare": 0
+        }
+    }
+}

@@ -1,0 +1,5 @@
+__tests__
+__mocks__
+.version
+.vscode
+node_modules

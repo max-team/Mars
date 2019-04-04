@@ -1,0 +1,8 @@
+{
+    "eslint": {
+        "rules": {
+            "fecs-export-on-declare": 0,
+            "fecs-min-vars-per-destructure": 0
+        }
+    }
+}

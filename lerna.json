@@ -1,0 +1,12 @@
+{
+  "packages": [
+    "packages/mars-@(build|core|api|components|cli|cli-template)"
+  ],
+  "command": {
+    "publish": {
+      "ignoreChanges": ["__test__/**", "*.md"],
+      "message": "chore: publish"
+    }
+  },
+  "version": "independent"
+}

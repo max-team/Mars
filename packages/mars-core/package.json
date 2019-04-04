@@ -1,0 +1,7 @@
+{
+    "name": "@marsjs/core",
+    "version": "0.2.2",
+    "scripts": {
+        "test": "jest --coverage"
+    }
+}

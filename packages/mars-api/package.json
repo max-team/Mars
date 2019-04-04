@@ -1,0 +1,12 @@
+{
+  "name": "@marsjs/api",
+  "version": "1.0.14",
+  "browser": "index.js",
+  "scripts": {
+    "test": "jest --coverage",
+    "test:dev": "jest --watch"
+  },
+  "dependencies": {
+    "whatwg-fetch": "^2.0.4"
+  }
+}
