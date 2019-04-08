@@ -178,6 +178,22 @@ program
         start(options);
     });
 
+program
+    .command('update')
+    .description('update all mars dependences')
+    .option('-r, --registry <url>', 'Use specified npm registry when installing dependencies (only for npm)')
+    .option('-f, --force', 'Force update all denpenences to latest version')
+    .action(cmd => {
+        const update = require('../lib/update');
+        const options = cleanArgs(cmd);
+
+        if (!options.registry) {
+            options.registry = defaultConfig.registry;
+        }
+
+        update(options);
+    });
+
 // output help information on unknown commands
 program
     .arguments('<command>')
