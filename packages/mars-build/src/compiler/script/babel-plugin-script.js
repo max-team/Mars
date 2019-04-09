@@ -170,7 +170,7 @@ module.exports = function getVisitor(options = {}) {
 
                         const mpType = isApp
                             ? 'app'
-                            : file.config.component ? 'component' : 'page';
+                            : (file.config && file.config.component) ? 'component' : 'page';
 
                         if (mpType === 'app' || mpType === 'page') {
                             const fnName = capitalize(mpType);

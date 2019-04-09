@@ -99,6 +99,9 @@ exports.compileScript = function (content, {
     content = content.replace(
         /process\.env\.MARS_ENV/g,
         JSON.stringify(MARS_ENV)
+    ).replace(
+        /process\.env\.NODE_ENV/g,
+        JSON.stringify(process.env.NODE_ENV || 'development')
     );
     const scriptRet = babel.transform(content, {
         plugins: [
