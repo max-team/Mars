@@ -18,6 +18,9 @@ async function start(cmd) {
     } = require(buildPath + '/src/scripts/run');
 
     let isServiceStarted = false;
+
+    process.env.NODE_ENV = 'development';
+
     watch(config, {
         target
     }).on('stop', () => {

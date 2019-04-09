@@ -23,6 +23,9 @@ exports.compile = function compile(source, options) {
     source = source.replace(
         /process\.env\.MARS_ENV/g,
         JSON.stringify(target)
+    ).replace(
+        /process\.env\.NODE_ENV/g,
+        JSON.stringify(process.env.NODE_ENV || 'development')
     );
     const scriptRet = transformSync(source, {
         plugins: [

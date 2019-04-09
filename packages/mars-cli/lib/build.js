@@ -17,6 +17,9 @@ async function build(cmd) {
         build
     } = require(buildPath + '/src/scripts/run');
 
+
+    process.env.NODE_ENV = 'production';
+
     build(config, {
         target,
         build: true
