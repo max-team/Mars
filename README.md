@@ -32,10 +32,18 @@ mars build [--target, -t swan (default) | wx | h5]
 
 ## 案例
 
-||百度智能小程序|H5|
-|-|-|-|
-|装馨家|![装馨家小程序](./docs/assets/qrcode-mp-online.png)|![装馨家 H5](./docs/assets/qrcode-h5-online.png)|
+### 多端案例
 
+| | 百度智能小程序 | H5 |
+|-|-|-|
+| 装馨家 | ![](./docs/assets/qr-jiazhuang.png) | ![](./docs/assets/qr-jiazhuang-h5.png) |
+| 健康养生说 | ![](./docs/assets/qr-yangsheng.png) | ![](./docs/assets/qr-yangsheng-h5.png) |
+
+### 小程序案例
+
+| 百度百聘 | AI 画报大师 | AI 福利图 | 百度作业模式 |
+|-|-|-|-|
+| ![](./docs/assets/qr-baipin.png) | ![](./docs/assets/qr-huabao.png) | ![](./docs/assets/qr-fuli.png) | ![](./docs/assets/qr-zuoye.png) |
 ## Contributing & Discussion
 
 请参考 [如何贡献](./CONTRIBUTING.md)

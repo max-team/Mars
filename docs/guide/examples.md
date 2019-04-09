@@ -1,5 +1,14 @@
 # 案例
 
-||小程序|H5|
+### 多端案例
+
+| | 百度智能小程序 | H5 |
 |-|-|-|
-|装馨家|![装馨家小程序](../assets/qrcode-mp-online.png)|![装馨家 H5](../assets/qrcode-h5-online.png)|
+| 装馨家 | ![](../assets/qr-jiazhuang.png) | ![](../assets/qr-jiazhuang-h5.png) |
+| 健康养生说 | ![](../assets/qr-yangsheng.png) | ![](../assets/qr-yangsheng-h5.png) |
+
+### 小程序案例
+
+| 百度百聘 | AI 画报大师 | AI 福利图 | 百度作业模式 |
+|-|-|-|-|
+| ![](../assets/qr-baipin.png) | ![](../assets/qr-huabao.png) | ![](../assets/qr-fuli.png) | ![](../assets/qr-zuoye.png) |

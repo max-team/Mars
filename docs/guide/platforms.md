@@ -1,5 +1,12 @@
 # 多端适配
 
+## 设计稿尺寸单位
+
+框架默认开启 px 单位转换功能，在小程序中会转换为 `rpx`，在 H5 中会转换为 `rem` （按照 1rem = 100px 转换）。
+
+将编译配置中 `designWidth` 设置为实际设计稿的宽度值，在开发汇总书写尺寸即可按照 1:1 的关系来进行书写，即从设计稿上量的长度 100px，那么尺寸书写就是 100px。详细设置参考【编译配置】。
+
+
 ## 特性支持
 
 ### 全局方法
@@ -9,9 +16,38 @@
 | getApp | 支持 | 支持(可以获取到 app 实例及其属性和生命周期、支持 $api) | 
 | getCurrentPages | 支持 | 支持(已支持获取到 route 和 uri，其他信息暂未支持) | 
 
-### 生命周期和页面方法
 
-Mars 框架(在 Page 和 Componet 上)支持了完整的 Vue 生命周期和小程序生命周期。建议开发者使用 Vue 生命周期。
+### 配置
+
+#### App
+
+| 配置属性 | 小程序 | H5 | | 
+|---|---|---|---|
+| pages | 支持 | 支持 |  | 
+| window | 支持 | 支持 |  | 
+| tabBar | 支持 | 支持 |  | 
+| preloadRule | 支持| 不支持 |  | 
+| subpackages | 支持 | 不支持 |  | 
+
+
+#### Page
+
+| 配置属性 | 小程序 | H5 | | 
+|---|---|---|---|
+| navigationBarBackgroundColor | 支持 | 支持 | |
+| navigationBarTextStyle | 支持 | 支持 | |
+| navigationBarTitleText | 支持 | 支持 | |
+| navigationStyle | 支持 | 支持 | |
+| backgroundColor | 支持 | 支持 | |
+| backgroundTextStyle | 支持 | 支持 | |
+| enablePullDownRefresh | 支持 | 支持 | |
+| onReachBottomDistance | 支持 | 支持 | |
+| disableScroll | 支持 | 支持 | |
+
+
+### 生命周期和事件方法
+
+Mars (在 Page 和 Componet 上)支持完整的 Vue 生命周期和小程序生命周期，对应的映射关系如下，建议开发者使用 Vue 生命周期来开发。
 
 #### App
 | 生命周期 | 小程序 | H5 | | 
@@ -69,34 +105,6 @@ Mars 框架(在 Page 和 Componet 上)支持了完整的 Vue 生命周期和小�
 | lifetimes.detached | 支持 | 支持(映射为 destroyed) |  |
 
 
-### 配置
-
-#### App
-
-| 配置属性 | 小程序 | H5 | | 
-|---|---|---|---|
-| pages | 支持 | 支持 |  | 
-| window | 支持 | 支持 |  | 
-| preloadRule | 支持| 不支持 |  | 
-| tabBar | 支持 | 支持 |  | 
-| subpackages | 支持 | 不支持 |  | 
-
-
-#### Page
-
-| 配置属性 | 小程序 | H5 | | 
-|---|---|---|---|
-| navigationBarBackgroundColor | 支持 | 支持 | |
-| navigationBarTextStyle | 支持 | 支持 | |
-| navigationBarTitleText | 支持 | 支持 | |
-| navigationStyle | 支持 | 支持 | |
-| backgroundColor | 支持 | 支持 | |
-| backgroundTextStyle | 支持 | 支持 | |
-| enablePullDownRefresh | 支持 | 支持 | |
-| onReachBottomDistance | 支持 | 支持 | |
-| disableScroll | 支持 | 支持 | |
-
-
 ### 特性
 
 #### Component 构造器
@@ -105,9 +113,9 @@ Mars 框架(在 Page 和 Componet 上)支持了完整的 Vue 生命周期和小�
 
 | 字段 | 小程序 | H5 | | 
 |---|---|---|---|
-| behaviors | 不支持 | 不支持 | |
 | options | 支持 | 不支持 | |
 | externalClasses | 支持 | 不支持 | |
+| behaviors | 不支持 | 不支持 | |
 | definitionFilter | 不支持 | 不支持 | |
 
 

@@ -1,11 +1,37 @@
-# 小程序特性
+# 框架
 
-## 小程序配置
 
-小程序 App、Page、Component 中的相关配置，需要配置到 Vue 文件 script 部分导出对象的 config 字段中，如：
+## 开发规范
 
-```javascript
-// app.vue
+### 文件组织结构
+Mars 框架中 App、Page、Component 使用 vue 单文件组件规范，定义在 `.vue` 文件中，其中 `<script>` 区块需使用 ES module 模式导出（即 `export default {}`）
+
+目录结构如下，其中 `app.vue` 为 APP 入口文件（不支持其他文件名），入口文件无需包含 `<template>` 区块：
+
+```
+├── src                    源码目录
+|   ├── components         组件目录
+|   ├── pages              页面目录
+|   |   └── index          index 页面目录
+|   |       ├── banner     index 页面私有组件或其他资源文件等
+|   |       └── index.vue  index 页面
+|   ├── common             公共资源目录
+|   ├── app.vue            APP 入口文件
+|   └── project.swan.json  小程序 project 文件
+├── package.json
+└── mars.config.js         编译配置文件, 参考【编译配置】
+```
+
+## App
+
+App 是小程序的入口文件，约定其文件名为 `app.vue`。可以在 App 上定义一些全局的配置，绑定 App 生命周期方法或定义自定义属性，以及定义全局样式。
+
+Mars 中 App、Page、Component 的相关配置，需要配置到 Vue 文件 script 部分导出对象的 `config` 字段中。
+
+App 示例代码: `app.vue`
+
+```html
+<script>
 export default {
     // ...
     config: {
@@ -14,10 +40,35 @@ export default {
             'pages/example/index'
         ]
     },
+    onLanuch() {},
+    onShow() {},
+    onHide() {},
+    globalData: {}
     // ...
 }
+</script>
+<style lang="less">
+.page {
+    padding: 30px;
+}
+</style>
+```
 
-// pages/home/index.vue
+## Page
+
+Page 是一个定义为页面的 Vue 文件，在 App 的 `config.pages` 里声明后可以使用，Page 加载(`onLoad`)的时候会创建一个对应的 Vue 根实例（Page 中 `this` 指向此 Vue 实例）。
+
+Page 示例代码: `pages/home/index.vue`
+
+```html
+<template>
+    <view class="page">
+        <c-hello :helloText="helloText">
+            <text>Mars!</text>
+        </c-hello>
+    </view>
+</template>
+<script>
 // 注意：vue 文件中使用组件按照 vue 规范的 components 字段配置即可，无需在 config 中配置 usingComponents
 import Hello from '../../components/Hello/Hello.vue';
 
@@ -29,29 +80,114 @@ export default {
     components: {
         'c-hello': Hello
     },
+    data() {
+        helloText: 'welcome!'
+    },
+    onLoad(options) {},
+    onReady() {},
+    onUnload() {},
+    onShow() {},
+    onHide() {},
+    onForceReLaunch() {},
+    onPullDownRefresh() {},
+    onReachBottom() {},
+    onShareAppMessage() {},
+    onPageScroll() {},
+    onTabItemTap() {},
     // ...
 }
 
-// components/Hello/Hello.vue
+</script>
+<style lang="less">
+</style>
+```
+
+## Component
+
+Component 是定义为组件的 Vue 文件，必须在其 config 中设置 `component: true`。Component 被 Page 或 Component 引用并渲染后，会生成对应的 Vue 实例（Component 中 `this` 指向此 Vue 实例）。
+
+Component 示例代码: `components/Hello/Hello.vue`
+
+```html
+<template>
+    <view>
+        {{helloText}}: <slot />
+    </view>
+</template>
+<script>
 // 注意：组件需在 config 中配置 component: true
 export default {
     // ...
     config: {
         component: true
     },
+    props: {
+        helloText: {
+            type: String,
+            default: 'hello'
+        }
+    },
+    lifetimes: {
+        created() {},
+        attached() {},
+        ready() {},
+        detached() {}
+    },
+    pageLifetimes: {
+        show() {},
+        hide() {}
+    },
     // ...
 }
-
+</script>
+<style lang="less">
+</style>
 ```
 
-## 小程序组件
-按照小程序的组件标签名和属性使用，属性绑定使用 vue 语法，如：`<input :value="value" />`
+## 小程序特性支持
 
-## 小程序事件
-按照小程序的事件名使用，事件绑定使用 vue 语法，如 `@tap="onTap"`
+### 自定义组件特性
 
-## 小程序 API
-为了实现多端兼容，框架会在 App 实例及 Page/Component 实例上通过 `$api` 字段来挂载原生 API，即可以在实例上通过 `this.$api` 或者在其他 js 文件中通过 `app.$api` (`app = getApp()`) 来访问小程序 API。
+在组件导出对象上配置。
+
+- 支持 `externalClasses` （调用组件传入外部样式类属性时暂不支持动态绑定）
+- 支持 `options`
+- 不支持 behaviors 和自定义扩展
+
+### 获取小程序实例和 Page options
+使用框架开发的页面和组件中，`this` 指向的是 Vue 实例，通过下面的方法可以获取到小程序实例。
+
+- 在页面或组件实例中获取对应小程序实例: `this.$mp.scope`
+- 在页面实例中获取小程序 Page options: `this.$mp.options`
+
+::: tip
+框架会通过 Vue 运行时将数据更新同步到小程序，不能直接通过小程序实例调用 `setData`，会导致数据不一致。
+:::
+
+## 生命周期和事件方法
+
+Mars 支持完整的 Vue 生命周期和小程序生命周期及事件方法（部分在 H5 暂未支持）详见 [多端适配 - 生命周期](./platforms.html#生命周期和事件方法)。
+
+生命周期图示及顺序
+
+![生命周期图示](../assets/lifecycle.png)
+
+如图示，Vue 生命周期与 swan 生命周期触发顺序为：
+
+- [lifetimes Vue:Page] created
+- [lifetimes swan:Page] onLoad
+- [lifetimes Vue:Page] mounted
+- [lifetimes swan:Page] onShow
+- [lifetimes swan:Page] onReady
+
+注意：swan 的视图在 Page onReady 时或 Component (lifetimes) ready 时才创建完成，使用视图相关 API 时要注意。
+
+
+## 组件
+框架的组件规范使用百度智能小程序和微信小程序组件规范，使用时按照小程序的组件名、属性名和事件名使用，属性和事件绑定使用 vue 语法，如：`<input :value="value" @input="onInput" />`
+
+## API
+Mars 的 API 规范使用百度智能小程序和微信小程序 API 规范，为了实现多端兼容，框架会在 App 实例及 Page/Component 实例上通过 `$api` 字段来挂载原生 API，即可以在实例上通过 `this.$api` 或者在其他 js 文件中通过 `app.$api` (`app = getApp()`) 来访问小程序 API。
 
 另外，为了开发方便，通过上述方式调用 API 时框架会自动将原生的异步 API 转换为 Promise API，可以直接用 Promise 方式使用，如
 
@@ -74,7 +210,6 @@ const app = getApp();
 app.$api.request().then();
 
 ```
-
 
 ## 扩展 API
 
@@ -111,73 +246,3 @@ this.$mpUpdated()
 const app = getApp();
 app.$mpUpdated(...);
 ```
-
-## 获取小程序实例和 Page options
-使用框架开发的页面和组件中，`this` 指向的是 Vue 实例，通过下面的方法可以获取到小程序实例。
-
-- 在页面或组件实例中获取对应小程序实例: `this.$mp.scope`
-- 在页面实例中获取小程序 Page options: `this.$mp.options`
-
-::: tip
-框架会通过 Vue 运行时将数据更新同步到小程序，不能直接通过小程序实例调用 `setData`，会导致数据不一致。
-:::
-
-## 小程序特性支持
-
-### 自定义组件特性
-
-在组件导出对象上配置。
-
-- 支持 `externalClasses` （调用组件传入外部样式类属性时暂不支持动态绑定）
-- 支持 `options`
-- 不支持 behaviors 和自定义扩展
-
-## 小程序生命周期和方法回调
-
-```javascript
-// 页面生命周期，注意生命周期和方法中 this 指向 vue 实例
-export default {
-    // ...
-    onLoad(options) {},
-    onReady() {},
-    onShow() {},
-    onHide() {},
-    onUnload() {},
-    onForceReLaunch() {},
-    onPullDownRefresh() {},
-    onReachBottom() {},
-    onShareAppMessage() {},
-    onPageScroll() {},
-    onTabItemTap() {},
-    // ...
-}
-
-// 组件生命周期，注意生命周期和方法中 this 指向 vue 实例
-export default {
-    // ...
-    lifetimes: {
-        created() {},
-        attached() {},
-        ready() {},
-        detached() {}
-    },
-    pageLifetimes: {
-        show() {},
-        hide() {}
-    }
-    // ...
-}
-```
-生命周期图示及顺序
-
-![生命周期图示](../assets/lifecycle.png)
-
-如图示，Vue 生命周期与 swan 生命周期触发顺序为：
-
-- [lifetimes Vue:Page] created
-- [lifetimes swan:Page] onLoad
-- [lifetimes Vue:Page] mounted
-- [lifetimes swan:Page] onShow
-- [lifetimes swan:Page] onReady
-
-注意：swan 的视图在 Page onReady 时或 Component (lifetimes) ready 时才创建完成，使用视图相关 API 时要注意。

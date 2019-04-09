@@ -19,6 +19,7 @@ module.exports = {
             '/guide/platforms',
             '/guide/component',
             '/guide/API',
+            '/guide/config',
             '/guide/examples',
             '/CHANGELOG'
         ],
