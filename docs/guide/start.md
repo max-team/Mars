@@ -88,7 +88,7 @@ options 配置请参考 [postcss-px2units](https://www.npmjs.com/package/postcss
 #### `preprocessors`
 Type: `{[name: string]: processor}`
 
-Type of `processor`: `extnames: Array<lang> | config`
+Type of `processor`: `extnames: config`
 
 Type of `config`: `{ extnames: Array<lang> [, options: Object, process: process | void]}`
 
@@ -132,10 +132,18 @@ module.exports = function (target) {
             }
         },
         preprocessors: {
-            less: ['less'],
-            sass: ['sass', 'scss'],
-            stylus: ['stylus', 'styl'],
-            typescript: ['ts']
+            less: {
+                extnames: ['less']
+            },
+            sass: {
+                extnames: ['sass', 'scss']
+            },
+            stylus: {
+                extnames: ['stylus', 'styl']
+            },
+            typescript: {
+                extnames: ['ts']
+            }
         },
         postprocessors: {
             postcss: {

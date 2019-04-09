@@ -21,10 +21,18 @@ module.exports = function (merge, target) {
             }
         },
         preprocessors: {
-            less: ['less'],
-            sass: ['sass', 'scss'],
-            stylus: ['stylus', 'styl'],
-            typescript: ['ts']
+            less: {
+                extnames: ['less']
+            },
+            sass: {
+                extnames: ['sass', 'scss']
+            },
+            stylus: {
+                extnames: ['stylus', 'styl']
+            },
+            typescript: {
+                extnames: ['ts']
+            }
         },
         postprocessors: {
             postcss: {
