@@ -2,13 +2,13 @@
 
 ## 安装
 
-``` sh
+```shell
 npm i -g @marsjs-cli
 ```
 
 ## 创建项目
 
-``` sh
+```shell
 mars create my-project
 ```
 
@@ -16,7 +16,7 @@ mars create my-project
 
 ## 开发项目
 
-``` sh
+```shell
 mars serve
 ```
 
@@ -24,8 +24,24 @@ mars serve
 
 ## 构建项目（用于上线）
 
-``` sh
+```shell
 mars build
 ```
 
 可通过 `-t` 设置编译目标，可选值为 `swan` | `wx` | `h5`，默认 `swan`；
+
+## 升级当前项目 Mars 相关依赖库
+
+```shell
+mars update
+```
+
+相当于 `npm update`。
+
+可指定 `-f` 来升级到最新版本，
+
+```shell
+mars update -f
+```
+
+相当于 `npm install xxx@latest`。
