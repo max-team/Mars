@@ -2,7 +2,7 @@
 home: true
 # heroImage: /assets/img/M.05a98ab0.png
 actionText: 快速开始 →
-actionLink: /guide/
+actionLink: /guide/start
 footer: Copyright © 2018-present Mars
 ---
 

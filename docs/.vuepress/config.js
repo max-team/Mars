@@ -16,14 +16,14 @@ module.exports = {
             '/guide/start',
             '/guide/miniprogram',
             '/guide/vue-features',
-            '/guide/h5',
+            '/guide/platforms',
             '/guide/component',
             '/guide/API',
             '/guide/examples',
             '/CHANGELOG'
         ],
         nav: [
-            {text: '文档', link: '/guide/'},
+            {text: '教程', link: '/guide/start'},
             {text: 'CHANGELOG', link: '/CHANGELOG'},
             {text: 'Github', link: 'https://github.com/max-team/Mars'}
         ],

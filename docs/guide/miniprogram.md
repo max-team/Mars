@@ -118,19 +118,24 @@ app.$mpUpdated(...);
 - 在页面或组件实例中获取对应小程序实例: `this.$mp.scope`
 - 在页面实例中获取小程序 Page options: `this.$mp.options`
 
+::: tip
+框架会通过 Vue 运行时将数据更新同步到小程序，不能直接通过小程序实例调用 `setData`，会导致数据不一致。
+:::
+
 ## 小程序特性支持
 
-自定义组件特性，在 `config` 中直接配置。
+### 自定义组件特性
+
+在组件导出对象上配置。
 
 - 支持 `externalClasses` （调用组件传入外部样式类属性时暂不支持动态绑定）
 - 支持 `options`
 - 不支持 behaviors 和自定义扩展
 
-
 ## 小程序生命周期和方法回调
 
 ```javascript
-// 在 vue 中绑定页面生命周期，注意生命周期和方法中 this 指向 vue 实例
+// 页面生命周期，注意生命周期和方法中 this 指向 vue 实例
 export default {
     // ...
     onLoad(options) {},
@@ -147,7 +152,7 @@ export default {
     // ...
 }
 
-// 在 vue 中绑定组件生命周期，注意生命周期和方法中 this 指向 vue 实例
+// 组件生命周期，注意生命周期和方法中 this 指向 vue 实例
 export default {
     // ...
     lifetimes: {

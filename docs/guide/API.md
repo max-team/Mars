@@ -1,11 +1,11 @@
-# Mars API 使用说明
+# API
 
 Mars 的 API 规范使用百度智能小程序和微信小程序 API 规范，在 H5 端进行了适配，并支持 Promise 化。为了实现多端兼容，框架会在 App 实例及 Page/Component 实例上通过 `$api` 字段来挂载原生 API，即：可以在实例上通过 `this.$api` 或者在其他 js 文件中通过 `app.$api` (`app = getApp()`) 来访问小程序 API。
 
-## 小程序官方文档
+## 小程序 API 官方文档
 
+- [百度智能小程序](https://smartprogram.baidu.com/docs/develop/api/net_request/#request/)
 - [微信小程序](https://developers.weixin.qq.com/miniprogram/dev/api/)
-- [百度小程序](https://smartprogram.baidu.com/docs/develop/api/net_request/#request/)
 
 ## API 使用示例
 
@@ -18,7 +18,7 @@ this.$api.request({...params, success, fail, complete})
     });
 ```
 
-## API 支持情况
+## API 支持列表
 
 ### 网络
 
