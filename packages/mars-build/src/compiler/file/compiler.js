@@ -32,6 +32,9 @@ function compileJS(content, options) {
     ).replace(
         /process\.env\.MARS_CONFIG/g,
         JSON.stringify(MARS_CONFIG)
+    ).replace(
+        /process\.env\.NODE_ENV/g,
+        JSON.stringify(process.env.NODE_ENV || 'development')
     );
 
     return transformSync(content, {
