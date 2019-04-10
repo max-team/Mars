@@ -45,16 +45,11 @@ function getTaskSFC(config, options) {
 
     if (target === 'h5') {
         compile = require('../gulp-mars-h5');
-        // for dev use local packages
-        if (config.devConfig) {
-            let absoluteH5Path = path.resolve(process.cwd(), 'dist-h5/src/');
-            let absoluteCompPath = path.resolve(__filename, '../../../../mars-components/src/');
-            let absoluteApiPath = path.resolve(__filename, '../../../../mars-api/');
-            let devCompPath = path.relative(absoluteH5Path, absoluteCompPath);
-            let devApiPath = path.relative(absoluteH5Path, absoluteApiPath);
-
-            compileOption.devApiPath = devApiPath;
-            compileOption.devCompPath = devCompPath;
+        // for packages
+        if (config.packages) {
+            const {api, components} = config.packages;
+            compileOption.devApiPath = api;
+            compileOption.devCompPath = components;
         }
     }
 
