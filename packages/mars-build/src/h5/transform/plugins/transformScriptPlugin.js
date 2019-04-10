@@ -242,7 +242,7 @@ function mapSwanLifeTime(properties, t, lifeKey, lifeItem, lifeMapKey, options) 
             'method',
             t.identifier(lifeMapKey),
             [],
-            t.BlockStatement([
+            t.blockStatement([
                 lifeHookExpression
             ])
         ));
