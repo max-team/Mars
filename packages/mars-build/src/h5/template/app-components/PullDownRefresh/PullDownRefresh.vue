@@ -204,7 +204,7 @@ export default {
 
 <style lang="less" scoped>
 .mars-pull-refresh-wrap {
-    font-size: 12px;
+    font-size: 15px;
 }
 .mars-pull-refresh-header {
     height: 0;
