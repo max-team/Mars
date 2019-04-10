@@ -5,7 +5,7 @@
 
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import browserHistory from './browser-history';
+import browserHistory from './browserHistory';
 
 Vue.use(VueRouter);
 const router = new VueRouter({
@@ -21,11 +21,12 @@ Vue.prototype.isBack = false;
 Vue.prototype.fromRouterPosY = 0;
 router.beforeEach(function (to, from, next) {
     if (!to.query._) {
-        to.query['_'] = guid();
+        to.query._ = guid();
     }
+
     Vue.prototype.currentRoute = [{
-        route: to.path,
-        uri: to.path
+        route: to.path.replace(/^\//, ''),
+        uri: to.path.replace(/^\//, '')
     }];
     let toPath = decodeURI(to.fullPath); // 兼容 vue-router 浏览器前进/返回时的 decodeURI操作
     let fromPath = decodeURI(from.fullPath);
@@ -41,6 +42,7 @@ router.beforeEach(function (to, from, next) {
             delete query._;
         }
     }
+
     toPath = decodeURI(to.fullPath);
     fromPath = decodeURI(from.fullPath);
     // 记录浏览历史
@@ -50,12 +52,14 @@ router.beforeEach(function (to, from, next) {
         if (browserHistoryArr[i] && browserHistoryArr[i].path === toPath) {
             browserHistoryIndex = i;
         }
+
     }
 
     for (let i = browserHistoryLength; i >= 0; i--) {
         if (browserHistoryArr[i] && browserHistoryArr[i].path === fromPath) {
             browserHistoryArr[i].pos = window.pageYOffset;
         }
+
     }
 
     if (browserHistoryLength > 1
@@ -71,7 +75,9 @@ router.beforeEach(function (to, from, next) {
         if (browserHistory.length === 0
             || -1 === browserHistoryIndex
             || browserHistoryIndex !== browserHistoryLength - 1) {
-            browserHistoryArr.push({path: toPath});
+            browserHistoryArr.push({
+                path: toPath
+            });
         }
     }
     // // 没有from.name 且 browserHistory.length !== 0，表示从畅听跳转到其他页面又跳转回畅听
@@ -80,7 +86,6 @@ router.beforeEach(function (to, from, next) {
     //     browserHistoryArr.push({path: to.fullPath});
     // }
     browserHistory.set(browserHistoryArr);
-    next();
     router.app.$nextTick(() => {
         const browserHistoryArr = browserHistory.list;
         const browserHistoryLength = browserHistory.length;
@@ -89,9 +94,8 @@ router.beforeEach(function (to, from, next) {
             && browserHistoryLast.pos) {
             Vue.prototype.fromRouterPosY = browserHistoryLast.pos;
         }
-        else {
-            window.scrollTo(0, 0);
-        }
+
     });
+    next();
 });
 export default router;
