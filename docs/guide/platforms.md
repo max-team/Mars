@@ -25,7 +25,7 @@
 |---|---|---|---|
 | pages | 支持 | 支持 |  | 
 | tabBar | 支持 | 见下方 |  | 
-| window | 支持 | 暂不支持 |  | 
+| window | 支持 | 见下方 |  | 
 | preloadRule | 支持| 不支持 |  | 
 | subpackages | 支持 | 不支持 |  | 
 
@@ -49,6 +49,20 @@ list 接受一个数组，tab 按数组的顺序排序，每个项都是一个�
 | text | 支持 | 支持 |
 | iconPath | 支持 | 支持 |
 | selectedIconPath | 支持 | 支持 |
+
+`window`
+
+| 配置属性 | 小程序 | H5 | | 
+|---|---|---|---|
+| navigationBarBackgroundColor | 支持 | 支持 | |
+| navigationBarTextStyle | 支持 | 支持 | |
+| navigationBarTitleText | 支持 | 支持 | |
+| navigationStyle | 支持 | 不支持 | |
+| backgroundColor | 支持 | 支持 | |
+| backgroundTextStyle | 支持 | 支持 | |
+| enablePullDownRefresh | 支持 | 支持 | |
+| onReachBottomDistance | 支持 | 支持 | |
+
 
 #### Page
 
