@@ -24,11 +24,31 @@
 | 配置属性 | 小程序 | H5 | | 
 |---|---|---|---|
 | pages | 支持 | 支持 |  | 
-| window | 支持 | 支持 |  | 
-| tabBar | 支持 | 支持 |  | 
+| tabBar | 支持 | 见下方 |  | 
+| window | 支持 | 暂不支持 |  | 
 | preloadRule | 支持| 不支持 |  | 
 | subpackages | 支持 | 不支持 |  | 
 
+`tabBar`
+
+| 配置属性 | 小程序 | H5 | | 
+|---|---|---|---|
+| backgroundColor | 支持 | 支持 |
+| borderStyle| 支持 | 支持 |
+| color	| 支持 | 支持 |
+| list | 支持 | 见下方 |
+| selectedColor	| 支持 | 支持 |
+
+`tabBar.list: Array<item: Object>`
+
+list 接受一个数组，tab 按数组的顺序排序，每个项都是一个对象，其属性值如下：
+
+| 配置属性 | 小程序 | H5 | | 
+|---|---|---|---|
+| pagePath | 支持 | 支持 |
+| text | 支持 | 支持 |
+| iconPath | 支持 | 支持 |
+| selectedIconPath | 支持 | 支持 |
 
 #### Page
 
