@@ -1,11 +1,11 @@
 {
   "name": "@marsjs/cli",
-  "version": "0.1.14",
+  "version": "0.1.15",
   "bin": {
     "mars": "./bin/mars.js"
   },
   "dependencies": {
-    "@marsjs/build": "^0.2.3",
+    "@marsjs/build": "^0.2.4",
     "@vue/cli": "^3.5.1",
     "@vue/cli-shared-utils": "^3.5.1",
     "chalk": "^2.4.1",
