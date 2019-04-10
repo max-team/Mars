@@ -79,11 +79,11 @@ export default {
         this.scroller = this.$refs.scroller;
         this.container = window;
         this.enablePullDownRefresh && this.initTouch();
-        this.enableReachBottom && this.initScroll();
+        this.initScroll();
     },
     updated() {
         this.enablePullDownRefresh ? (this.initTouch()) : (this.detachTouch());
-        this.enableReachBottom ? (this.initScroll()) : (this.detachScroll());
+        // this.enableReachBottom ? (this.initScroll()) : (this.detachScroll());
     },
     methods: {
         initTouch() {
@@ -116,14 +116,18 @@ export default {
             window.removeEventListener('touchcancel', onTouchCancel);
         },
         initScroll() {
+            this.scrollHandler = null;
+            window.addEventListener('scroll', this.onScroll);
+        },
+        onScroll() {
+            this.$emit('page-scroll', {
+                scrollTop: window.pageYOffset
+            });
             if (!this.enableReachBottom) {
                 return;
             }
-            this.scrollHandler = null;
-            window.addEventListener('scroll', this.reachBottom);
-        },
-        reachBottom() {
             this.containerHeight = this.container.offsetHeight;
+            
             if (this.scrollHandler) {
                 clearTimeout(this.scrollHandler);
                 this.scrollHandler = null;
@@ -139,7 +143,7 @@ export default {
         },
         detachScroll() {
             this.scrollHandler = null;
-            window.removeEventListener('scroll', this.reachBottom);
+            window.removeEventListener('scroll', this.onScroll);
         },
         onTouchStart(e) {
             if (this.loading) {
@@ -177,7 +181,7 @@ export default {
             that.loading = true;
             this.currentStep = STATUS_LOADING;
             this.height = this.offset;
-            that.$emit('on-refresh');
+            that.$emit('pull-down-refresh');
         },
 
         stopPullDownRefresh() {
@@ -200,7 +204,7 @@ export default {
 
 <style lang="less" scoped>
 .mars-pull-refresh-wrap {
-    font-size: 15px;
+    font-size: 12px;
 }
 .mars-pull-refresh-header {
     height: 0;

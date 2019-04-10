@@ -2,7 +2,9 @@
  * @file vue script transform plugin: 处理hook
  * @author zhangjingyuan02
  */
+
 /* eslint-disable fecs-camelcase */
+
 /* eslint-disable babel/new-cap */
 
 // 小程序page生命周期
@@ -13,12 +15,13 @@ const PAGE_LIFECYCLE_HOOKS = {
     onHide: true,
     onUnload: true,
     onForceRelaunch: true,
-    // 'onPullDownRefresh': true,
-    // 'onReachBottom': true,
-    onShareAppMessage: true,
-    onPageScroll: true,
-    onTabItemTap: true,
-    onLaunch: true
+    onLaunch: true,
+    onShareAppMessage: true
+    // onPullDownRefresh: true,
+    // onReachBottom: true,
+    // onPageScroll: true,
+    // onTabItemTap: true,
+
 };
 
 const PAGE_LIFE_MAP_VUE = {
@@ -122,7 +125,7 @@ const Property = (t, options) => {
                     name: 'components'
                 })
                 || COMP_LIFECYCLE_HOOKS[path.node.key.name]
-            )) {
+                )) {
                 return;
             }
 
@@ -143,25 +146,28 @@ const Property = (t, options) => {
                             bindParentNode.source = t.stringLiteral(bindVaule.value + '.vue');
                             p.value = bindParentNode.source;
                         }
+
                     });
 
                     path.node.value.properties.push();
                     const valObj = getPlainObjectNodeValue(t.objectExpression(props), path, t);
                     options.baseOptions && (options.baseOptions.components = valObj);
-
                 }
             }
             else if (COMP_LIFECYCLE_HOOKS[path.node.key.name]) {
                 path.remove();
             }
+
         },
         ObjectMethod(path, state) {
             if (PAGE_LIFECYCLE_HOOKS[path.node.key.name]) {
                 path.remove();
             }
+
         }
     };
 };
+
 /* eslint-enable */
 
 /**
@@ -252,6 +258,7 @@ module.exports = function getVisitor(options = {}) {
                     if (!t.isObjectExpression(path.node.declaration)) {
                         return;
                     }
+
                     let properties = path.node.declaration.properties;
                     options.baseOptions && (options.baseOptions.config = {});
                     options.baseOptions && (options.baseOptions.components = {});
@@ -262,33 +269,49 @@ module.exports = function getVisitor(options = {}) {
                         if (item.key.name !== 'config') {
                             options.baseOptions.appApi[item.key.name] = item;
                         }
+
                     });
                     // 处理 onPullDownRefresh 到 methods
                     function dealSwanPageApi(apiName) {
-                        let onPullDownRefreshBody = properties.find(item => item.key.name === apiName);
-                        if (onPullDownRefreshBody) {
+                        let apiBody = properties.find(item => item.key.name === apiName);
+                        const apiBodyIndex = properties.findIndex(item => item.key.name === apiName);
+                        if (apiBody) {
+                            apiBody = apiBody.type === 'ObjectMethod'
+                                ? apiBody
+                                : apiBody.type === 'ObjectProperty'
+                                    ? apiBody.value
+                                    : apiBody;
+                            properties.splice(apiBodyIndex, 1);
                             options.baseOptions && (options.baseOptions.enableConfig[apiName] = true);
                             let methodsObj = properties.find(item => item.key.name === 'methods');
-                            // 获取 onPullDownRefresh 函数体
-                            let onPullDownRefreshMethod = t.objectMethod(
+                            // 获取 api 参数
+                            let apiParams = [];
+                            apiBody.params.forEach(item => {
+                                apiParams.push(t.identifier(item.name));
+                            });
+                            // 获取 onPullDownRefresh/onReachBottom 函数体
+                            let apiMethod = t.objectMethod(
                                 'method',
                                 t.identifier(apiName),
-                                [],
-                                onPullDownRefreshBody.body
+                                apiParams,
+                                apiBody.body
                             );
                             if (!methodsObj) {
                                 properties.push(t.objectProperty(
                                     t.identifier('methods'),
-                                    t.objectExpression([onPullDownRefreshMethod])
+                                    t.objectExpression([apiMethod])
                                 ));
                             }
                             else {
-                                methodsObj.value.properties.push(onPullDownRefreshMethod);
+                                methodsObj.value.properties.push(apiMethod);
                             }
                         }
                     }
-                    dealSwanPageApi('onPullDownRefresh');
-                    dealSwanPageApi('onReachBottom');
+                    // 处理page api
+                    ['onPullDownRefresh', 'onReachBottom', 'onPageScroll', 'onTabItemTap'].forEach(key => {
+                        dealSwanPageApi(key);
+                    });
+
                     // 处理swan page 生命周期：onLoad 、onReady 、onUnload、onShow 、onHide
                     // 收集 app.vue 周期：onLaunch 、 onShow 、 onHide
                     ['onLoad', 'onReady', 'onUnload', 'onLaunch', 'onShow', 'onHide'].forEach(key => {
@@ -296,6 +319,7 @@ module.exports = function getVisitor(options = {}) {
                         if (!lifeItem) {
                             return;
                         }
+
                         let lifeMapKey = PAGE_LIFE_MAP_VUE[key];
                         mapSwanLifeTime(properties, t, key, lifeItem, lifeMapKey, options);
                     });
@@ -310,10 +334,12 @@ module.exports = function getVisitor(options = {}) {
                         if (!lifeTypeItem) {
                             return;
                         }
+
                         const lifeItem = lifeTypeItem.value.properties.find(item => item.key.name === key);
                         if (!lifeItem) {
                             return;
                         }
+
                         mapSwanLifeTime(properties, t, key, lifeItem, lifeMapKey, options);
                     });
                     path.traverse(Property(t, options));
@@ -321,4 +347,4 @@ module.exports = function getVisitor(options = {}) {
             }
         };
     };
-}
+};

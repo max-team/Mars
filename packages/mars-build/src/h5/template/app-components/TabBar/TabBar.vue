@@ -20,6 +20,7 @@
             <div
                 v-if="item.iconPath"
                 class="tab-item icon-and-text"
+                @click="tap(item, index)"
             >
                 <div
                     class="tab-item-icon"
@@ -77,6 +78,15 @@ export default {
         borderStyle: {
             type: String,
             default: '#fff'
+        }
+    },
+    methods: {
+        tap(item, index) {
+            this.$emit('tab-item-tap', {
+                index: `${index}`,
+                text: item.text,
+                pagePath: item.pagePath.replace(/^\//, '')
+            });
         }
     }
 }
@@ -149,4 +159,3 @@ export default {
     background-size: cover;
 }
 </style>
-

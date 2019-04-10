@@ -36,4 +36,4 @@ const vm = new Vue({
 initGlobalApi(Vue, vm);
 
 // 将初始化后的$api赋值给getApp
-marsAppData['$api'] = vm.$api;
+marsAppData.$api = vm.$api;
