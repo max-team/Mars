@@ -57,5 +57,8 @@
     "mock-socket": "^8.0.5",
     "vuepress": "^0.14.10",
     "webpack-dev-middleware": "3.6.0"
+  },
+  "dependencies": {
+    "envinfo": "^7.1.0"
   }
 }
