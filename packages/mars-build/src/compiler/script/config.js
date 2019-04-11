@@ -14,7 +14,8 @@ exports.compile = function compile(source, options) {
     Object.keys(components).forEach(k => {
         components[k] = components[k].replace(/\.vue$/, '');
     });
-    config.usingComponents = components;
+
+    config.usingComponents = Object.assign(components, config.usingComponents || {});
     return {
         code: JSON.stringify(config)
     };

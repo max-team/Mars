@@ -86,7 +86,7 @@ function compile(file, opt) {
                     let basicCompMap = {};
                     delToVueTag(el, options, basicCompMap);
                     if (!el.parent) {
-                        el.attrsMap['style'] = `backgroundColor: ${config.backgroundColor || null};`;
+                        el.attrsMap.style = `backgroundColor: ${config.backgroundColor || null};`;
                     }
                     componentSet = Object.assign(componentSet, basicCompMap);
                 }
@@ -123,8 +123,9 @@ function compile(file, opt) {
             appStyle: styles && styles[0] // 用户app.vue中的style
                 ? {
                     content: styles[0].content,
-                    attrs: styles[0].attrs.lang ? styles[0].attrs.lang : ''}
-                : null,
+                    attrs: styles[0].attrs.lang ? styles[0].attrs.lang : ''
+                }
+                : {},
             script: appScript && appScript.content || '',
             appScriptApi: scriptRet.pageLifeApi, // 用户app.vue中的生命周期
             template: appTemplate && appTemplate.content || '',
@@ -174,7 +175,11 @@ function compile(file, opt) {
 
     // 处理style
     const h5StylesArr = styles.filter(item => !item.attrs || (!item.attrs.target || item.attrs.target === 'h5'));
-    const styleContent = h5StylesArr.reduce((styleStr, {attrs, content, lang}) => `${styleStr}
+    const styleContent = h5StylesArr.reduce((styleStr, {
+        attrs,
+        content,
+        lang
+    }) => `${styleStr}
 <style ${lang ? `lang="${lang}"` : ''} scoped>
     ${content}
 </style>`, '');
@@ -200,7 +205,9 @@ ${styleContent || ''}
         if (Object.keys(componentSet).length > 0) {
             const componentsFile = new Vinyl({
                 path: opt.dest + '/components.js',
-                _info_: {componentSet}
+                _info_: {
+                    componentSet
+                }
             });
             compileComponents(componentsFile, opt);
             componentsFile.writeFileSync();
@@ -225,7 +232,8 @@ function gulpPrefixer(opt) {
         if (file.isBuffer()) {
             try {
                 compile(file, opt);
-            } catch (e) {
+            }
+            catch (e) {
                 log.error('[COMPILE ERROR]:', e);
             }
         }

@@ -1,5 +1,3 @@
-
-
 <template>
     <div
         id="mars"
@@ -24,8 +22,9 @@
             >
                 <pull-down-refresh
                     ref="refresherHandler"
-                    @on-refresh="handleRefresh"
+                    @pull-down-refresh="handleRefresh"
                     @reach-bottom="handleReachBottom"
+                    @page-scroll="handlePageScroll"
                     :enablePullDownRefresh="enablePullDownRefresh"
                     :enableReachBottom="enableReachBottom"
                     :onReachBottomDistance="onReachBottomDistance"
@@ -62,12 +61,14 @@
             </div>
             <tab-bar
                 v-if="tabList.length > 0 && showTabBar ? customShowTabBar : false"
+                @tab-item-tap="handleTabItemTap"
                 :tabList="tabList"
                 :currentPath="currentPath"
                 :color="tabBarColor"
                 :selectedColor="tabBarSelectedColor"
                 :borderStyle="tabBarBorderStyle"
-                :backgroundColor="tabBarBackgroundColor"/>
+                :backgroundColor="tabBarBackgroundColor"
+                />
         </div>
     </div>
 </template>
@@ -247,6 +248,18 @@ export default {
             this.transitionStatus === 'end'
             && this.$refs.currentRouter.onReachBottom
             && this.$refs.currentRouter.onReachBottom();
+        },
+
+        handlePageScroll(data) {
+            this.transitionStatus === 'end'
+            && this.$refs.currentRouter.onPageScroll
+            && this.$refs.currentRouter.onPageScroll(data);
+        },
+
+        handleTabItemTap(item) {
+            this.transitionStatus === 'end'
+            && this.$refs.currentRouter.onTabItemTap
+            && this.$refs.currentRouter.onTabItemTap(item);
         }
     }
 }
@@ -316,5 +329,3 @@ export default {
 }
 
 </style>
-
-

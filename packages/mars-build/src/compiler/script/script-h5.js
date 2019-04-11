@@ -151,7 +151,7 @@ exports.compileApp = function (options) {
     const {
         content: cssContent,
         attrs
-    } = appStyle || {};
+    } = appStyle;
 
     contentStr = `
 <template>
