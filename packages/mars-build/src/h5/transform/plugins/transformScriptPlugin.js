@@ -188,17 +188,20 @@ function mapSwanLifeTime(properties, t, lifeKey, lifeItem, lifeMapKey, options) 
             ? lifeItem.value.body
             : null;
 
-    APP_PAOGE_LIFE[lifeKey] && options.baseOptions && (options.baseOptions.pageLifeApi.push({
-        key: lifeKey,
-        body: timeMethodBlock
-    }));
-
     // 获取 time 函数 参数名
     const timeMethodParamName = type === 'ObjectMethod'
         ? lifeItem.params[0] && lifeItem.params[0].name || 'option'
         : type === 'ObjectProperty'
             ? lifeItem.value.params[0] && lifeItem.value.params[0].name || 'option'
             : 'option';
+
+    // 获取 app.vue 里的生命周期函数
+    APP_PAOGE_LIFE[lifeKey] && options.baseOptions && (options.baseOptions.pageLifeApi.push({
+        key: lifeKey,
+        params: timeMethodParamName,
+        body: timeMethodBlock
+    }));
+
     // 生成匿名函数调用
     const anonymousFuncExpression = t.expressionStatement(
         t.callExpression(

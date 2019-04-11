@@ -2,7 +2,9 @@
  * @file h5 transform plugin
  * @author zhangjingyuan02
  */
+
 /* eslint-disable fecs-camelcase */
+
 /* eslint-disable babel/new-cap */
 
 const APP_LIFE_MAP_VUE = {
@@ -18,25 +20,27 @@ const APP_LIFE_MAP_VUE = {
  * Map SWAN APP Life Time 映射小程序生命周期到vue hook
  * @param {Object} properties node ast
  * @param {Object} t ast plugin param
- * @param {Object} lifeItemBody 小程序原有生命周期hook函数内容
+ * @param {Object} lifeItem 小程序原有生命周期hook函数内容
  * @param {string} lifeMapKey 映射的 vue 周期hook
  */
-function mapSwanAppLifeTime(properties, t, lifeItemBody, lifeMapKey) {
+function mapSwanAppLifeTime(properties, t, lifeItem, lifeMapKey) {
     // 获取 time 函数体
-    const timeMethodBlock = lifeItemBody;
-
+    const {
+        body: timeMethodBlock,
+        params: paramsName
+    } = lifeItem;
     // 生成匿名函数调用
     const anonymousFuncExpression = t.expressionStatement(
         t.callExpression(
             t.memberExpression(
                 t.functionExpression(
                     null,
-                    [],
+                    [t.identifier(paramsName)],
                     timeMethodBlock
                 ),
                 t.identifier('call')
             ),
-            [t.identifier('this')]
+            [t.identifier('this'), t.identifier('this.$route.query')]
         )
     );
     let originLifeItem = properties.find(item => item.key.name === lifeMapKey);
@@ -64,11 +68,11 @@ module.exports = function getVisitor(options = {}) {
                     // 按预订顺序APP_LIFE_MAP_VUE 执行
                     Object.keys(APP_LIFE_MAP_VUE).forEach(key => {
                         let lifeItem = options.appScriptApi.find(item => item.key === key);
-                        lifeItem && mapSwanAppLifeTime(properties, t, lifeItem.body, APP_LIFE_MAP_VUE[key]);
+                        lifeItem && mapSwanAppLifeTime(properties, t, lifeItem, APP_LIFE_MAP_VUE[key]);
                     });
                     return;
                 }
             }
         };
     };
-}
+};
