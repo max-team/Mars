@@ -22,16 +22,9 @@ function compileJS(content, options) {
         target
     } = options;
 
-    const buildConfig = options._config || {};
-    const {designWidth, modules} = buildConfig;
-    const MARS_CONFIG = {designWidth, modules};
-
     content = content.replace(
         /process\.env\.MARS_ENV/g,
         JSON.stringify(target)
-    ).replace(
-        /process\.env\.MARS_CONFIG/g,
-        JSON.stringify(MARS_CONFIG)
     ).replace(
         /process\.env\.NODE_ENV/g,
         JSON.stringify(process.env.NODE_ENV || 'development')

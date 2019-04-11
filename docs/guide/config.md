@@ -28,7 +28,7 @@ Type：`(target: string) => Object`
 ### `designWidth`
 设计稿尺寸换算单位(px)。
 
-框架默认开启 px 单位转换功能（通过 `postcss-px2units` 插件），在小程序中会转换为 `rpx`，在 H5 中会转换为 `rem` （规定 1rem = 100px）。
+框架默认开启 px 单位转换功能（通过 `postcss-px2units` 插件），在小程序中会转换为 `rpx`，在 H5 中会转换为 `rem`。
 
 将 `designWidth` 设置为实际设计稿的宽度值，在开发汇总书写尺寸即可按照 1:1 的关系来进行书写，即从设计稿上量的长度 100px，那么尺寸书写就是 100px。
 
