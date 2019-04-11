@@ -26,7 +26,8 @@ router.beforeEach(function (to, from, next) {
 
     Vue.prototype.currentRoute = [{
         route: to.path.replace(/^\//, ''),
-        uri: to.path.replace(/^\//, '')
+        uri: to.path.replace(/^\//, ''),
+        options: to.query
     }];
     let toPath = decodeURI(to.fullPath); // 兼容 vue-router 浏览器前进/返回时的 decodeURI操作
     let fromPath = decodeURI(from.fullPath);
