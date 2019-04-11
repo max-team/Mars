@@ -1,6 +1,6 @@
 ---
 home: true
-# heroImage: /assets/img/M.05a98ab0.png
+# heroImage: https://avatars0.githubusercontent.com/u/49058748?s=200&v=4
 actionText: 快速开始 →
 actionLink: /guide/start
 footer: Copyright © 2018-present Mars
@@ -22,7 +22,6 @@ footer: Copyright © 2018-present Mars
 </div>
 </div>
 <!-- features end -->
-
 
 ## Mars
 
