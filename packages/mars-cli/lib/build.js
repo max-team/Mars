@@ -11,19 +11,19 @@ const execa = require('execa');
 const {getConfig} = require('./scripts/getConfig');
 
 async function build(cmd) {
-    const {config, target, buildPath} = getConfig(cmd);
+    const {target, buildPath} = getConfig(cmd);
 
     const {
         build
-    } = require(buildPath + '/src/scripts/run');
+    } = require(buildPath);
 
-
-    process.env.NODE_ENV = 'production';
-
-    build(config, {
+    const options = {
         target,
         build: true
-    }).on('stop', () => {
+    };
+    process.env.NODE_ENV = 'production';
+    process.env.MARS_CLI_OPTIONS = JSON.stringify(options);
+    build(options).on('stop', () => {
         if (target === 'h5') {
             const child = execa('npm', ['run', 'build-dist-h5']);
             child.stdout.pipe(process.stdout);

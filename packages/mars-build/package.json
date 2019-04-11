@@ -15,6 +15,7 @@
         "babel-plugin-minify-guarded-expressions": "^0.4.3",
         "chalk": "^2.4.2",
         "del": "^3.0.0",
+        "fs-extra": "^7.0.1",
         "gulp": "^3.9.1",
         "gulp-changed": "^3.2.0",
         "gulp-intercept": "^0.1.0",
