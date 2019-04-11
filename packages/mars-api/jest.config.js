@@ -14,6 +14,9 @@ module.exports = {
         '<rootDir>/__test__/**/*.js'
     ],
     testEnvironment: 'jest-environment-jsdom-global',
+    testEnvironmentOptions: {
+        userAgent: 'Mozilla/5.0 (Linux; Android 7.1.1; Nexus 6 Build/N6F26U) AppleWebKit/537.36 (KHTML, like Gecko)'
+    },
     testPathIgnorePatterns: [
         '/node_modules/'
     ],
