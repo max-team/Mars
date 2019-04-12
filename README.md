@@ -27,8 +27,8 @@ mars build [--target, -t swan (default) | wx | h5]
 
 ```
 
-更多教程请访问 [https://max-team.github.io/mars/](https://max-team.github.io/mars/)
-
+## 文档教程
+[https://max-team.github.io/mars/](https://max-team.github.io/mars/)
 
 ## 案例
 
@@ -44,6 +44,10 @@ mars build [--target, -t swan (default) | wx | h5]
 | 百度百聘 | AI 画报大师 | AI 福利图 | 百度作业模式 |
 |-|-|-|-|
 | ![](./docs/assets/qr-baipin.png) | ![](./docs/assets/qr-huabao.png) | ![](./docs/assets/qr-fuli.png) | ![](./docs/assets/qr-zuoye.png) |
+
+## CHANGELOG
+[CHANGELOG](./docs/CHANGELOG.md)
+
 ## Contributing & Discussion
 
 请参考 [如何贡献](./CONTRIBUTING.md)
