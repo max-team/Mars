@@ -1,13 +1,13 @@
 {
   "name": "@marsjs/cli-template",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "bin": {
     "mars-cli-service": "./bin/mars-cli-service.js"
   },
   "dependencies": {
-    "@vue/cli-service": "^3.5.1",
-    "@vue/cli-plugin-babel": "^3.0.0",
     "@marsjs/vue-cli-plugin-mars-web": "^0.0.9",
+    "@vue/cli-plugin-babel": "^3.0.0",
+    "@vue/cli-service": "^3.5.1",
     "chalk": "^2.4.2",
     "fs-extra": "^7.0.1",
     "globby": "^9.1.0"
