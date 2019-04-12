@@ -7,10 +7,11 @@ const {
     build,
     clean,
     watch,
-    merge
 } = require('./scripts/run');
 
+const getConfig = require('./scripts/getConfig');
+ 
 exports.build = build;
 exports.clean = clean;
 exports.watch = watch;
-exports.merge = merge;
+exports.getConfig = getConfig;
