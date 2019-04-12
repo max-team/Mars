@@ -3,7 +3,7 @@
  * @author huxiaohui02
  */
 import 'whatwg-fetch';
-import {callback} from '../utils';
+import {callback} from '../../lib/utils';
 
 function serializeParams(params) {
     if (!params) {

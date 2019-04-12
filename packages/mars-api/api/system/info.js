@@ -3,7 +3,7 @@
  * @author zhangjingyuan02
  */
 
-import {callback} from '../utils';
+import {callback} from '../../lib/utils';
 
 const NAVIGATION_BAR_HEIGHT = 38;
 
@@ -86,6 +86,7 @@ function getSystemInfo(options = {}) {
     });
 }
 
+/* eslint-disable fecs-export-on-declare */
 export {
     getSystemInfoSync,
     getSystemInfo
