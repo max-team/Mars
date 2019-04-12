@@ -1,15 +1,23 @@
 /* eslint-disable */
-const config = require('./src/build.config');
-const {designWidth, modules} = config;
-const px2unitsOptions = designWidth ? modules.postcss.px2units : false;
+// use same build config for vue-cli postcss-loader
 
-module.exports = ({ file, options, env }) => ({
-    plugins: {
-        autoprefixer: {},
-        'postcss-px2units': 
-            file.dirname.indexOf('src/app-components') > -1
-            || file.basename === 'mars-base.css'
-            ? false
-            : px2unitsOptions
-    }
-});
+const {getConfig} = require('@marsjs/build');
+let config = getConfig();
+
+const {postprocessors = {}, designWidth = false, modules = {}} = config;
+const postcssOptions = (postprocessors.postcss && postprocessors.postcss.options) || {};
+const px2units = modules.postcss && modules.postcss.px2units;
+const px2unitsPluin = designWidth && px2units ? require('postcss-px2units')(px2units) : false;
+
+const plugins = postcssOptions.plugins || [];
+const pluginsWithPX = plugins.slice();
+pluginsWithPX.unshift(px2unitsPluin);
+
+function getPostcssConfig({file, options, env}) {
+    const isAppFile = file.dirname.indexOf('src/app-components') > -1
+                || file.basename === 'mars-base.css';
+    postcssOptions.plugins = isAppFile ? plugins : pluginsWithPX;
+    return postcssOptions;
+}
+
+module.exports = getPostcssConfig;

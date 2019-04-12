@@ -8,7 +8,7 @@ module.exports = {
     title: 'Mars',
     description: 'Vue 驱动的多端开发框架',
     head: [
-        ['link', {rel: 'icon', href: '/assets/img/Mars-128.png'}]
+        ['link', {rel: 'icon', href: 'https://avatars2.githubusercontent.com/u/48916409?s=96&v=4'}]
     ],
     themeConfig: {
         sidebarDepth: 2,
