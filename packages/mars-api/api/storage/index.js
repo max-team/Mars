@@ -3,7 +3,7 @@
  * @author zhaolongfei
  */
 
-import {callback} from '../utils';
+import {callback} from '../../lib/utils';
 
 const cookieCache = [];
 
@@ -12,6 +12,9 @@ function setCookie(cname, cvalue, exdays = 10) {
     d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
     let expires = 'expires=' + d.toUTCString();
     document.cookie = cname + '=' + cvalue + '; ' + expires;
+
+    // 缓存cookie
+    cookieCache.push(cname);
 }
 
 function getCookie(cname) {

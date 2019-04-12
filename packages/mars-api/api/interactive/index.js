@@ -3,7 +3,7 @@
  * @author zhangjingyuan02
  */
 
-import {shouleBeObject, getParameterError, callback} from '../utils';
+import {shouleBeObject, getParameterError, callback} from '../../lib/utils';
 import {create as createToast, remove as removeToast} from './toast';
 import {create as createLoading, remove as removeLoading} from './loading';
 import {create as createModal} from './modal';

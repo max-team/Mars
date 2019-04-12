@@ -3,7 +3,7 @@
  * @author zhangjingyuan02
  */
 
-import {callback} from '../utils';
+import {callback} from '../../lib/utils';
 
 const modalMaskStyle = {
     position: 'fixed',

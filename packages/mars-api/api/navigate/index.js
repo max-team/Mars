@@ -2,7 +2,7 @@
  * @file export navigate api
  */
 
-import {callback} from '../utils';
+import {callback} from '../../lib/utils';
 
 function guid() {
     return Math.random().toString(36).substr(2, 12);
@@ -103,7 +103,9 @@ function navigateBack(options) {
  * @param {string} options.url 需要跳转的应用内页面的路径
  */
 function reLaunch(options) {
-    location.href = location.href.replace(/\/pages\/(.*)/, options.url);
+    // ts解决path相同不刷新问题
+    let url = options.url + (options.url.indexOf('?') > -1 ? '&' : '?') + 'ts=' + Date.now();
+    location.href = location.href.replace(/\/pages\/(.*)/, url);
 }
 
 /* eslint-disable fecs-export-on-declare */

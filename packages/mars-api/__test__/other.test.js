@@ -13,7 +13,7 @@ describe('[api]others', () => {
         const complete = jest.fn();
 
         // OtherApi.makePhoneCall({
-        //     phoneNumber: '15210604234',
+        //     phoneNumber: '152xxxx4234',
         //     success,
         //     fail,
         //     complete

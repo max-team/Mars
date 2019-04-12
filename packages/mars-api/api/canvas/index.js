@@ -2,7 +2,7 @@
  * @file Canvas API
  * @author zhaolongfei
  */
-import {callback} from '../utils';
+import {callback} from '../../lib/utils';
 
 class Canvas {
     constructor(id) {

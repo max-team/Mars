@@ -3,7 +3,7 @@
  * @author mars
  */
 
-import {callback} from '../utils';
+import {callback} from '../../lib/utils';
 
 function handleAndGetMsg(name, options = {}) {
     const {success, fail, complete} = options;

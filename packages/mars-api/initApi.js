@@ -13,6 +13,7 @@ import * as other from './api/other';
 import * as open from './api/open';
 import * as interactive from './api/interactive';
 import * as canvas from './api/canvas';
+import * as pageInfo from './api/pageInfo';
 import request from './api/request';
 import {createAnimation, animationDirective} from './api/createAnimation';
 
@@ -33,6 +34,7 @@ export default function initNativeApi(mars) {
         selector,
         socket,
         canvas,
+        pageInfo,
         {
             request,
             createAnimation
