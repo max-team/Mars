@@ -6,6 +6,8 @@
   },
   "dependencies": {
     "@vue/cli-service": "^3.5.1",
+    "@vue/cli-plugin-babel": "^3.0.0",
+    "@marsjs/vue-cli-plugin-mars-web": "^0.0.9",
     "chalk": "^2.4.2",
     "fs-extra": "^7.0.1",
     "globby": "^9.1.0"
