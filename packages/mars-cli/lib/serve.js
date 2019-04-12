@@ -14,7 +14,8 @@ async function start(cmd) {
     const {target, buildPath} = getConfig(cmd);
 
     const {
-        watch
+        watch,
+        clean
     } = require(buildPath);
 
     const options = {
@@ -23,14 +24,14 @@ async function start(cmd) {
     process.env.NODE_ENV = 'development';
     process.env.MARS_CLI_OPTIONS = JSON.stringify(options);
 
-    let isServiceStarted = false;
-    watch(options).on('stop', () => {
-        if (!isServiceStarted && target === 'h5') {
-            isServiceStarted = true;
-            const child = execa('npm', ['run', 'serve-dist-h5']);
-            child.stdout.pipe(process.stdout);
-            child.stderr.pipe(process.stderr);
-        }
+    clean(options).once('stop', () => {
+        watch(options).once('stop', () => {
+            if (target === 'h5') {
+                const child = execa('npm', ['run', 'serve-dist-h5']);
+                child.stdout.pipe(process.stdout);
+                child.stderr.pipe(process.stderr);
+            }
+        });
     });
 }
 

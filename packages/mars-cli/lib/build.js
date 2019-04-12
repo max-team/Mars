@@ -14,7 +14,8 @@ async function build(cmd) {
     const {target, buildPath} = getConfig(cmd);
 
     const {
-        build
+        build,
+        clean
     } = require(buildPath);
 
     const options = {
@@ -23,13 +24,17 @@ async function build(cmd) {
     };
     process.env.NODE_ENV = 'production';
     process.env.MARS_CLI_OPTIONS = JSON.stringify(options);
-    build(options).on('stop', () => {
-        if (target === 'h5') {
-            const child = execa('npm', ['run', 'build-dist-h5']);
-            child.stdout.pipe(process.stdout);
-            child.stderr.pipe(process.stderr);
-        }
+
+    clean(options).once('stop', () => {
+        build(options).once('stop', () => {
+            if (target === 'h5') {
+                const child = execa('npm', ['run', 'build-dist-h5']);
+                child.stdout.pipe(process.stdout);
+                child.stderr.pipe(process.stderr);
+            }
+        });
     });
+
 }
 
 module.exports = (...args) =>
