@@ -119,6 +119,14 @@ function compile(file, opt) {
             script: appScript,
             styles: appStyle
         } = vueCompiler.parseComponent(appContent.toString(), {});
+
+        // 替换 appStyle 中的 POSTCSS_PX2UNITS_COMMENT 注释
+        const buildConfig = opt._config;
+        const px2units = buildConfig.modules.postcss.px2units;
+        const px2unitsComment = (px2units && px2units.comment) || 'no';
+        let appStyleContent = appStyle && appStyle[0].content || '';
+        appStyleContent = appStyleContent.replace(/POSTCSS_PX2UNITS_COMMENT/g, px2unitsComment);
+
         appContent = compileApp({
             appStyle: styles && styles[0] // 用户app.vue中的style
                 ? {
@@ -129,7 +137,7 @@ function compile(file, opt) {
             script: appScript && appScript.content || '',
             appScriptApi: scriptRet.pageLifeApi, // 用户app.vue中的生命周期
             template: appTemplate && appTemplate.content || '',
-            style: appStyle && appStyle[0].content || '' // 入口文件APP.vue 自带style
+            style: appStyleContent // 入口文件APP.vue 自带style
         });
         fs.writeFileSync(opt.dest + '/App.vue', appContent);
 
