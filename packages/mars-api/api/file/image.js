@@ -5,7 +5,7 @@
  */
 
 import {uploader} from './upload';
-import {callback} from '../utils';
+import {callback} from '../../lib/utils';
 
 export function chooseImage(options) {
     const {

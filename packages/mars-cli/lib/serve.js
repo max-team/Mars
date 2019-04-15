@@ -11,25 +11,27 @@ const execa = require('execa');
 const {getConfig} = require('./scripts/getConfig');
 
 async function start(cmd) {
-    const {config, target, buildPath} = getConfig(cmd);
+    const {target, buildPath} = getConfig(cmd);
 
     const {
-        watch
-    } = require(buildPath + '/src/scripts/run');
+        watch,
+        clean
+    } = require(buildPath);
 
-    let isServiceStarted = false;
-
-    process.env.NODE_ENV = 'development';
-
-    watch(config, {
+    const options = {
         target
-    }).on('stop', () => {
-        if (!isServiceStarted && target === 'h5') {
-            isServiceStarted = true;
-            const child = execa('npm', ['run', 'serve-dist-h5']);
-            child.stdout.pipe(process.stdout);
-            child.stderr.pipe(process.stderr);
-        }
+    };
+    process.env.NODE_ENV = 'development';
+    process.env.MARS_CLI_OPTIONS = JSON.stringify(options);
+
+    clean(options).once('stop', () => {
+        watch(options).once('stop', () => {
+            if (target === 'h5') {
+                const child = execa('npm', ['run', 'serve-dist-h5']);
+                child.stdout.pipe(process.stdout);
+                child.stderr.pipe(process.stderr);
+            }
+        });
     });
 }
 

@@ -3,7 +3,7 @@
  * @author zhangjingyuan02
  */
 
-import {callback} from '../utils';
+import {callback} from '../../lib/utils';
 
 /* eslint-disable fecs-min-vars-per-destructure */
 

@@ -2,7 +2,7 @@
  * @file export other api
  * @author huxiaohui02
  */
-import {shouleBeObject, getParameterError, callback} from '../utils';
+import {shouleBeObject, getParameterError, callback} from '../../lib/utils';
 
 export * from './unsupport';
 

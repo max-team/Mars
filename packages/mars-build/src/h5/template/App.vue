@@ -189,6 +189,11 @@ export default {
             this.pos = 0;
             this.bodyHeight = 'auto';
             this.$refs.currentRouter.$emit('marsTransitionEnterEnd');
+            this.$nextTick(() => {
+                if (this.isBack) {
+                    window.scrollTo(0, this.fromRouterPosY);
+                }
+            });
         },
         enter() {
             if (this.isBack) {
@@ -266,6 +271,10 @@ export default {
 </script>
 
 <style lang="less" scoped>
+// TODO: App.vue 会包含用户的 app.vue 中的 css 代码（需要 px 转换）
+// 但是这里的框架 css 不需要经过 px 转换, 
+// 先通过注释 POSTCSS_PX2UNITS_COMMENT 来 disable, 后续考虑独立开
+
 #mars {
     width: 100%;
     overflow-x: hidden;
@@ -275,7 +284,7 @@ export default {
 
     .swan-app-container {
         width: 100%;
-        padding-top: 38px;
+        padding-top: 38px; /* POSTCSS_PX2UNITS_COMMENT */
 
         .swan-app-tab-panel {
             overflow-y: auto;

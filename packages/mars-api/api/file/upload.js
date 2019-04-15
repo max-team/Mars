@@ -4,7 +4,7 @@
  * @author zhaolongfei(izhaolongfei@gmail.com)
  */
 
-import {callback} from '../utils';
+import {callback} from '../../lib/utils';
 
 export function uploader(type = 'image', count = 1) {
     return new Promise((resolve, reject) => {

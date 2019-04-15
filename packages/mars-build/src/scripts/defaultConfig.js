@@ -3,7 +3,7 @@
  * @author zhangwentao <winty2013@gmail.com>
  */
 
-module.exports = function (merge, target) {
+module.exports = function (target) {
     const config = {
         projectFiles: ['project.swan.json', 'project.config.json'],
         source: ['src/**/*.vue'],

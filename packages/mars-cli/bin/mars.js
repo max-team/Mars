@@ -18,6 +18,7 @@ const fs = require('fs-extra');
 const path = require('path');
 const slash = require('slash');
 const minimist = require('minimist');
+const {getCliVersion} = require('../lib/helper/utils');
 
 function checkNodeVersion(wanted, id) {
     if (!semver.satisfies(process.version, wanted)) {
@@ -56,7 +57,7 @@ if (
 const program = require('commander');
 
 program
-    .version(require('../package').version)
+    .version(getCliVersion())
     .usage('<command> [options]');
 
 program
@@ -192,6 +193,15 @@ program
         }
 
         update(options);
+    });
+
+program
+    .command('info')
+    .description('Diagnostics Mars env info')
+    .action(cmd => {
+        const info = require('../lib/info');
+
+        info();
     });
 
 // output help information on unknown commands
