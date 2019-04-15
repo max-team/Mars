@@ -31,14 +31,6 @@ packsges
 npm test
 ```
 
-### 修改文档
-提交代码前先运行单元测试，新增代码需同时提供对应的单元测试代码。
-
-```shell
-# 在项目目录下执行
-npm test
-```
-
 ### 提交代码
 
 提交信息需要使用 conventional commit 格式，即：
