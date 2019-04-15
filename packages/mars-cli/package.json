@@ -15,7 +15,8 @@
     "inquirer": "^6.2.2",
     "minimist": "^1.2.0",
     "semver": "^5.5.0",
-    "slash": "^2.0.0"
+    "slash": "^2.0.0",
+    "envinfo": "^7.1.0"
   },
   "engines": {
     "node": ">=8.9"
