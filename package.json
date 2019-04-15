@@ -7,6 +7,8 @@
     "publish": "lerna publish from-git --registry https://registry.npmjs.org",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
+    "clean": "rimraf package-lock.json packages/*/node_modules packages/*/package-lock.json",
+    "bootstrap": "npm run clean && npx lerna bootstrap",
     "test": "cross-env NODE_ENV=test lerna run test --stream -- -- --colors",
     "test:stream": "cross-env NODE_ENV=test lerna run test --stream",
     "test:core": "npm run test:stream -- --no-prefix --scope @marsjs/core -- -- --colors --verbose",
@@ -62,7 +64,7 @@
     "lerna-changelog": "^0.8.2",
     "lint-staged": "^8.1.0",
     "mock-socket": "^8.0.5",
-    "vuepress": "^0.14.10",
+    "vuepress": "^1.0.0-alpha.47",
     "webpack-dev-middleware": "3.6.0"
   },
   "config": {

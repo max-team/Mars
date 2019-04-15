@@ -1,6 +1,6 @@
 {
   "packages": [
-    "packages/mars-@(build|core|api|components|cli|cli-template)"
+    "packages/*"
   ],
   "command": {
     "publish": {

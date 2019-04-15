@@ -11,7 +11,7 @@ module.exports = {
         ['link', {rel: 'icon', href: 'https://avatars2.githubusercontent.com/u/48916409?s=96&v=4'}]
     ],
     themeConfig: {
-        sidebarDepth: 2,
+        sidebarDepth: 1,
         sidebar: [
             '/guide/start',
             '/guide/miniprogram',
@@ -23,11 +23,15 @@ module.exports = {
             '/guide/examples',
             '/CHANGELOG'
         ],
+        displayAllHeaders: true,
         nav: [
             {text: '教程', link: '/guide/start'},
-            {text: 'CHANGELOG', link: '/CHANGELOG'},
-            {text: 'Github', link: 'https://github.com/max-team/Mars'}
+            {text: 'CHANGELOG', link: '/CHANGELOG'}
         ],
-        lastUpdated: 'Last Updated'
+        lastUpdated: 'Last Updated',
+        repo: 'max-team/Mars',
+        docsDir: 'docs',
+        editLinks: true,
+        editLinkText: '在 GitHub 上编辑此页'
     }
 };

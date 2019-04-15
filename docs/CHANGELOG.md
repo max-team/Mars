@@ -1,6 +1,5 @@
 # CHANGELOG
 
-
 ## 2019-04-12
 
 - @marsjs/api@1.0.16
@@ -38,5 +37,3 @@
 - @marsjs/core@0.2.3
 - @marsjs/cli@0.1.14
 - @marsjs/cli-template@0.1.4
-
-
