@@ -6,7 +6,7 @@
 # 在项目目录下执行 要求 node >= 8.10
 
 npm install
-npx lerna bootstrap
+npm run bootstrap
 
 ```
 
@@ -18,11 +18,20 @@ examples            // 示例项目代码
 packsges
     |- mars-build   // 编译相关代码
     |- mars-core    // 运行时代码
-    |- mars-components  // 适配 H5 的组件代码
+    |- mars-cli     // CLI 代码
+    |- mars-cli-template  // CLI Service 代码
     |- mars-api     // 适配 H5 的 API 代码
 ```
 
 ### 单元测试
+提交代码前先运行单元测试，新增代码需同时提供对应的单元测试代码。
+
+```shell
+# 在项目目录下执行
+npm test
+```
+
+### 修改文档
 提交代码前先运行单元测试，新增代码需同时提供对应的单元测试代码。
 
 ```shell
