@@ -63,5 +63,5 @@ function watch(options = {}) {
 module.exports = {
     clean,
     build,
-    watch,
+    watch
 };

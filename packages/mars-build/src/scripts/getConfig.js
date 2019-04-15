@@ -71,7 +71,7 @@ function getConfig(options) {
         try {
             options = JSON.parse(process.env.MARS_CLI_OPTIONS);
         }
-        catch(e) {}
+        catch (e) {}
     }
     if (!options) {
         throw new Error('pass options to @marsjs/build or use @marsjs/cli');

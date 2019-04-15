@@ -6,11 +6,11 @@
 const {
     build,
     clean,
-    watch,
+    watch
 } = require('./scripts/run');
 
 const getConfig = require('./scripts/getConfig');
- 
+
 exports.build = build;
 exports.clean = clean;
 exports.watch = watch;

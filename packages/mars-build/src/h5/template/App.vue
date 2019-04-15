@@ -189,6 +189,11 @@ export default {
             this.pos = 0;
             this.bodyHeight = 'auto';
             this.$refs.currentRouter.$emit('marsTransitionEnterEnd');
+            this.$nextTick(() => {
+                if (this.isBack) {
+                    window.scrollTo(0, this.fromRouterPosY);
+                }
+            });
         },
         enter() {
             if (this.isBack) {
