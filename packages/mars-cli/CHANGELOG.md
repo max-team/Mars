@@ -1,3 +1,19 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+## [0.1.18](https://github.com/max-team/Mars/compare/@marsjs/cli@0.1.17...@marsjs/cli@0.1.18) (2019-04-16)
+
+
+### Bug Fixes
+
+* move envinfo to mars-cli ([7b10b0c](https://github.com/max-team/Mars/commit/7b10b0c))
+
+
+
+
+
 ## [0.1.17](https://github.com/max-team/Mars/compare/@marsjs/cli@0.1.14...@marsjs/cli@0.1.17) (2019-04-16)
 
 ### Features
@@ -8,4 +24,3 @@
 ## 0.1.14 (2019-04-09)
 
 - initial version
-

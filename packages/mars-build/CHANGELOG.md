@@ -1,3 +1,26 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+## [0.2.7](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.6...@marsjs/build@0.2.7) (2019-04-16)
+
+
+### Bug Fixes
+
+* **page-api:** fix getCurrentPages res & add page life time params ([28ed920](https://github.com/max-team/Mars/commit/28ed920))
+* **px:** fix to 15px ([c94126d](https://github.com/max-team/Mars/commit/c94126d))
+* **white screen:** fix ios safari white screen ([f4e5739](https://github.com/max-team/Mars/commit/f4e5739))
+
+
+### Features
+
+* **pageApi:** add new page api and merge some feature ([7a12c7b](https://github.com/max-team/Mars/commit/7a12c7b))
+
+
+
+
+
 ## [0.2.6](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.3...@marsjs/build@0.2.6) (2019-04-16)
 
 
@@ -22,7 +45,3 @@
 ## 0.2.3 (2019-04-09)
 
 - initial version
-
-
-
-
