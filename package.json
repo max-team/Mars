@@ -6,7 +6,7 @@
     "version": "lerna version --no-push --conventional-commits",
     "publish": "lerna publish from-git --registry https://registry.npmjs.org",
     "docs:dev": "vuepress dev docs",
-    "docs:build": "vuepress build docs",
+    "docs:build": "vuepress build docs && cp docs/.vuepress/index.html docs/.vuepress/dist",
     "clean": "rimraf packages/*/node_modules packages/*/package-lock.json",
     "bootstrap": "npm run clean && npx lerna bootstrap",
     "test": "cross-env NODE_ENV=test lerna run test --stream -- -- --colors",

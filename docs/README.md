@@ -4,6 +4,7 @@ home: true
 actionText: 快速开始 →
 actionLink: /guide/start
 footer: Copyright © 2018-present Mars
+pageClass: home-page
 ---
 
 <!-- features start -->

@@ -5,6 +5,7 @@
 
 module.exports = {
     base: '/Mars/',
+    dest: 'docs/.vuepress/dist/Mars',
     title: 'Mars',
     description: 'Vue 驱动的多端开发框架',
     head: [
