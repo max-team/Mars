@@ -1,7 +1,5 @@
-# Change Log
+# @marsjs/cli-template
 
-All notable changes to this project will be documented in this file.
-See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
 ## [0.1.6](https://github.com/max-team/Mars/compare/@marsjs/cli-template@0.1.5...@marsjs/cli-template@0.1.6) (2019-04-16)
 

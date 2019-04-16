@@ -46,7 +46,7 @@ mars build [--target, -t swan (default) | wx | h5]
 | ![](./docs/assets/qr-baipin.png) | ![](./docs/assets/qr-huabao.png) | ![](./docs/assets/qr-fuli.png) | ![](./docs/assets/qr-zuoye.png) |
 
 ## CHANGELOG
-[CHANGELOG](./docs/CHANGELOG.md)
+[CHANGELOG](https://max-team.github.io/Mars/CHANGELOGS/core.html)
 
 ## Contributing & Discussion
 

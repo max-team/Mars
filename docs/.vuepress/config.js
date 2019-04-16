@@ -13,21 +13,29 @@ module.exports = {
     ],
     themeConfig: {
         sidebarDepth: 1,
-        sidebar: [
-            '/guide/start',
-            '/guide/miniprogram',
-            '/guide/vue-features',
-            '/guide/platforms',
-            '/guide/component',
-            '/guide/API',
-            '/guide/config',
-            '/guide/examples',
-            '/CHANGELOG'
-        ],
+        sidebar: {
+            '/guide/': [
+                'start',
+                'miniprogram',
+                'vue-features',
+                'platforms',
+                'component',
+                'API',
+                'config',
+                'examples'
+            ],
+            '/CHANGELOGS/': [
+                'core',
+                'build',
+                'api',
+                'cli',
+                'cli-template'
+            ]
+        },
         displayAllHeaders: true,
         nav: [
             {text: '教程', link: '/guide/start'},
-            {text: 'CHANGELOG', link: '/CHANGELOG'}
+            {text: 'CHANGELOG', link: '/CHANGELOGS/core'}
         ],
         lastUpdated: 'Last Updated',
         repo: 'max-team/Mars',
