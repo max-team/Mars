@@ -131,6 +131,13 @@ const Property = (t, options) => {
 
             if (path.node.key.name === 'config') {
                 const configValue = getPlainObjectNodeValue(path.node.value, path, t) || {};
+
+                if (configValue.pages) {
+                    configValue.pages = configValue.pages.filter(item => !/\.(swan|mp)$/.test(item));
+                }
+                if (configValue.tabBar && configValue.tabBar.list) {
+                    configValue.tabBar.list = configValue.tabBar.list.filter(item => !/\.(swan|mp)$/.test(item.pagePath));
+                }
                 options.baseOptions && (options.baseOptions.config = configValue);
                 path.remove();
             }

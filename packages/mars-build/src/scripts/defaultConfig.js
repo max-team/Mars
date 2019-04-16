@@ -8,7 +8,10 @@ module.exports = function (target) {
         projectFiles: ['project.swan.json', 'project.config.json'],
         source: ['src/**/*.vue'],
         dest: target === 'h5' ? './dist-h5/src' : `./dist-${target}`,
-        assets: [
+        assets: target === 'h5' ? [
+            'src/**/*.!(vue|swan|wxml)'
+        ]
+        : [
             'src/**/*.!(vue)'
         ],
         designWidth: 750,
