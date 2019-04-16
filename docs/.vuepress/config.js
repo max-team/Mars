@@ -22,7 +22,8 @@ module.exports = {
                 'component',
                 'API',
                 'config',
-                'examples'
+                'examples',
+                'common-questions'
             ],
             '/CHANGELOGS/': [
                 'core',
