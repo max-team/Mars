@@ -28,7 +28,7 @@ mars build [--target, -t swan (default) | wx | h5]
 ```
 
 ## 文档教程
-[https://max-team.github.io/mars/](https://max-team.github.io/mars/)
+[https://max-team.github.io/Mars/](https://max-team.github.io/Mars/)
 
 ## 案例
 
