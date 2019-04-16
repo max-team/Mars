@@ -51,6 +51,19 @@ const getPropertyVisitor = (t, options) => {
 
             if (propName === 'config') {
                 const configValue = getPlainObjectNodeValue(path.node.value, path, t) || {};
+
+                if (options.isApp) {
+                    if (configValue.pages) {
+                        configValue.pages = configValue.pages.map(item => item.replace(/\.(swan|mp)$/, ''));
+                    }
+                    if (configValue.tabBar && configValue.tabBar.list) {
+                        configValue.tabBar.list = configValue.tabBar.list.map(item => {
+                            item.pagePath = item.pagePath.replace(/\.(swan|mp)$/, '');
+                            return item;
+                        });
+                    }
+                }
+
                 options.file && (options.file.config = configValue);
                 path.remove();
             }
