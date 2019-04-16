@@ -60,6 +60,16 @@ function getMarkNode(options) {
             compIdCounter++;
         }
 
+        ['v-show', 'v-model'].forEach(dir => {
+            if (el.attrsMap[dir]) {
+                const value = el.attrsMap[dir];
+                el.attrsList.push({
+                    name: `:${dir}`,
+                    value
+                });
+                el.attrsMap[`:${dir}`] = value;
+            }
+        });
     };
 }
 
@@ -69,7 +79,6 @@ function getPostTrans(options) {
         if (node.directives) {
             delete node.directives;
         }
-
     };
 }
 
