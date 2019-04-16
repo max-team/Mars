@@ -1,0 +1,11 @@
+## [0.1.17](https://github.com/max-team/Mars/compare/@marsjs/cli@0.1.14...@marsjs/cli@0.1.17) (2019-04-16)
+
+### Features
+
+* **cli:** set process.env.NODE_ENV ([f22c7ca](https://github.com/max-team/Mars/commit/f22c7ca))
+* **cli:** 编译前先清空编译产物 ([4d79b1e](https://github.com/max-team/Mars/commit/4d79b1e), [cf7bf84](https://github.com/max-team/Mars/commit/cf7bf84))
+
+## 0.1.14 (2019-04-09)
+
+- initial version
+
