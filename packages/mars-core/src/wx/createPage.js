@@ -6,9 +6,12 @@
 /* global Page */
 
 /* eslint-disable babel/new-cap */
-import pageMixin, {handleProxy} from './mixins';
+import pageMixin, {handleProxy, handleModel} from './mixins';
 import {makeCreatePage} from '../base/createPage';
 import {setData} from './data';
 import {callHook} from './lifecycle';
 
-export default makeCreatePage(pageMixin, handleProxy, setData, callHook);
+export default makeCreatePage(pageMixin, {
+    handleProxy,
+    handleModel
+}, setData, callHook);
