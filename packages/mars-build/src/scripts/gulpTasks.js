@@ -99,6 +99,13 @@ function getTaskRuntime(config, options) {
     const {dest: buildDest, source} = config;
     let dest = getDestDir(config, options);
     dest = dest + '/' + buildDest.coreDir;
+    let framework = JSON.stringify({});
+    try {
+        framework = JSON.stringify(config.framework || {});
+    } catch (e) {
+        throw new Error('config.framework must be plain Object');
+    }
+
     return () => {
         return gulp.src(source.runtime)
             .pipe(changed(dest))
@@ -109,6 +116,9 @@ function getTaskRuntime(config, options) {
                 source = source.replace(
                     /process\.env\.NODE_ENV/g,
                     JSON.stringify(process.env.NODE_ENV || 'development')
+                ).replace(
+                    /process\.env\.MARS_CONFIG_FRAMEWORK/g,
+                    framework
                 );
                 const ret = transform(source, {
                     plugins: [

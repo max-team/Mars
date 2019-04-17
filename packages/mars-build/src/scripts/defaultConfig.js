@@ -16,6 +16,7 @@ module.exports = function (target) {
         ],
         designWidth: 750,
         watch: ['src/**/*'],
+        framework: {},
         modules: {
             postcss: {
                 px2units: {
