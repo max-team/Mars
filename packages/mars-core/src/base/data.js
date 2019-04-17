@@ -12,6 +12,8 @@ import {mark, measure} from '../helper/perf';
 import config from '../config';
 import {getMpUpdatedCallbacks} from './api/mpNextTick';
 
+const {framework = {}} = config;
+
 function cleanKeyPath(vm) {
     if (vm.__mpKeyPath) {
         Object.keys(vm.__mpKeyPath).forEach(_key => {
@@ -55,14 +57,15 @@ export function setData(vm, $mp, isRoot = false) {
         const computed = getChangedComputed(vm);
         data = Object.assign(data, computed, changed);
         // 如果后续数据更新 需要计算新增的实例上的 computed 值
-        // if (Object.keys(data).length > 0) {
-        //     const allComputed = getAllComputed(vm);
-        //     data = Object.keys(allComputed).length > 0
-        //         ? Object.assign(data, {
-        //             [isRoot ? 'rootComputed' : 'compComputed']: allComputed
-        //         })
-        //         : data;
-        // }
+        const skipLaterCalc = framework.computed && framework.computed.skipLaterCalc;
+        if (!skipLaterCalc && Object.keys(data).length > 0) {
+            const allComputed = getAllComputed(vm);
+            data = Object.keys(allComputed).length > 0
+                ? Object.assign(data, {
+                    [isRoot ? 'rootComputed' : 'compComputed']: allComputed
+                })
+                : data;
+        }
     }
 
     if (process.env.NODE_ENV !== 'production' && config.performance && mark) {
