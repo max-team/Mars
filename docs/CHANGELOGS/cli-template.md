@@ -1,5 +1,19 @@
 # @marsjs/cli-template
 
+## [0.1.9](https://github.com/max-team/Mars/compare/@marsjs/cli-template@0.1.8...@marsjs/cli-template@0.1.9) (2019-04-17)
+
+
+### Bug Fixes
+
+* **cli-template:** babel.config.js at dist-h5 not work for serve h5 ([18fffb2](https://github.com/max-team/Mars/commit/18fffb2))
+
+
+### Features
+
+* **cli & cli-template:** expose build target to process.env.MARS_CLI_TARGET ([ec3ee54](https://github.com/max-team/Mars/commit/ec3ee54))
+
+
+
 ## [0.1.8](https://github.com/max-team/Mars/compare/@marsjs/cli-template@0.1.7...@marsjs/cli-template@0.1.8) (2019-04-17)
 
 

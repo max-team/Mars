@@ -12,10 +12,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
-
-
-# @marsjs/cli
-
 ## [0.1.18](https://github.com/max-team/Mars/compare/@marsjs/cli@0.1.17...@marsjs/cli@0.1.18) (2019-04-16)
 
 

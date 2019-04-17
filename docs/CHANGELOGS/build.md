@@ -1,5 +1,12 @@
 # @marsjs/build
 
+## [0.2.10](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.9...@marsjs/build@0.2.10) (2019-04-17)
+
+### Features
+
+* **core & build:** support skipLaterCalc for computed ([6dcf61c](https://github.com/max-team/Mars/commit/6dcf61c))
+
+
 ## [0.2.9](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.8...@marsjs/build@0.2.9) (2019-04-17)
 
 
