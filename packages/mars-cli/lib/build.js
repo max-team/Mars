@@ -24,6 +24,7 @@ async function build(cmd) {
     };
     process.env.NODE_ENV = 'production';
     process.env.MARS_CLI_OPTIONS = JSON.stringify(options);
+    process.env.MARS_CLI_TARGET = target;
 
     clean(options).once('stop', () => {
         build(options).once('stop', () => {
