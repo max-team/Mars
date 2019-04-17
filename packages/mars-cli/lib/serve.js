@@ -27,7 +27,7 @@ async function start(cmd) {
 
     clean(options).once('stop', () => {
         watch(options).once('stop', () => {
-            if (target === 'h5') {
+            if (target.indexOf('h5') !== -1) {
                 const child = execa('npm', ['run', 'serve-dist-h5']);
                 child.stdout.pipe(process.stdout);
                 child.stderr.pipe(process.stderr);

@@ -4,6 +4,8 @@
  */
 
 /* eslint-disable fecs-min-vars-per-destructure */
+/* globals Set */
+
 const gulp = require('gulp');
 const {
     getTaskSFC,
@@ -19,16 +21,16 @@ const getConfig = require('./getConfig');
 function getBuildTasks(config = {}, options = {}) {
     const {target} = options;
     // config = formatConfig(config);
-    gulp.task('compile:sfc', getTaskSFC(config, options));
-    gulp.task('copy:assets', getTaskCompileAssets(config, options));
+    gulp.task('compile:sfc:' + target, getTaskSFC(config, options));
+    gulp.task('copy:assets:' + target, getTaskCompileAssets(config, options));
     let buildTasks = [
-        'compile:sfc',
-        'copy:assets'
+        'compile:sfc:' + target,
+        'copy:assets:' + target
     ];
 
     if (target !== 'h5') {
-        gulp.task('compile:runtime', getTaskRuntime(config, options));
-        buildTasks.push('compile:runtime');
+        gulp.task('compile:runtime:' + target, getTaskRuntime(config, options));
+        buildTasks.push('compile:runtime:' + target);
     }
 
     return buildTasks;
@@ -51,10 +53,28 @@ function build(options = {}) {
 }
 
 function watch(options = {}) {
-    const config = getConfig(options);
-    const buildTasks = getBuildTasks(config, options);
-    gulp.task('build', buildTasks);
-    gulp.task('watch', ['build'], getTaskWatch(config, options));
+
+    const targets = options.target.split(',');
+    let watch = new Set();
+    targets.forEach(item => {
+        options.target = item;
+        if (['swan', 'h5', 'wx'].indexOf(item) === -1) {
+            return;
+        }
+
+        const config = getConfig(options);
+        config.watch && config.watch.forEach(item => watch.add(item));
+        const buildTasks = getBuildTasks(config, options);
+        gulp.task('build:' + item, buildTasks);
+    });
+
+    const taskArr = targets.map(item => 'build:' + item);
+    const watchArr = Array.from(watch);
+
+    gulp.task('watch', taskArr, getTaskWatch({
+        watch: watchArr,
+        taskArr
+    }, options));
 
     console.log('[start task] watch');
     return gulp.start('watch');

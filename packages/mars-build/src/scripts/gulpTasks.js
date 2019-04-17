@@ -145,9 +145,9 @@ function getTaskClean(config, options) {
 }
 
 function getTaskWatch(config, options) {
-    const {watch} = config;
+    const {watch, taskArr} = config;
     return () => {
-        return gulp.watch(watch, ['build']);
+        return gulp.watch(watch, taskArr);
     };
 }
 
