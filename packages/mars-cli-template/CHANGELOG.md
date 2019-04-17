@@ -1,22 +1,12 @@
-# Change Log
+# @marsjs/cli-template
 
-All notable changes to this project will be documented in this file.
-See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [0.1.8](https://github.com/max-team/Mars/compare/@marsjs/cli-template@0.1.6...@marsjs/cli-template@0.1.8) (2019-04-17)
+## [0.1.8](https://github.com/max-team/Mars/compare/@marsjs/cli-template@0.1.7...@marsjs/cli-template@0.1.8) (2019-04-17)
 
 
 ### Bug Fixes
 
 * **cli-template:** move h5 specified config files to dist-h5 ([3de6acd](https://github.com/max-team/Mars/commit/3de6acd))
-
-
-### Features
-
-* support setting H5 title ([d63bf9e](https://github.com/max-team/Mars/commit/d63bf9e))
-
-
-
 
 
 ## [0.1.7](https://github.com/max-team/Mars/compare/@marsjs/cli-template@0.1.6...@marsjs/cli-template@0.1.7) (2019-04-16)
@@ -25,9 +15,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Features
 
 * support setting H5 title ([d63bf9e](https://github.com/max-team/Mars/commit/d63bf9e))
-
-    - 支持 H5 的项目，在 vue.config.js 中可以设置title。方法是配置 `html-webpack-plugin` 的 title 参数。
-
 
 
 ## [0.1.6](https://github.com/max-team/Mars/compare/@marsjs/cli-template@0.1.5...@marsjs/cli-template@0.1.6) (2019-04-16)

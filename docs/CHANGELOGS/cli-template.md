@@ -1,5 +1,20 @@
 # @marsjs/cli-template
 
+## [0.1.8](https://github.com/max-team/Mars/compare/@marsjs/cli-template@0.1.7...@marsjs/cli-template@0.1.8) (2019-04-17)
+
+
+### Bug Fixes
+
+* **cli-template:** move h5 specified config files to dist-h5 ([3de6acd](https://github.com/max-team/Mars/commit/3de6acd))
+
+
+## [0.1.7](https://github.com/max-team/Mars/compare/@marsjs/cli-template@0.1.6...@marsjs/cli-template@0.1.7) (2019-04-16)
+
+
+### Features
+
+* support setting H5 title ([d63bf9e](https://github.com/max-team/Mars/commit/d63bf9e))
+
 
 ## [0.1.6](https://github.com/max-team/Mars/compare/@marsjs/cli-template@0.1.5...@marsjs/cli-template@0.1.6) (2019-04-16)
 

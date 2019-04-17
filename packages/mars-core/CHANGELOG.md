@@ -1,7 +1,4 @@
-# Change Log
-
-All notable changes to this project will be documented in this file.
-See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+# @marsjs/core
 
 ## [0.2.4](https://github.com/max-team/Mars/compare/@marsjs/core@0.2.3...@marsjs/core@0.2.4) (2019-04-17)
 
@@ -14,8 +11,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Performance Improvements
 
 * **core:** disable computed props for later render ([50c89fb](https://github.com/max-team/Mars/commit/50c89fb))
-
-
 
 
 
