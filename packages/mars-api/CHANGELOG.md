@@ -1,7 +1,4 @@
-# Change Log
-
-All notable changes to this project will be documented in this file.
-See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+# @marsjs/api
 
 ## [1.0.17](https://github.com/max-team/Mars/compare/@marsjs/api@1.0.16...@marsjs/api@1.0.17) (2019-04-16)
 

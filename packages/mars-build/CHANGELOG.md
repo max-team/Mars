@@ -1,22 +1,12 @@
-# Change Log
+# @marsjs/build
 
-All notable changes to this project will be documented in this file.
-See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [0.2.9](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.7...@marsjs/build@0.2.9) (2019-04-17)
+## [0.2.9](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.8...@marsjs/build@0.2.9) (2019-04-17)
 
 
 ### Bug Fixes
 
 * **build:** bind v-show/v-model value in case of no other getters ([b3e58c0](https://github.com/max-team/Mars/commit/b3e58c0))
-
-
-### Features
-
-* make H5 compatible with mp comp and pages ([1c38d88](https://github.com/max-team/Mars/commit/1c38d88))
-
-
-
 
 
 ## [0.2.8](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.7...@marsjs/build@0.2.8) (2019-04-16)
@@ -25,11 +15,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Features
 
 * make H5 compatible with mp comp and pages ([1c38d88](https://github.com/max-team/Mars/commit/1c38d88))
-    
-    - 使用小程序组件方法不变，h5 中会忽略，目前 template 中不会移除该组件。
-
-    - 使用小程序页面需要加 .swan 后缀，h5 中会忽略掉。
-
 
 
 

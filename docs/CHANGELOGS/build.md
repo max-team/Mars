@@ -1,5 +1,22 @@
 # @marsjs/build
 
+## [0.2.9](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.8...@marsjs/build@0.2.9) (2019-04-17)
+
+
+### Bug Fixes
+
+* **build:** bind v-show/v-model value in case of no other getters ([b3e58c0](https://github.com/max-team/Mars/commit/b3e58c0))
+
+
+## [0.2.8](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.7...@marsjs/build@0.2.8) (2019-04-16)
+
+
+### Features
+
+* make H5 compatible with mp comp and pages ([1c38d88](https://github.com/max-team/Mars/commit/1c38d88))
+
+
+
 ## [0.2.7](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.6...@marsjs/build@0.2.7) (2019-04-16)
 
 
