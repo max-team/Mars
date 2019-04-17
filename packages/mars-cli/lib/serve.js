@@ -23,6 +23,7 @@ async function start(cmd) {
     };
     process.env.NODE_ENV = 'development';
     process.env.MARS_CLI_OPTIONS = JSON.stringify(options);
+    process.env.MARS_CLI_TARGET = target;
 
     clean(options).once('stop', () => {
         watch(options).once('stop', () => {
