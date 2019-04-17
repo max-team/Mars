@@ -159,16 +159,7 @@ program
             options.registry = defaultConfig.registry;
         }
 
-        if (options.target) {
-            const targets = options.target.split(',');
-            for (let i = 0; i < targets.length; i++) {
-                options.target = targets[i];
-                build(options);
-            }
-        }
-        else {
-            build(options);
-        }
+        build(options);
     });
 
 program

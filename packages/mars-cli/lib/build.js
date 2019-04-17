@@ -28,7 +28,7 @@ async function build(cmd) {
 
     clean(options).once('stop', () => {
         build(options).once('stop', () => {
-            if (target === 'h5') {
+            if (target.indexOf('h5') !== -1) {
                 const child = execa('npm', ['run', 'build-dist-h5']);
                 child.stdout.pipe(process.stdout);
                 child.stderr.pipe(process.stderr);

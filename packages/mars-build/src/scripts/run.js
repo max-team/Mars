@@ -36,24 +36,7 @@ function getBuildTasks(config = {}, options = {}) {
     return buildTasks;
 }
 
-function clean(options = {}) {
-    const config = getConfig(options);
-    gulp.task('clean', getTaskClean(config, options));
-
-    console.log('[start task] clean');
-    return gulp.start('clean');
-}
-
-function build(options = {}) {
-    const config = getConfig(options);
-    const buildTasks = getBuildTasks(config, options);
-    gulp.task('build', buildTasks);
-    console.log('[start task] build');
-    return gulp.start('build');
-}
-
-function watch(options = {}) {
-
+function setupBuildTasks(options) {
     const targets = options.target.split(',');
     let watch = new Set();
     targets.forEach(item => {
@@ -70,6 +53,30 @@ function watch(options = {}) {
 
     const taskArr = targets.map(item => 'build:' + item);
     const watchArr = Array.from(watch);
+    return {
+        taskArr,
+        watchArr
+    };
+}
+
+function clean(options = {}) {
+    const config = getConfig(options);
+    gulp.task('clean', getTaskClean(config, options));
+
+    console.log('[start task] clean');
+    return gulp.start('clean');
+}
+
+function build(options = {}) {
+    const {taskArr} = setupBuildTasks(options);
+
+    gulp.task('build', taskArr);
+    console.log('[start task] build');
+    return gulp.start('build');
+}
+
+function watch(options = {}) {
+    const {taskArr, watchArr} = setupBuildTasks(options);
 
     gulp.task('watch', taskArr, getTaskWatch({
         watch: watchArr,
