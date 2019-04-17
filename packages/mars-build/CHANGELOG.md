@@ -1,3 +1,25 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+## [0.2.10](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.7...@marsjs/build@0.2.10) (2019-04-17)
+
+
+### Bug Fixes
+
+* **build:** bind v-show/v-model value in case of no other getters ([b3e58c0](https://github.com/max-team/Mars/commit/b3e58c0))
+
+
+### Features
+
+* make H5 compatible with mp comp and pages ([1c38d88](https://github.com/max-team/Mars/commit/1c38d88))
+* **core & build:** support skipLaterCalc for computed ([6dcf61c](https://github.com/max-team/Mars/commit/6dcf61c))
+
+
+
+
+
 # @marsjs/build
 
 

@@ -1,3 +1,19 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+## [0.1.19](https://github.com/max-team/Mars/compare/@marsjs/cli@0.1.18...@marsjs/cli@0.1.19) (2019-04-17)
+
+
+### Features
+
+* **cli & cli-template:** expose build target to process.env.MARS_CLI_TARGET ([ec3ee54](https://github.com/max-team/Mars/commit/ec3ee54))
+
+
+
+
+
 # @marsjs/cli
 
 ## [0.1.18](https://github.com/max-team/Mars/compare/@marsjs/cli@0.1.17...@marsjs/cli@0.1.18) (2019-04-16)

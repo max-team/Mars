@@ -1,3 +1,26 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+## [0.1.9](https://github.com/max-team/Mars/compare/@marsjs/cli-template@0.1.6...@marsjs/cli-template@0.1.9) (2019-04-17)
+
+
+### Bug Fixes
+
+* **cli-template:** babel.config.js at dist-h5 not work for serve h5 ([18fffb2](https://github.com/max-team/Mars/commit/18fffb2))
+* **cli-template:** move h5 specified config files to dist-h5 ([3de6acd](https://github.com/max-team/Mars/commit/3de6acd))
+
+
+### Features
+
+* support setting H5 title ([d63bf9e](https://github.com/max-team/Mars/commit/d63bf9e))
+* **cli & cli-template:** expose build target to process.env.MARS_CLI_TARGET ([ec3ee54](https://github.com/max-team/Mars/commit/ec3ee54))
+
+
+
+
+
 # @marsjs/cli-template
 
 
