@@ -148,6 +148,7 @@ program
     .description('build project in production mode')
     .option('-r, --registry <url>', 'Use specified npm registry when installing dependencies (only for npm)')
     .option('-t, --target <target>', 'Build target (swan | h5 | wx, default: swan)')
+    .option('-w, --watch', 'Open watch mode')
     .action(cmd => {
         const options = cleanArgs(cmd);
         const buildPath = path.resolve(__dirname, './mars-build.js');

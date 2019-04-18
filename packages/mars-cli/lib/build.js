@@ -15,19 +15,21 @@ async function build(cmd) {
 
     const {
         build,
+        watch,
         clean
     } = require(buildPath);
 
     const options = {
-        target,
-        build: true
+        target
     };
     process.env.NODE_ENV = 'production';
     process.env.MARS_CLI_OPTIONS = JSON.stringify(options);
     process.env.MARS_CLI_TARGET = target;
 
+    const run = cmd.watch ? watch : build;
+
     clean(options).once('stop', () => {
-        build(options).once('stop', () => {
+        run(options).once('stop', () => {
             if (target === 'h5') {
                 const child = execa('npm', ['run', 'build-dist-h5']);
                 child.stdout.pipe(process.stdout);
