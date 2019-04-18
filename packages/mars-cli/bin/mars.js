@@ -18,7 +18,8 @@ const fs = require('fs-extra');
 const path = require('path');
 const slash = require('slash');
 const minimist = require('minimist');
-const {getCliVersion} = require('../lib/helper/utils');
+const {getCliVersion, cleanArgs, defaultConfig} = require('../lib/helper/utils');
+const execa = require('execa');
 
 function checkNodeVersion(wanted, id) {
     if (!semver.satisfies(process.version, wanted)) {
@@ -29,10 +30,6 @@ function checkNodeVersion(wanted, id) {
         process.exit(1);
     }
 }
-
-const defaultConfig = {
-    registry: 'https://registry.npm.taobao.org'
-};
 
 checkNodeVersion(requiredVersion, 'mars-cli');
 
@@ -152,14 +149,28 @@ program
     .option('-r, --registry <url>', 'Use specified npm registry when installing dependencies (only for npm)')
     .option('-t, --target <target>', 'Build target (swan | h5 | wx, default: swan)')
     .action(cmd => {
-        const build = require('../lib/build');
         const options = cleanArgs(cmd);
+        const buildPath = path.resolve(__dirname, './mars-build.js');
 
-        if (!options.registry) {
-            options.registry = defaultConfig.registry;
-        }
+        const targets = (options.target || 'swan').split(',');
+        targets.forEach(t => {
+            const args = [buildPath, '-t', t];
+            Object.keys(options).forEach(op => {
+                if (op === 'target') {
+                    return;
+                }
 
-        build(options);
+                if (options[op] !== false) {
+                    args.push('--' + op);
+                    if (options[op] !== true) {
+                        args.push(options.op);
+                    }
+                }
+            });
+            execa('node', args, {
+                stdout: 'inherit'
+            });
+        });
     });
 
 program
@@ -167,16 +178,29 @@ program
     .description('serve project in development mode')
     .option('-r, --registry <url>', 'Use specified npm registry when installing dependencies (only for npm)')
     .option('-t, --target <target>', 'Build target (swan | h5 | wx, default: swan)')
-    // .option('-d, --dest <dir>', 'output directory (default: dist)')
     .action(cmd => {
-        const start = require('../lib/serve');
         const options = cleanArgs(cmd);
+        const buildPath = path.resolve(__dirname, './mars-serve.js');
 
-        if (!options.registry) {
-            options.registry = defaultConfig.registry;
-        }
+        const targets = (options.target || 'swan').split(',');
+        targets.forEach(t => {
+            const args = [buildPath, '-t', t];
+            Object.keys(options).forEach(op => {
+                if (op === 'target') {
+                    return;
+                }
 
-        start(options);
+                if (options[op] !== false) {
+                    args.push('--' + op);
+                    if (options[op] !== true) {
+                        args.push(options.op);
+                    }
+                }
+            });
+            execa('node', args, {
+                stdout: 'inherit'
+            });
+        });
     });
 
 program
@@ -226,23 +250,4 @@ program.parse(process.argv);
 
 if (!process.argv.slice(2).length) {
     program.outputHelp();
-}
-
-function camelize(str) {
-    return str.replace(/-(\w)/g, (_, c) => c ? c.toUpperCase() : '');
-}
-
-// commander passes the Command object itself as options,
-// extract only actual options into a fresh object.
-function cleanArgs(cmd) {
-    const args = {};
-    cmd.options.forEach(o => {
-        const key = camelize(o.long.replace(/^--/, ''));
-        // if an option is not present and Command has a method with the same name
-        // it should not be copied
-        if (typeof cmd[key] !== 'function' && typeof cmd[key] !== 'undefined') {
-            args[key] = cmd[key];
-        }
-    });
-    return args;
 }
