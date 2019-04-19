@@ -37,6 +37,7 @@ function getMarkNode(options) {
 
         const tag = el.tag;
         const isComp = components && components[tag];
+        el.isComp = isComp;
 
         if (el.attrsMap['v-for'] && !el.iterator1) {
             el.iterator1 = 'index';
@@ -73,6 +74,69 @@ function getMarkNode(options) {
     };
 }
 
+function isComplexExp(exp) {
+    return typeof exp === 'string' ? /^\(.+\)$/.test(exp) : false;
+}
+
+function getFilters(node) {
+    let props = node.attrsList
+        ? node.attrsList.filter(({name, value}) =>
+            name.indexOf(':') >= 0 && (value.indexOf('|') > 0 || isComplexExp(value))
+        )
+        : [];
+    props = props.map(({name}) => name.replace(/^(v-bind)?:/, ''));
+
+    let texts = node.children
+        ? node.children.map(c => {
+            if (c.type !== 2) {
+                return null;
+            }
+            const isComplex = c.tokens.some(token => typeof token === 'object' && isComplexExp(token['@binding']));
+            const isFilter = c.expression.indexOf('_s(_f(') >= 0;
+            return (isComplex || isFilter) ? c.expression : null;
+        })
+        : [];
+
+    let vfor = isComplexExp(node.for) ? node.for : undefined;
+    let vif = isComplexExp(node.if) ? node.if : undefined;
+    let velseif = isComplexExp(node.elseif) ? node.elseif : undefined;
+
+    const hasFilter = (props.length + texts.filter(t => t).length) > 0;
+    return (hasFilter || vfor || vif || velseif)
+        ? {
+            p: props,
+            t: texts,
+            vfor,
+            vif,
+            velseif
+        }
+        : null;
+}
+
+function getGenData(options) {
+    let filterIdCounter = 0;
+    return function markNode(el, options) {
+        let filters = getFilters(el);
+        if (filters) {
+            const fid = filterIdCounter++;
+            el._fid = fid;
+            el._filters = filters;
+            let data = [
+                `fid: ${fid}`,
+                `t: [${filters.t.join(',')}]`,
+                `p: ${JSON.stringify(filters.p)}`
+            ];
+            filters.vfor && data.push(`for: ${filters.vfor}`);
+            filters.velseif && data.push('if: true');
+            filters.vif && data.push('if: true');
+            const dataStr = `f: { ${data.join(', ')} },`;
+            return dataStr;
+        }
+        return '';
+    };
+}
+
+
 function getPostTrans(options) {
     return function postTrans(node) {
         // remove all directives
@@ -93,7 +157,8 @@ module.exports = function mark(source, options) {
         modules: [
             {
                 transformNode: getMarkNode(options),
-                postTransformNode: getPostTrans(options)
+                postTransformNode: getPostTrans(options),
+                genData: getGenData(options)
             }
         ]
     });
