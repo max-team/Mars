@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.20](https://github.com/max-team/Mars/compare/@marsjs/cli@0.1.19...@marsjs/cli@0.1.20) (2019-04-19)
+
+
+### Features
+
+* cli build and serve support multi target ([1d7edfb](https://github.com/max-team/Mars/commit/1d7edfb))
+
+
+
+
+
 ## [0.1.19](https://github.com/max-team/Mars/compare/@marsjs/cli@0.1.18...@marsjs/cli@0.1.19) (2019-04-17)
 
 

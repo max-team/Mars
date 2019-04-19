@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.12](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.11...@marsjs/build@0.2.12) (2019-04-19)
+
+
+### Features
+
+* **core & build:** support filters and complex exporession ([086e848](https://github.com/max-team/Mars/commit/086e848))
+* **core & build:** support filters and complex exporession ([2e13b5e](https://github.com/max-team/Mars/commit/2e13b5e))
+
+
+
+
+
 ## [0.2.11](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.10...@marsjs/build@0.2.11) (2019-04-17)
 
 
