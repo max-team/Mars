@@ -21,4 +21,10 @@ mars serve [--target, -t swan (默认) | wx | h5]
 # 构建模式
 mars build [--target, -t swan (默认) | wx | h5]
 
+# 更新所有 marsjs 相关依赖
+# 默认相当于 npm update。-f 时，强制更新到最新版本
+mars update [--registry, -r url] [-force, -f]
+
+# 获取当前环境信息
+mars info
 ```
