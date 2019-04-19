@@ -8,10 +8,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-* **core & build:** support filters and complex exporession ([086e848](https://github.com/max-team/Mars/commit/086e848))
-* **core & build:** support filters and complex exporession ([2e13b5e](https://github.com/max-team/Mars/commit/2e13b5e))
-
-
+* **core & build:** support filters and complex exporession ([2e13b5e](https://github.com/max-team/Mars/commit/2e13b5e), [086e848](https://github.com/max-team/Mars/commit/086e848))
 
 
 

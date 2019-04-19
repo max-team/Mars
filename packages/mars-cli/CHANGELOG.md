@@ -8,7 +8,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-* cli build and serve support multi target ([1d7edfb](https://github.com/max-team/Mars/commit/1d7edfb))
+* **cli:** cli build and serve support multi target ([1d7edfb](https://github.com/max-team/Mars/commit/1d7edfb))
 
 
 
@@ -28,7 +28,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
-* move envinfo to mars-cli ([7b10b0c](https://github.com/max-team/Mars/commit/7b10b0c))
+* **cli:** move envinfo to mars-cli ([7b10b0c](https://github.com/max-team/Mars/commit/7b10b0c))
 
 
 ## [0.1.17](https://github.com/max-team/Mars/compare/@marsjs/cli@0.1.14...@marsjs/cli@0.1.17) (2019-04-12)

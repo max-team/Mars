@@ -12,8 +12,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
-
-
 ## [0.2.5](https://github.com/max-team/Mars/compare/@marsjs/core@0.2.4...@marsjs/core@0.2.5) (2019-04-17)
 
 

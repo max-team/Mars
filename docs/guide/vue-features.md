@@ -2,12 +2,31 @@
 
 ## 模板语法
 
-- 支持插值（暂不支持v-html、不支持复杂表达式，开发中）
+- 支持插值（暂不支持v-html）
 - 支持 v- 指令（某些修饰符不支持，参考指令文档）
 - 支持缩写
 
-**注意**：表达式只支持 [swan 支持的表达式](https://smartprogram.baidu.com/docs/develop/framework/view_data/)，不支持 swan `{= =}` 双向绑定和 Filter 过滤器
+::: warning
+`build@0.2.12` `core@0.2.6` 起支持过滤器（filters）和复杂表达式（包括函数调用），之前的版本只支持 [swan 支持的表达式](https://smartprogram.baidu.com/docs/develop/framework/view_data/)。
 
+为了区分简单表达式，使用复杂表达式需要在表达式最外层加上 `()`，如下示例。
+
+filters 可以在插值和 props 中使用，复杂表达式可以在插值、props、v-if、v-else-if、v-for 中使用。
+:::
+
+
+```html
+{{( Math.random() )}}  // => 0.21836891324389485
+{{ btnText | capitalize}}
+
+<view l="0,2,0" :test="reverse(btnText) | capitalize">
+
+<view v-if="(Math.random() > 0.5)">v-if="Math.random() > 0.5"</view>
+<view v-else-if="(Math.random() > 0.5)">v-else-if="(Math.random() > 0.5)"</view>
+<view v-else>v-else</view>
+
+<view v-for="item in (split(btnText))">{{item}}</view>
+```
 
 ## 计算属性
 
@@ -71,9 +90,13 @@
 
 ## 可复用性 & 组合
 
-- 插件和过滤器：暂不支持（开发中）
+- 过滤器：支持
 - mixin：暂不支持（计划中）
-- 自定义指令、渲染函数、JSX：不支持
+- 插件、自定义指令、渲染函数、JSX：不支持
+
+::: warning
+`build@0.2.12` `core@0.2.6` 起支持过滤器（filters），暂时只支持局部定义过滤器。
+:::
 
 ## 规模化
 

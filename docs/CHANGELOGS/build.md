@@ -1,5 +1,14 @@
 # @marsjs/build
 
+## [0.2.12](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.11...@marsjs/build@0.2.12) (2019-04-19)
+
+
+### Features
+
+* **core & build:** 支持过滤器和复杂表达式 ([2e13b5e](https://github.com/max-team/Mars/commit/2e13b5e), [086e848](https://github.com/max-team/Mars/commit/086e848))
+
+
+
 ## [0.2.11](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.10...@marsjs/build@0.2.11) (2019-04-17)
 
 
@@ -13,7 +22,7 @@
 
 ### Features
 
-* **core & build:** support skipLaterCalc for computed ([6dcf61c](https://github.com/max-team/Mars/commit/6dcf61c))
+* **core & build:** 支持跳过实例更新时跳过 computed 通过 properties 传给小程序 ([6dcf61c](https://github.com/max-team/Mars/commit/6dcf61c))
 
 
 ## [0.2.9](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.8...@marsjs/build@0.2.9) (2019-04-17)
