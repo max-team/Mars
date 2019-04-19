@@ -71,6 +71,14 @@ function getMarkNode(options) {
                 el.attrsMap[`:${dir}`] = value;
             }
         });
+
+        // plain el will skip genData
+        // mark el with ComplexExp not plain to make filters data generated
+        if (el.attrsList.length === 0
+            && (isComplexExp(el.for) || isComplexExp(el.if) || isComplexExp(el.elseif))
+        ) {
+            el.plain = false;
+        }
     };
 }
 
