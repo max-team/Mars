@@ -1,5 +1,14 @@
 # @marsjs/core
 
+## [0.2.7](https://github.com/max-team/Mars/compare/@marsjs/core@0.2.6...@marsjs/core@0.2.7) (2019-04-22)
+
+
+### Features
+
+* **core & build: (require build@0.2.13+)** 微信小程序支持 filter 和复杂表达式 ([9fdb951](https://github.com/max-team/Mars/commit/9fdb951))
+
+
+
 ## [0.2.6](https://github.com/max-team/Mars/compare/@marsjs/core@0.2.5...@marsjs/core@0.2.6) (2019-04-19)
 
 

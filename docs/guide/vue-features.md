@@ -7,7 +7,7 @@
 - 支持缩写
 
 ::: warning
-`build@0.2.12` `core@0.2.6` 起支持过滤器（filters）和复杂表达式（包括函数调用），之前的版本只支持 [swan 支持的表达式](https://smartprogram.baidu.com/docs/develop/framework/view_data/)。
+`build@0.2.13` `core@0.2.7` 起支持过滤器（filters）和复杂表达式（包括函数调用），之前的版本只支持 [swan 支持的表达式](https://smartprogram.baidu.com/docs/develop/framework/view_data/)。
 
 为了区分简单表达式，使用复杂表达式需要在表达式最外层加上 `()`，如下示例。
 
