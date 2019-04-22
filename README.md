@@ -50,6 +50,10 @@ mars build [--target, -t swan (default) | wx | h5]
 
 ## Contributing & Discussion
 
-请参考 [如何贡献](./CONTRIBUTING.md)
+官方微信群
+
+![](./docs/assets/wechat-1.png)
+
+贡献请参考 [如何贡献](./CONTRIBUTING.md)
 
 欢迎提 Issue 和 PR。
