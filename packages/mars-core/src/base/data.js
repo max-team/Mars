@@ -34,7 +34,6 @@ export function setData(vm, $mp, isRoot = false) {
     }
     let data = {};
     data = getFiltersData(vm, $mp, data);
-    console.log('===getFiltersData', data);
 
     if (!vm.__swan_inited__) {
         vm.__swan_inited__ = true;
