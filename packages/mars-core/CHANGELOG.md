@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.7](https://github.com/max-team/Mars/compare/@marsjs/core@0.2.6...@marsjs/core@0.2.7) (2019-04-22)
+
+
+### Features
+
+* **core & build:** 微信小程序支持 filter 和复杂表达式 ([9fdb951](https://github.com/max-team/Mars/commit/9fdb951))
+
+
+
+
+
 ## [0.2.6](https://github.com/max-team/Mars/compare/@marsjs/core@0.2.5...@marsjs/core@0.2.6) (2019-04-19)
 
 
