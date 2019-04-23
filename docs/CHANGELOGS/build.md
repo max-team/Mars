@@ -1,5 +1,14 @@
 # @marsjs/build
 
+## [0.2.14](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.13...@marsjs/build@0.2.14) (2019-04-23)
+
+
+### Features
+
+* **build:** H5 getCurrentPages 支持返回历史页面栈信息 ([#39](https://github.com/max-team/Mars/issues/39)) ([a327656](https://github.com/max-team/Mars/commit/a327656))
+
+
+
 ## [0.2.13](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.12...@marsjs/build@0.2.13) (2019-04-22)
 
 
