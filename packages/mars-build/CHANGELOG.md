@@ -8,9 +8,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-* **update api:** add history list to global api getCurrentPages ([#39](https://github.com/max-team/Mars/issues/39)) ([a327656](https://github.com/max-team/Mars/commit/a327656))
-
-
+* **build:** H5 getCurrentPages 支持返回历史页面栈信息 ([#39](https://github.com/max-team/Mars/issues/39)) ([a327656](https://github.com/max-team/Mars/commit/a327656))
 
 
 
