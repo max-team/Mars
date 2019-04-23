@@ -24,11 +24,6 @@ router.beforeEach(function (to, from, next) {
         to.query._ = guid();
     }
 
-    Vue.prototype.currentRoute = [{
-        route: to.path.replace(/^\//, ''),
-        uri: to.path.replace(/^\//, ''),
-        options: to.query
-    }];
     let toPath = decodeURI(to.fullPath); // 兼容 vue-router 浏览器前进/返回时的 decodeURI操作
     let fromPath = decodeURI(from.fullPath);
     const browserHistoryArr = browserHistory.list;
@@ -77,7 +72,10 @@ router.beforeEach(function (to, from, next) {
             || -1 === browserHistoryIndex
             || browserHistoryIndex !== browserHistoryLength - 1) {
             browserHistoryArr.push({
-                path: toPath
+                path: toPath,
+                route: to.path.replace(/^\//, ''),
+                uri: to.path.replace(/^\//, ''),
+                options: to.query
             });
         }
     }
@@ -86,6 +84,7 @@ router.beforeEach(function (to, from, next) {
     //     browserHistoryArr = [];
     //     browserHistoryArr.push({path: to.fullPath});
     // }
+    Vue.prototype.currentRoute = browserHistoryArr;
     browserHistory.set(browserHistoryArr);
     router.app.$nextTick(() => {
         const browserHistoryArr = browserHistory.list;
