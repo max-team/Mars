@@ -2,12 +2,31 @@
 
 ## 模板语法
 
-- 支持插值（暂不支持v-html、不支持复杂表达式，开发中）
+- 支持插值（暂不支持v-html）
 - 支持 v- 指令（某些修饰符不支持，参考指令文档）
 - 支持缩写
 
-**注意**：表达式只支持 [swan 支持的表达式](https://smartprogram.baidu.com/docs/develop/framework/view_data/)，不支持 swan `{= =}` 双向绑定和 Filter 过滤器
+::: warning
+`build@0.2.13` `core@0.2.7` 起支持过滤器（filters）和复杂表达式（包括函数调用），之前的版本只支持 [swan 支持的表达式](https://smartprogram.baidu.com/docs/develop/framework/view_data/)。
 
+为了区分简单表达式，使用复杂表达式需要在表达式最外层加上 `()`，如下示例。
+
+filters 可以在插值和 props 中使用，复杂表达式可以在插值、props、v-if、v-else-if、v-for 中使用。
+:::
+
+
+```html
+{{( Math.random() )}}  // => 0.21836891324389485
+{{ btnText | capitalize}}
+
+<view l="0,2,0" :test="reverse(btnText) | capitalize">
+
+<view v-if="(Math.random() > 0.5)">v-if="Math.random() > 0.5"</view>
+<view v-else-if="(Math.random() > 0.5)">v-else-if="(Math.random() > 0.5)"</view>
+<view v-else>v-else</view>
+
+<view v-for="item in (split(btnText))">{{item}}</view>
+```
 
 ## 计算属性
 
@@ -61,19 +80,22 @@
 - data：需要是函数（**注意**：不支持在 data 中获取 props 的值作为初始值，首次渲染会获取不到）
 - props：支持
 - slot：支持
-- scoped-slot：支持（基于 v2.5.21 语法）
+- scoped-slot：部分支持（基于 v2.5.21 语法，swan 和 H5 支持，wx 平台暂不支持）
 - 自定义事件：支持
 - refs：支持通过 refs 访问组件实例（暂不支持 refs 访问视图元素）
 - 动态组件 & 异步组件：不支持
 - **注意**：由于小程序组件渲染不能在渲染时设置数据，目前只有 data 函数返回的默认值/props的值/此时计算出的计算属性值 作用于组件的首次渲染，其他的数据更新都会在组件首次渲染完成后再更新
 
 
-
 ## 可复用性 & 组合
 
-- 插件和过滤器：暂不支持（开发中）
+- 过滤器：支持
 - mixin：暂不支持（计划中）
-- 自定义指令、渲染函数、JSX：不支持
+- 插件、自定义指令、渲染函数、JSX：不支持
+
+::: warning
+`build@0.2.12` `core@0.2.6` 起支持过滤器（filters），暂时只支持局部定义过滤器。
+:::
 
 ## 规模化
 

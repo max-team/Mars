@@ -5,5 +5,6 @@
 
 export default {
     performance: false,
-    debug: false
+    debug: false,
+    framework: process.env.MARS_CONFIG_FRAMEWORK
 };

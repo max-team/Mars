@@ -4,14 +4,16 @@
  */
 
 /* eslint-disable fecs-camelcase */
-
 /* eslint-disable babel/new-cap */
 /* eslint-disable no-console */
-
 /* eslint-disable fecs-min-vars-per-destructure */
+
 import {mark, measure} from '../helper/perf';
+import deepEqual from '../helper/deepEqual';
 import config from '../config';
 import {getMpUpdatedCallbacks} from './api/mpNextTick';
+
+const {framework = {}} = config;
 
 function cleanKeyPath(vm) {
     if (vm.__mpKeyPath) {
@@ -30,16 +32,14 @@ export function setData(vm, $mp, isRoot = false) {
         // const perfTagEnd = `${this.route}-end`;
         mark(perfTagStart);
     }
-
     let data = {};
+    data = getFiltersData(vm, $mp, data);
+
     if (!vm.__swan_inited__) {
         vm.__swan_inited__ = true;
-
-        let initData = {
-            __inited__: true
-        };
-        isRoot && (initData.rootUID = $mp.__uid__);
-        data = getData(vm, initData);
+        data.__inited__ = true;
+        isRoot && (data.rootUID = $mp.__uid__);
+        data = getData(vm, data);
         if (isRoot) {
             const rootComputed = getAllComputed(vm);
             data = Object.assign(data, {
@@ -56,10 +56,9 @@ export function setData(vm, $mp, isRoot = false) {
         const computed = getChangedComputed(vm);
         data = Object.assign(data, computed, changed);
         // 如果后续数据更新 需要计算新增的实例上的 computed 值
-        if (Object.keys(data).length > 0) {
-            // console.log('[pref start] getAllComputed');
+        const skipLaterCalc = framework.computed && framework.computed.skipLaterCalc;
+        if (!skipLaterCalc && Object.keys(data).length > 0) {
             const allComputed = getAllComputed(vm);
-            // console.log('[pref end] getAllComputed');
             data = Object.keys(allComputed).length > 0
                 ? Object.assign(data, {
                     [isRoot ? 'rootComputed' : 'compComputed']: allComputed
@@ -106,6 +105,107 @@ export function setData(vm, $mp, isRoot = false) {
             });
         }
     }
+}
+
+function compareAndSetData(k, val, old, key, data) {
+    if (!deepEqual(val, old)) {
+        data[`_f_.${k}.` + key] = val;
+    }
+}
+
+function getFiltersData(vm, $mp, data = {}) {
+    /*
+    optimised filter data
+    init:
+    {
+        _f_: {
+            0: {
+                _if: true,
+                _t: ['Hello'],
+                _p: {
+                    test: 'text'
+                }
+            }
+        }
+    }
+    update:
+    {
+        '_f_.0._if': false,
+        '_f_.0._t.0: 'Olleh',
+        '_f_.0._p.test: 'test',
+        '_f_.1': {
+            _t: [],
+            _p: {}
+        }
+    } */
+
+    if (vm._fData) {
+        const originFData = $mp.data._f_;
+        if (!originFData) {
+            data._f_ = {};
+        }
+        Object.keys(vm._fData).forEach(k => {
+            // if vnode equals null, means its vif equals false
+            let vnode = vm._fData[k];
+            const vnodeFData = vnode
+                ? (vnode.data && vnode.data.f || {})
+                : {if: false};
+
+            const {t: texts, p: props, for: _for} = vnodeFData;
+            const _if = !!vnodeFData.if;
+            let propsData = {};
+            if (vnode && props) {
+                propsData = vnode.componentOptions
+                    ? vnode.componentOptions.propsData
+                    : (vnode.data && vnode.data.attrs);
+            }
+
+            const curData = originFData && originFData[k];
+            if (!curData) {
+                let kData = {};
+                kData = {
+                    _if,
+                    _for
+                };
+                if (props) {
+                    kData._p = kData._p || {};
+                    props.forEach(key => {
+                        kData._p[key] = propsData[key];
+                    });
+                }
+                if (texts) {
+                    kData._t = kData._t || {};
+                    texts.forEach((t, index) => {
+                        kData._t[index] = t + '';
+                    });
+                }
+                if (originFData) {
+                    const key = `_f_.${k}`;
+                    data[key] = kData;
+                }
+                else {
+                    data._f_[k] = kData;
+                }
+            }
+            else {
+                compareAndSetData(k, _if, curData._if, '_if', data);
+                compareAndSetData(k, _for, curData._for, '_for', data);
+                // compare texts
+                if (texts) {
+                    texts.forEach((t, index) => {
+                        compareAndSetData(k, t + '', curData._t[index], `_t.${index}`, data);
+                    });
+                }
+                // compare props
+                if (props) {
+                    props.forEach(key => {
+                        compareAndSetData(k, propsData[key], curData._p[key], `_p.${key}`, data);
+                    });
+                }
+            }
+        });
+    }
+    return data;
 }
 
 function getData(vm, data = {}) {
@@ -165,7 +265,6 @@ function getChangedData(vm, _data, keyPath = '', ret = {}) {
             else if (data instanceof Object) {
                 getChangedData(vm, data, path, ret);
             }
-
         });
     }
     return ret;

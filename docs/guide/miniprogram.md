@@ -164,6 +164,60 @@ export default {
 框架会通过 Vue 运行时将数据更新同步到小程序，不能直接通过小程序实例调用 `setData`，会导致数据不一致。
 :::
 
+## 使用小程序组件和页面
+
+支持在 mars 项目中使用小程序的组件和页面，具体方法为：
+
+### 使用小程序组件
+
+直接在 config 中配置 usingComponents 来使用,**不需要加文件名后缀**：
+
+```html
+<script>
+export default {
+    config: {
+        usingComponents: {
+            'a-comp': '../../path/to/components'
+        }
+    }
+};
+
+</script>
+```
+
+### 使用小程序页面
+
+在 app.vue 中引入时，需要添加 .swan、.mp 后缀：
+
+```html
+<script>
+export default {
+    config: {
+        pages: [
+            'pages/home/index',
+            'pages/land/index',
+            'pages/swan/index.swan'
+        ],
+        tabBar: {
+            list: [{
+                pagePath: 'pages/home/index',
+                text: 'TabA'
+            }, {
+                pagePath: 'pages/land/index',
+                text: 'TabB'
+            }, {
+                pagePath: 'pages/swan/index.swan',
+                text: 'Swan'
+            }]
+        }
+    }
+};
+</script>
+```
+::: tip
+当生成 H5 项目时，这些组件和页面会被忽略，需要自行在业务中进行处理。
+:::
+
 ## 生命周期和事件方法
 
 Mars 支持完整的 Vue 生命周期和小程序生命周期及事件方法（部分在 H5 暂未支持）详见 [多端适配 - 生命周期](./platforms.html#生命周期和事件方法)。

@@ -1,7 +1,8 @@
 # Referenced from https://github.com/github/gitignore/blob/master/Node.gitignore
 
 # npm lock file
-package-lock.json
+# package-lock.json
+packages/*/package-lock.json
 
 # Logs
 logs

@@ -28,7 +28,7 @@ mars build [--target, -t swan (default) | wx | h5]
 ```
 
 ## 文档教程
-[https://max-team.github.io/mars/](https://max-team.github.io/mars/)
+[https://max-team.github.io/Mars/](https://max-team.github.io/Mars/)
 
 ## 案例
 
@@ -45,8 +45,16 @@ mars build [--target, -t swan (default) | wx | h5]
 |-|-|-|-|
 | ![](./docs/assets/qr-baipin.png) | ![](./docs/assets/qr-huabao.png) | ![](./docs/assets/qr-fuli.png) | ![](./docs/assets/qr-zuoye.png) |
 
-## CHANGELOG
-[CHANGELOG](./docs/CHANGELOG.md)
+## Packages & CHANGELOGs
+
+| package | version | CHANGELOG |
+|-|-|-|
+| @marsjs/cli | [![](https://img.shields.io/npm/v/@marsjs/cli.svg)](https://www.npmjs.com/package/@marsjs/cli) | [CHANGELOG](https://max-team.github.io/Mars/CHANGELOGS/cli.html) |
+| @marsjs/cli-template | [![](https://img.shields.io/npm/v/@marsjs/cli-template.svg)](https://www.npmjs.com/package/@marsjs/cli-template) | [CHANGELOG](https://max-team.github.io/Mars/CHANGELOGS/cli-template.html) |
+| @marsjs/core | [![](https://img.shields.io/npm/v/@marsjs/core.svg)](https://www.npmjs.com/package/@marsjs/core) | [CHANGELOG](https://max-team.github.io/Mars/CHANGELOGS/core.html) |
+| @marsjs/build | [![](https://img.shields.io/npm/v/@marsjs/build.svg)](https://www.npmjs.com/package/@marsjs/build) | [CHANGELOG](https://max-team.github.io/Mars/CHANGELOGS/build.html) |
+| @marsjs/api | [![](https://img.shields.io/npm/v/@marsjs/api.svg)](https://www.npmjs.com/package/@marsjs/api) | [CHANGELOG](https://max-team.github.io/Mars/CHANGELOGS/api.html) |
+| @marsjs/components | [![](https://img.shields.io/npm/v/@marsjs/components.svg)](https://www.npmjs.com/package/@marsjs/components) | |
 
 ## Contributing & Discussion
 

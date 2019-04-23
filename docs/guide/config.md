@@ -120,7 +120,7 @@ module.exports = function (target) {
         },
         postprocessors: {
             postcss: {
-                extnames: ['less', 'sass', 'scss', 'stylus', 'styl'],
+                extnames: ['css', 'less', 'sass', 'scss', 'stylus', 'styl'],
                 options: {
                     plugins: [require('autoprefixer')]
                 }

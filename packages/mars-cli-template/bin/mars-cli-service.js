@@ -38,6 +38,7 @@ const command = args._[0];
 
 const context = path.resolve(process.cwd(), args.path);
 // default MARS_CLI_OPTIONS when run mars-cli-service directly
+process.env.MARS_CLI_TARGET = process.env.MARS_CLI_TARGET || 'h5';
 process.env.MARS_CLI_OPTIONS = process.env.MARS_CLI_OPTIONS || JSON.stringify({
     target: 'h5'
 });

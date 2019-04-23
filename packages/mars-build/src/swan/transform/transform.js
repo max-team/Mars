@@ -89,6 +89,42 @@ function processScopedSlots(node, options) {
     });
 }
 
+function transFilters(node, options) {
+    // filters 的处理
+    /* eslint-disable fecs-camelcase */
+    const {_fid: fid, _filters: filters} = node;
+    /* eslint-enable fecs-camelcase */
+    if (fid !== undefined) {
+        filters.p.forEach(name => {
+            const val = `_f_[${fid}]._p.${name}`;
+            node.attrsMap['v-bind:' + name] = val;
+        });
+
+        filters.t.forEach((item, index) => {
+            if (item && node.children && node.children[index]) {
+                let child = node.children[index];
+                let token = `_f_[${fid}]._t[${index}]`;
+                child.tokens = [{'@binding': token}];
+                child.text = `{{ ${token} }}`;
+            }
+        });
+
+        if (filters.vfor) {
+            node.for = `_f_[${fid}]._for`;
+        }
+
+        if (filters.vif) {
+            node.attrsMap['v-if'] = `_f_[${fid}]._if`;
+        }
+
+        if (filters.velseif) {
+            node.attrsMap['v-else-if'] = `_f_[${fid}]._if`;
+        }
+    }
+
+    return node;
+}
+
 const nodeProcesser = {
     preProcess(nodeType, node, options) {
         // 格式化 attrsMap
@@ -133,6 +169,7 @@ const nodeProcesser = {
             changeSlotPropsBind(node, options);
         }
 
+        node = transFilters(node, options);
         node.attrsMap = transAttrs(node, options);
         processChildren(node, options);
 

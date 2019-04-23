@@ -1,6 +1,6 @@
 {
     "name": "@marsjs/build",
-    "version": "0.2.6",
+    "version": "0.2.13",
     "scripts": {
         "test": "jest --coverage"
     },

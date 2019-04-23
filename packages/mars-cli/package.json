@@ -1,6 +1,6 @@
 {
   "name": "@marsjs/cli",
-  "version": "0.1.17",
+  "version": "0.1.20",
   "bin": {
     "mars": "./bin/mars.js"
   },
@@ -9,14 +9,14 @@
     "@vue/cli-shared-utils": "^3.5.1",
     "chalk": "^2.4.1",
     "commander": "^2.16.0",
+    "envinfo": "^7.1.0",
     "execa": "^1.0.0",
     "fs-extra": "^7.0.1",
     "globby": "^9.0.0",
     "inquirer": "^6.2.2",
     "minimist": "^1.2.0",
     "semver": "^5.5.0",
-    "slash": "^2.0.0",
-    "envinfo": "^7.1.0"
+    "slash": "^2.0.0"
   },
   "engines": {
     "node": ">=8.9"
