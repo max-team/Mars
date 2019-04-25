@@ -7,7 +7,7 @@
 /* eslint-disable no-native-reassign */
 /* eslint-disable fecs-min-vars-per-destructure */
 
-const {compile: compileTemplate} = require('vue-template-compiler');
+const {compile: compileTemplate} = require('vue-template-compiler/build');
 const transpile = require('vue-template-es2015-compiler');
 
 function getIterator(node) {
