@@ -41,5 +41,6 @@ module.exports = {
     'map': `${prefixComp}map`,
     // 画布
     'canvas': `${prefixComp}canvas`,
-    'web-view': `${prefixComp}web-view`
+    'web-view': `${prefixComp}web-view`,
+    'block': 'template'
 };

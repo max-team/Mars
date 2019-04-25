@@ -65,10 +65,10 @@ const COMP_LIFE_MAP_VUE = {
         type: 'pageLifetimes'
     }
 };
-const APP_PAOGE_LIFE = {
-    onLaunch: true,
-    onShow: true,
-    onHide: true
+const APP_PAOGE_LIFE_MAP_VUE = {
+    onLaunch: 'beforeMount',
+    onShow: 'mounted',
+    onHide: 'destroyed'
     // onLoad: true,
     // onReady: true,
     // onUnload: true
@@ -117,6 +117,10 @@ function getPlainObjectNodeValue(node, path, t) {
 const Property = (t, options) => {
     return {
         Property(path, state) {
+            if (PAGE_LIFECYCLE_HOOKS[path.node.key.name]) {
+                path.remove();
+                return;
+            }
             if (!(
                 t.isIdentifier(path.node.key, {
                     name: 'config'
@@ -202,13 +206,6 @@ function mapSwanLifeTime(properties, t, lifeKey, lifeItem, lifeMapKey, options) 
             ? lifeItem.value.params[0] && lifeItem.value.params[0].name || 'option'
             : 'option';
 
-    // 获取 app.vue 里的生命周期函数
-    APP_PAOGE_LIFE[lifeKey] && options.baseOptions && (options.baseOptions.pageLifeApi.push({
-        key: lifeKey,
-        params: timeMethodParamName,
-        body: timeMethodBlock
-    }));
-
     // 生成匿名函数调用
     const anonymousFuncExpression = t.expressionStatement(
         t.callExpression(
@@ -243,9 +240,17 @@ function mapSwanLifeTime(properties, t, lifeKey, lifeItem, lifeMapKey, options) 
         );
     let originLifeItem = properties.find(item => item.key.name === lifeMapKey);
     if (originLifeItem) {
+        // 获取 originLifeItem 不同type下的body
+        let originLifeItemBody = null;
+        originLifeItemBody = originLifeItem.type === 'ObjectMethod'
+        ? originLifeItem.body.body
+        : originLifeItem.type === 'ObjectProperty'
+            ? originLifeItem.value.body.body
+            : null;
+
         lifeMapKey !== 'beforeMount' // onLoad 在beforeMount之前执行
-            ? originLifeItem.body.body.push(lifeHookExpression)
-            : originLifeItem.body.body.unshift(lifeHookExpression);
+            ? originLifeItemBody.push(lifeHookExpression)
+            : originLifeItemBody.unshift(lifeHookExpression);
     }
     else {
         properties.push(t.objectMethod(
@@ -273,14 +278,7 @@ module.exports = function getVisitor(options = {}) {
                     options.baseOptions && (options.baseOptions.config = {});
                     options.baseOptions && (options.baseOptions.components = {});
                     options.baseOptions && (options.baseOptions.enableConfig = {});
-                    options.baseOptions && (options.baseOptions.pageLifeApi = []);
-                    isApp && options.baseOptions && (options.baseOptions.appApi = {});
-                    isApp && properties.forEach(item => {
-                        if (item.key.name !== 'config') {
-                            options.baseOptions.appApi[item.key.name] = item;
-                        }
 
-                    });
                     // 处理 onPullDownRefresh 到 methods
                     function dealSwanPageApi(apiName) {
                         let apiBody = properties.find(item => item.key.name === apiName);
@@ -330,7 +328,7 @@ module.exports = function getVisitor(options = {}) {
                             return;
                         }
 
-                        let lifeMapKey = PAGE_LIFE_MAP_VUE[key];
+                        let lifeMapKey = isApp ? APP_PAOGE_LIFE_MAP_VUE[key] : PAGE_LIFE_MAP_VUE[key];
                         mapSwanLifeTime(properties, t, key, lifeItem, lifeMapKey, options);
                     });
 

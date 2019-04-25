@@ -7,7 +7,7 @@
 
 module.exports = function getVisitor(options = {}) {
     return ({types: t}) => {
-        const {routes, componentSet, pagesInfo, window, mars, appApi} = options;
+        const {routes, componentSet, pagesInfo, window, mars} = options;
         return {
             visitor: {
                 // 处理main.js 里的 render函数参数
@@ -125,18 +125,6 @@ module.exports = function getVisitor(options = {}) {
                             ));
                         }
                     }
-                },
-                VariableDeclaration(path, state) {
-                    if (Object.keys(appApi).length === 0) {
-                        return;
-                    }
-                    let declarationItem = path.node.declarations[0];
-                    if (!(declarationItem && declarationItem.id.name === 'marsAppData')) {
-                        return;
-                    }
-                    Object.keys(appApi).forEach(key => {
-                        appApi[key] && declarationItem.init.properties.push(appApi[key]);
-                    });
                 },
                 Program: {
                     // 在 exit 时才能拿到 file.config

@@ -5,13 +5,14 @@
 
 /* globals Vue */
 
-import App from './App.vue';
+import App from './MarsApp.vue';
 import router from './router.js';
-import initGlobalApi from './globalApi';
+import initGlobalApi from './globalApi.js';
 import './mars-base.css'; // 引入公共样式
+import appApi from './appApi.js';
 Vue.config.productionTip = false;
 
-let marsAppData = {};
+let marsAppData = appApi;
 window.getApp = function () {
     return marsAppData;
 };

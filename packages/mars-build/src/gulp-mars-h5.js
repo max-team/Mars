@@ -4,8 +4,11 @@
  */
 
 /* eslint-disable fecs-no-require */
+
 /* eslint-disable no-native-reassign */
+
 /* eslint-disable fecs-min-vars-per-destructure */
+
 /* eslint-disable fecs-camelcase */
 const through = require('through2');
 const gutil = require('gulp-util');
@@ -27,7 +30,8 @@ const {
     compileMain,
     compileApp,
     compileComponents,
-    compileApi
+    compileApi,
+    compileGetApp
 } = require('./compiler/script/script-h5');
 const delToVueTag = require('./h5/transform/tag');
 const generate = require('./compiler/template/generate');
@@ -35,15 +39,14 @@ const generate = require('./compiler/template/generate');
 let componentSet = {}; // 小程序使用的组件集合
 let mainOptions = {}; // 配置集合
 let pagesInfo = []; // 页面title集合
-let appApi = {}; // app.vue api 集合
 
 Vinyl.prototype.writeFileSync = function () {
     if (!this.contents || !this.path) {
         throw new Error('Vinyl.prototype.writeFileSync() requires path and contents to write');
     }
+
     fs.writeFileSync(this.path, this.contents.toString());
 };
-
 
 function compile(file, opt) {
     const rPath = path.relative(file.base, file.path);
@@ -76,6 +79,7 @@ function compile(file, opt) {
     // 处理 template
     let templateRet = null;
     let templateFile = null;
+    let templateCode = '';
     if (template) {
         templateRet = vueCompiler.compile(template.content, {
             compileOptions: {
@@ -88,19 +92,20 @@ function compile(file, opt) {
                     if (!el.parent) {
                         el.attrsMap.style = `backgroundColor: ${config.backgroundColor || null};`;
                     }
+
                     componentSet = Object.assign(componentSet, basicCompMap);
                 }
             }]
         });
-        let code = generate(templateRet.ast, {
+        templateCode = generate(templateRet.ast, {
             target: 'h5'
         });
-        templateFile = new Vinyl({
-            path: fPath + '.vue',
-            contents: new Buffer(code || '')
-        });
-
     }
+
+    templateFile = new Vinyl({
+        path: `${fPath}.vue`,
+        contents: new Buffer(templateCode || '')
+    });
 
     // 处理 app.vue 生成 对应 router.js ，处理框架入口App.vue，并合并app.vue的生命周期
     if (isApp) {
@@ -112,34 +117,13 @@ function compile(file, opt) {
         });
         fs.writeFileSync(opt.dest + '/router.js', routerContent);
 
-        // 处理框架入口文件APP.vue，合并app.vue中的生命周期
-        let appContent = fs.readFileSync(__dirname + '/h5/template/App.vue');
-        const {
-            template: appTemplate,
-            script: appScript,
-            styles: appStyle
-        } = vueCompiler.parseComponent(appContent.toString(), {});
+        // 处理入口文件app.vue
+        const customAppApi = compileApp(scriptRet);
 
-        // 替换 appStyle 中的 POSTCSS_PX2UNITS_COMMENT 注释
-        const buildConfig = opt._config;
-        const px2units = buildConfig.modules.postcss.px2units;
-        const px2unitsComment = (px2units && px2units.comment) || 'no';
-        let appStyleContent = appStyle && appStyle[0].content || '';
-        appStyleContent = appStyleContent.replace(/POSTCSS_PX2UNITS_COMMENT/g, px2unitsComment);
-
-        appContent = compileApp({
-            appStyle: styles && styles[0] // 用户app.vue中的style
-                ? {
-                    content: styles[0].content,
-                    attrs: styles[0].attrs.lang ? styles[0].attrs.lang : ''
-                }
-                : {},
-            script: appScript && appScript.content || '',
-            appScriptApi: scriptRet.pageLifeApi, // 用户app.vue中的生命周期
-            template: appTemplate && appTemplate.content || '',
-            style: appStyleContent // 入口文件APP.vue 自带style
-        });
-        fs.writeFileSync(opt.dest + '/App.vue', appContent);
+        // 处理 getApp appApi
+        let appApiContent = fs.readFileSync(__dirname + '/h5/template/appApi.js');
+        appApiContent = compileGetApp(appApiContent, customAppApi);
+        fs.writeFileSync(opt.dest + '/appApi.js', appApiContent);
 
         // 处理 globalApi
         let apiPluginContent = fs.readFileSync(__dirname + '/h5/template/globalApi.js');
@@ -148,7 +132,6 @@ function compile(file, opt) {
 
         // 获取小程序 app.vue里的config eg.onReachBottomDistance
         mainOptions = Object.assign(mainOptions, config);
-
     }
 
     // 持续集成 main.js pageTitleMap
@@ -168,10 +151,8 @@ function compile(file, opt) {
         navigationStyle: config.navigationStyle
     });
 
-    appApi = Object.assign(appApi, scriptRet.appApi);
     mainOptions = Object.assign(mainOptions, {
-        pagesInfo,
-        appApi
+        pagesInfo
     });
     let content = fs.readFileSync(__dirname + '/h5/template/main.js');
     content = compileMain(content, {
@@ -184,20 +165,19 @@ function compile(file, opt) {
     // 处理style
     const h5StylesArr = styles.filter(item => !item.attrs || (!item.attrs.target || item.attrs.target === 'h5'));
     const styleContent = h5StylesArr.reduce((styleStr, {
-        attrs,
-        content,
-        lang
-    }) => `${styleStr}
+            attrs,
+            content,
+            lang
+        }) => `${styleStr}
 <style ${lang ? `lang="${lang}"` : ''} scoped>
     ${content}
 </style>`, '');
 
-    // app.vue has no template & 生成 xxx.vue & 生成 components.js
-    if (!isApp) {
-        templateFile.contents = new Buffer(`
+    // 生成 xxx.vue & 生成 components.js
+    templateFile.contents = new Buffer(`
 <template>
     ${!config.component ? '<div>' : ''}
-        ${templateFile.contents.toString()}
+        ${templateFile.contents.toString() ? templateFile.contents.toString() : '<slot/>' }
     ${!config.component ? '</div>' : ''}
 </template>
 ${scriptRet && scriptRet.content ? `
@@ -208,18 +188,17 @@ ${scriptRet.content}
 ${styleContent || ''}
 `);
 
-        templateFile.writeFileSync();
-        // 持续集成 components.js
-        if (Object.keys(componentSet).length > 0) {
-            const componentsFile = new Vinyl({
-                path: opt.dest + '/components.js',
-                _info_: {
-                    componentSet
-                }
-            });
-            compileComponents(componentsFile, opt);
-            componentsFile.writeFileSync();
-        }
+    templateFile.writeFileSync();
+    // 持续集成 components.js
+    if (Object.keys(componentSet).length > 0) {
+        const componentsFile = new Vinyl({
+            path: opt.dest + '/components.js',
+            _info_: {
+                componentSet
+            }
+        });
+        compileComponents(componentsFile, opt);
+        componentsFile.writeFileSync();
     }
 
     return file;

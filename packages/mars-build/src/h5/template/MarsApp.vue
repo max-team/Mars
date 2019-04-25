@@ -3,73 +3,75 @@
         id="mars"
         :class="[transitionStatus === 'enter' ? 'transition-status-enter' : null]"
     >
-        <div
-            class="swan-app-container"
-            :class="[transitionStatus === 'enter' ? 'transition-status-enter' : null]"
-        >
-            <navigation-bar
-                :transitionDuration="transitionDuration"
-                :transitionTimingFunc="transitionTimingFunc"
-                :backgroundColor="currentNavigationBarBackgroundColor"
-                :textStyle="currentNavigationBarTextStyle"
-                :showBottomBorder="showNavigationBorder"
-                :homeIconColor="navigationBarHomeColor"
-                :title="currentTitle"
-                :isHomePage="isHomePage"/>
+        <custom-app ref="app">
             <div
-                class="swan-app-tab-panel"
+                class="swan-app-container"
                 :class="[transitionStatus === 'enter' ? 'transition-status-enter' : null]"
             >
-                <pull-down-refresh
-                    ref="refresherHandler"
-                    @pull-down-refresh="handleRefresh"
-                    @reach-bottom="handleReachBottom"
-                    @page-scroll="handlePageScroll"
-                    :enablePullDownRefresh="enablePullDownRefresh"
-                    :enableReachBottom="enableReachBottom"
-                    :onReachBottomDistance="onReachBottomDistance"
-                    class="tab-panel-content"
-                    :style="{
-                        top: `${pos || 0}px`,
-                        height: bodyHeight,
-                        position: transitionStatus === 'enter' ? 'relative': 'static'
-                    }"
+                <navigation-bar
+                    :transitionDuration="transitionDuration"
+                    :transitionTimingFunc="transitionTimingFunc"
+                    :backgroundColor="currentNavigationBarBackgroundColor"
+                    :textStyle="currentNavigationBarTextStyle"
+                    :showBottomBorder="showNavigationBorder"
+                    :homeIconColor="navigationBarHomeColor"
+                    :title="currentTitle"
+                    :isHomePage="isHomePage"/>
+                <div
+                    class="swan-app-tab-panel"
+                    :class="[transitionStatus === 'enter' ? 'transition-status-enter' : null]"
                 >
-                    <transition 
-                        :name="(!tabChange && !browserAction) ? 'fold-left' : 'back'"
-                        :mode="!this.browserAction ? 'in-out' : null"
-                        @before-enter="beforeEnter"
-                        @after-enter="afterEnter"
-                        @enter="enter"
-                        @leave="leave"
-                        @before-leave="beforeLeave"
+                    <pull-down-refresh
+                        ref="refresherHandler"
+                        @pull-down-refresh="handleRefresh"
+                        @reach-bottom="handleReachBottom"
+                        @page-scroll="handlePageScroll"
+                        :enablePullDownRefresh="enablePullDownRefresh"
+                        :enableReachBottom="enableReachBottom"
+                        :onReachBottomDistance="onReachBottomDistance"
+                        class="tab-panel-content"
+                        :style="{
+                            top: `${pos || 0}px`,
+                            height: bodyHeight,
+                            position: transitionStatus === 'enter' ? 'relative': 'static'
+                        }"
                     >
-                        <keep-alive :max="6">
-                            <router-view
-                                v-if="showRouterView"
-                                :key="routerViewKey"
-                                ref="currentRouter"
-                                :style="{
-                                    paddingBottom: tabBarHeight + 'px',
-                                    backgroundColor: currentBackgroundColor || '#fff',
-                                    top: transitionStatus === 'enter' ? `${-pos}px`: null
-                                }"
-                            />
-                        </keep-alive>
-                    </transition>
-                </pull-down-refresh>
+                        <transition 
+                            :name="(!tabChange && !browserAction) ? 'fold-left' : 'back'"
+                            :mode="!this.browserAction ? 'in-out' : null"
+                            @before-enter="beforeEnter"
+                            @after-enter="afterEnter"
+                            @enter="enter"
+                            @leave="leave"
+                            @before-leave="beforeLeave"
+                        >
+                            <keep-alive :max="6">
+                                <router-view
+                                    v-if="showRouterView"
+                                    :key="routerViewKey"
+                                    ref="currentRouter"
+                                    :style="{
+                                        paddingBottom: tabBarHeight + 'px',
+                                        backgroundColor: currentBackgroundColor || '#fff',
+                                        top: transitionStatus === 'enter' ? `${-pos}px`: null
+                                    }"
+                                />
+                            </keep-alive>
+                        </transition>
+                    </pull-down-refresh>
+                </div>
+                <tab-bar
+                    v-if="tabList.length > 0 && showTabBar ? customShowTabBar : false"
+                    @tab-item-tap="handleTabItemTap"
+                    :tabList="tabList"
+                    :currentPath="currentPath"
+                    :color="tabBarColor"
+                    :selectedColor="tabBarSelectedColor"
+                    :borderStyle="tabBarBorderStyle"
+                    :backgroundColor="tabBarBackgroundColor"
+                    />
             </div>
-            <tab-bar
-                v-if="tabList.length > 0 && showTabBar ? customShowTabBar : false"
-                @tab-item-tap="handleTabItemTap"
-                :tabList="tabList"
-                :currentPath="currentPath"
-                :color="tabBarColor"
-                :selectedColor="tabBarSelectedColor"
-                :borderStyle="tabBarBorderStyle"
-                :backgroundColor="tabBarBackgroundColor"
-                />
-        </div>
+        </custom-app>
     </div>
 </template>
 
@@ -78,6 +80,7 @@
 import TabBar from './app-components/TabBar/TabBar.vue';
 import PullDownRefresh from './app-components/PullDownRefresh/PullDownRefresh.vue';
 import NavigationBar from './app-components/NavigationBar/NavigationBar.vue';
+import customApp from './app.vue';
 
 export default {
     name: 'app',
@@ -120,7 +123,8 @@ export default {
     components: {
         'tab-bar': TabBar,
         'pull-down-refresh': PullDownRefresh,
-        'navigation-bar': NavigationBar
+        'navigation-bar': NavigationBar,
+        'custom-app': customApp
     },
     data() {
         return {
