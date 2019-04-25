@@ -5,12 +5,12 @@
 
 ### Bug Fixes
 
-* **build:** fix vue-template-compiler version compare error ([#42](https://github.com/max-team/Mars/issues/42)) ([3498c68](https://github.com/max-team/Mars/commit/3498c68))
+* **cli:** fix vue-template-compiler version compare error ([#42](https://github.com/max-team/Mars/issues/42)) ([3498c68](https://github.com/max-team/Mars/commit/3498c68))
 
 
 ### Features
 
-* mars build support watch mode ([fdaa007](https://github.com/max-team/Mars/commit/fdaa007))
+* **cli:** mars build support watch mode ([fdaa007](https://github.com/max-team/Mars/commit/fdaa007))
 
 
 

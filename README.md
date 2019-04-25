@@ -61,3 +61,5 @@ mars build [--target, -t swan (default) | wx | h5]
 请参考 [如何贡献](./CONTRIBUTING.md)
 
 欢迎提 Issue 和 PR。
+
+百度员工可以加 Hi 群：1659354
