@@ -1,5 +1,13 @@
 # @marsjs/build
 
+## [0.2.15](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.14...@marsjs/build@0.2.15) (2019-04-25)
+
+
+### Bug Fixes
+
+* **build:** fix vue-template-compiler version compare error ([#42](https://github.com/max-team/Mars/issues/42)) ([3498c68](https://github.com/max-team/Mars/commit/3498c68))
+
+
 ## [0.2.14](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.13...@marsjs/build@0.2.14) (2019-04-23)
 
 
