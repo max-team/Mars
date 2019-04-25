@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## 2019-04-25
+
+- @marsjs/build@0.2.15
+- @marsjs/cli@0.1.21
+
+### Bug Fixes
+
+* **build:** fix vue-template-compiler version compare error ([#42](https://github.com/max-team/Mars/issues/42)) ([3498c68](https://github.com/max-team/Mars/commit/3498c68))d
+
 ## 2019-04-12
 
 - @marsjs/api@1.0.16
