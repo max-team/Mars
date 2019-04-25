@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.16](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.15...@marsjs/build@0.2.16) (2019-04-25)
+
+
+### Features
+
+* **update api:** add history list to global api getCurrentPages ([4667930](https://github.com/max-team/Mars/commit/4667930))
+
+
+
+
+
 ## [0.2.15](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.14...@marsjs/build@0.2.15) (2019-04-25)
 
 
