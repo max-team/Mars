@@ -94,7 +94,9 @@ router.beforeEach(function (to, from, next) {
             && browserHistoryLast.pos) {
             Vue.prototype.fromRouterPosY = browserHistoryLast.pos;
         }
-
+        else {
+            Vue.prototype.fromRouterPosY = 0;
+        }
     });
     next();
 });
