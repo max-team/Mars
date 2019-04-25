@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.21](https://github.com/max-team/Mars/compare/@marsjs/cli@0.1.20...@marsjs/cli@0.1.21) (2019-04-25)
+
+
+### Bug Fixes
+
+* **build:** fix vue-template-compiler version compare error ([#42](https://github.com/max-team/Mars/issues/42)) ([3498c68](https://github.com/max-team/Mars/commit/3498c68))
+
+
+### Features
+
+* mars build support watch mode ([fdaa007](https://github.com/max-team/Mars/commit/fdaa007))
+
+
+
+
+
 ## [0.1.20](https://github.com/max-team/Mars/compare/@marsjs/cli@0.1.19...@marsjs/cli@0.1.20) (2019-04-19)
 
 
