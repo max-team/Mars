@@ -14,7 +14,7 @@ const PluginError = gutil.PluginError;
 // 常量
 const PLUGIN_NAME = 'gulp-mars';
 
-const vueCompiler = require('vue-template-compiler');
+const vueCompiler = require('vue-template-compiler/build');
 const fs = require('fs');
 const path = require('path');
 const mkdirp = require('mkdirp');

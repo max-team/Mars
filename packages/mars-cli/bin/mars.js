@@ -169,7 +169,8 @@ program
                 }
             });
             execa('node', args, {
-                stdout: 'inherit'
+                stdout: 'inherit',
+                stderr: 'inherit'
             });
         });
     });
@@ -199,7 +200,8 @@ program
                 }
             });
             execa('node', args, {
-                stdout: 'inherit'
+                stdout: 'inherit',
+                stderr: 'inherit'
             });
         });
     });

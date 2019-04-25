@@ -5,7 +5,7 @@
 /* eslint-disable fecs-min-vars-per-destructure */
 
 const File = require('./File');
-const {parseComponent} = require('vue-template-compiler');
+const {parseComponent} = require('vue-template-compiler/build');
 
 function getLang(block, defaultLang) {
     return (block && block.attrs && block.attrs.lang) ? block.attrs.lang : defaultLang;
