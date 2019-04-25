@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.17](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.16...@marsjs/build@0.2.17) (2019-04-25)
+
+
+### Bug Fixes
+
+* **history-pos:** 修复页面不滚动跳转后返回定位的问题 ([92b01bb](https://github.com/max-team/Mars/commit/92b01bb))
+
+
+
+
+
 ## [0.2.16](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.15...@marsjs/build@0.2.16) (2019-04-25)
 
 
