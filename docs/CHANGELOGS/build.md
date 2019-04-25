@@ -1,5 +1,13 @@
 # @marsjs/build
 
+## [0.2.16](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.15...@marsjs/build@0.2.16) (2019-04-25)
+
+
+### Features
+
+* **ubuild:** 升级getApp 项目中的 app.vue 文件在编译到 H5 时保留独立 sfc ([4667930](https://github.com/max-team/Mars/commit/4667930))
+
+
 ## [0.2.15](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.14...@marsjs/build@0.2.15) (2019-04-25)
 
 
