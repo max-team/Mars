@@ -29,7 +29,6 @@
         "stylus": "^0.54.5",
         "through2": "^3.0.0",
         "vinyl": "^2.2.0",
-        "vue": "2.5.21",
         "vue-template-compiler": "2.5.21",
         "vue-template-es2015-compiler": "^1.8.1"
     }
