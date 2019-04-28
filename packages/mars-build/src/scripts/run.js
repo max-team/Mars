@@ -16,6 +16,13 @@ const {
 // const getDefaultConf = require('./defaultConfig');
 const getConfig = require('./getConfig');
 
+/**
+ * getBuildTasks
+ *
+ * @param {mars.config} config config
+ * @param {mars.options} options options
+ * @return {string[]}
+ */
 function getBuildTasks(config = {}, options = {}) {
     const {target} = options;
     // config = formatConfig(config);
@@ -42,6 +49,12 @@ function clean(options = {}) {
     return gulp.start('clean');
 }
 
+/**
+ * build
+ *
+ * @param {mars.buildOptions} options options
+ * @return {Object}
+ */
 function build(options = {}) {
     const config = getConfig(options);
     const buildTasks = getBuildTasks(config, options);
