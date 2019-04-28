@@ -10,14 +10,14 @@
 /* eslint-disable fecs-min-vars-per-destructure */
 
 const Vinyl = require('vinyl');
-const fs = require('fs');
+const fs = require('fs-extra');
 
 Vinyl.prototype.writeFileSync = function () {
     if (!this.contents || !this.path) {
         throw new Error('Vinyl.prototype.writeFileSync() requires path and contents to write');
     }
 
-    fs.writeFileSync(this.path, this.contents.toString());
+    fs.outputFileSync(this.path, this.contents.toString());
 };
 
 Vinyl.prototype.appendContent = function (str) {
