@@ -10,19 +10,13 @@ const intercept = require('gulp-intercept');
 const changed = require('gulp-changed');
 
 const {transform} = require('babel-core');
-const {getPathToCWD} = require('../helper/path');
+const {getPathToCWD, getDestDir} = require('../helper/path');
 const {FILE_SUFFIX} = require('../helper/config');
 const log = require('../helper/log');
 
-function getDestDir(config, options) {
-    const {dest} = config;
-    const {target} = options;
-    return dest.path.replace('{TARGET}', target);
-}
-
 function getTaskSFC(config, options) {
     const {dest: buildDest, source} = config;
-    const dest = getDestDir(config, options);
+    const dest = getDestDir(config.dest, options.target);
 
     let compileOption = config.options.sfc;
     compileOption = Object.assign({
@@ -75,7 +69,7 @@ function getTaskSFC(config, options) {
 function getTaskCompileAssets(config, options) {
     const {source} = config;
     const {target} = options;
-    const dest = getDestDir(config, options);
+    const dest = getDestDir(config.dest, options.target);
     let {assets = [], h5Template} = source;
     if (target === 'h5' && h5Template) {
         assets = assets.concat([h5Template]);
@@ -97,7 +91,7 @@ function getTaskCompileAssets(config, options) {
 
 function getTaskRuntime(config, options) {
     const {dest: buildDest, source} = config;
-    let dest = getDestDir(config, options);
+    let dest = getDestDir(config.dest, options.target);
     dest = dest + '/' + buildDest.coreDir;
     let framework = JSON.stringify({});
     try {
@@ -135,7 +129,7 @@ function getTaskRuntime(config, options) {
 
 function getTaskClean(config, options) {
     const {projectFiles} = config;
-    let dest = getDestDir(config, options);
+    let dest = getDestDir(config.dest, options.target);
     return callback => {
         let files = [`${dest}/**`, `!${dest}`].concat(projectFiles
             ? (projectFiles.map(item => `!${dest}/${item}`))
