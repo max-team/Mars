@@ -66,6 +66,12 @@ function getRuntimeConfig({
     };
 }
 
+/**
+ * getConfig
+ *
+ * @param {mars.options} options options
+ * @return {mars.config}
+ */
 function getConfig(options) {
     if (!options && process.env.MARS_CLI_OPTIONS) {
         try {
