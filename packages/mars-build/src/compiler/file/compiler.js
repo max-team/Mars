@@ -2,7 +2,9 @@
  * @file gulp plugin file compiler
  * @author zhangwentao <winty2013@gmail.com>
  */
+
 /* eslint-disable fecs-min-vars-per-destructure */
+/* eslint-disable fecs-no-require */
 
 const through = require('through2');
 const gutil = require('gulp-util');
@@ -16,6 +18,7 @@ const {compile: compileStyle} = require('../style/style');
 const {getFileCompiler} = require('./base');
 const {isCSS, isJS, changeExt, getDestDir} = require('../../helper/path');
 const log = require('../../helper/log');
+const compileModules = require('./compileModules');
 
 /**
  * 编译 JS
@@ -24,7 +27,7 @@ const log = require('../../helper/log');
  * @param {mars.options} options opt
  * @return {babel.BabelFileResult}
  */
-function compileJS(content, options) {
+async function compileJS(content, options) {
     const {
         target
     } = options;
@@ -38,7 +41,8 @@ function compileJS(content, options) {
         JSON.stringify(process.env.NODE_ENV || 'development')
     );
 
-    return transformSync(content, {
+    let usedModules = {};
+    let res = transformSync(content, {
         plugins: [
             [
                 path.resolve(__dirname, './babel-plugin-relative-import.js'),
@@ -46,16 +50,22 @@ function compileJS(content, options) {
                     filePath: options.path,
                     // cwd: path.resolve(process.cwd(), getDestDir(buildConfig.dest, target)),
                     cwd: path.resolve(process.cwd(), './src'),
-                    modules: {
-                        '@marsjs/core': '/mars-core',
-                        'vuex': '/mars_modules/vuex'
-                    }
+                    usedModules
                 }
             ],
             'minify-guarded-expressions',
             'minify-dead-code-elimination'
         ]
     });
+
+    const destPath = path.resolve(getDestDir(buildConfig.dest, target));
+    const usedModuleKeys = Object.keys(usedModules);
+    for (let i = 0; i < usedModuleKeys.length; i++) {
+        const item = usedModuleKeys[i];
+        await compileModules.compile(item, usedModules[item], destPath);
+    }
+
+    return res;
 }
 
 async function compile(file, options) {

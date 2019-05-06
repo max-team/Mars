@@ -15,7 +15,8 @@ exports.compile = async function compile(file, options) {
         isApp,
         coreRelativePath,
         target,
-        renderStr: !isApp ? renderFunctionName : null
+        renderStr: !isApp ? renderFunctionName : null,
+        dest: options._config.dest
     });
 
     // app.vue has no template

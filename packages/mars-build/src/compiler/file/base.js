@@ -2,7 +2,9 @@
  * @file base file compiler
  * @author zhangwentao <winty2013@gmail.com>
  */
+
 /* eslint-disable fecs-min-vars-per-destructure */
+/* eslint-disable fecs-no-require */
 
 const buildInProcessors = require('./processor');
 

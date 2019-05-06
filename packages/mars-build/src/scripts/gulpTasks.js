@@ -3,6 +3,9 @@
  * @author zhangwentao <winty2013@gmail.com>
  */
 /* eslint-disable fecs-min-vars-per-destructure */
+
+/* eslint-disable fecs-no-require */
+
 const path = require('path');
 const gulp = require('gulp');
 const del = require('del');
@@ -89,6 +92,13 @@ function getTaskCompileAssets(config, options) {
     };
 }
 
+/**
+ * getTaskRuntime
+ *
+ * @param {mars.config} config config
+ * @param {mars.options} options options
+ * @return {Function}
+ */
 function getTaskRuntime(config, options) {
     const {dest: buildDest, source} = config;
     let dest = getDestDir(config.dest, options.target);
@@ -96,34 +106,20 @@ function getTaskRuntime(config, options) {
     let framework = JSON.stringify({});
     try {
         framework = JSON.stringify(config.framework || {});
-    } catch (e) {
+    }
+    catch (e) {
         throw new Error('config.framework must be plain Object');
     }
 
+    const compileFile = require('../compiler/runtime/compiler').compile;
+
     return () => {
-        return gulp.src(source.runtime)
-            .pipe(changed(dest))
-            .pipe(intercept(file => {
-                // TODO: mars-core runtime 的编译先简单写到这里，后续单独拿出来
-                log.info('[compile:runtime]:', getPathToCWD(file.path));
-                let source = (file.contents && file.contents.toString()) || '';
-                source = source.replace(
-                    /process\.env\.NODE_ENV/g,
-                    JSON.stringify(process.env.NODE_ENV || 'development')
-                ).replace(
-                    /process\.env\.MARS_CONFIG_FRAMEWORK/g,
-                    framework
-                );
-                const ret = transform(source, {
-                    plugins: [
-                        'minify-guarded-expressions',
-                        'minify-dead-code-elimination'
-                    ]
-                });
-                file.contents = new Buffer(ret.code || '');
-                return file;
-            }))
-            .pipe(gulp.dest(dest));
+        log.info('[compile:runtime]:', options.target);
+        return compileFile({
+            framework,
+            target: options.target,
+            dest: buildDest
+        });
     };
 }
 
