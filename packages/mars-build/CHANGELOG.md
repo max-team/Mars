@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.18](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.17...@marsjs/build@0.2.18) (2019-05-07)
+
+
+### Bug Fixes
+
+* **build:** fix h5 style scoped and fix component map ([b92de1e](https://github.com/max-team/Mars/commit/b92de1e))
+* write file error on windows ([4e2f90d](https://github.com/max-team/Mars/commit/4e2f90d))
+
+
+### Features
+
+* add type hint ([#45](https://github.com/max-team/Mars/issues/45)) ([d8b4a5d](https://github.com/max-team/Mars/commit/d8b4a5d))
+
+
+
+
+
 ## [0.2.17](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.16...@marsjs/build@0.2.17) (2019-04-25)
 
 
