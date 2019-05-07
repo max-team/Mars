@@ -2,6 +2,9 @@
  * @file build
  * @author zhangjingyuan02
  */
+
+/* eslint-disable fecs-no-require */
+
 // import component from './component';
 const tagMap = require('./vueComponentTagMap');
 const templateOnlyForH5 = 'template-mars';
@@ -38,7 +41,10 @@ module.exports = function (ast, options, compMap) {
         return ast;
     }
 
-    if (tag === templateOnlyForH5 && ast.attrsMap['target'] === 'h5') {
+    if (
+        tag === templateOnlyForH5
+        && ast.attrsMap['target'] === 'h5'
+    ) {
         tag = 'template';
     }
 
@@ -56,8 +62,12 @@ module.exports = function (ast, options, compMap) {
         }
     });
     ast.tag = tagMap[tag] || tag;
-    if (tagMap[tag] && !compMap[tagMap[tag]]) {
+    if (
+        tagMap[tag]
+        && !compMap[tagMap[tag]]
+        && tagMap[tag] !== 'template'
+    ) {
         compMap[`${tagMap[tag]}`] = toCamel(tagMap[tag]);
     }
     return ast;
-}
+};

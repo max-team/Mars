@@ -165,11 +165,12 @@ function compile(file, opt) {
     // 处理style
     const h5StylesArr = styles.filter(item => !item.attrs || (!item.attrs.target || item.attrs.target === 'h5'));
     const styleContent = h5StylesArr.reduce((styleStr, {
-            attrs,
+            scoped,
             content,
-            lang
+            lang,
+            attrs
         }) => `${styleStr}
-<style ${lang ? `lang="${lang}"` : ''} scoped>
+<style ${lang ? `lang="${lang}"` : ''} ${attrs && !attrs.target ? 'scoped' : scoped ? 'scoped' : ''}>
     ${content}
 </style>`, '');
 
@@ -205,10 +206,7 @@ ${styleContent || ''}
 }
 
 // 插件级别的函数（处理文件）
-function gulpPrefixer(opt) {
-    opt = opt || {
-        dest: './dist-h5'
-    };
+function gulpPrefixer(opt = {dest: './dist-h5'}) {
     // 创建一个 stream 通道，以让每个文件通过
     const stream = through.obj(function (file, enc, cb) {
         if (file.isStream()) {
