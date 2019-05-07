@@ -1,5 +1,14 @@
 # @marsjs/build
 
+## [0.2.18](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.17...@marsjs/build@0.2.18) (2019-05-07)
+
+
+### Bug Fixes
+
+* **build:** fix h5 style scoped and fix component map ([b92de1e](https://github.com/max-team/Mars/commit/b92de1e))
+* write file error on windows ([4e2f90d](https://github.com/max-team/Mars/commit/4e2f90d))
+
+
 ## [0.2.17](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.16...@marsjs/build@0.2.17) (2019-04-25)
 
 ### Bug Fixes
