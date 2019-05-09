@@ -9,12 +9,10 @@ const merge = require('lodash.merge');
 const getDefaultConf = require('./defaultConfig');
 
 function getProjectConfig(options) {
-    const target = options.target || 'swan';
-
     let projectConfig = {};
     const configPath = path.resolve(process.cwd(), './mars.config.js');
     if (fs.existsSync(configPath)) {
-        projectConfig = require(configPath)(target);
+        projectConfig = require(configPath)(options.target);
     }
 
     return projectConfig;
