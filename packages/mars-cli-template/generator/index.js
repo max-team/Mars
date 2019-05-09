@@ -23,8 +23,8 @@ module.exports = async (api, options) => {
         // 添加 h5 所需的依赖
         api.extendPackage({
             scripts: {
-                'serve-dist-h5': 'mars-cli-service serve --path ./dist-h5',
-                'build-dist-h5': 'mars-cli-service build --path ./dist-h5'
+                'serve-dist-h5': 'mars-cli-service serve',
+                'build-dist-h5': 'mars-cli-service build'
             },
             dependencies: {
                 'vue': '^2.6.6',

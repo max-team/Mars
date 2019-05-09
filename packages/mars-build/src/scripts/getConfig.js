@@ -12,7 +12,7 @@ function getProjectConfig(options) {
     let projectConfig = {};
     const configPath = path.resolve(process.cwd(), './mars.config.js');
     if (fs.existsSync(configPath)) {
-        projectConfig = require(configPath)(options.target);
+        projectConfig = require(configPath)(options);
     }
 
     return projectConfig;
@@ -21,8 +21,11 @@ function getProjectConfig(options) {
 // 兼容原 Task 的配置格式
 function formatConfig(options) {
     let config = getProjectConfig(options);
-    const {target} = options;
-    config = merge(getDefaultConf(target), config);
+    const {
+        target,
+        env
+    } = options;
+    config = merge(getDefaultConf({target, env}), config);
 
     config.dest = {
         path: config.dest,
