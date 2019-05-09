@@ -37,8 +37,8 @@
                         }"
                     >
                         <transition 
-                            :name="(!tabChange && !browserAction) ? 'fold-left' : 'back'"
-                            :mode="!this.browserAction ? 'in-out' : null"
+                            :name="useTransition && !tabChange && !browserAction ? 'fold-left' : 'back'"
+                            :mode="useTransition && !browserAction ? 'in-out' : null"
                             @before-enter="beforeEnter"
                             @after-enter="afterEnter"
                             @enter="enter"
@@ -113,6 +113,10 @@ export default {
             default: 'dark'
         },
         showNavigationBorder: {
+            type: Boolean,
+            default: true
+        },
+        useTransition: {
             type: Boolean,
             default: true
         },

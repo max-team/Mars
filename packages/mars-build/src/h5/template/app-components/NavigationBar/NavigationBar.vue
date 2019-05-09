@@ -8,7 +8,7 @@
             transitionTimingFunction: transitionTimingFunc,
             backgroundColor: backgroundColor,
             color: textStyle,
-            borderbottom: showBottomBorder ? '1px #ccc solid' : null
+            borderBottom: showBottomBorder ? '1px #ccc solid' : null
         }"
     >
         <router-link
