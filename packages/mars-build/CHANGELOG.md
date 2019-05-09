@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.19](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.18...@marsjs/build@0.2.19) (2019-05-09)
+
+
+### Bug Fixes
+
+* **build:** bad path generated while building in windows ([#48](https://github.com/max-team/Mars/issues/48)) ([f60fa38](https://github.com/max-team/Mars/commit/f60fa38))
+
+
+
+
+
 ## [0.2.18](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.17...@marsjs/build@0.2.18) (2019-05-07)
 
 
