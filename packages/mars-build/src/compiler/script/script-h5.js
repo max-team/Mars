@@ -13,7 +13,7 @@ const transformCompPlugin = require('../../h5/transform/plugins/transformCompPlu
 const transformRouterPlugin = require('../../h5/transform/plugins/transformRouterPlugin');
 const transformAppPlugin = require('../../h5/transform/plugins/transformAppPlugin');
 const transformGetAppPlugin = require('../../h5/transform/plugins/transformGetAppPlugin');
-const MARS_ENV = 'h5';
+const MARS_ENV = process.env.MARS_ENV_TARGET;
 
 exports.preCompile = function (file) {
 };
