@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.22](https://github.com/max-team/Mars/compare/@marsjs/cli@0.1.21...@marsjs/cli@0.1.22) (2019-05-10)
+
+
+### Features
+
+* **build:** update target condition and support App and fix postcss ([ad0e2c4](https://github.com/max-team/Mars/commit/ad0e2c4))
+* **cli:** support h5:xx  swan:xx multi packages ([ce99ea0](https://github.com/max-team/Mars/commit/ce99ea0))
+
+
+
+
+
 ## [0.1.21](https://github.com/max-team/Mars/compare/@marsjs/cli@0.1.20...@marsjs/cli@0.1.21) (2019-04-25)
 
 
