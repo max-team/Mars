@@ -23,7 +23,7 @@ module.exports = function generate(obj, options = {}) {
         return text;
     }
 
-    if (tag === customTemplate && process.env.MARS_ENV_TARGET !== attrsMap.target) {
+    if (tag === customTemplate && (process.env.MARS_ENV_TARGET || options.target) !== attrsMap.target) {
         return;
     }
     else if (tag === customTemplate) {
