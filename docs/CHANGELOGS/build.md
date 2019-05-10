@@ -1,5 +1,13 @@
 # @marsjs/build
 
+## [0.2.21](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.20...@marsjs/build@0.2.21) (2019-05-10)
+
+
+### Bug Fixes
+
+* **build:** add default value for process.env.MARS_ENV_TARGET ([8eb4f2d](https://github.com/max-team/Mars/commit/8eb4f2d))
+
+
 ## [0.2.20](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.19...@marsjs/build@0.2.20) (2019-05-10)
 
 
