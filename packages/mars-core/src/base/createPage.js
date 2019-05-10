@@ -11,6 +11,7 @@
 import Vue from './vue/index';
 import {mark, measure} from '../helper/perf';
 import config from '../config';
+import {state} from './state';
 
 export function makeCreatePage(pageMixin, {handleProxy, handleModel}, setData, callHook) {
     return function (options) {
@@ -30,6 +31,10 @@ export function makeCreatePage(pageMixin, {handleProxy, handleModel}, setData, c
                     const perfTagStart = `${this.route}-start`;
                     // const perfTagEnd = `${this.route}-end`;
                     mark(perfTagStart);
+                }
+
+                if (state.store && !options.store) {
+                    options.store = state.store;
                 }
 
                 const vm = new Vue(options);
