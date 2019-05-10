@@ -9,16 +9,27 @@
 
 /* eslint-disable fecs-min-vars-per-destructure */
 
-const {transformSync, transformFromAst} = require('@babel/core');
+const {transformSync} = require('@babel/core');
 const transformPlugin = require('./babel-plugin-script');
+const path = require('path');
+const compileModules = require('../file/compileModules');
 
-exports.compile = function compile(source, options) {
+/**
+ * compile script
+ *
+ * @param {string} source source
+ * @param {mars.options} options options
+ * @return {mars.script.compileScriptResult}
+ */
+async function compile(source, options) {
     const {
         isApp,
         renderStr,
         coreRelativePath,
-        target
+        target,
+        dest
     } = options;
+
     let ret = {};
     source = source.replace(
         /process\.env\.MARS_ENV/g,
@@ -40,12 +51,30 @@ exports.compile = function compile(source, options) {
     });
     // 处理完再进行minify，发现minify和定制的插件会有坑
     let code = scriptRet.code;
+
+    let usedModules = {};
     const minifyScriptRet = transformSync(code, {
         plugins: [
+            [
+                path.resolve(__dirname, '../file/babel-plugin-relative-import.js'),
+                {
+                    filePath: options.path,
+                    cwd: path.resolve(process.cwd(), dest.path),
+                    usedModules
+                }
+            ],
             'minify-guarded-expressions',
             'minify-dead-code-elimination'
         ]
     });
+
+    const destPath = path.resolve(dest.path);
+    const usedModuleKeys = Object.keys(usedModules);
+    for (let i = 0; i < usedModuleKeys.length; i++) {
+        const item = usedModuleKeys[i];
+        await compileModules.compile(item, usedModules[item], destPath);
+    }
+
     code = minifyScriptRet.code;
     const {
         config = {},
@@ -54,4 +83,8 @@ exports.compile = function compile(source, options) {
         moduleType = 'esm'
     } = ret;
     return {code, config, components, computedKeys, moduleType};
+}
+
+module.exports = {
+    compile
 };

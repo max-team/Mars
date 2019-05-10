@@ -2,7 +2,9 @@
  * @file gulp plugin file compiler
  * @author zhangwentao <winty2013@gmail.com>
  */
+
 /* eslint-disable fecs-min-vars-per-destructure */
+/* eslint-disable fecs-no-require */
 
 const through = require('through2');
 const gutil = require('gulp-util');
@@ -16,11 +18,20 @@ const {compile: compileStyle} = require('../style/style');
 const {getFileCompiler} = require('./base');
 const {isCSS, isJS, changeExt} = require('../../helper/path');
 const log = require('../../helper/log');
+const compileModules = require('./compileModules');
 
-function compileJS(content, options) {
+/**
+ * 编译 JS
+ *
+ * @param {string} content 文件内容
+ * @param {mars.options} options opt
+ * @return {babel.BabelFileResult}
+ */
+async function compileJS(content, options) {
     const {
         target
     } = options;
+    const buildConfig = options._config;
 
     content = content.replace(
         /process\.env\.MARS_ENV/g,
@@ -30,12 +41,30 @@ function compileJS(content, options) {
         JSON.stringify(process.env.NODE_ENV || 'development')
     );
 
-    return transformSync(content, {
+    let usedModules = {};
+    let res = transformSync(content, {
         plugins: [
+            [
+                path.resolve(__dirname, './babel-plugin-relative-import.js'),
+                {
+                    filePath: options.path,
+                    cwd: path.resolve(process.cwd(), './src'),
+                    usedModules
+                }
+            ],
             'minify-guarded-expressions',
             'minify-dead-code-elimination'
         ]
     });
+
+    const destPath = path.resolve(buildConfig.dest.path);
+    const usedModuleKeys = Object.keys(usedModules);
+    for (let i = 0; i < usedModuleKeys.length; i++) {
+        const item = usedModuleKeys[i];
+        await compileModules.compile(item, usedModules[item], destPath);
+    }
+
+    return res;
 }
 
 async function compile(file, options) {

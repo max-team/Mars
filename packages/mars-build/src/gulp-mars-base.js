@@ -40,7 +40,7 @@ function compile(file, opt, compilers) {
         opt.coreDir || 'common'
     );
     coreRelativePath = coreRelativePath[0] === '.' ? coreRelativePath : './' + coreRelativePath;
-    coreRelativePath = slash(coreRelativePath + `/${target}/index`);
+    coreRelativePath = slash(coreRelativePath + '/index');
 
     try {
         const dirPath = fPath.replace(/[^/]+$/, '');

@@ -3,26 +3,29 @@
  * @author zhangwentao <winty2013@gmail.com>
  */
 /* eslint-disable fecs-min-vars-per-destructure */
+
+/* eslint-disable fecs-no-require */
+
 const path = require('path');
 const gulp = require('gulp');
 const del = require('del');
 const intercept = require('gulp-intercept');
 const changed = require('gulp-changed');
 
-const {transform} = require('babel-core');
 const {getPathToCWD} = require('../helper/path');
 const {FILE_SUFFIX} = require('../helper/config');
 const log = require('../helper/log');
 
-function getDestDir(config, options) {
-    const {dest} = config;
-    const {target} = options;
-    return dest.path.replace('{TARGET}', target);
-}
-
+/**
+ * getTaskSFC
+ *
+ * @param {mars.config} config config
+ * @param {mars.options} options options
+ * @return {Function}
+ */
 function getTaskSFC(config, options) {
     const {dest: buildDest, source} = config;
-    const dest = getDestDir(config, options);
+    const dest = config.dest.path;
 
     let compileOption = config.options.sfc;
     compileOption = Object.assign({
@@ -71,11 +74,17 @@ function getTaskSFC(config, options) {
     };
 }
 
-
+/**
+ * getTaskCompileAssets
+ *
+ * @param {mars.config} config config
+ * @param {mars.options} options options
+ * @return {Function}
+ */
 function getTaskCompileAssets(config, options) {
     const {source} = config;
     const {target} = options;
-    const dest = getDestDir(config, options);
+    const dest = config.dest.path;
     let {assets = [], h5Template} = source;
     if (target === 'h5' && h5Template) {
         assets = assets.concat([h5Template]);
@@ -95,47 +104,46 @@ function getTaskCompileAssets(config, options) {
     };
 }
 
+/**
+ * getTaskRuntime
+ *
+ * @param {mars.config} config config
+ * @param {mars.options} options options
+ * @return {Function}
+ */
 function getTaskRuntime(config, options) {
     const {dest: buildDest, source} = config;
-    let dest = getDestDir(config, options);
-    dest = dest + '/' + buildDest.coreDir;
+    // let dest = buildDest.path + '/' + buildDest.coreDir;
     let framework = JSON.stringify({});
     try {
         framework = JSON.stringify(config.framework || {});
-    } catch (e) {
+    }
+    catch (e) {
         throw new Error('config.framework must be plain Object');
     }
 
+    const compileFile = require('../compiler/runtime/compiler').compile;
+
     return () => {
-        return gulp.src(source.runtime)
-            .pipe(changed(dest))
-            .pipe(intercept(file => {
-                // TODO: mars-core runtime 的编译先简单写到这里，后续单独拿出来
-                log.info('[compile:runtime]:', getPathToCWD(file.path));
-                let source = (file.contents && file.contents.toString()) || '';
-                source = source.replace(
-                    /process\.env\.NODE_ENV/g,
-                    JSON.stringify(process.env.NODE_ENV || 'development')
-                ).replace(
-                    /process\.env\.MARS_CONFIG_FRAMEWORK/g,
-                    framework
-                );
-                const ret = transform(source, {
-                    plugins: [
-                        'minify-guarded-expressions',
-                        'minify-dead-code-elimination'
-                    ]
-                });
-                file.contents = new Buffer(ret.code || '');
-                return file;
-            }))
-            .pipe(gulp.dest(dest));
+        log.info('[compile:runtime]:', options.target);
+        return compileFile({
+            framework,
+            target: options.target,
+            dest: buildDest
+        });
     };
 }
 
+/**
+ * getTaskClean
+ *
+ * @param {mars.config} config config
+ * @param {mars.options} options options
+ * @return {Function}
+ */
 function getTaskClean(config, options) {
     const {projectFiles} = config;
-    let dest = getDestDir(config, options);
+    let dest = config.dest.path;
     return callback => {
         let files = [`${dest}/**`, `!${dest}`].concat(projectFiles
             ? (projectFiles.map(item => `!${dest}/${item}`))
@@ -144,6 +152,13 @@ function getTaskClean(config, options) {
     };
 }
 
+/**
+ * getTaskWatch
+ *
+ * @param {mars.config} config config
+ * @param {mars.options} options options
+ * @return {Function}
+ */
 function getTaskWatch(config, options) {
     const {watch} = config;
     return () => {
@@ -151,6 +166,13 @@ function getTaskWatch(config, options) {
     };
 }
 
+/**
+ * getTasks
+ *
+ * @param {mars.config} config config
+ * @param {mars.options} options options
+ * @return {void}
+ */
 function getTasks(config, options) {
     gulp.task('compile:sfc', getTaskSFC(config, options));
     gulp.task('compile:runtime', getTaskRuntime(config, options));

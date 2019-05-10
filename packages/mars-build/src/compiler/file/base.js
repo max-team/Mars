@@ -2,7 +2,9 @@
  * @file base file compiler
  * @author zhangwentao <winty2013@gmail.com>
  */
+
 /* eslint-disable fecs-min-vars-per-destructure */
+/* eslint-disable fecs-no-require */
 
 const buildInProcessors = require('./processor');
 
@@ -54,6 +56,7 @@ function getFileCompiler(compile, config) {
         // preprocessors
         source = await process(source, getExtProcessors(preprocessors, lang));
         // compile
+        options.path = file.path;
         const result =  await compile(source, options, fileOptions);
         // postprocessors
         let {code, ...rest} = result;

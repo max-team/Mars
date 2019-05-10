@@ -7,10 +7,7 @@ namespace mars {
     interface config {
         assets: string[];
         designWidth: boolean;
-        dest: {
-            coreDir: string;
-            path: string;
-        };
+        dest: destObj;
         devConfig: {
             buildPath: string;
             corePath: string;
@@ -37,9 +34,15 @@ namespace mars {
         h5 = 'h5',
         wx = 'wx'
     }
+
+    interface destObj {
+        coreDir: string;
+        path: string;
+    }
     
     interface options {
         target: target;
+        _config?: config;
     }
 
     interface buildOptions extends options {

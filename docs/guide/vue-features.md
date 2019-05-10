@@ -97,6 +97,70 @@ filters 可以在插值和 props 中使用，复杂表达式可以在插值、pr
 `build@0.2.12` `core@0.2.6` 起支持过滤器（filters），暂时只支持局部定义过滤器。
 :::
 
-## 规模化
+## Vuex
 
-- vuex：暂不支持（开发中）
+Mars 中使用 Vuex 的方法与 Vue 类似，首先在 app.vue 中引入 Vue 和 Vuex，并初始化：
+
+> 由于 Mars 使用定制的 Vue ，因此务必**从 @marsjs/core 中引入 Vue**。
+
+```javascript
+import {Vue} from '@marsjs/core';
+import Vuex from 'vuex';
+
+Vue.use(Vuex);
+```
+
+之后创建一个 store:
+
+```javascript
+const store = new Vuex.Store({
+    state: {
+        count: 0
+    },
+    mutations: {
+        increment(state) {
+            state.count++;
+        }
+
+    }
+});
+```
+
+放在 app.vue 的 export 中：
+
+```javascript
+export default {
+    config: {
+        pages: [
+            'pages/home/index',
+            'pages/land/index',
+            'pages/swan/index.swan'
+        ],
+        tabBar: {
+            list: [{
+                pagePath: 'pages/home/index',
+                text: 'API'
+            }, {
+                pagePath: 'pages/land/index',
+                text: 'Component'
+            }, {
+                pagePath: 'pages/swan/index.swan',
+                text: 'Swan'
+            }]
+        },
+        window: {
+            navigationBarBackgroundColor: '#3eaf7c',
+            navigationBarTextStyle: 'white'
+        },
+        networkTimeout: {
+            request: 30000
+        }
+    },
+    store,
+    onLaunch() {},
+    onShow() {}
+};
+```
+
+完成，接下来就可以正常使用 vuex 了。
+
