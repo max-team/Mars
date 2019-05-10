@@ -1,5 +1,14 @@
 # @marsjs/build
 
+## [0.2.20](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.19...@marsjs/build@0.2.20) (2019-05-10)
+
+
+### Features
+
+* **build:** add mars config useTransition ([57421c1](https://github.com/max-team/Mars/commit/57421c1))
+* **build:** update target condition and support App and fix postcss ([ad0e2c4](https://github.com/max-team/Mars/commit/ad0e2c4))
+
+
 
 ## [0.2.19](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.18...@marsjs/build@0.2.19) (2019-05-09)
 

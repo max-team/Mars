@@ -1,5 +1,14 @@
 # @marsjs/cli-template
 
+## [0.1.10](https://github.com/max-team/Mars/compare/@marsjs/cli-template@0.1.9...@marsjs/cli-template@0.1.10) (2019-05-10)
+
+
+### Features
+
+* **build:** update target condition and support App and fix postcss ([ad0e2c4](https://github.com/max-team/Mars/commit/ad0e2c4))
+* **cli:** support h5:xx  swan:xx multi packages ([ce99ea0](https://github.com/max-team/Mars/commit/ce99ea0))
+
+
 ## [0.1.9](https://github.com/max-team/Mars/compare/@marsjs/cli-template@0.1.8...@marsjs/cli-template@0.1.9) (2019-04-17)
 
 
