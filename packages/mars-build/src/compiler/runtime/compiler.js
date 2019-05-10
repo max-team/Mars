@@ -11,7 +11,6 @@ const gutil = require('gulp-util');
 const PluginError = gutil.PluginError;
 const PLUGIN_NAME = 'file-compiler';
 const log = require('../../helper/log');
-const {getDestDir} = require('../../helper/path');
 const webpack = require('webpack');
 const path = require('path');
 
@@ -23,7 +22,7 @@ const path = require('path');
  */
 function compile(options) {
     const {target, dest, framework} = options;
-    const destPath = getDestDir(dest, target);
+    const destPath = dest.path;
     let entry;
     if (target === 'wx') {
         entry = require.resolve('@marsjs/core/src/wx', {

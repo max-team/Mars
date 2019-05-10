@@ -16,7 +16,7 @@ const {transformSync} = require('@babel/core');
 
 const {compile: compileStyle} = require('../style/style');
 const {getFileCompiler} = require('./base');
-const {isCSS, isJS, changeExt, getDestDir} = require('../../helper/path');
+const {isCSS, isJS, changeExt} = require('../../helper/path');
 const log = require('../../helper/log');
 const compileModules = require('./compileModules');
 
@@ -48,7 +48,6 @@ async function compileJS(content, options) {
                 path.resolve(__dirname, './babel-plugin-relative-import.js'),
                 {
                     filePath: options.path,
-                    // cwd: path.resolve(process.cwd(), getDestDir(buildConfig.dest, target)),
                     cwd: path.resolve(process.cwd(), './src'),
                     usedModules
                 }
@@ -58,7 +57,7 @@ async function compileJS(content, options) {
         ]
     });
 
-    const destPath = path.resolve(getDestDir(buildConfig.dest, target));
+    const destPath = path.resolve(buildConfig.dest.path);
     const usedModuleKeys = Object.keys(usedModules);
     for (let i = 0; i < usedModuleKeys.length; i++) {
         const item = usedModuleKeys[i];

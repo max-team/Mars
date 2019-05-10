@@ -26,21 +26,9 @@ function changeExt(filePath, ext) {
     return filePath;
 }
 
-/**
- * 获取 dest 目录
- *
- * @param {mars.destObj} dest dest
- * @param {string} target target
- * @return {string}
- */
-function getDestDir(dest, target) {
-    return dest.path.replace('{TARGET}', target);
-}
-
 module.exports = {
     getPathToCWD,
     isCSS,
     isJS,
-    changeExt,
-    getDestDir
+    changeExt
 };

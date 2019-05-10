@@ -12,14 +12,20 @@ const del = require('del');
 const intercept = require('gulp-intercept');
 const changed = require('gulp-changed');
 
-const {transform} = require('babel-core');
-const {getPathToCWD, getDestDir} = require('../helper/path');
+const {getPathToCWD} = require('../helper/path');
 const {FILE_SUFFIX} = require('../helper/config');
 const log = require('../helper/log');
 
+/**
+ * getTaskSFC
+ *
+ * @param {mars.config} config config
+ * @param {mars.options} options options
+ * @return {Function}
+ */
 function getTaskSFC(config, options) {
     const {dest: buildDest, source} = config;
-    const dest = getDestDir(config.dest, options.target);
+    const dest = config.dest.path;
 
     let compileOption = config.options.sfc;
     compileOption = Object.assign({
@@ -68,11 +74,17 @@ function getTaskSFC(config, options) {
     };
 }
 
-
+/**
+ * getTaskCompileAssets
+ *
+ * @param {mars.config} config config
+ * @param {mars.options} options options
+ * @return {Function}
+ */
 function getTaskCompileAssets(config, options) {
     const {source} = config;
     const {target} = options;
-    const dest = getDestDir(config.dest, options.target);
+    const dest = config.dest.path;
     let {assets = [], h5Template} = source;
     if (target === 'h5' && h5Template) {
         assets = assets.concat([h5Template]);
@@ -101,8 +113,7 @@ function getTaskCompileAssets(config, options) {
  */
 function getTaskRuntime(config, options) {
     const {dest: buildDest, source} = config;
-    let dest = getDestDir(config.dest, options.target);
-    dest = dest + '/' + buildDest.coreDir;
+    // let dest = buildDest.path + '/' + buildDest.coreDir;
     let framework = JSON.stringify({});
     try {
         framework = JSON.stringify(config.framework || {});
@@ -123,9 +134,16 @@ function getTaskRuntime(config, options) {
     };
 }
 
+/**
+ * getTaskClean
+ *
+ * @param {mars.config} config config
+ * @param {mars.options} options options
+ * @return {Function}
+ */
 function getTaskClean(config, options) {
     const {projectFiles} = config;
-    let dest = getDestDir(config.dest, options.target);
+    let dest = config.dest.path;
     return callback => {
         let files = [`${dest}/**`, `!${dest}`].concat(projectFiles
             ? (projectFiles.map(item => `!${dest}/${item}`))
@@ -134,6 +152,13 @@ function getTaskClean(config, options) {
     };
 }
 
+/**
+ * getTaskWatch
+ *
+ * @param {mars.config} config config
+ * @param {mars.options} options options
+ * @return {Function}
+ */
 function getTaskWatch(config, options) {
     const {watch} = config;
     return () => {
@@ -141,6 +166,13 @@ function getTaskWatch(config, options) {
     };
 }
 
+/**
+ * getTasks
+ *
+ * @param {mars.config} config config
+ * @param {mars.options} options options
+ * @return {void}
+ */
 function getTasks(config, options) {
     gulp.task('compile:sfc', getTaskSFC(config, options));
     gulp.task('compile:runtime', getTaskRuntime(config, options));

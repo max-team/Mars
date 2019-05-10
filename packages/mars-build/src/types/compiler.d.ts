@@ -10,3 +10,20 @@ namespace mars.runtime {
         dest: destObj;
     }
 }
+
+namespace mars.script {
+    interface compileScriptResult {
+        code: string;
+        config: any;
+        components: {
+            [name: string]: string;
+        };
+        computedKeys: string[];
+        moduleType: moduleType
+    }
+
+    enum moduleType {
+        esm = 'esm',
+        cmd = 'cmd'
+    }
+}

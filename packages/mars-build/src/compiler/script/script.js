@@ -9,13 +9,19 @@
 
 /* eslint-disable fecs-min-vars-per-destructure */
 
-const {transformSync, transformFromAst} = require('@babel/core');
+const {transformSync} = require('@babel/core');
 const transformPlugin = require('./babel-plugin-script');
 const path = require('path');
-const {getDestDir} = require('../../helper/path');
 const compileModules = require('../file/compileModules');
 
-exports.compile = async function compile(source, options) {
+/**
+ * compile script
+ *
+ * @param {string} source source
+ * @param {mars.options} options options
+ * @return {mars.script.compileScriptResult}
+ */
+async function compile(source, options) {
     const {
         isApp,
         renderStr,
@@ -62,7 +68,7 @@ exports.compile = async function compile(source, options) {
         ]
     });
 
-    const destPath = path.resolve(getDestDir(dest, target));
+    const destPath = path.resolve(dest.path);
     const usedModuleKeys = Object.keys(usedModules);
     for (let i = 0; i < usedModuleKeys.length; i++) {
         const item = usedModuleKeys[i];
@@ -77,4 +83,8 @@ exports.compile = async function compile(source, options) {
         moduleType = 'esm'
     } = ret;
     return {code, config, components, computedKeys, moduleType};
+}
+
+module.exports = {
+    compile
 };
