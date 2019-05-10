@@ -27,6 +27,7 @@ async function build(cmd) {
     process.env.MARS_CLI_OPTIONS = JSON.stringify(options);
     process.env.MARS_CLI_TARGET = target;
     process.env.MARS_CLI_DEST = env ? `./dist-${env}` : './dist-h5';
+    process.env.MARS_ENV_TARGET = `${target}${env ? `:${env}` : ''}`;
 
     const run = cmd.watch ? watch : build;
 

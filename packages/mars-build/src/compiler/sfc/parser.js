@@ -34,7 +34,8 @@ exports.parse = function parse(file, options) {
             attrs: script ? script.attrs : {}
         }
     });
-    const stylesArr = styles.filter(item => !item.attrs || (!item.attrs.target || item.attrs.target === target));
+    const stylesArr = styles.filter(item =>
+        !item.attrs || (!item.attrs.target || item.attrs.target === process.env.MARS_ENV_TARGET));
     const styleContent = stylesArr.reduce((stylestr, {content}) => `
 ${stylestr}
 ${content}

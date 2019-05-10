@@ -7,7 +7,7 @@
 
 // import component from './component';
 const tagMap = require('./vueComponentTagMap');
-const templateOnlyForH5 = 'template-mars';
+const customTemplate = 'template-mars';
 
 const nativeEvent = {
     '@touchstart': '@touchstart',
@@ -35,17 +35,18 @@ function toCamel(name) {
     return camelName.substring(0, 1).toUpperCase() + camelName.substring(1);
 }
 
-module.exports = function (ast, options, compMap) {
+module.exports = function (ast, compMap) {
     let tag = ast.tag;
     if (!tag) {
         return ast;
     }
 
     if (
-        tag === templateOnlyForH5
-        && ast.attrsMap['target'] === 'h5'
+        tag === customTemplate
+        && ast.attrsMap.target === process.env.MARS_ENV_TARGET
     ) {
         tag = 'template';
+        delete ast.attrsMap.target;
     }
 
     Object.keys(ast.attrsMap).forEach(key => {

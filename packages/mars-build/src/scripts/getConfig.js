@@ -12,7 +12,7 @@ function getProjectConfig(options) {
     let projectConfig = {};
     const configPath = path.resolve(process.cwd(), './mars.config.js');
     if (fs.existsSync(configPath)) {
-        projectConfig = require(configPath)(options);
+        projectConfig = require(configPath)(process.env.MARS_ENV_TARGET);
     }
 
     return projectConfig;

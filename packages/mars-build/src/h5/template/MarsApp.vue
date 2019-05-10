@@ -292,7 +292,7 @@ export default {
 
     .swan-app-container {
         width: 100%;
-        padding-top: 38px; /* POSTCSS_PX2UNITS_COMMENT */
+        padding-top: 38px; /* no */
 
         .swan-app-tab-panel {
             overflow-y: auto;

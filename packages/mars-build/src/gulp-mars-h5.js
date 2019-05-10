@@ -51,7 +51,7 @@ Vinyl.prototype.writeFileSync = function () {
 function compile(file, opt) {
     const rPath = path.relative(file.base, file.path);
     const fPath = path.resolve(file.cwd, opt.dest, rPath).replace(/\.vue$/, '');
-    const isApp = path.basename(fPath) === 'app';
+    const isApp = path.basename(fPath).toLowerCase() === 'app';
     try {
         const dirPath = fPath.replace(/[^/]+$/, '');
         mkdirp.sync(dirPath);
@@ -88,7 +88,7 @@ function compile(file, opt) {
             modules: [{
                 preTransformNode(el, options) {
                     let basicCompMap = {};
-                    delToVueTag(el, options, basicCompMap);
+                    delToVueTag(el, basicCompMap);
                     if (!el.parent) {
                         el.attrsMap.style = `backgroundColor: ${config.backgroundColor || null};`;
                     }
@@ -98,7 +98,7 @@ function compile(file, opt) {
             }]
         });
         templateCode = generate(templateRet.ast, {
-            target: 'h5'
+            target: process.env.MARS_ENV_TARGET
         });
     }
 
@@ -163,7 +163,8 @@ function compile(file, opt) {
     fs.writeFileSync(opt.dest + '/main.js', content);
 
     // 处理style
-    const h5StylesArr = styles.filter(item => !item.attrs || (!item.attrs.target || item.attrs.target === 'h5'));
+    const h5StylesArr = styles.filter(item =>
+        !item.attrs || (!item.attrs.target || item.attrs.target === process.env.MARS_ENV_TARGET));
     const styleContent = h5StylesArr.reduce((styleStr, {
             scoped,
             content,

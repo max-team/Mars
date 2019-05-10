@@ -18,13 +18,9 @@ const {isCSS, isJS, changeExt} = require('../../helper/path');
 const log = require('../../helper/log');
 
 function compileJS(content, options) {
-    const {
-        target
-    } = options;
-
     content = content.replace(
         /process\.env\.MARS_ENV/g,
-        JSON.stringify(target)
+        JSON.stringify(process.env.MARS_ENV_TARGET)
     ).replace(
         /process\.env\.NODE_ENV/g,
         JSON.stringify(process.env.NODE_ENV || 'development')
