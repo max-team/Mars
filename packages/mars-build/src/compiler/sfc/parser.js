@@ -35,7 +35,7 @@ exports.parse = function parse(file, options) {
         }
     });
     const stylesArr = styles.filter(item =>
-        !item.attrs || (!item.attrs.target || item.attrs.target === process.env.MARS_ENV_TARGET));
+        !item.attrs || (!item.attrs.target || item.attrs.target === (process.env.MARS_ENV_TARGET || target)));
     const styleContent = stylesArr.reduce((stylestr, {content}) => `
 ${stylestr}
 ${content}

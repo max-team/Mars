@@ -12,7 +12,7 @@ function getProjectConfig(options) {
     let projectConfig = {};
     const configPath = path.resolve(process.cwd(), './mars.config.js');
     if (fs.existsSync(configPath)) {
-        projectConfig = require(configPath)(process.env.MARS_ENV_TARGET);
+        projectConfig = require(configPath)(process.env.MARS_ENV_TARGET || options.target || 'swan');
     }
 
     return projectConfig;

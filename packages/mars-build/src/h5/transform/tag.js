@@ -43,7 +43,7 @@ module.exports = function (ast, compMap) {
 
     if (
         tag === customTemplate
-        && ast.attrsMap.target === process.env.MARS_ENV_TARGET
+        && ast.attrsMap.target === (process.env.MARS_ENV_TARGET || 'h5')
     ) {
         tag = 'template';
         delete ast.attrsMap.target;
