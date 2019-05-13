@@ -46,6 +46,7 @@ function compile(options) {
                 filename: 'index.js',
                 libraryTarget: 'commonjs'
             },
+            devtool: false,
             mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
             plugins: [
                 new webpack.DefinePlugin({
