@@ -69,6 +69,7 @@ function compile(val, key, destPath) {
                 filename: modulePath,
                 libraryTarget: 'commonjs'
             },
+            devtool: false,
             mode: process.env.NODE_ENV === 'production' ? 'production' : 'development'
         }, (err, stats) => {
             if (err) {
