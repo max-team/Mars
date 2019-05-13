@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "version": "lerna version patch --no-push --conventional-commits",
+    "version": "lerna version patch --no-push --conventional-commits --ignore-changes '**/mars-cli/**' '**/mars-core/**'",
     "publish": "lerna publish from-git --registry https://registry.npmjs.org",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs && cp docs/.vuepress/index.html docs/.vuepress/dist",
