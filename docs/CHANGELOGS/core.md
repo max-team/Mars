@@ -1,5 +1,14 @@
 # @marsjs/core
 
+## [0.2.8](https://github.com/max-team/Mars/compare/@marsjs/core@0.2.7...@marsjs/core@0.2.8) (2019-05-13)
+
+
+### Features
+
+* **build & core:** 支持 Vuex ([#46](https://github.com/max-team/Mars/issues/46)) ([173a329](https://github.com/max-team/Mars/commit/173a329))
+
+
+
 ## [0.2.7](https://github.com/max-team/Mars/compare/@marsjs/core@0.2.6...@marsjs/core@0.2.7) (2019-04-22)
 
 

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.23](https://github.com/max-team/Mars/compare/@marsjs/cli@0.1.22...@marsjs/cli@0.1.23) (2019-05-13)
+
+
+### Features
+
+* **cli:** prompting while every dep is latest ([2376cff](https://github.com/max-team/Mars/commit/2376cff))
+
+
+
+
+
 ## [0.1.22](https://github.com/max-team/Mars/compare/@marsjs/cli@0.1.21...@marsjs/cli@0.1.22) (2019-05-10)
 
 
