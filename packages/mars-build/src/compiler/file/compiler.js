@@ -19,6 +19,7 @@ const {getFileCompiler} = require('./base');
 const {isCSS, isJS, changeExt} = require('../../helper/path');
 const log = require('../../helper/log');
 const compileModules = require('./compileModules');
+const modules = compileModules.modules;
 
 /**
  * 编译 JS
@@ -49,6 +50,7 @@ async function compileJS(content, options) {
                 {
                     filePath: options.path,
                     cwd: path.resolve(process.cwd(), './src'),
+                    modules,
                     usedModules
                 }
             ],

@@ -89,12 +89,23 @@ exports.compileMain = function (content, options) {
     return content;
 };
 
-exports.compileScript = function (content, {
-    isApp = false
-}) {
+
+const path = require('path');
+const {getUIModules, resolveComponentsPath} = require('./script');
+const compileModules = require('../file/compileModules');
+
+exports.compileScript = async function (content, options = {}) {
     if (!content) {
         return null;
     }
+
+    const {
+        isApp = false,
+        target,
+        dest,
+        path: filePath
+    } = options;
+
     let baseOptions = {}; // 收集 config 和 components
     content = content.replace(
         /process\.env\.MARS_ENV/g,
@@ -123,6 +134,27 @@ exports.compileScript = function (content, {
     content = new Buffer(scriptStr);
 
     const {config = {}, components = {}, enableConfig = null} = baseOptions;
+
+    const destPath = path.resolve(dest.path);
+    const uiModules = getUIModules(components, target);
+    let resolvedPaths = {};
+    content = babel.transform(content, {
+        plugins: [
+            [
+                path.resolve(__dirname, '../file/babel-plugin-relative-import.js'),
+                {
+                    filePath,
+                    cwd: path.resolve(process.cwd(), dest.path),
+                    modules: uiModules,
+                    resolvedPaths
+                }
+            ]
+        ]
+    }).code;
+
+    resolveComponentsPath(components, resolvedPaths);
+    await compileModules.compileUIModules(uiModules, destPath);
+
     return {config, components, enableConfig, content};
 };
 

@@ -40,7 +40,6 @@ function compile(val, key, destPath) {
         return Promise.resolve();
     }
 
-
     const entry = require.resolve(key, {
         paths: [process.cwd()]
     });
@@ -97,7 +96,46 @@ function compile(val, key, destPath) {
 
 }
 
+
+async function compileUIModules(uiModules, destPath) {
+    for (const key of Object.keys(uiModules)) {
+        const {path: modPath, realName} = uiModules[key];
+        let coreEntry;
+        let entry;
+        let isH5 = false;
+        try {
+            coreEntry = require.resolve(realName + '/mars-core', {
+                paths: [process.cwd()]
+            });
+            entry = coreEntry.replace('mars-core/index.js', '');
+        }
+        catch (e) {
+            isH5 = true;
+            coreEntry = require.resolve(realName + '/main.js', {
+                paths: [process.cwd()]
+            });
+            entry = coreEntry.replace('/main.js', '');
+        }
+
+        const dest = path.resolve(destPath, modPath);
+
+        log.info('[compile:ui-module]:', getPathToCWD(entry));
+        await fs.copy(entry, dest);
+
+        if (!isH5) {
+            const coreDestPath = path.resolve(destPath, 'mars-core');
+            const uiCoreDestPath = path.resolve(dest, 'mars-core');
+            const coreRelativePath = path.relative(
+                uiCoreDestPath,
+                coreDestPath
+            );
+            fs.outputFileSync(uiCoreDestPath + '/index.js', `export * from '${coreRelativePath}';`);
+        }
+    }
+}
+
 module.exports = {
     compile,
-    modules
+    modules,
+    compileUIModules
 };
