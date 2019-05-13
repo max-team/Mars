@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.23](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.22...@marsjs/build@0.2.23) (2019-05-13)
+
+
+### Bug Fixes
+
+* **build:** remove eval from webpack output ([#53](https://github.com/max-team/Mars/issues/53)) ([932a98a](https://github.com/max-team/Mars/commit/932a98a))
+
+
+
+
+
 ## [0.2.22](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.21...@marsjs/build@0.2.22) (2019-05-13)
 
 
