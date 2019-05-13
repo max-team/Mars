@@ -3,26 +3,28 @@
  * @author meixuguang
  */
 
-const {error, stopSpinner} = require('@vue/cli-shared-utils');
+/* eslint-disable fecs-no-require */
+/* eslint-disable no-console */
+
+const {stopSpinner} = require('@vue/cli-shared-utils');
+const logger = require('@vue/cli-shared-utils/lib/logger');
 const execa = require('execa');
 const fs = require('fs-extra');
 
-function executeCommand(command, args, targetDir) {
-    return new Promise((resolve, reject) => {
-
-        const child = execa(command, args, {
-            cwd: targetDir,
-            stdio: ['inherit', 'inherit', 'inherit']
-        });
-
-        child.on('close', code => {
-            if (code !== 0) {
-                reject(`command failed: ${command} ${args.join(' ')}`);
-                return;
-            }
-            resolve();
-        });
+async function executeCommand(command, args, targetDir) {
+    const child = execa(command, args, {
+        cwd: targetDir
     });
+
+    child.stdout.pipe(process.stdout);
+
+    const res = await child;
+
+    if (res.code !== 0) {
+        logger.error(`command failed: ${command} ${args.join(' ')}\n`);
+    }
+
+    return res;
 }
 
 const dependencyList = [
@@ -49,7 +51,11 @@ async function update(cmd) {
         forceUpdate(cmd.registry);
     }
     else {
-        compatibleUpdate(cmd.registry);
+        const res = await compatibleUpdate(cmd.registry);
+
+        if (!res.stdout && !res.stderr) {
+            logger.info('所有依赖已是最新。');
+        }
     }
 }
 
@@ -84,7 +90,7 @@ async function forceUpdate(registry) {
 module.exports = (...args) =>
     update(...args).catch(err => {
         stopSpinner(false); // do not persist
-        error(err);
+        logger.error(err);
         if (!process.env.VUE_CLI_TEST) {
             process.exit(1);
         }
