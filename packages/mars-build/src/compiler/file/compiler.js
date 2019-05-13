@@ -98,12 +98,12 @@ exports.gulpPlugin = function (options) {
             return cb();
         }
         if (file.isBuffer()) {
-            try {
-                compile(file, options).then(_ => cb(null, file));
-            }
-            catch (e) {
-                log.error('[COMPILE ERROR]:', e);
-            }
+            compile(file, options)
+                .then(_ => cb(null, file))
+                .catch(err => {
+                    log.error('[COMPILE ERROR]:', err);
+                    cb(null, file);
+                });
             return;
         }
         // for other file type

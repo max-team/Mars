@@ -69,12 +69,12 @@ function gulpPlugin(opt = {dest: './dist'}, compilers) {
             return cb();
         }
         if (file.isBuffer()) {
-            try {
-                compile(file, opt, compilers).then(_ => cb(null, file));
-            }
-            catch (e) {
-                log.error('[COMPILE ERROR]:', e);
-            }
+            compile(file, opt, compilers)
+                .then(_ => cb(null, file))
+                .catch(err => {
+                    log.error('[COMPILE ERROR]:', err);
+                    cb(null, file);
+                });
         }
     });
     return stream;
