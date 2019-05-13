@@ -15,3 +15,11 @@ configureWebpack: {
     ]
 }
 ```
+
+### 新增的文件没有触发编译？
+
+执行 `mars serve` 后，新增了文件，发现不能够触发编译。请检查 mars.config.js 文件，是否自己设置了 watch。
+
+gulp.watch 不能设置为绝对路径或 `./` 开头的路径，否则不能自动监测到新增文件，例如：`./src/**/*` 需要改为 `src/**/*`。
+
+详细说明见：https://stackoverflow.com/questions/22391527/gulps-gulp-watch-not-triggered-for-new-or-deleted-files 。
