@@ -19,7 +19,9 @@ jobs:
           branch: master
     - stage: release
       if: branch = release
-      script: git checkout master
+      script: 
+        - git pull
+        - git checkout master
       before_deploy:
         - echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
         - git remote set-url origin https://${GITHUB_TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git
