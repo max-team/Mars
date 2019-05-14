@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.24](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.23...@marsjs/build@0.2.24) (2019-05-14)
+
+
+### Features
+
+* **build:** 支持 npm 方式引入组件库 [#34](https://github.com/max-team/Mars/issues/34) ([b428d64](https://github.com/max-team/Mars/commit/b428d64))
+* **build & core:** add h5 runtime entry ([f1f7ff9](https://github.com/max-team/Mars/commit/f1f7ff9))
+
+
+
+
+
 ## [0.2.23](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.22...@marsjs/build@0.2.23) (2019-05-13)
 
 
