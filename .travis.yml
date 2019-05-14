@@ -31,3 +31,5 @@ jobs:
         provider: script
         script:
           - npm run version && npm run publish -- --yes
+        on:
+          all_branches: true
