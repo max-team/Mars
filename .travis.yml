@@ -1,13 +1,12 @@
 language: node_js
 node_js:
   - lts/*
-before_install:
-install:
-  - npm install
 jobs:
   include:
     - stage: docs
       if: branch = master
+      install:
+        - npm install
       script: npm run docs:build
       deploy:
         provider: pages
@@ -19,13 +18,19 @@ jobs:
           branch: master
     - stage: release
       if: branch = release
-      before_deploy:
-        - echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+      script: 
         - git remote set-url origin https://${GITHUB_TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git
-      deploy:
-        provider: script
-        script: 
-          - git checkout master
-          - npm run version && npm run publish -- --yes
-        on:
-          branch: release
+        - git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'
+        - git fetch --all
+        - git checkout master
+      # before_deploy:
+        - git stash
+        - echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+      # deploy:
+      #   provider: script
+      #   skip_cleanup: true
+      #   script:
+        - npm run version
+        - npm run publish -- --yes
+        # on:
+        #   all_branches: true
