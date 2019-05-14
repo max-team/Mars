@@ -4,10 +4,10 @@ node_js:
 before_install:
 install:
   - npm install
-
 jobs:
   include:
     - stage: docs
+      if: branch = master
       script: npm run docs:build
       deploy:
         provider: pages
@@ -18,13 +18,14 @@ jobs:
         on:
           branch: master
     - stage: release
+      if: branch = release
+      script: git checkout master
       before_deploy:
         - echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
         - git remote set-url origin https://${GITHUB_TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git
       deploy:
         provider: script
-        script: 
-          - git checkout master
+        script:
           - npm run version && npm run publish -- --yes
         on:
           branch: release
