@@ -30,7 +30,7 @@ jobs:
       #   provider: script
       #   skip_cleanup: true
       #   script:
-        - npm run version
+        - npm run version -- --yes
         - npm run publish -- --yes
         # on:
         #   all_branches: true
