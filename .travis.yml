@@ -23,16 +23,14 @@ jobs:
         - git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'
         - git fetch --all
         - git checkout master
+      before_deploy:
+        - git stash
         - echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
-        - npm install
-        - npm run version
-        - npm run publish -- --yes
-      # before_deploy:
-      # deploy:
-      #   provider: script
-      #   skip_cleanup: true
-      #   script:
-          # - npm run version
-          # - npm run publish -- --yes
-        # on:
-        #   all_branches: true
+      deploy:
+        provider: script
+        skip_cleanup: true
+        script:
+          - npm run version
+          - npm run publish -- --yes
+        on:
+          all_branches: true
