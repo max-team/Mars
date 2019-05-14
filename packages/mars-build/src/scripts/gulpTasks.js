@@ -26,17 +26,18 @@ const log = require('../helper/log');
 function getTaskSFC(config, options) {
     const {dest: buildDest, source} = config;
     const dest = config.dest.path;
+    const {target} = options;
 
     let compileOption = config.options.sfc;
     compileOption = Object.assign({
         dest,
+        target,
         coreDir: buildDest.coreDir
     }, compileOption);
 
     compileOption._argv = options;
     compileOption._config = config;
 
-    const {target} = options;
     let compile;
     if (target === 'swan') {
         compile = require('../gulp-mars-swan');

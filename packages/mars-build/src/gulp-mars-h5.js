@@ -23,6 +23,7 @@ const path = require('path');
 const mkdirp = require('mkdirp');
 const Vinyl = require('vinyl');
 const log = require('./helper/log');
+const slash = require('slash');
 
 const {
     compileScript,
@@ -48,13 +49,13 @@ Vinyl.prototype.writeFileSync = function () {
     fs.writeFileSync(this.path, this.contents.toString());
 };
 
-function compile(file, opt) {
+async function compile(file, opt) {
     const rPath = path.relative(file.base, file.path);
-    const fPath = path.resolve(file.cwd, opt.dest, rPath).replace(/\.vue$/, '');
+    const fPath = slash(path.resolve(file.cwd, opt.dest, rPath).replace(/\.vue$/, ''));
     const isApp = path.basename(fPath).toLowerCase() === 'app';
+    let fileDirPath = fPath.replace(/[^/]+$/, '');
     try {
-        const dirPath = fPath.replace(/[^/]+$/, '');
-        mkdirp.sync(dirPath);
+        mkdirp.sync(fileDirPath);
     }
     catch (e) {}
 
@@ -69,8 +70,11 @@ function compile(file, opt) {
     let config = null;
     let enableConfig = null;
     if (script) {
-        scriptRet = compileScript(script.content, {
-            isApp
+        scriptRet = await compileScript(script.content, {
+            isApp,
+            target: opt.target,
+            path: fPath + '.vue',
+            dest: opt._config.dest
         });
         config = scriptRet && scriptRet.config;
         enableConfig = scriptRet && scriptRet.enableConfig;
@@ -216,18 +220,13 @@ function gulpPrefixer(opt = {dest: './dist-h5'}) {
         }
 
         if (file.isBuffer()) {
-            try {
-                compile(file, opt);
-            }
-            catch (e) {
-                log.error('[COMPILE ERROR]:', e);
-            }
+            compile(file, opt)
+                .then(_ => cb(null, file))
+                .catch(err => {
+                    log.error('[COMPILE ERROR]:', err);
+                    cb(null, file);
+                });
         }
-
-        // 确保文件进入下一个 gulp 插件
-        this.push(file);
-        // 告诉 stream 引擎，我们已经处理完了这个文件
-        cb();
     });
     // 返回文件 stream
     return stream;

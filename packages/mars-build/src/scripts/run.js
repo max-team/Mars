@@ -33,10 +33,10 @@ function getBuildTasks(config = {}, options = {}) {
         'copy:assets'
     ];
 
-    if (target !== 'h5') {
-        gulp.task('compile:runtime', getTaskRuntime(config, options));
-        buildTasks.push('compile:runtime');
-    }
+    // if (target !== 'h5') {
+    gulp.task('compile:runtime', getTaskRuntime(config, options));
+    buildTasks.push('compile:runtime');
+    // }
 
     return buildTasks;
 }

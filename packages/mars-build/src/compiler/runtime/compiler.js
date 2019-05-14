@@ -13,6 +13,7 @@ const PLUGIN_NAME = 'file-compiler';
 const log = require('../../helper/log');
 const webpack = require('webpack');
 const path = require('path');
+const fs = require('fs-extra');
 
 /**
  * compile
@@ -24,6 +25,7 @@ function compile(options) {
     const {target, dest, framework} = options;
     const destPath = dest.path;
     let entry;
+    const coreDestDir = path.resolve(process.cwd(), destPath + '/' + dest.coreDir);
     if (target === 'wx') {
         entry = require.resolve('@marsjs/core/src/wx', {
             paths: [process.cwd()]
@@ -34,6 +36,13 @@ function compile(options) {
             paths: [process.cwd()]
         });
     }
+    else if (target === 'h5') {
+        // h5 runtime just copy it
+        entry = require.resolve('@marsjs/core/src/h5', {
+            paths: [process.cwd()]
+        });
+        return fs.copy(entry, path.resolve(coreDestDir, 'index.js'));
+    }
     else {
         return Promise.resolve();
     }
@@ -42,7 +51,7 @@ function compile(options) {
         webpack({
             entry: [entry],
             output: {
-                path: path.resolve(process.cwd(), destPath + '/' + dest.coreDir),
+                path: coreDestDir,
                 filename: 'index.js',
                 libraryTarget: 'commonjs'
             },

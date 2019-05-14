@@ -26,9 +26,18 @@ function changeExt(filePath, ext) {
     return filePath;
 }
 
+function getModuleName(mod) {
+    let [name, temp] = mod.split('/');
+    if (name[0] === '@') {
+        name = `${name}/${temp}`;
+    }
+    return name;
+}
+
 module.exports = {
     getPathToCWD,
     isCSS,
     isJS,
-    changeExt
+    changeExt,
+    getModuleName
 };
