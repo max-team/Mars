@@ -42,9 +42,9 @@ function compile(file, opt, compilers) {
     coreRelativePath = coreRelativePath[0] === '.' ? coreRelativePath : './' + coreRelativePath;
     coreRelativePath = slash(coreRelativePath + '/index');
 
+    let fileDirPath = fPath.replace(/[^/]+$/, '');
     try {
-        const dirPath = fPath.replace(/[^/]+$/, '');
-        mkdirp.sync(dirPath);
+        mkdirp.sync(fileDirPath);
     }
     catch (e) {}
 
