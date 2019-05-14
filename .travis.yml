@@ -25,11 +25,12 @@ jobs:
         - git checkout master
         - npm install
       before_deploy:
-        - git stash
         - echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
       deploy:
         provider: script
+        skip_cleanup: true
         script:
-          - npm run version && npm run publish -- --yes
+          - npm run version
+          - npm run publish -- --yes
         on:
           all_branches: true
