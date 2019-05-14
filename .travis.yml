@@ -21,8 +21,9 @@ jobs:
       if: branch = release
       script: 
         - git remote set-url origin https://${GITHUB_TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git
-        - git fetch origin master
-        - git checkout -b master --track origin/master
+        - git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'
+        - git fetch --all
+        - git checkout master
       before_deploy:
         - echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
       deploy:
