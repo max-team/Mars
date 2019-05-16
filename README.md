@@ -36,8 +36,8 @@ mars build [--target, -t swan (default) | wx | h5]
 
 | | 百度智能小程序 | H5 |
 |-|-|-|
-| 装馨家 | ![](./docs/assets/qr-jiazhuang.png) | ![](./docs/assets/qr-jiazhuang-h5.png) |
-| 健康养生说 | ![](./docs/assets/qr-yangsheng.png) | ![](./docs/assets/qr-yangsheng-h5.png) |
+| 装馨家 | ![](./docs/assets/qr-jiazhuang.png) | [![](./docs/assets/qr-jiazhuang-h5.png)](https://jia.baidu.com/m#/pages/home/index) |
+| 健康养生说 | ![](./docs/assets/qr-yangsheng.png) | [![](./docs/assets/qr-yangsheng-h5.png)](https://sp0.baidu.com/5LMDcjW6BwF3otqbppnN2DJv/health.pae.baidu.com/medauth/healthpage/#/pages/list/index) |
 
 ### 小程序案例
 
