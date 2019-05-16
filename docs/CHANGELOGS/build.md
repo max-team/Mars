@@ -65,14 +65,14 @@
 ### Bug Fixes
 
 * **build:** fix h5 style scoped and fix component map ([b92de1e](https://github.com/max-team/Mars/commit/b92de1e))
-* write file error on windows ([4e2f90d](https://github.com/max-team/Mars/commit/4e2f90d))
+* **build:** write file error on windows ([4e2f90d](https://github.com/max-team/Mars/commit/4e2f90d))
 
 
 ## [0.2.17](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.16...@marsjs/build@0.2.17) (2019-04-25)
 
 ### Bug Fixes
 
-* **history-pos:** 修复页面不滚动跳转后返回定位的问题 ([92b01bb](https://github.com/max-team/Mars/commit/92b01bb))
+* **build:** 修复页面不滚动跳转后返回定位的问题 ([92b01bb](https://github.com/max-team/Mars/commit/92b01bb))
 
 
 
@@ -81,7 +81,7 @@
 
 ### Refactor
 
-* **ubuild:** 升级getApp 项目中的 app.vue 文件在编译到 H5 时保留独立 sfc ([4667930](https://github.com/max-team/Mars/commit/4667930))
+* **build:** 升级getApp 项目中的 app.vue 文件在编译到 H5 时保留独立 sfc ([4667930](https://github.com/max-team/Mars/commit/4667930))
 
 
 ## [0.2.15](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.14...@marsjs/build@0.2.15) (2019-04-25)
