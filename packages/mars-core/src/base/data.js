@@ -240,14 +240,12 @@ function getChangedData(vm, _data, keyPath = '', ret = {}) {
     if (!ob) {
         return ret;
     }
-
     const {__changedKeys__: changedKeys} = ob;
     vm.__mpKeyPath = vm.__mpKeyPath || {};
 
     if (ob.__changed__ || ob.__changedKeys__) {
         vm.__mpKeyPath[ob.dep.id] = ob;
     }
-
     if (ob.__changed__) {
         ret[keyPath] = _data;
     }
@@ -257,10 +255,6 @@ function getChangedData(vm, _data, keyPath = '', ret = {}) {
             const path = (keyPath ? `${keyPath}.` : '') + key;
             if (changedKeys && changedKeys[key]) {
                 ret[path] = data;
-            // if (data instanceof Object) {
-            //     // if (quickEquel()) {
-            //     // }
-            // }
             }
             else if (data instanceof Object) {
                 getChangedData(vm, data, path, ret);
