@@ -7,8 +7,7 @@
 
 ### Bug Fixes
 
-* **build:** fix '||' is marked as filter ([#59](https://github.com/max-team/Mars/issues/59)) ([22dfd00](https://github.com/max-team/Mars/commit/22dfd00))
-
+* **build:** 修复 '||' 被识别为过滤器 ([#59](https://github.com/max-team/Mars/issues/59)) ([22dfd00](https://github.com/max-team/Mars/commit/22dfd00))
 
 
 
