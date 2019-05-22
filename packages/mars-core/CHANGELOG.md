@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.9](https://github.com/max-team/Mars/compare/@marsjs/core@0.2.8...@marsjs/core@0.2.9) (2019-05-14)
+
+
+### Features
+
+* **build & core:** add h5 runtime entry ([f1f7ff9](https://github.com/max-team/Mars/commit/f1f7ff9))
+
+
+
+
+
 ## [0.2.8](https://github.com/max-team/Mars/compare/@marsjs/core@0.2.7...@marsjs/core@0.2.8) (2019-05-13)
 
 
