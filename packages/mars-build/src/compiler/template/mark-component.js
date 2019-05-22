@@ -89,7 +89,7 @@ function isComplexExp(exp) {
 function getFilters(node) {
     let props = node.attrsList
         ? node.attrsList.filter(({name, value}) =>
-            name.indexOf(':') >= 0 && (value.indexOf('|') > 0 || isComplexExp(value))
+            name.indexOf(':') >= 0 && (/[^|]+\|[^|]+/.test(value) || isComplexExp(value))
         )
         : [];
     props = props.map(({name}) => name.replace(/^(v-bind)?:/, ''));
