@@ -19,6 +19,7 @@ const path = require('path');
 const slash = require('slash');
 const minimist = require('minimist');
 const {getCliVersion, cleanArgs, defaultConfig} = require('../lib/helper/utils');
+const getPackageVersion = require('../lib/helper/getPackageVersion');
 const execa = require('execa');
 
 function checkNodeVersion(wanted, id) {
@@ -50,6 +51,21 @@ if (
 ) {
     process.env.VUE_CLI_DEBUG = true;
 }
+
+// 检查 cli 是否有更新，给出提示
+const cliVersion = getCliVersion();
+getPackageVersion('@marsjs/cli', 'latest')
+    .then(data => {
+        const latestVersion = data && data.version;
+        if (!latestVersion) {
+            return;
+        }
+
+        if (semver.lt(cliVersion, latestVersion)) {
+            console.log(chalk.green(`@marsjs/cli 有更新，当前版本为 ${cliVersion}, 最新版本为 ${latestVersion}，请尽快升级。`));
+        }
+    });
+
 
 const program = require('commander');
 
