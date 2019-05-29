@@ -162,10 +162,10 @@ async function compile(file, opt) {
     content = compileMain(content, {
         mainOptions,
         componentSet,
-        mars: opt._config.h5 || null
+        mars: opt._config.h5 || {}
     });
     fs.writeFileSync(opt.dest + '/main.js', content);
-    process.env.MARS_PWA = opt._config.h5 && opt._config.h5.supportPWA;
+    process.env.MARS_PWA = !!(opt._config.h5 && opt._config.h5.supportPWA);
 
     // 处理style
     const h5StylesArr = styles.filter(item =>

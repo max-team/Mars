@@ -75,9 +75,11 @@ exports.compileMain = function (content, options) {
             routes: tabBar && tabBar.list || [],
             window,
             mars: {
-                navigationBarHomeColor: mars && mars.navigationBarHomeColor || 'dark',
-                showNavigationBorder: mars && mars.showNavigationBorder ? mars.showNavigationBorder : true,
-                useTransition: mars && mars.useTransition ? mars.useTransition : true,
+                navigationBarHomeColor: mars.navigationBarHomeColor === undefined
+                    ? 'dark'
+                    : mars.navigationBarHomeColor,
+                showNavigationBorder: !!mars.showNavigationBorder,
+                useTransition: mars.useTransition === undefined ? true : mars.useTransition,
                 homePage: `/${tabBar && tabBar.list && tabBar.list.length > 0 ? tabBar.list[0].pagePath : pages[0]}`,
                 supportPWA: !!mars.supportPWA
             },
