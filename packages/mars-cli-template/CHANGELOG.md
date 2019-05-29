@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.11](https://github.com/max-team/Mars/compare/@marsjs/cli-template@0.1.10...@marsjs/cli-template@0.1.11) (2019-05-29)
+
+
+### Features
+
+* **build:** add PWA feature ([a7bdbd0](https://github.com/max-team/Mars/commit/a7bdbd0))
+
+
+
+
+
 ## [0.1.10](https://github.com/max-team/Mars/compare/@marsjs/cli-template@0.1.9...@marsjs/cli-template@0.1.10) (2019-05-10)
 
 
