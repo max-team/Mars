@@ -114,6 +114,28 @@ program
             }
         ]);
 
+        let needPWA = false;
+        if (target !== 'noH5') {
+            let res = await inquirer.prompt([
+                {
+                    name: 'target',
+                    type: 'list',
+                    message: 'H5 是否需要支持 PWA：',
+                    choices: [
+                        {
+                            name: '需要',
+                            value: 'need'
+                        },
+                        {
+                            name: '不需要',
+                            value: 'no'
+                        }
+                    ]
+                }
+            ]);
+            needPWA = res.target === 'need';
+        }
+
         /* eslint-disable fecs-camelcase */
         options.inlinePreset = JSON.stringify({
             useConfigFiles: false,
@@ -123,7 +145,8 @@ program
             plugins: {
                 '@marsjs/cli-template': {
                     version: '~0.1.0',
-                    noH5: target === 'noH5'
+                    noH5: target === 'noH5',
+                    needPWA
                 }
             }
         });

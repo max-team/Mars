@@ -73,11 +73,15 @@ process.env.MARS_CLI_OPTIONS = process.env.MARS_CLI_OPTIONS || JSON.stringify({
     if (!fs.existsSync(process.cwd() + '/vue.config.js')) {
         console.error(chalk.red('vue.config.js 文件未找到，请确认当前所在工程支持编译到 h5。'));
     }
-    await fs.copy(process.cwd() + '/vue.config.js', context + '/vue.config.js');
+    if (!process.env.VUE_CLI_SERVICE_CONFIG_PATH) {
+        process.env.VUE_CLI_SERVICE_CONFIG_PATH = process.cwd() + '/vue.config.js';
+    }
+    // await fs.copy(process.cwd() + '/vue.config.js', context + '/vue.config.js');
 
     const plugins = [
         idToPlugin('@marsjs/vue-cli-plugin-mars-web'),
-        idToPlugin('@vue/cli-plugin-babel')
+        idToPlugin('@vue/cli-plugin-babel'),
+        idToPlugin('@marsjs/vue-cli-plugin-pwa')
     ];
     const service = new Service(context, {
         plugins
