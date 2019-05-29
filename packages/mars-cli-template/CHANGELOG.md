@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.12](https://github.com/max-team/Mars/compare/@marsjs/cli-template@0.1.11...@marsjs/cli-template@0.1.12) (2019-05-29)
+
+
+### Bug Fixes
+
+* **build:** compatible with older versions ([36bb19b](https://github.com/max-team/Mars/commit/36bb19b))
+
+
+
+
+
 ## [0.1.11](https://github.com/max-team/Mars/compare/@marsjs/cli-template@0.1.10...@marsjs/cli-template@0.1.11) (2019-05-29)
 
 

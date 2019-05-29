@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.27](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.26...@marsjs/build@0.2.27) (2019-05-29)
+
+
+### Bug Fixes
+
+* **build:** compatible with older versions ([36bb19b](https://github.com/max-team/Mars/commit/36bb19b))
+
+
+
+
+
 ## [0.2.26](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.25...@marsjs/build@0.2.26) (2019-05-29)
 
 

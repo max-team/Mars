@@ -1,6 +1,6 @@
 {
   "name": "@marsjs/cli-template",
-  "version": "0.1.11",
+  "version": "0.1.12",
   "bin": {
     "mars-cli-service": "./bin/mars-cli-service.js"
   },
