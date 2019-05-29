@@ -8,6 +8,11 @@ module.exports = {
         '@marsjs/components'
     ],
     parallel: false,
+    pwa: {
+        include: [/\.html$/, /\.jpg$/, /\.png$/, /\.css$/, /\.js$/],
+        version: '0-0-1',
+        exclude: []
+    },
     chainWebpack: config => {
         config
             .plugin('html')

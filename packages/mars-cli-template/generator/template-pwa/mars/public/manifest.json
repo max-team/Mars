@@ -1,0 +1,21 @@
+{
+    "name": "mars-demo",
+    "short_name": "mars-demo",
+    "icons": [
+      {
+        "src": "./img/icons/mars-192.png",
+        "sizes": "192x192",
+        "type": "image/png"
+      },
+      {
+        "src": "./img/icons/mars-128.png",
+        "sizes": "128x128",
+        "type": "image/png"
+      }
+    ],
+    "start_url": "./index.html",
+    "display": "standalone",
+    "background_color": "#FFF",
+    "theme_color": "#4DBA87"
+  }
+  

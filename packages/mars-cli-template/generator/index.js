@@ -4,7 +4,10 @@
  */
 
 module.exports = async (api, options) => {
-
+    const {
+        noH5,
+        needPWA
+    } = options;
 
     if (options.isDistH5) {
         api.render('./dist-h5');
@@ -15,10 +18,10 @@ module.exports = async (api, options) => {
         doesCompile: api.hasPlugin('babel') || api.hasPlugin('typescript')
     });
 
-    if (!options.noH5) {
-        api.render('./template-h5', {
-            doesCompile: api.hasPlugin('babel') || api.hasPlugin('typescript')
-        });
+    if (!noH5) {
+        api.render('./template-h5', null, {delimiter: '$'});
+
+        needPWA && api.render('./template-pwa', null, {delimiter: '$'});
 
         // 添加 h5 所需的依赖
         api.extendPackage({
@@ -36,6 +39,7 @@ module.exports = async (api, options) => {
                 'atom-web-compiler': '^2.2.0',
                 'atom2vue-loader': '^1.0.0',
                 '@marsjs/vue-cli-plugin-mars-web': '^0.0.9',
+                '@marsjs/vue-cli-plugin-pwa': '^0.0.1',
                 '@vue/cli-plugin-babel': '^3.0.0',
                 '@vue/cli-service': '^3.5.0',
                 'less': '^3.0.4',

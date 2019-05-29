@@ -150,6 +150,14 @@ module.exports = function getVisitor(options = {}) {
                             // 插入 import basicComponents from './components.js';
                             insertImportDeclaration('basicComponents', './components.js');
                         }
+                        // 注册 service worker
+                        if (!!mars.supportPWA) {
+                            path.node.body.unshift(t.expressionStatement(t.callExpression(
+                                t.identifier('registerServiceWorker'),
+                                [t.stringLiteral('sw.js')]
+                            )));
+                            insertImportDeclaration('registerServiceWorker', './registerServiceWorker.js');
+                        }
                         // 插入 import Vue from 'vue';
                         insertImportDeclaration('Vue', 'vue');
                     }
@@ -157,4 +165,4 @@ module.exports = function getVisitor(options = {}) {
             }
         };
     };
-}
+};
