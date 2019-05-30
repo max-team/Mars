@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.29](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.28...@marsjs/build@0.2.29) (2019-05-30)
+
+
+### Features
+
+* **build:** support subPackages config ([1e6c5a8](https://github.com/max-team/Mars/commit/1e6c5a8))
+
+
+
+
+
 ## [0.2.28](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.27...@marsjs/build@0.2.28) (2019-05-30)
 
 
