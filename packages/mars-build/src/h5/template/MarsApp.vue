@@ -86,7 +86,7 @@ export default {
     name: 'app',
     props: {
         tabBars: {
-            type: Array
+            type: Object
         },
         navigationBarBackgroundColor: {
             type: String,
@@ -184,7 +184,21 @@ export default {
         }
     },
     mounted() {
-        this.tabList = this.tabBars;
+        const {
+            list: tabBarList,
+            style: tabBarStyle
+        } = this.tabBars;
+        const {
+            backgroundColor,
+            borderStyle,
+            selectedColor,
+            color
+        } = tabBarStyle;
+        this.tabList = tabBarList;
+        color && (this.tabBarColor = color);
+        selectedColor && (this.tabBarSelectedColor = selectedColor);
+        backgroundColor && (this.tabBarBackgroundColor = backgroundColor);
+        borderStyle && (this.tabBarBorderStyle = borderStyle);
         this.currentPath = this.$route.path;
         this.getPageConfig(this.$route.path);
         this.showRouterView = true;

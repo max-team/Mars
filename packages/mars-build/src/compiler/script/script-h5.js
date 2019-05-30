@@ -70,9 +70,23 @@ exports.compileMain = function (content, options) {
         window = null,
         pagesInfo
     } = mainOptions;
+    const {
+        backgroundColor,
+        borderStyle,
+        color,
+        selectedColor,
+        list = []
+    } = tabBar;
+    const tabBarStyle = {
+        backgroundColor,
+        borderStyle,
+        color,
+        selectedColor
+    };
     const mainRet = babel.transform(content.toString(), {
         plugins: [transformMainPlugin({
-            routes: tabBar && tabBar.list || [],
+            routes: list,
+            tabBarStyle,
             window,
             mars: {
                 navigationBarHomeColor: mars.navigationBarHomeColor === undefined
@@ -80,7 +94,7 @@ exports.compileMain = function (content, options) {
                     : mars.navigationBarHomeColor,
                 showNavigationBorder: !!mars.showNavigationBorder,
                 useTransition: mars.useTransition === undefined ? true : mars.useTransition,
-                homePage: `/${tabBar && tabBar.list && tabBar.list.length > 0 ? tabBar.list[0].pagePath : pages[0]}`,
+                homePage: `/${list.length > 0 ? list[0].pagePath : pages[0]}`,
                 supportPWA: !!mars.supportPWA
             },
             componentSet,
