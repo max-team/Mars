@@ -23,7 +23,27 @@ exports.postCompile = function (file) {
 
 exports.compileRouter = function (content, options) {
     const {config = {}, mars} = options;
-    const routes = config.pages || [];
+    const {
+        pages = [],
+        subPackages = []
+    } = config;
+    let subPages = [];
+    if (subPackages && subPackages.length > 0) {
+        subPackages.forEach(item => {
+            if (!item.pages) {
+                return;
+            }
+            if (item.pages.length > 0) {
+                item.pages.forEach(route => {
+                    subPages.push(`${item.root}/${route}`);
+                });
+            }
+            else {
+                subPages.push(`${item.root}/${item.pages[0]}`);
+            }
+        });
+    }
+    const routes = pages.concat(subPages);
     const mode = mars && mars.mode ? mars.mode : 'history';
     const routerRet = babel.transform(content.toString(), {
         plugins: [transformRouterPlugin({

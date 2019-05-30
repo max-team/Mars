@@ -75,6 +75,7 @@ export default {
         padding: 0 98px;
         line-height: 30px;
         box-sizing: border-box;
+        height: 30px;
         .title-inner {
             display: block;
             overflow: hidden;
