@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.28](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.27...@marsjs/build@0.2.28) (2019-05-30)
+
+
+### Features
+
+* **build:** support tabBar style config ([25eed6a](https://github.com/max-team/Mars/commit/25eed6a))
+
+
+
+
+
 ## [0.2.27](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.26...@marsjs/build@0.2.27) (2019-05-29)
 
 
