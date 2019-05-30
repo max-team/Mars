@@ -7,15 +7,15 @@
 
 module.exports = function getVisitor(options = {}) {
     return ({types: t}) => {
-        const {routes, componentSet, pagesInfo, window, mars} = options;
+        const {routes, componentSet, pagesInfo, window, mars, tabBarStyle} = options;
         return {
             visitor: {
                 // 处理main.js 里的 render函数参数
                 ArrowFunctionExpression(path, state) {
-                    let tabBars = [];
+                    let tabBarList = [];
                     // import component & routes
                     for (let r of routes) {
-                        tabBars.push(t.objectExpression([
+                        tabBarList.push(t.objectExpression([
                             t.objectProperty(
                                 t.identifier('pagePath'),
                                 t.stringLiteral(`/${r.pagePath}`)
@@ -42,10 +42,28 @@ module.exports = function getVisitor(options = {}) {
                             )
                         ]));
                     }
+                    let styleArr = [];
+                    Object.keys(tabBarStyle).forEach(key => {
+                        if (tabBarStyle[key]) {
+                            styleArr.push(t.objectProperty(
+                                t.identifier(key),
+                                t.stringLiteral(`${tabBarStyle[key]}`)
+                            ));
+                        }
+                    });
                     let propsAst = [];
                     propsAst.push(t.objectProperty(
                         t.identifier('tabBars'),
-                        t.arrayExpression(tabBars)
+                        t.objectExpression([
+                            t.objectProperty(
+                                t.identifier('list'),
+                                t.arrayExpression(tabBarList)
+                            ),
+                            t.objectProperty(
+                                t.identifier('style'),
+                                t.objectExpression(styleArr)
+                            )
+                        ])
                     ));
                     // 配置 全部变量 window
                     Object.keys(window).forEach(key => {
