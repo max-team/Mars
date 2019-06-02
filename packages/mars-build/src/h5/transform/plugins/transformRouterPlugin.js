@@ -8,7 +8,7 @@
 
 // page/home/index to PageHomeIndex
 function toCamel(name) {
-    let camelName = name.replace(/^\//, '').replace(/\/(\w)(\w+)/g, (a, b, c) => b.toUpperCase() + c.toLowerCase());
+    let camelName = name.replace(/^\//, '').replace(/[\/|-](\w)(\w+)/g, (a, b, c) => b.toUpperCase() + c.toLowerCase());
     return camelName.substring(0, 1).toUpperCase() + camelName.substring(1);
 }
 
