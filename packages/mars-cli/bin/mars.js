@@ -19,6 +19,7 @@ const path = require('path');
 const slash = require('slash');
 const minimist = require('minimist');
 const {getCliVersion, cleanArgs, defaultConfig} = require('../lib/helper/utils');
+const getPackageVersion = require('../lib/helper/getPackageVersion');
 const execa = require('execa');
 
 function checkNodeVersion(wanted, id) {
@@ -50,6 +51,21 @@ if (
 ) {
     process.env.VUE_CLI_DEBUG = true;
 }
+
+// 检查 cli 是否有更新，给出提示
+const cliVersion = getCliVersion();
+getPackageVersion('@marsjs/cli', 'latest')
+    .then(data => {
+        const latestVersion = data && data.version;
+        if (!latestVersion) {
+            return;
+        }
+
+        if (semver.lt(cliVersion, latestVersion)) {
+            console.log(chalk.green(`@marsjs/cli 有更新，当前版本为 ${cliVersion}, 最新版本为 ${latestVersion}，请尽快升级。`));
+        }
+    });
+
 
 const program = require('commander');
 
@@ -98,6 +114,28 @@ program
             }
         ]);
 
+        let needPWA = false;
+        if (target !== 'noH5') {
+            let res = await inquirer.prompt([
+                {
+                    name: 'target',
+                    type: 'list',
+                    message: 'H5 是否需要支持 PWA：',
+                    choices: [
+                        {
+                            name: '需要',
+                            value: 'need'
+                        },
+                        {
+                            name: '不需要',
+                            value: 'no'
+                        }
+                    ]
+                }
+            ]);
+            needPWA = res.target === 'need';
+        }
+
         /* eslint-disable fecs-camelcase */
         options.inlinePreset = JSON.stringify({
             useConfigFiles: false,
@@ -107,7 +145,8 @@ program
             plugins: {
                 '@marsjs/cli-template': {
                     version: '~0.1.0',
-                    noH5: target === 'noH5'
+                    noH5: target === 'noH5',
+                    needPWA
                 }
             }
         });

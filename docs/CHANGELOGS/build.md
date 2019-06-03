@@ -1,5 +1,16 @@
 # @marsjs/build
 
+
+
+## [0.2.25](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.24...@marsjs/build@0.2.25) (2019-05-22)
+
+
+### Bug Fixes
+
+* **build:** 修复 '||' 被识别为过滤器 ([#59](https://github.com/max-team/Mars/issues/59)) ([22dfd00](https://github.com/max-team/Mars/commit/22dfd00))
+
+
+
 ## [0.2.24](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.23...@marsjs/build@0.2.24) (2019-05-14)
 
 

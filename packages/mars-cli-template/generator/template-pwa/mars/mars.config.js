@@ -8,7 +8,8 @@ module.exports = function (target) {
             navigationBarHomeColor: 'light',
             showNavigationBorder: true,
             mode: 'hash',
-            useTransition: true
+            useTransition: true,
+            supportPWA: true
         }
     };
 

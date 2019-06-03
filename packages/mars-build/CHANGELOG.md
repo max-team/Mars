@@ -3,6 +3,61 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.30](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.29...@marsjs/build@0.2.30) (2019-06-03)
+
+
+### Bug Fixes
+
+* 组件中没有child，只有 scopedslot 时，scopedslot 不会被渲染 ([c0b7309](https://github.com/max-team/Mars/commit/c0b7309))
+
+
+
+
+
+## [0.2.29](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.28...@marsjs/build@0.2.29) (2019-05-30)
+
+
+### Features
+
+* **build:** support subPackages config ([1e6c5a8](https://github.com/max-team/Mars/commit/1e6c5a8))
+
+
+
+
+
+## [0.2.28](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.27...@marsjs/build@0.2.28) (2019-05-30)
+
+
+### Features
+
+* **build:** support tabBar style config ([25eed6a](https://github.com/max-team/Mars/commit/25eed6a))
+
+
+
+
+
+## [0.2.27](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.26...@marsjs/build@0.2.27) (2019-05-29)
+
+
+### Bug Fixes
+
+* **build:** compatible with older versions ([36bb19b](https://github.com/max-team/Mars/commit/36bb19b))
+
+
+
+
+
+## [0.2.26](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.25...@marsjs/build@0.2.26) (2019-05-29)
+
+
+### Features
+
+* **build:** add PWA feature ([a7bdbd0](https://github.com/max-team/Mars/commit/a7bdbd0))
+
+
+
+
+
 ## [0.2.25](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.24...@marsjs/build@0.2.25) (2019-05-22)
 
 
