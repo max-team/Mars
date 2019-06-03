@@ -55,10 +55,6 @@ module.exports = function generate(obj, options = {}) {
         return `${spaceLine}<${tag}${attrs ? ' ' + attrs : ''} />${ifText}`;
     }
 
-    if (!child) {
-        return `${spaceLine}<${tag}${attrs ? ' ' + attrs : ''}></${tag}>${ifText}`;
-    }
-
     return `${spaceLine}<${tag}${attrs ? ' ' + attrs : ''}>${child || ''}${slots || ''}</${tag}>${ifText}`;
 };
 
