@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.30](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.29...@marsjs/build@0.2.30) (2019-06-03)
+
+
+### Bug Fixes
+
+* 组件中没有child，只有 scopedslot 时，scopedslot 不会被渲染 ([c0b7309](https://github.com/max-team/Mars/commit/c0b7309))
+
+
+
+
+
 ## [0.2.29](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.28...@marsjs/build@0.2.29) (2019-05-30)
 
 
