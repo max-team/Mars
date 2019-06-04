@@ -83,7 +83,7 @@ function navigateBack(options) {
         if (!this.$router) {
             return;
         }
-        delta = parseInt(delta, 10);
+        delta = parseInt(delta || 1, 10);
         let routes = this.$router.options.routes;
         delta > routes.length
             ? this.$router.push(routes[0].path)
@@ -95,6 +95,34 @@ function navigateBack(options) {
     }
     navigateBackSuccess && callback(success);
     callback(complete);
+}
+
+
+/**
+ * 跳转到 tabBar 页面
+ * @param {Object} options 跳转参数
+ * @param {string} options.url 需要跳转的 tabBar 页面的路径
+ * @param {Function} options.success 接口调用成功的回调函数
+ * @param {Function} options.fail 接口调用失败的回调函数
+ * @param {Function} options.complete 接口调用结束的回调函数（调用成功、失败都会执行）
+ */
+function switchTab(options) {
+    let {
+        url,
+        success,
+        fail,
+        complete
+    } = options;
+
+    this.$router && this.$router.push({
+        path: url
+    }, function (res) {
+        callback(success, res);
+        callback(complete, res);
+    }, function (res) {
+        callback(fail, res);
+        callback(complete, res);
+    });
 }
 
 /**
@@ -113,5 +141,6 @@ export {
     navigateTo,
     redirectTo,
     navigateBack,
-    reLaunch
+    reLaunch,
+    switchTab
 };
