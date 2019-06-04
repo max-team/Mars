@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.31](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.30...@marsjs/build@0.2.31) (2019-06-04)
+
+
+### Bug Fixes
+
+* **bug:** 修复因兼容tabBar style 配置引入的bug：缺少tabBar会报错 ([e0ae976](https://github.com/max-team/Mars/commit/e0ae976))
+
+
+
+
+
 ## [0.2.30](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.29...@marsjs/build@0.2.30) (2019-06-03)
 
 
