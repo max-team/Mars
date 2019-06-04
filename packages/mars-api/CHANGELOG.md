@@ -1,3 +1,19 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+## [1.0.18](https://github.com/max-team/Mars/compare/@marsjs/api@1.0.17...@marsjs/api@1.0.18) (2019-06-04)
+
+
+### Features
+
+* **api:** add navigate api: switch tab ([ff33fda](https://github.com/max-team/Mars/commit/ff33fda))
+
+
+
+
+
 # @marsjs/api
 
 ## [1.0.17](https://github.com/max-team/Mars/compare/@marsjs/api@1.0.16...@marsjs/api@1.0.17) (2019-04-16)
