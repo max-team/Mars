@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.32](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.31...@marsjs/build@0.2.32) (2019-06-04)
+
+
+### Features
+
+* **build:** 支持app.vue route添加文件类型筛选 ([4161775](https://github.com/max-team/Mars/commit/4161775))
+
+
+
+
+
 ## [0.2.31](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.30...@marsjs/build@0.2.31) (2019-06-04)
 
 
