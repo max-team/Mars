@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.19](https://github.com/max-team/Mars/compare/@marsjs/api@1.0.18...@marsjs/api@1.0.19) (2019-06-05)
+
+
+### Features
+
+* **api:** add previewImage api ([02a0dd7](https://github.com/max-team/Mars/commit/02a0dd7))
+
+
+
+
+
 ## [1.0.18](https://github.com/max-team/Mars/compare/@marsjs/api@1.0.17...@marsjs/api@1.0.18) (2019-06-04)
 
 
