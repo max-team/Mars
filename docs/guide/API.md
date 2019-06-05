@@ -12,9 +12,9 @@ Mars 的 API 规范使用百度智能小程序和微信小程序 API 规范，�
 ```js
 this.$api.request({...params, success, fail, complete})
     .then(res => {
-        // TOOD
+        // TODO
     }).catch(e => {
-        // TOOD
+        // TODO
     });
 ```
 
