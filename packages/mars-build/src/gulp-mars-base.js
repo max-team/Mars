@@ -48,7 +48,7 @@ function compile(file, opt, compilers) {
     }
     catch (e) {}
 
-    const isApp = path.basename(fPath) === 'app';
+    const isApp = path.basename(fPath).toLowerCase() === 'app';
     const options = Object.assign({
         isApp,
         coreRelativePath,
