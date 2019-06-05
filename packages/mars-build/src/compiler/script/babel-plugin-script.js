@@ -56,6 +56,17 @@ const getPropertyVisitor = (t, options) => {
                     if (configValue.pages) {
                         configValue.pages = configValue.pages.map(item => item.replace(/\.(swan|mp)$/, ''));
                     }
+                    if (configValue.subPackages && configValue.subPackages.length > 0) {
+                        configValue.subPackages = configValue.subPackages.map(item => {
+                            if (!item.pages || item.pages.length === 0) {
+                                return item;
+                            }
+                            const pageArr = [];
+                            item.pages.forEach(route => pageArr.push(route.replace(/\.(swan|mp)$/, '')));
+                            item.pages = pageArr;
+                            return item;
+                        });
+                    }
                     if (configValue.tabBar && configValue.tabBar.list) {
                         configValue.tabBar.list = configValue.tabBar.list.map(item => {
                             item.pagePath = item.pagePath.replace(/\.(swan|mp)$/, '');
