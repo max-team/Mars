@@ -29,8 +29,14 @@ function compile(file, opt, compilers) {
         }
     } = opt;
     const rPath = path.relative(file.base, file.path);
-    const fPath = slash(path.resolve(file.cwd, opt.dest, rPath).replace(/\.vue$/, ''));
-    const baseName = path.basename(fPath);
+    let fPath = slash(path.resolve(file.cwd, opt.dest, rPath).replace(/\.vue$/, ''));
+    let baseName = path.basename(fPath);
+    const isApp = baseName.toLowerCase() === 'app';
+    if (isApp && baseName === 'App') {
+        file.path = file.path.replace('App.vue', 'app.vue');
+        fPath = fPath.replace('App', 'app');
+        baseName = 'app';
+    }
 
     let coreRelativePath = path.join(
         path.relative(
@@ -48,7 +54,6 @@ function compile(file, opt, compilers) {
     }
     catch (e) {}
 
-    const isApp = path.basename(fPath) === 'app';
     const options = Object.assign({
         isApp,
         coreRelativePath,
