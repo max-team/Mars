@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.35](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.34...@marsjs/build@0.2.35) (2019-06-07)
+
+
+### Features
+
+* 支持 App.vue 大写 ([bf67dab](https://github.com/max-team/Mars/commit/bf67dab))
+
+
+
+
+
 ## [0.2.34](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.33...@marsjs/build@0.2.34) (2019-06-05)
 
 
