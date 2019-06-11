@@ -113,32 +113,30 @@ function compareAndSetData(k, val, old, key, data) {
     }
 }
 
-function getFiltersData(vm, $mp, data = {}) {
-    /*
-    optimised filter data
-    init:
-    {
-        _f_: {
-            0: {
-                _if: true,
-                _t: ['Hello'],
-                _p: {
-                    test: 'text'
-                }
+/*
+optimised filter data
+init:
+{
+    _f_: {
+        0: {
+            _t: ['Hello'],
+            _p: {
+                text: 'Olleh'
             }
         }
     }
-    update:
-    {
-        '_f_.0._if': false,
-        '_f_.0._t.0: 'Olleh',
-        '_f_.0._p.test: 'test',
-        '_f_.1': {
-            _t: [],
-            _p: {}
-        }
-    } */
-
+}
+update:
+{
+    '_f_.0._t.0: 'Olleh',
+    '_f_.0._p.text: 'Hello',
+    '_f_.1': {
+        _t: [],
+        _p: {}
+    }
+}
+*/
+function getFiltersData(vm, $mp, data = {}) {
     if (vm._fData) {
         const originFData = $mp.data._f_;
         if (!originFData) {
@@ -154,7 +152,9 @@ function getFiltersData(vm, $mp, data = {}) {
             const {t: texts, p: props, for: _for} = vnodeFData;
             const _if = !!vnodeFData.if;
             let propsData = {};
+            let styleData = {};
             if (vnode && props) {
+                styleData = vnode.data;
                 propsData = vnode.componentOptions
                     ? vnode.componentOptions.propsData
                     : (vnode.data && vnode.data.attrs);
@@ -170,7 +170,12 @@ function getFiltersData(vm, $mp, data = {}) {
                 if (props) {
                     kData._p = kData._p || {};
                     props.forEach(key => {
-                        kData._p[key] = propsData[key];
+                        if (key === 'class' || key === 'style') {
+                            kData._p[key] = styleData[key];
+                        }
+                        else {
+                            kData._p[key] = propsData[key];
+                        }
                     });
                 }
                 if (texts) {
