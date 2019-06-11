@@ -3,6 +3,61 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.35](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.34...@marsjs/build@0.2.35) (2019-06-07)
+
+
+### Features
+
+* 支持 App.vue 大写 ([bf67dab](https://github.com/max-team/Mars/commit/bf67dab))
+
+
+
+
+
+## [0.2.34](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.33...@marsjs/build@0.2.34) (2019-06-05)
+
+
+### Features
+
+* 兼容 App.vue 和 app.vue ([b37e161](https://github.com/max-team/Mars/commit/b37e161))
+
+
+
+
+
+## [0.2.33](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.32...@marsjs/build@0.2.33) (2019-06-05)
+
+
+### Bug Fixes
+
+* **build:** subPackages里支持 按文件类型筛选，编译到小程序时去掉尾缀 ([9f5051f](https://github.com/max-team/Mars/commit/9f5051f))
+
+
+
+
+
+## [0.2.32](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.31...@marsjs/build@0.2.32) (2019-06-04)
+
+
+### Features
+
+* **build:** 支持app.vue route添加文件类型筛选 ([4161775](https://github.com/max-team/Mars/commit/4161775))
+
+
+
+
+
+## [0.2.31](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.30...@marsjs/build@0.2.31) (2019-06-04)
+
+
+### Bug Fixes
+
+* **bug:** 修复因兼容tabBar style 配置引入的bug：缺少tabBar会报错 ([e0ae976](https://github.com/max-team/Mars/commit/e0ae976))
+
+
+
+
+
 ## [0.2.30](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.29...@marsjs/build@0.2.30) (2019-06-03)
 
 

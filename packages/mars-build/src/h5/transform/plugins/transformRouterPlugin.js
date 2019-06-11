@@ -8,9 +8,14 @@
 
 // page/home/index to PageHomeIndex
 function toCamel(name) {
-    let camelName = name.replace(/^\//, '').replace(/\/(\w)(\w+)/g, (a, b, c) => b.toUpperCase() + c.toLowerCase());
+    let camelName = name.replace(/^\//, '').replace(/[\/|-](\w)(\w+)/g, (a, b, c) => b.toUpperCase() + c.toLowerCase());
     return camelName.substring(0, 1).toUpperCase() + camelName.substring(1);
 }
+
+const routeExtraType = {
+    swan: '.swan',
+    wx: '.wxml'
+};
 
 module.exports = function getVisitor(options = {}) {
     return ({types: t}) => {
@@ -27,6 +32,9 @@ module.exports = function getVisitor(options = {}) {
                     let routesArr = [];
                     // import routes
                     for (let r of routes) {
+                        if (r.indexOf(routeExtraType.wx) > -1 || r.indexOf(routeExtraType.swan) > -1) {
+                            continue;
+                        }
                         routesArr.push(t.objectExpression([
                             t.objectProperty(
                                 t.identifier('path'),
@@ -72,6 +80,9 @@ module.exports = function getVisitor(options = {}) {
 
                         // import routes
                         for (let r of routes) {
+                            if (r.indexOf(routeExtraType.wx) > -1 || r.indexOf(routeExtraType.swan) > -1) {
+                                continue;
+                            }
                             insertImportDeclaration(toCamel(r), `./${r}.vue`);
                         }
 
@@ -80,4 +91,4 @@ module.exports = function getVisitor(options = {}) {
             }
         };
     };
-}
+};

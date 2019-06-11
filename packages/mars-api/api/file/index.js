@@ -4,7 +4,8 @@
  */
 
 import {
-    chooseImage
+    chooseImage,
+    previewImage
 } from './image';
 
 import {
@@ -13,5 +14,6 @@ import {
 
 export {
     chooseImage,
+    previewImage,
     uploadFile
 };

@@ -87,12 +87,13 @@ function isComplexExp(exp) {
 }
 
 function getFilters(node) {
-    let props = node.attrsList
-        ? node.attrsList.filter(({name, value}) =>
-            name.indexOf(':') >= 0 && (/[^|]+\|[^|]+/.test(value) || isComplexExp(value))
-        )
+    let props = node.attrsMap
+        ? Object.keys(node.attrsMap).filter(name => {
+            const value = node.attrsMap[name];
+            return name.indexOf(':') >= 0 && (/[^|]+\|[^|]+/.test(value) || isComplexExp(value));
+        })
         : [];
-    props = props.map(({name}) => name.replace(/^(v-bind)?:/, ''));
+    props = props.map(name => name.replace(/^(v-bind)?:/, ''));
 
     let texts = node.children
         ? node.children.map(c => {

@@ -96,7 +96,7 @@ exports.compileMain = function (content, options) {
         color,
         selectedColor,
         list = []
-    } = tabBar;
+    } = tabBar || {};
     const tabBarStyle = {
         backgroundColor,
         borderStyle,
