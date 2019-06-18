@@ -39,17 +39,17 @@ function checkExtraEnvComponent(ast, target) {
             return true;
         }
         else {
-            return checkExtraEnvComponent(parent);
+            return checkExtraEnvComponent(parent, target);
         }
     }
     return false;
 }
 
 // 找出在在当前环境中使用的组件
-function findUsefulComponent(ast, components, target, componentsInUsed) {
+function findUsefulComponent(ast, target, componentsInUsed) {
     const tag = ast.tag;
     const children = ast.children;
-    if (components[tag]) {
+    if (componentsInUsed[tag]) {
         componentsInUsed[tag].using = true;
     }
     if (children) {
@@ -58,14 +58,14 @@ function findUsefulComponent(ast, components, target, componentsInUsed) {
                 return;
             }
             else {
-                findUsefulComponent(child, components, target, componentsInUsed);
+                findUsefulComponent(child, target, componentsInUsed);
             }
         });
     }
 }
 
 function updateComponents(ast, components, target, componentsInUsed) {
-    findUsefulComponent(ast, components, target, componentsInUsed);
+    findUsefulComponent(ast, target, componentsInUsed);
     Object.keys(componentsInUsed).forEach(comp => {
         if (!componentsInUsed[comp].using) {
             delete components[comp];
