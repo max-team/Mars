@@ -161,7 +161,7 @@ export default {
     },
     computed: {
         tabBarHeight() {
-            return this.tabList.some(item => item.pagePath === this.$route.path) ? 45 : 0;
+            return this.tabList.some(item => item.pagePath === this.$route.path) && this.customShowTabBar ? 45 : 0;
         }
     },
     watch: {
