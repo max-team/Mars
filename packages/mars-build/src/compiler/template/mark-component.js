@@ -64,6 +64,14 @@ function findUsefulComponent(ast, components, target, componentsInUsed) {
     }
 }
 
+function updateComponents(ast, components, target, componentsInUsed) {
+    findUsefulComponent(ast, components, target, componentsInUsed);
+    Object.keys(componentsInUsed).forEach(comp => {
+        if (!componentsInUsed[comp].using) {
+            delete components[comp];
+        }
+    });
+}
 function getMarkNode(options, componentsInUsed = {}) {
     let {components, target} = options;
     let compIdCounter = 0;
@@ -71,6 +79,7 @@ function getMarkNode(options, componentsInUsed = {}) {
         const tag = el.tag;
         const isComp = components && components[tag];
         el.isComp = isComp;
+
         // 找出 template-mars 其他target下的组件，进行标记
         if (checkExtraEnvComponent(el, target || process.env.MARS_ENV_TARGET) && components[tag]) {
             componentsInUsed[tag].using = false;
@@ -184,11 +193,22 @@ function getGenData(options) {
 
 
 function getPostTrans(options) {
-    return function postTrans(node) {
+    const {
+        target
+    } = options;
+    return function postTrans(el) {
+        const children = el.children;
         // remove all directives
-        if (node.directives) {
-            delete node.directives;
+        if (el.directives) {
+            delete el.directives;
         }
+        children.forEach((child, index) => {
+            if (child.tag === customTemplate
+                && child.attrsMap
+                && child.attrsMap.target !== target) {
+                children.splice(index, 1);
+            }
+        });
     };
 }
 
@@ -218,12 +238,12 @@ module.exports = function mark(source, options) {
         modules: [
             {
                 transformNode: getMarkNode(options, componentsInUsed),
-                postTransformNode: getPostTrans(options),
+                postTransformNode: getPostTrans(options, componentsInUsed),
                 genData: getGenData(options)
             }
         ]
     });
-    findUsefulComponent(ast, components, target, componentsInUsed);
+    updateComponents(ast, components, target, componentsInUsed);
     let code = `({ render: function() { ${render} }, staticRenderFns: [\
 ${staticRenderFns.map(fn => `function() { ${fn} },)}`)}\
 ] })`;
