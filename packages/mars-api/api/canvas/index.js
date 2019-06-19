@@ -10,7 +10,7 @@ class Canvas {
         this.context = this.canvas.getContext('2d');
     }
     /**
-     * 小程序目前不支持的H5API
+     * 小程序目前不支持的H5 API
      * isPointInPath()
      * transform()
      * createImageData()
@@ -118,7 +118,7 @@ class Canvas {
         this.context.lineTo(x, y);
     }
 
-    arc(x, y, r, sAngle, eAngle, counterclockwise) {
+    arc(x, y, r, sAngle, eAngle, counterclockwise = false) {
         this.context.arc(x, y, r, sAngle, eAngle, counterclockwise);
     }
 
@@ -208,9 +208,7 @@ class Canvas {
 
     draw(reserve, cb) {
         // H5不需要通过draw方法开发绘制
-        setTimeout(_ => {
-            cb();
-        });
+        cb && cb();
     }
 
     font(value) {
