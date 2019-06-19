@@ -220,7 +220,6 @@ class Canvas {
     }
 }
 
-
 export function createCanvasContext(canvasId) {
     return new Canvas(canvasId);
 }
