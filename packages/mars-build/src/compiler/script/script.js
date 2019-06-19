@@ -12,6 +12,7 @@ const {transformSync} = require('@babel/core');
 
 const {getModuleName} = require('../../helper/path');
 const transformPlugin = require('./babel-plugin-script');
+const postTransformPlugin = require('./babel-plugin-script-post');
 const compileModules = require('../file/compileModules');
 const modules = compileModules.modules;
 
@@ -52,7 +53,6 @@ async function compile(source, options) {
     });
     // 处理完再进行minify，发现minify和定制的插件会有坑
     let code = scriptRet.code;
-
     let usedModules = {};
     const minifyScriptRet = transformSync(code, {
         plugins: [
@@ -107,6 +107,25 @@ async function compile(source, options) {
     return {code, config, components, computedKeys, moduleType};
 }
 
+/**
+ * postcompile script
+ *
+ * @param {string} source source
+ * @param {mars.options} options options
+ * @return {mars.script.compileScriptResult}
+ */
+async function postCompile(source, options) {
+    const {componentsInUsed} = options;
+    const scriptRet = transformSync(source, {
+        plugins: [
+            postTransformPlugin({
+                componentsInUsed
+            })
+        ]
+    });
+    return {code: scriptRet.code};
+}
+
 function resolveComponentsPath(components, resolvedPaths) {
     Object.keys(components).forEach(key => {
         const name = components[key];
@@ -133,6 +152,7 @@ function getUIModules(components, target) {
 
 module.exports = {
     compile,
+    postCompile,
     getUIModules,
     resolveComponentsPath
 };

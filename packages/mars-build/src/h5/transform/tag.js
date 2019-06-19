@@ -35,12 +35,25 @@ function toCamel(name) {
     return camelName.substring(0, 1).toUpperCase() + camelName.substring(1);
 }
 
+// 判断租先节点是否含有 template-mars target=swan|wx，如果含有，则不收集该ast tag
+function checkScopedTemplateIsH5(ast) {
+    let parent = ast.parent;
+    if (parent) {
+        if (parent.tag === 'template-mars' && parent.attrsMap && parent.attrsMap.target !== 'h5') {
+            return false;
+        }
+        else {
+            return checkScopedTemplateIsH5(parent);
+        }
+    }
+    return true;
+}
+
 module.exports = function (ast, compMap) {
     let tag = ast.tag;
     if (!tag) {
         return ast;
     }
-
     if (
         tag === customTemplate
         && ast.attrsMap.target === (process.env.MARS_ENV_TARGET || 'h5')
@@ -67,6 +80,7 @@ module.exports = function (ast, compMap) {
         tagMap[tag]
         && !compMap[tagMap[tag]]
         && tagMap[tag] !== 'template'
+        && checkScopedTemplateIsH5(ast)
     ) {
         compMap[`${tagMap[tag]}`] = toCamel(tagMap[tag]);
     }

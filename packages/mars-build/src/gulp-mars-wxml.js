@@ -30,6 +30,7 @@ const {transform} = require('./wx/compiler/index');
 const templateCompiler = getCompiler(mark, transform, generate, 'wx');
 const styleCompiler = require('./compiler/style/style').compile;
 const scriptCompiler = require('./compiler/script/script').compile;
+const scriptPostCompiler = require('./compiler/script/script').postCompile;
 const configCompiler = require('./compiler/script/config').compile;
 
 const {FILE_SUFFIX} = require('./helper/config');
@@ -38,6 +39,7 @@ const compilers = {
     templateCompiler,
     styleCompiler,
     scriptCompiler,
+    scriptPostCompiler,
     configCompiler
 };
 

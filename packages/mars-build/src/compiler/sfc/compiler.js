@@ -9,8 +9,13 @@ const {getFileCompilers} = require('../file/base');
 exports.compile = async function compile(file, options) {
     const {template, script, styles, config: configFile} = file;
     const {compilers, isApp, fPath, target, coreRelativePath, baseName} = options;
-    const {templateCompiler, scriptCompiler, styleCompiler, configCompiler} = getFileCompilers(compilers, options);
-
+    const {
+        templateCompiler,
+        scriptCompiler,
+        scriptPostCompiler,
+        styleCompiler,
+        configCompiler
+    } = getFileCompilers(compilers, options);
     const {components, config, computedKeys, moduleType} = await scriptCompiler(script, {
         isApp,
         coreRelativePath,
@@ -18,12 +23,15 @@ exports.compile = async function compile(file, options) {
         renderStr: !isApp ? renderFunctionName : null,
         dest: options._config.dest
     });
-
     // app.vue has no template
     if (!isApp) {
-        const {render} = await templateCompiler(template, {
+        const {render, componentsInUsed} = await templateCompiler(template, {
             components,
-            computedKeys
+            computedKeys,
+            target
+        });
+        await scriptPostCompiler(script, {
+            componentsInUsed
         });
         script.appendContent(
             `;\nfunction ${renderFunctionName}() {return ${render + '.render.bind(this)()'};\n}`

@@ -19,6 +19,7 @@ const {transform} = require('./swan/transform/index');
 const templateCompiler = getCompiler(mark, transform, generate, 'swan');
 const styleCompiler = require('./compiler/style/style').compile;
 const scriptCompiler = require('./compiler/script/script').compile;
+const scriptPostCompiler = require('./compiler/script/script').postCompile;
 const configCompiler = require('./compiler/script/config').compile;
 
 const {FILE_SUFFIX} = require('./helper/config');
@@ -26,6 +27,7 @@ const {FILE_SUFFIX} = require('./helper/config');
 const compilers = {
     templateCompiler,
     styleCompiler,
+    scriptPostCompiler,
     scriptCompiler,
     configCompiler
 };

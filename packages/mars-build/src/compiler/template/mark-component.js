@@ -9,6 +9,7 @@
 
 const {compile: compileTemplate} = require('vue-template-compiler/build');
 const transpile = require('vue-template-es2015-compiler');
+const customTemplate = 'template-mars';
 
 function getIterator(node) {
     if (!node) {
@@ -30,14 +31,59 @@ function isInFor(el) {
     return isInFor(el.parent);
 }
 
-function getMarkNode(options) {
-    let {components} = options;
+// 判断租先节点是否含有 template-mars target非当前环境，如果含有，则收集ast tag
+function checkExtraEnvComponent(ast, target) {
+    let parent = ast.parent;
+    if (parent) {
+        if (parent.tag === customTemplate && parent.attrsMap && parent.attrsMap.target !== target) {
+            return true;
+        }
+        else {
+            return checkExtraEnvComponent(parent, target);
+        }
+    }
+    return false;
+}
+
+// 找出在在当前环境中使用的组件
+function findUsefulComponent(ast, target, componentsInUsed) {
+    const tag = ast.tag;
+    const children = ast.children;
+    if (componentsInUsed[tag]) {
+        componentsInUsed[tag].using = true;
+    }
+    if (children) {
+        children.forEach(child => {
+            if (child.tag === customTemplate && child.attrsMap.target !== target) {
+                return;
+            }
+            else {
+                findUsefulComponent(child, target, componentsInUsed);
+            }
+        });
+    }
+}
+
+function updateComponents(ast, components, target, componentsInUsed) {
+    findUsefulComponent(ast, target, componentsInUsed);
+    Object.keys(componentsInUsed).forEach(comp => {
+        if (!componentsInUsed[comp].using) {
+            delete components[comp];
+        }
+    });
+}
+function getMarkNode(options, componentsInUsed = {}) {
+    let {components, target} = options;
     let compIdCounter = 0;
     return function markNode(el, options) {
-
         const tag = el.tag;
         const isComp = components && components[tag];
         el.isComp = isComp;
+
+        // 找出 template-mars 其他target下的组件，进行标记
+        if (checkExtraEnvComponent(el, target || process.env.MARS_ENV_TARGET) && components[tag]) {
+            componentsInUsed[tag].using = false;
+        }
 
         if (el.attrsMap['v-for'] && !el.iterator1) {
             el.iterator1 = 'index';
@@ -147,15 +193,41 @@ function getGenData(options) {
 
 
 function getPostTrans(options) {
-    return function postTrans(node) {
+    const {
+        target
+    } = options;
+    return function postTrans(el) {
+        const children = el.children;
         // remove all directives
-        if (node.directives) {
-            delete node.directives;
+        if (el.directives) {
+            delete el.directives;
         }
+        children.forEach((child, index) => {
+            if (child.tag === customTemplate
+                && child.attrsMap
+                && child.attrsMap.target !== target) {
+                children.splice(index, 1);
+            }
+        });
     };
 }
 
 module.exports = function mark(source, options) {
+    const {
+        components,
+        target
+    } = options;
+
+    let componentsInUsed = {};
+    Object.keys(components).forEach(name => {
+        if (!componentsInUsed[name]) {
+            componentsInUsed[name] = {
+                using: false,
+                declaration: components[name]
+            };
+        }
+    });
+
     const {
         ast,
         render,
@@ -165,17 +237,17 @@ module.exports = function mark(source, options) {
         preserveWhitespace: false,
         modules: [
             {
-                transformNode: getMarkNode(options),
-                postTransformNode: getPostTrans(options),
+                transformNode: getMarkNode(options, componentsInUsed),
+                postTransformNode: getPostTrans(options, componentsInUsed),
                 genData: getGenData(options)
             }
         ]
     });
-
+    updateComponents(ast, components, target, componentsInUsed);
     let code = `({ render: function() { ${render} }, staticRenderFns: [\
 ${staticRenderFns.map(fn => `function() { ${fn} },)}`)}\
 ] })`;
     code = transpile(code);
 
-    return {ast, render: code, errors};
+    return {ast, render: code, errors, componentsInUsed};
 };
