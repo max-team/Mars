@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.37](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.36...@marsjs/build@0.2.37) (2019-06-19)
+
+
+### Features
+
+* **build:** hideTabBar时 屏幕高度 & 去掉模板中未用到的组件JS ([#86](https://github.com/max-team/Mars/issues/86)) ([6e10522](https://github.com/max-team/Mars/commit/6e10522))
+
+
+
+
+
 ## [0.2.36](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.35...@marsjs/build@0.2.36) (2019-06-11)
 
 
