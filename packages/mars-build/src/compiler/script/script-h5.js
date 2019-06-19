@@ -13,6 +13,7 @@ const transformCompPlugin = require('../../h5/transform/plugins/transformCompPlu
 const transformRouterPlugin = require('../../h5/transform/plugins/transformRouterPlugin');
 const transformAppPlugin = require('../../h5/transform/plugins/transformAppPlugin');
 const transformGetAppPlugin = require('../../h5/transform/plugins/transformGetAppPlugin');
+const postTransformScriptPlugin = require('./babel-plugin-script-post');
 const MARS_ENV = process.env.MARS_ENV_TARGET || 'h5';
 
 exports.preCompile = function (file) {
@@ -193,6 +194,17 @@ exports.compileScript = async function (content, options = {}) {
     await compileModules.compileUIModules(uiModules, destPath);
 
     return {config, components, enableConfig, content};
+};
+
+exports.postCompileScript = function (content, options = {}) {
+    const {componentsInUsed} = options;
+    return babel.transform(content, {
+        plugins: [
+            postTransformScriptPlugin({
+                componentsInUsed
+            })
+        ]
+    }).code;
 };
 
 exports.compileApp = function (script) {

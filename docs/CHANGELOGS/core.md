@@ -1,5 +1,17 @@
 # @marsjs/core
 
+## [0.2.11](https://github.com/max-team/Mars/compare/@marsjs/core@0.2.10...@marsjs/core@0.2.11) (2019-06-11)
+
+### Features
+
+* **build & core:** class 和 style 属性支持使用过滤器 ([fe652db](https://github.com/max-team/Mars/commit/fe652db))
+
+
+## [0.2.10](https://github.com/max-team/Mars/compare/@marsjs/core@0.2.9...@marsjs/core@0.2.10) (2019-05-29)
+
+**Note:** Version bump only for package @marsjs/core
+
+
 ## [0.2.9](https://github.com/max-team/Mars/compare/@marsjs/core@0.2.8...@marsjs/core@0.2.9) (2019-05-14)
 
 

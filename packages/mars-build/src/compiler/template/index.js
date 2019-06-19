@@ -11,14 +11,14 @@
 
 exports.getCompiler = function getCompiler(marker, transformer, generater, target) {
     return function compiler(source, options) {
-        let {ast, render} = marker(source, options);
+        let {ast, render, componentsInUsed} = marker(source, options);
         let {ast: myAst} = transformer(ast, options);
         options = Object.assign(options, {
             target
         });
         let code = generater(myAst, options);
 
-        return {render, code};
+        return {render, code, componentsInUsed};
     };
 };
 

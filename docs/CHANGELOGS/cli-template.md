@@ -1,5 +1,21 @@
 # @marsjs/cli-template
 
+## [0.1.12](https://github.com/max-team/Mars/compare/@marsjs/cli-template@0.1.11...@marsjs/cli-template@0.1.12) (2019-05-29)
+
+
+### Bug Fixes
+
+* **build:** compatible with older versions ([36bb19b](https://github.com/max-team/Mars/commit/36bb19b))
+
+
+## [0.1.11](https://github.com/max-team/Mars/compare/@marsjs/cli-template@0.1.10...@marsjs/cli-template@0.1.11) (2019-05-29)
+
+
+### Features
+
+* **build:** add PWA feature ([a7bdbd0](https://github.com/max-team/Mars/commit/a7bdbd0))
+
+
 ## [0.1.10](https://github.com/max-team/Mars/compare/@marsjs/cli-template@0.1.9...@marsjs/cli-template@0.1.10) (2019-05-10)
 
 

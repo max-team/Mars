@@ -1,6 +1,96 @@
 # @marsjs/build
 
 
+## [0.2.36](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.35...@marsjs/build@0.2.36) (2019-06-11)
+
+
+### Features
+
+* **build & core:** class 和 style 属性支持使用过滤器 ([fe652db](https://github.com/max-team/Mars/commit/fe652db))
+
+
+
+## [0.2.35](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.34...@marsjs/build@0.2.35) (2019-06-07)
+
+
+### Features
+
+* 支持 App.vue 大写 ([bf67dab](https://github.com/max-team/Mars/commit/bf67dab))
+
+
+
+## [0.2.34](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.33...@marsjs/build@0.2.34) (2019-06-05)
+
+
+### Features
+
+* 兼容 App.vue 和 app.vue ([b37e161](https://github.com/max-team/Mars/commit/b37e161))
+
+
+## [0.2.33](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.32...@marsjs/build@0.2.33) (2019-06-05)
+
+
+### Bug Fixes
+
+* **build:** subPackages里支持 按文件类型筛选，编译到小程序时去掉尾缀 ([9f5051f](https://github.com/max-team/Mars/commit/9f5051f))
+
+
+
+## [0.2.32](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.31...@marsjs/build@0.2.32) (2019-06-04)
+
+
+### Features
+
+* **build:** 支持app.vue route添加文件类型筛选 ([4161775](https://github.com/max-team/Mars/commit/4161775))
+
+
+## [0.2.31](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.30...@marsjs/build@0.2.31) (2019-06-04)
+
+
+### Bug Fixes
+
+* **bug:** 修复因兼容tabBar style 配置引入的bug：缺少tabBar会报错 ([e0ae976](https://github.com/max-team/Mars/commit/e0ae976))
+
+
+## [0.2.30](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.29...@marsjs/build@0.2.30) (2019-06-03)
+
+
+### Bug Fixes
+
+* 组件中没有child，只有 scopedslot 时，scopedslot 不会被渲染 ([c0b7309](https://github.com/max-team/Mars/commit/c0b7309))
+
+
+## [0.2.29](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.28...@marsjs/build@0.2.29) (2019-05-30)
+
+
+### Features
+
+* **build:** support subPackages config ([1e6c5a8](https://github.com/max-team/Mars/commit/1e6c5a8))
+
+
+## [0.2.28](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.27...@marsjs/build@0.2.28) (2019-05-30)
+
+
+### Features
+
+* **build:** support tabBar style config ([25eed6a](https://github.com/max-team/Mars/commit/25eed6a))
+
+
+## [0.2.27](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.26...@marsjs/build@0.2.27) (2019-05-29)
+
+
+### Bug Fixes
+
+* **build:** compatible with older versions ([36bb19b](https://github.com/max-team/Mars/commit/36bb19b))
+
+
+## [0.2.26](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.25...@marsjs/build@0.2.26) (2019-05-29)
+
+
+### Features
+
+* **build:** add PWA feature ([a7bdbd0](https://github.com/max-team/Mars/commit/a7bdbd0))
+
 
 ## [0.2.25](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.24...@marsjs/build@0.2.25) (2019-05-22)
 

@@ -1,5 +1,13 @@
 # @marsjs/cli
 
+## [0.1.24](https://github.com/max-team/Mars/compare/@marsjs/cli@0.1.23...@marsjs/cli@0.1.24) (2019-05-29)
+
+### Features
+
+* **build:** add PWA feature ([a7bdbd0](https://github.com/max-team/Mars/commit/a7bdbd0))
+* check latest mars-cli version ([93a937f](https://github.com/max-team/Mars/commit/93a937f))
+
+
 ## [0.1.23](https://github.com/max-team/Mars/compare/@marsjs/cli@0.1.22...@marsjs/cli@0.1.23) (2019-05-13)
 
 

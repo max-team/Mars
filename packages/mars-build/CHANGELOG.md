@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.36](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.35...@marsjs/build@0.2.36) (2019-06-11)
+
+
+### Features
+
+* **build & core:** class 和 style 属性支持使用过滤器 ([fe652db](https://github.com/max-team/Mars/commit/fe652db))
+
+
+
+
+
 ## [0.2.35](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.34...@marsjs/build@0.2.35) (2019-06-07)
 
 
