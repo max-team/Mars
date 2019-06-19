@@ -49,11 +49,22 @@ function checkScopedTemplateIsH5(ast) {
     return true;
 }
 
-module.exports = function (ast, compMap) {
+module.exports = function (ast, options) {
+    const {
+        basicCompMap,
+        componentsInUsed
+    } = options;
     let tag = ast.tag;
+
+    const isH5Component = checkScopedTemplateIsH5(ast);
+    if (componentsInUsed[tag] && isH5Component) {
+        componentsInUsed[tag].using = true;
+    }
+
     if (!tag) {
         return ast;
     }
+
     if (
         tag === customTemplate
         && ast.attrsMap.target === (process.env.MARS_ENV_TARGET || 'h5')
@@ -78,11 +89,11 @@ module.exports = function (ast, compMap) {
     ast.tag = tagMap[tag] || tag;
     if (
         tagMap[tag]
-        && !compMap[tagMap[tag]]
+        && !basicCompMap[tagMap[tag]]
         && tagMap[tag] !== 'template'
-        && checkScopedTemplateIsH5(ast)
+        && isH5Component
     ) {
-        compMap[`${tagMap[tag]}`] = toCamel(tagMap[tag]);
+        basicCompMap[`${tagMap[tag]}`] = toCamel(tagMap[tag]);
     }
     return ast;
 };
