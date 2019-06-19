@@ -207,7 +207,7 @@ class Canvas {
     }
 
     draw(reserve, cb) {
-        // H5不需要通过draw方法开发绘制
+        // H5 不需要通过 draw 方法开发绘制
         cb && cb();
     }
 
