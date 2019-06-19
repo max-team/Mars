@@ -31,47 +31,28 @@ function isInFor(el) {
     return isInFor(el.parent);
 }
 
-// 判断租先节点是否含有 template-mars target非当前环境，如果含有，则收集ast tag
-function checkExtraEnvComponent(ast, target) {
+// 判断租先节点是否含有 template-mars target当前环境，如果含有，则收集ast tag
+function checkCurrentEnvComponent(ast, target) {
     let parent = ast.parent;
     if (parent) {
         if (parent.tag === customTemplate && parent.attrsMap && parent.attrsMap.target !== target) {
-            return true;
+            return false;
         }
         else {
-            return checkExtraEnvComponent(parent, target);
+            return checkCurrentEnvComponent(parent, target);
         }
     }
-    return false;
+    return true;
 }
 
-// 找出在在当前环境中使用的组件
-function findUsefulComponent(ast, target, componentsInUsed) {
-    const tag = ast.tag;
-    const children = ast.children;
-    if (componentsInUsed[tag]) {
-        componentsInUsed[tag].using = true;
-    }
-    if (children) {
-        children.forEach(child => {
-            if (child.tag === customTemplate && child.attrsMap.target !== target) {
-                return;
-            }
-            else {
-                findUsefulComponent(child, target, componentsInUsed);
-            }
-        });
-    }
-}
-
-function updateComponents(ast, components, target, componentsInUsed) {
-    findUsefulComponent(ast, target, componentsInUsed);
+function updateComponents(components, componentsInUsed) {
     Object.keys(componentsInUsed).forEach(comp => {
         if (!componentsInUsed[comp].using) {
             delete components[comp];
         }
     });
 }
+
 function getMarkNode(options, componentsInUsed = {}) {
     let {components, target} = options;
     let compIdCounter = 0;
@@ -80,9 +61,8 @@ function getMarkNode(options, componentsInUsed = {}) {
         const isComp = components && components[tag];
         el.isComp = isComp;
 
-        // 找出 template-mars 其他target下的组件，进行标记
-        if (checkExtraEnvComponent(el, target || process.env.MARS_ENV_TARGET) && components[tag]) {
-            componentsInUsed[tag].using = false;
+        if (checkCurrentEnvComponent(el, target || process.env.MARS_ENV_TARGET) && isComp) {
+            componentsInUsed[tag].using = true;
         }
 
         if (el.attrsMap['v-for'] && !el.iterator1) {
@@ -214,8 +194,7 @@ function getPostTrans(options) {
 
 module.exports = function mark(source, options) {
     const {
-        components,
-        target
+        components
     } = options;
 
     let componentsInUsed = {};
@@ -243,7 +222,8 @@ module.exports = function mark(source, options) {
             }
         ]
     });
-    updateComponents(ast, components, target, componentsInUsed);
+
+    updateComponents(components, componentsInUsed);
     let code = `({ render: function() { ${render} }, staticRenderFns: [\
 ${staticRenderFns.map(fn => `function() { ${fn} },)}`)}\
 ] })`;
