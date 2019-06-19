@@ -4,6 +4,7 @@
  */
 
 import {getPageInstance} from '../helper/instance';
+import {setObjectData} from '../helper/util';
 
 export function makePageMixin($api) {
     return {
@@ -119,16 +120,16 @@ export function handleModel(event) {
         return;
     }
 
-    if (type === 'input') {
-        this.$vue[model] = event.detail.value;
-    }
-    else if (type === 'change' && tag === 'picker') {
-        this.$vue[model] = event.detail.value;
+    if (
+        type === 'input'
+        || (type === 'change' && tag === 'picker')
+        || (type === 'change' && tag === 'radio')
+    ) {
+        setObjectData(this.$vue, model, event.detail.value);
     }
     else if (type === 'change' && tag === 'switch') {
-        this.$vue[model] = event.detail.checked;
+        setObjectData(this.$vue, model, event.detail.checked);
     }
-    else if (type === 'change' && tag === 'radio') {
-        this.$vue[model] = event.detail.value;
-    }
+
+
 }
