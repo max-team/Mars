@@ -28,7 +28,12 @@ module.exports = function getVisitor(options = {}) {
                     }
                     path.traverse({
                         ObjectProperty(path, state) {
-                            if (!componentsInUsed[path.node.key.name].using) {
+                            let componentName = path.node.key.type === 'Identifier'
+                                ? path.node.key.name
+                                : path.node.key.type === 'StringLiteral'
+                                    ? path.node.key.value
+                                    : null;
+                            if (componentName && !componentsInUsed[componentName].using) {
                                 path.remove();
                             }
                         }

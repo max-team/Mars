@@ -79,7 +79,6 @@ function getMarkNode(options, componentsInUsed = {}) {
         const tag = el.tag;
         const isComp = components && components[tag];
         el.isComp = isComp;
-
         // 找出 template-mars 其他target下的组件，进行标记
         if (checkExtraEnvComponent(el, target || process.env.MARS_ENV_TARGET) && components[tag]) {
             componentsInUsed[tag].using = false;
@@ -238,7 +237,7 @@ module.exports = function mark(source, options) {
         modules: [
             {
                 transformNode: getMarkNode(options, componentsInUsed),
-                postTransformNode: getPostTrans(options, componentsInUsed),
+                postTransformNode: getPostTrans(options),
                 genData: getGenData(options)
             }
         ]
