@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.38](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.37...@marsjs/build@0.2.38) (2019-06-19)
+
+
+### Bug Fixes
+
+* **build:** 修复因components属性type为StringLiteral时编译问题 ([5d2a898](https://github.com/max-team/Mars/commit/5d2a898))
+
+
+### Features
+
+* **build:** hideTabBar时 屏幕高度 & 单端文件打包优化，去掉非本端文件 ([fb67de2](https://github.com/max-team/Mars/commit/fb67de2))
+
+
+
+
+
 ## [0.2.37](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.36...@marsjs/build@0.2.37) (2019-06-19)
 
 

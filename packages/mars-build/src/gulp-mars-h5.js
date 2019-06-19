@@ -51,24 +51,6 @@ Vinyl.prototype.writeFileSync = function () {
     fs.writeFileSync(this.path, this.contents.toString());
 };
 
-// 找出在在当前环境中使用的组件
-function findUsefulComponent(ast, componentsInUsed) {
-    const tag = ast.tag;
-    const children = ast.children;
-    if (componentsInUsed[tag]) {
-        componentsInUsed[tag].using = true;
-    }
-    if (children) {
-        children.forEach(child => {
-            if (child.tag === customTemplate && child.attrsMap.target !== 'h5') {
-                return;
-            }
-            else {
-                findUsefulComponent(child, componentsInUsed);
-            }
-        });
-    }
-}
 
 async function compile(file, opt) {
     const rPath = path.relative(file.base, file.path);
@@ -121,11 +103,13 @@ async function compile(file, opt) {
             modules: [{
                 preTransformNode(el, options) {
                     let basicCompMap = {};
-                    delToVueTag(el, basicCompMap);
+                    delToVueTag(el, {
+                        basicCompMap,
+                        componentsInUsed
+                    });
                     if (!el.parent) {
                         el.attrsMap.style = `backgroundColor: ${config.backgroundColor || null};`;
                     }
-
                     componentSet = Object.assign(componentSet, basicCompMap);
                 }
             }]
@@ -133,14 +117,12 @@ async function compile(file, opt) {
         templateCode = generate(templateRet.ast, {
             target: process.env.MARS_ENV_TARGET || 'h5'
         });
-        findUsefulComponent(templateRet.ast, componentsInUsed);
     }
 
     templateFile = new Vinyl({
         path: `${fPath}.vue`,
         contents: new Buffer(templateCode || '')
     });
-
     // 处理非H5的引用
     scriptRet.content = postCompileScript(scriptRet.content, {
         componentsInUsed
