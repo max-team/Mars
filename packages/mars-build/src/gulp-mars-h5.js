@@ -13,6 +13,7 @@
 const through = require('through2');
 const gutil = require('gulp-util');
 const PluginError = gutil.PluginError;
+const customTemplate = 'template-mars';
 
 // 常量
 const PLUGIN_NAME = 'gulp-mars';
@@ -27,6 +28,7 @@ const slash = require('slash');
 
 const {
     compileScript,
+    postCompileScript,
     compileRouter,
     compileMain,
     compileApp,
@@ -49,6 +51,25 @@ Vinyl.prototype.writeFileSync = function () {
     fs.writeFileSync(this.path, this.contents.toString());
 };
 
+// 找出在在当前环境中使用的组件
+function findUsefulComponent(ast, componentsInUsed) {
+    const tag = ast.tag;
+    const children = ast.children;
+    if (componentsInUsed[tag]) {
+        componentsInUsed[tag].using = true;
+    }
+    if (children) {
+        children.forEach(child => {
+            if (child.tag === customTemplate && child.attrsMap.target !== 'h5') {
+                return;
+            }
+            else {
+                findUsefulComponent(child, componentsInUsed);
+            }
+        });
+    }
+}
+
 async function compile(file, opt) {
     const rPath = path.relative(file.base, file.path);
     const fPath = slash(path.resolve(file.cwd, opt.dest, rPath).replace(/\.vue$/, ''));
@@ -69,6 +90,7 @@ async function compile(file, opt) {
     let scriptRet = null;
     let config = null;
     let enableConfig = null;
+    let componentsInUsed = {}; // 记录组件是否使用
     if (script) {
         scriptRet = await compileScript(script.content, {
             isApp,
@@ -78,8 +100,15 @@ async function compile(file, opt) {
         });
         config = scriptRet && scriptRet.config;
         enableConfig = scriptRet && scriptRet.enableConfig;
+        scriptRet.components && Object.keys(scriptRet.components).forEach(name => {
+            if (!componentsInUsed[name]) {
+                componentsInUsed[name] = {
+                    using: false,
+                    declaration: scriptRet.components[name]
+                };
+            }
+        });
     }
-
     // 处理 template
     let templateRet = null;
     let templateFile = null;
@@ -104,11 +133,17 @@ async function compile(file, opt) {
         templateCode = generate(templateRet.ast, {
             target: process.env.MARS_ENV_TARGET || 'h5'
         });
+        findUsefulComponent(templateRet.ast, componentsInUsed);
     }
 
     templateFile = new Vinyl({
         path: `${fPath}.vue`,
         contents: new Buffer(templateCode || '')
+    });
+
+    // 处理非H5的引用
+    scriptRet.content = postCompileScript(scriptRet.content, {
+        componentsInUsed
     });
 
     // 处理 app.vue 生成 对应 router.js ，处理框架入口App.vue，并合并app.vue的生命周期

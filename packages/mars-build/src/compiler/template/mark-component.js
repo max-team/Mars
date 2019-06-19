@@ -39,17 +39,17 @@ function checkExtraEnvComponent(ast, target) {
             return true;
         }
         else {
-            return checkExtraEnvComponent(parent);
+            return checkExtraEnvComponent(parent, target);
         }
     }
     return false;
 }
 
 // 找出在在当前环境中使用的组件
-function findUsefulComponent(ast, components, target, componentsInUsed) {
+function findUsefulComponent(ast, target, componentsInUsed) {
     const tag = ast.tag;
     const children = ast.children;
-    if (components[tag]) {
+    if (componentsInUsed[tag]) {
         componentsInUsed[tag].using = true;
     }
     if (children) {
@@ -58,12 +58,20 @@ function findUsefulComponent(ast, components, target, componentsInUsed) {
                 return;
             }
             else {
-                findUsefulComponent(child, components, target, componentsInUsed);
+                findUsefulComponent(child, target, componentsInUsed);
             }
         });
     }
 }
 
+function updateComponents(ast, components, target, componentsInUsed) {
+    findUsefulComponent(ast, target, componentsInUsed);
+    Object.keys(componentsInUsed).forEach(comp => {
+        if (!componentsInUsed[comp].using) {
+            delete components[comp];
+        }
+    });
+}
 function getMarkNode(options, componentsInUsed = {}) {
     let {components, target} = options;
     let compIdCounter = 0;
@@ -184,11 +192,22 @@ function getGenData(options) {
 
 
 function getPostTrans(options) {
-    return function postTrans(node) {
+    const {
+        target
+    } = options;
+    return function postTrans(el) {
+        const children = el.children;
         // remove all directives
-        if (node.directives) {
-            delete node.directives;
+        if (el.directives) {
+            delete el.directives;
         }
+        children.forEach((child, index) => {
+            if (child.tag === customTemplate
+                && child.attrsMap
+                && child.attrsMap.target !== target) {
+                children.splice(index, 1);
+            }
+        });
     };
 }
 
@@ -223,7 +242,7 @@ module.exports = function mark(source, options) {
             }
         ]
     });
-    findUsefulComponent(ast, components, target, componentsInUsed);
+    updateComponents(ast, components, target, componentsInUsed);
     let code = `({ render: function() { ${render} }, staticRenderFns: [\
 ${staticRenderFns.map(fn => `function() { ${fn} },)}`)}\
 ] })`;
