@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.20](https://github.com/max-team/Mars/compare/@marsjs/api@1.0.19...@marsjs/api@1.0.20) (2019-06-19)
+
+
+### Features
+
+* **canvas:** detail update ([c34d738](https://github.com/max-team/Mars/commit/c34d738))
+* **canvas:** detail update ([0338fb5](https://github.com/max-team/Mars/commit/0338fb5))
+* **canvas:** detail update ([21c2f38](https://github.com/max-team/Mars/commit/21c2f38))
+
+
+
+
+
 ## [1.0.19](https://github.com/max-team/Mars/compare/@marsjs/api@1.0.18...@marsjs/api@1.0.19) (2019-06-05)
 
 

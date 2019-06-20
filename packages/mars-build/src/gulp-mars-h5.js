@@ -107,9 +107,6 @@ async function compile(file, opt) {
                         basicCompMap,
                         componentsInUsed
                     });
-                    if (!el.parent) {
-                        el.attrsMap.style = `backgroundColor: ${config.backgroundColor || null};`;
-                    }
                     componentSet = Object.assign(componentSet, basicCompMap);
                 }
             }]
@@ -169,7 +166,7 @@ async function compile(file, opt) {
         navigationBarTextStyle: config.navigationBarTextStyle,
         backgroundColor: config.backgroundColor,
         backgroundTextStyle: config.backgroundTextStyle,
-        navigationStyle: config.navigationStyle
+        navigationStyle: config.navigationStyle || 'default'
     });
 
     mainOptions = Object.assign(mainOptions, {

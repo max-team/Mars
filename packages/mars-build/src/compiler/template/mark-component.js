@@ -61,7 +61,7 @@ function getMarkNode(options, componentsInUsed = {}) {
         const isComp = components && components[tag];
         el.isComp = isComp;
 
-        if (checkCurrentEnvComponent(el, target || process.env.MARS_ENV_TARGET) && isComp) {
+        if (isComp && checkCurrentEnvComponent(el, target || process.env.MARS_ENV_TARGET)) {
             componentsInUsed[tag].using = true;
         }
 

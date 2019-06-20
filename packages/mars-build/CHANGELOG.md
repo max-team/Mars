@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.40](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.39...@marsjs/build@0.2.40) (2019-06-20)
+
+
+### Features
+
+* **build:** 支持navigationStyle: custom & 升级转场动画和背景配置 ([#98](https://github.com/max-team/Mars/issues/98)) ([3a526aa](https://github.com/max-team/Mars/commit/3a526aa))
+
+
+
+
+
+## [0.2.39](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.38...@marsjs/build@0.2.39) (2019-06-19)
+
+
+### Bug Fixes
+
+* **build:** 修复 ast 节点 component 信息收集问题 ([#96](https://github.com/max-team/Mars/issues/96)) ([c8d4352](https://github.com/max-team/Mars/commit/c8d4352))
+
+
+
+
+
 ## [0.2.38](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.37...@marsjs/build@0.2.38) (2019-06-19)
 
 
