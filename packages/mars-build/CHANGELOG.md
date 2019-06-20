@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.41](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.40...@marsjs/build@0.2.41) (2019-06-20)
+
+
+### Bug Fixes
+
+* **build:** 修复components检查时遇到的v-if/v-else 节点信息缺失问题 ([b2b3e5e](https://github.com/max-team/Mars/commit/b2b3e5e))
+
+
+### Features
+
+* **build:** 删除overflow-y，避免对 sticky 属性影响 ([440ed5f](https://github.com/max-team/Mars/commit/440ed5f))
+
+
+
+
+
 ## [0.2.40](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.39...@marsjs/build@0.2.40) (2019-06-20)
 
 
