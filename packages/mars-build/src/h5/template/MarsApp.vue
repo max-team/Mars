@@ -315,6 +315,7 @@ export default {
         width: 100%;
 
         .swan-app-tab-panel {
+            overflow-y: auto;
             width: 100%;
 
             .tab-panel-content {
