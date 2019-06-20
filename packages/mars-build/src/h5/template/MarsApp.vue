@@ -7,6 +7,9 @@
             <div
                 class="swan-app-container"
                 :class="[transitionStatus === 'enter' ? 'transition-status-enter' : null]"
+                :style="{
+                    paddingTop: hasNavigationBar ? '38px': null
+                }"
             >
                 <navigation-bar
                     :transitionDuration="transitionDuration"
@@ -16,7 +19,8 @@
                     :showBottomBorder="showNavigationBorder"
                     :homeIconColor="navigationBarHomeColor"
                     :title="currentTitle"
-                    :isHomePage="isHomePage"/>
+                    :isHomePage="isHomePage"
+                    :navigationStyle="currentNavigationStyle"/>
                 <div
                     class="swan-app-tab-panel"
                     :class="[transitionStatus === 'enter' ? 'transition-status-enter' : null]"
@@ -53,7 +57,7 @@
                                     :style="{
                                         paddingBottom: tabBarHeight + 'px',
                                         backgroundColor: currentBackgroundColor || '#fff',
-                                        top: transitionStatus === 'enter' ? `${-pos}px`: null
+                                        top: currentNavigationStyle === 'default' ? '38px': null
                                     }"
                                 />
                             </keep-alive>
@@ -72,6 +76,7 @@
                     />
             </div>
         </custom-app>
+        <div id="mars-background" ref="marsBackground"></div>
     </div>
 </template>
 
@@ -151,12 +156,13 @@ export default {
             routerViewKey: null,
             currentNavigationBarBackgroundColor: '',
             currentNavigationBarTextStyle: '',
-            currentNavigationStyle: '',
+            currentNavigationStyle: 'default',
             transitionStatus: 'end',
             transitionMode: 'in-out',
             pos: 0,
             bodyHeight: 'auto',
-            isHomePage: false
+            isHomePage: false,
+            hasNavigationBar: true
         }
     },
     computed: {
@@ -180,7 +186,6 @@ export default {
             || (to.path === from.path && JSON.stringify(to.query) !== JSON.stringify(from.query))
             ? this.routerViewKey = to.fullPath
             : this.routerViewKey = null;
-            document.querySelector('body').style.backgroundColor = this.currentBackgroundColor || '#fff';
         }
     },
     mounted() {
@@ -204,6 +209,8 @@ export default {
         this.showRouterView = true;
         this.routerViewKey = this.$route.path;
         this.isHomePage = this.$route.path === this.homePage;
+        this.$refs.marsBackground.style.backgroundColor = this.currentBackgroundColor || '#fff';
+        this.hasNavigationBar = this.currentNavigationStyle === 'default';
     },
     methods: {
         afterEnter() {
@@ -211,6 +218,8 @@ export default {
             this.pos = 0;
             this.bodyHeight = 'auto';
             this.$refs.currentRouter.$emit('marsTransitionEnterEnd');
+            this.$refs.marsBackground.style.backgroundColor = this.currentBackgroundColor || '#fff';
+            this.hasNavigationBar = this.currentNavigationStyle === 'default';
             this.$nextTick(() => {
                 if (this.isBack) {
                     window.scrollTo(0, this.fromRouterPosY);
@@ -231,7 +240,7 @@ export default {
             this.transitionMode = 'in-out';
             this.pos = -window.pageYOffset;
             !this.isBack && (this.transitionStatus = 'enter');
-            this.bodyHeight = screen.height - 38 + 'px';
+            this.bodyHeight = screen.height - (this.currentNavigationStyle === 'default' ? 38 : 0) + 'px';
         },
         beforeLeave() {
             this.leavePos = window.pageYOffset;
@@ -299,18 +308,14 @@ export default {
 
 #mars {
     width: 100%;
-    overflow-x: hidden;
-    background-color: #fff;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     scroll-behavior: smooth;
 
     .swan-app-container {
         width: 100%;
-        padding-top: 38px; /* no */
 
         .swan-app-tab-panel {
             overflow-y: auto;
-            overflow-x: hidden;
             width: 100%;
             .tab-panel-content {
                 position: relative;
@@ -320,7 +325,7 @@ export default {
                 animation-name: fold-left-in;
                 animation-duration: .3s;
                 box-sizing: border-box;
-                position: absolute;
+                position: fixed;
                 top: 0;
                 width: 100%;
                 height: 100%;
@@ -344,9 +349,18 @@ export default {
             }
         }
     }
+    #mars-background {
+        position: fixed;
+        z-index: -1;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
 }
 .transition-status-enter {
     position: absolute !important;
+    overflow-x: hidden;
     height: 100%;
 }
 
