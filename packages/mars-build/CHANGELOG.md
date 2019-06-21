@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.43](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.42...@marsjs/build@0.2.43) (2019-06-21)
+
+
+### Features
+
+* **build:** 去除多余overflow，支持页面内sticky ([1ef2fa9](https://github.com/max-team/Mars/commit/1ef2fa9))
+
+
+
+
+
 ## [0.2.42](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.41...@marsjs/build@0.2.42) (2019-06-20)
 
 **Note:** Version bump only for package @marsjs/build
