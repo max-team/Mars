@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.42](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.41...@marsjs/build@0.2.42) (2019-06-20)
+
+**Note:** Version bump only for package @marsjs/build
+
+
+
+
+
 ## [0.2.41](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.40...@marsjs/build@0.2.41) (2019-06-20)
 
 
