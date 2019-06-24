@@ -7,6 +7,8 @@
 /* eslint-disable no-native-reassign */
 /* eslint-disable fecs-min-vars-per-destructure */
 const babel = require('babel-core');
+const fs = require('fs');
+const mkdirp = require('mkdirp');
 const transformScriptPlugin = require('../../h5/transform/plugins/transformScriptPlugin');
 const transformMainPlugin = require('../../h5/transform/plugins/transformMainPlugin');
 const transformCompPlugin = require('../../h5/transform/plugins/transformCompPlugin');
@@ -259,4 +261,24 @@ ${contentStr}
     `;
     content = new Buffer(contentStr);
     return content;
+};
+
+// 处理tabBar iconPath，更改icon目录为默认目录，解决动态require 引发的context为src目录情况
+exports.compileTabBar = function (options, dest) {
+    // 处理tabBar iconPath
+    function dealIconPath(path) {
+        let pathArr = path.split('/');
+        let newPath = `${pathArr[pathArr.length - 1]}`;
+        let iconContent = fs.readFileSync(`${process.cwd()}/src/${path}`);
+        fs.writeFileSync(process.cwd() + `/${dest}/tabBarIcons/${newPath}`, iconContent);
+        return newPath;
+    }
+    mkdirp.sync(dest + '/tabBarIcons');
+    const tabBarList = options && options.tabBar && options.tabBar.list ? options.tabBar.list : [];
+    tabBarList.forEach(item => {
+        if (item.iconPath && item.selectedIconPath) {
+            item.iconPath = dealIconPath(item.iconPath);
+            item.selectedIconPath = dealIconPath(item.selectedIconPath);
+        }
+    });
 };
