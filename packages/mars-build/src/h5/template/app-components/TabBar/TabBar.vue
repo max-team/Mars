@@ -25,7 +25,7 @@
                 <div
                     class="tab-item-icon"
                     :style="{
-                        backgroundImage: `url(${require('../../'
+                        backgroundImage: `url(${require('../../tabBarIcons/'
                         + (currentPath === item.pagePath ? item.selectedIconPath : item.iconPath))})`
                     }"
                 >

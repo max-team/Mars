@@ -34,7 +34,8 @@ const {
     compileApp,
     compileComponents,
     compileApi,
-    compileGetApp
+    compileGetApp,
+    compileTabBar
 } = require('./compiler/script/script-h5');
 const delToVueTag = require('./h5/transform/tag');
 const generate = require('./compiler/template/generate');
@@ -147,6 +148,9 @@ async function compile(file, opt) {
         let apiPluginContent = fs.readFileSync(__dirname + '/h5/template/globalApi.js');
         apiPluginContent = compileApi(apiPluginContent, opt);
         fs.writeFileSync(opt.dest + '/globalApi.js', apiPluginContent);
+
+        // 处理 tabBar.vue里的图片引入路径
+        compileTabBar(config, opt.dest);
 
         // 获取小程序 app.vue里的config eg.onReachBottomDistance
         mainOptions = Object.assign(mainOptions, config);

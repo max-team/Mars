@@ -28,7 +28,7 @@ module.exports = {
     'picker': `${prefixComp}picker`,
     'radio': `${prefixComp}radio`,
     'radio-group': `${prefixComp}radio-group`,
-    'slider': `${prefixComp}silder`,
+    'slider': `${prefixComp}slider`,
     'switch': `${prefixComp}switch`,
     'textarea': `${prefixComp}textarea`,
     // 导航
