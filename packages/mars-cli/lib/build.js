@@ -23,7 +23,9 @@ async function build(cmd) {
         target,
         env
     };
-    process.env.NODE_ENV = 'production';
+    if (!process.env.NODE_ENV) {
+        process.env.NODE_ENV = 'production';
+    }
     process.env.MARS_CLI_OPTIONS = JSON.stringify(options);
     process.env.MARS_CLI_TARGET = target;
     process.env.MARS_CLI_DEST = env ? `./dist-${env}` : './dist-h5';
