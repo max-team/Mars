@@ -34,7 +34,6 @@ const {
     compileApp,
     compileComponents,
     compileApi,
-    compileGetApp,
     compileTabBar
 } = require('./compiler/script/script-h5');
 const delToVueTag = require('./h5/transform/tag');
@@ -137,12 +136,11 @@ async function compile(file, opt) {
         fs.writeFileSync(opt.dest + '/router.js', routerContent);
 
         // 处理入口文件app.vue
-        const customAppApi = compileApp(scriptRet);
+        const appScriptContent = compileApp(scriptRet);
 
         // 处理 getApp appApi
-        let appApiContent = fs.readFileSync(__dirname + '/h5/template/appApi.js');
-        appApiContent = compileGetApp(appApiContent, customAppApi);
-        fs.writeFileSync(opt.dest + '/appApi.js', appApiContent);
+        // let appApiContent = fs.readFileSync(__dirname + '/h5/template/appApi.js');
+        fs.writeFileSync(opt.dest + '/appApi.js', appScriptContent);
 
         // 处理 globalApi
         let apiPluginContent = fs.readFileSync(__dirname + '/h5/template/globalApi.js');
