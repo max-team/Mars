@@ -139,7 +139,7 @@ class Canvas {
     }
 
     setFontSize(fontSize) {
-        this.context.font = fontSize + 'px';
+        this.context.font = fontSize + 'px normal';
     }
 
     fillText(text, x, y, maxWidth) {
