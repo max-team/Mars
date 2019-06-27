@@ -4,7 +4,7 @@
  */
 
 /* globals Vue */
-
+import initAOPEvents from './AOP.js';
 import App from './MarsApp.vue';
 import router from './router.js';
 import initGlobalApi from './globalApi.js';
@@ -38,3 +38,6 @@ initGlobalApi(Vue, vm);
 
 // 将初始化后的$api赋值给getApp
 marsAppData.$api = vm.$api;
+
+// 初始化AOP注册事件
+initAOPEvents(vm);

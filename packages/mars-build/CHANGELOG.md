@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.44](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.43...@marsjs/build@0.2.44) (2019-06-25)
+
+
+### Bug Fixes
+
+* 修复 vueComponentTagMap 中slider 的拼写错误 ([dbe5ee7](https://github.com/max-team/Mars/commit/dbe5ee7))
+
+
+### Features
+
+* **build:** 解决动态团片require context影响webpack打包的问题 ([#108](https://github.com/max-team/Mars/issues/108)) ([810dbb8](https://github.com/max-team/Mars/commit/810dbb8))
+
+
+
+
+
 ## [0.2.43](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.42...@marsjs/build@0.2.43) (2019-06-21)
 
 

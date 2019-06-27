@@ -8,7 +8,7 @@
 /* eslint-disable babel/new-cap */
 
 const APP_LIFE_TIME = [
-    'beforeMount',
+    'created',
     'mounted',
     'destroyed'
 ];

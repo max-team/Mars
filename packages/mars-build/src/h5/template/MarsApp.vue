@@ -4,42 +4,45 @@
             id="mars"
             :class="[transitionStatus === 'enter' ? 'transition-status-enter' : null]"
         >
-            <custom-app ref="app">
+            <div
+                class="swan-app-container"
+                :class="[transitionStatus === 'enter' ? 'transition-status-enter' : null]"
+                :style="{
+                    paddingTop: hasNavigationBar ? '38px': null
+                }"
+            >
+                <navigation-bar
+                    :transitionDuration="transitionDuration"
+                    :transitionTimingFunc="transitionTimingFunc"
+                    :backgroundColor="currentNavigationBarBackgroundColor"
+                    :textStyle="currentNavigationBarTextStyle"
+                    :showBottomBorder="showNavigationBorder"
+                    :homeIconColor="navigationBarHomeColor"
+                    :title="currentTitle"
+                    :isHomePage="isHomePage"
+                    :navigationStyle="currentNavigationStyle"/>
                 <div
-                    class="swan-app-container"
+                    class="swan-app-tab-panel"
                     :class="[transitionStatus === 'enter' ? 'transition-status-enter' : null]"
-                    :style="{
-                        paddingTop: hasNavigationBar ? '38px': null
-                    }"
                 >
-                    <navigation-bar
-                        :transitionDuration="transitionDuration"
-                        :transitionTimingFunc="transitionTimingFunc"
-                        :backgroundColor="currentNavigationBarBackgroundColor"
-                        :textStyle="currentNavigationBarTextStyle"
-                        :showBottomBorder="showNavigationBorder"
-                        :homeIconColor="navigationBarHomeColor"
-                        :title="currentTitle"
-                        :isHomePage="isHomePage"
-                        :navigationStyle="currentNavigationStyle"/>
-                    <div
-                        class="swan-app-tab-panel"
-                        :class="[transitionStatus === 'enter' ? 'transition-status-enter' : null]"
+                    <pull-down-refresh
+                        ref="refresherHandler"
+                        @pull-down-refresh="handleRefresh"
+                        @reach-bottom="handleReachBottom"
+                        @page-scroll="handlePageScroll"
+                        :enablePullDownRefresh="enablePullDownRefresh"
+                        :enableReachBottom="enableReachBottom"
+                        :onReachBottomDistance="onReachBottomDistance"
+                        class="tab-panel-content"
+                        :style="{
+                            top: `${pos || 0}px`,
+                            height: bodyHeight,
+                            position: transitionStatus === 'enter' ? 'relative': 'static'
+                        }"
                     >
-                        <pull-down-refresh
-                            ref="refresherHandler"
-                            @pull-down-refresh="handleRefresh"
-                            @reach-bottom="handleReachBottom"
-                            @page-scroll="handlePageScroll"
-                            :enablePullDownRefresh="enablePullDownRefresh"
-                            :enableReachBottom="enableReachBottom"
-                            :onReachBottomDistance="onReachBottomDistance"
-                            class="tab-panel-content"
-                            :style="{
-                                top: `${pos || 0}px`,
-                                height: bodyHeight,
-                                position: transitionStatus === 'enter' ? 'relative': 'static'
-                            }"
+                        <custom-app 
+                            v-if="showRouterView"
+                            ref="app"
                         >
                             <transition 
                                 :name="useTransition && !tabChange && !browserAction ? 'fold-left' : 'back'"
@@ -52,7 +55,6 @@
                             >
                                 <keep-alive :max="6">
                                     <router-view
-                                        v-if="showRouterView"
                                         :key="routerViewKey"
                                         ref="currentRouter"
                                         :style="{
@@ -63,20 +65,20 @@
                                     />
                                 </keep-alive>
                             </transition>
-                        </pull-down-refresh>
-                    </div>
-                    <tab-bar
-                        v-if="tabList.length > 0 && showTabBar ? customShowTabBar : false"
-                        @tab-item-tap="handleTabItemTap"
-                        :tabList="tabList"
-                        :currentPath="currentPath"
-                        :color="tabBarColor"
-                        :selectedColor="tabBarSelectedColor"
-                        :borderStyle="tabBarBorderStyle"
-                        :backgroundColor="tabBarBackgroundColor"
-                        />
+                        </custom-app>
+                    </pull-down-refresh>
                 </div>
-            </custom-app>
+                <tab-bar
+                    v-if="tabList.length > 0 && showTabBar ? customShowTabBar : false"
+                    @tab-item-tap="handleTabItemTap"
+                    :tabList="tabList"
+                    :currentPath="currentPath"
+                    :color="tabBarColor"
+                    :selectedColor="tabBarSelectedColor"
+                    :borderStyle="tabBarBorderStyle"
+                    :backgroundColor="tabBarBackgroundColor"
+                    />
+            </div>
         </div>
         <div id="mars-background" ref="marsBackground"></div>
     </div>
@@ -351,15 +353,17 @@ export default {
             }
         }
     }
-    #mars-background {
-        position: fixed;
-        z-index: -1;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-    }
 }
+
+#mars-background {
+    position: fixed;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
 .transition-status-enter {
     position: absolute !important;
     overflow-x: hidden;
