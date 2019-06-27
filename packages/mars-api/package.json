@@ -1,6 +1,6 @@
 {
   "name": "@marsjs/api",
-  "version": "1.0.21",
+  "version": "1.0.22",
   "browser": "index.js",
   "scripts": {
     "test": "jest --coverage",
