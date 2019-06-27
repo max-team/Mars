@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.22](https://github.com/max-team/Mars/compare/@marsjs/api@1.0.21...@marsjs/api@1.0.22) (2019-06-27)
+
+
+### Bug Fixes
+
+* **api:** font style is required when set canvas font ([#112](https://github.com/max-team/Mars/issues/112)) ([499ff3a](https://github.com/max-team/Mars/commit/499ff3a))
+
+
+
+
+
 ## [1.0.21](https://github.com/max-team/Mars/compare/@marsjs/api@1.0.20...@marsjs/api@1.0.21) (2019-06-20)
 
 **Note:** Version bump only for package @marsjs/api
