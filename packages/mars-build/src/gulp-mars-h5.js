@@ -78,7 +78,8 @@ async function compile(file, opt) {
             isApp,
             target: opt.target,
             path: fPath + '.vue',
-            dest: opt._config.dest
+            dest: opt._config.dest,
+            mars: opt._config.h5 || {}
         });
         config = scriptRet && scriptRet.config;
         enableConfig = scriptRet && scriptRet.enableConfig;
