@@ -143,9 +143,9 @@ exports.compileScript = async function (content, options = {}) {
         isApp = false,
         target,
         dest,
-        path: filePath
+        path: filePath,
+        mars
     } = options;
-
     let baseOptions = {}; // 收集 config 和 components
     content = content.replace(
         /process\.env\.MARS_ENV/g,
@@ -154,11 +154,13 @@ exports.compileScript = async function (content, options = {}) {
         /process\.env\.NODE_ENV/g,
         JSON.stringify(process.env.NODE_ENV || 'development')
     );
+    const useAOP = mars.useAOP === undefined ? true : mars.useAOP;
     const scriptRet = babel.transform(content, {
         plugins: [
             transformScriptPlugin({
                 baseOptions,
-                isApp
+                isApp,
+                useAOP
             })
         ]
     });

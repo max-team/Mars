@@ -211,7 +211,7 @@ export default {
         this.currentPath = this.$route.path;
         this.getPageConfig(this.$route.path);
         this.showRouterView = true;
-        this.routerViewKey = this.$route.path;
+        this.routerViewKey = this.$route.fullPath;
         this.isHomePage = this.$route.path === this.homePage;
         this.$refs.marsBackground.style.backgroundColor = this.currentBackgroundColor || '#fff';
         this.hasNavigationBar = this.currentNavigationStyle === 'default';
