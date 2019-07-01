@@ -1,5 +1,30 @@
 # @marsjs/api
 
+## [1.0.22](https://github.com/max-team/Mars/compare/@marsjs/api@1.0.21...@marsjs/api@1.0.22) (2019-06-27)
+
+
+### Bug Fixes
+
+* **api:** font style is required when set canvas font ([#112](https://github.com/max-team/Mars/issues/112)) ([499ff3a](https://github.com/max-team/Mars/commit/499ff3a))
+
+
+
+## [1.0.21](https://github.com/max-team/Mars/compare/@marsjs/api@1.0.20...@marsjs/api@1.0.21) (2019-06-20)
+
+**Note:** Version bump only for package @marsjs/api
+
+
+
+## [1.0.20](https://github.com/max-team/Mars/compare/@marsjs/api@1.0.19...@marsjs/api@1.0.20) (2019-06-19)
+
+
+### Features
+
+* **canvas:** detail update ([c34d738](https://github.com/max-team/Mars/commit/c34d738))
+* **canvas:** detail update ([0338fb5](https://github.com/max-team/Mars/commit/0338fb5))
+* **canvas:** detail update ([21c2f38](https://github.com/max-team/Mars/commit/21c2f38))
+
+
 
 ## [1.0.19](https://github.com/max-team/Mars/compare/@marsjs/api@1.0.18...@marsjs/api@1.0.19) (2019-06-05)
 
@@ -9,12 +34,14 @@
 * **api:** add previewImage api ([02a0dd7](https://github.com/max-team/Mars/commit/02a0dd7))
 
 
+
 ## [1.0.18](https://github.com/max-team/Mars/compare/@marsjs/api@1.0.17...@marsjs/api@1.0.18) (2019-06-04)
 
 
 ### Features
 
 * **api:** add navigate api: switch tab ([ff33fda](https://github.com/max-team/Mars/commit/ff33fda))
+
 
 
 ## [1.0.17](https://github.com/max-team/Mars/compare/@marsjs/api@1.0.16...@marsjs/api@1.0.17) (2019-04-16)
