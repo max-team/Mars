@@ -101,12 +101,6 @@ export default {
     right: 0;
     height: 45px;
     overflow: hidden;
-    display: box;
-    box-orient: horizontal;
-    box-direction: normal;
-    box-pack: justify;
-    box-align: stretch;
-    box-lines: single;
     display: flex;
     flex-direction: row;
     justify-content: space-between;

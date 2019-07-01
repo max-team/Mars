@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.45](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.44...@marsjs/build@0.2.45) (2019-06-27)
+
+
+### Features
+
+* **build:** 解决动态团片require context影响webpack打包的问题 ([#114](https://github.com/max-team/Mars/issues/114)) ([67c031a](https://github.com/max-team/Mars/commit/67c031a))
+
+
+
+
+
 ## [0.2.44](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.43...@marsjs/build@0.2.44) (2019-06-25)
 
 
