@@ -348,7 +348,10 @@ function mapSwanLifeTime(properties, t, lifeKey, lifeItem, lifeMapKey, options) 
 
 module.exports = function getVisitor(options = {}) {
     return ({types: t}) => {
-        const isApp = options.isApp;
+        const {
+            useAOP,
+            isApp
+        } = options;
         return {
             visitor: {
                 ExportDefaultDeclaration(path, state) {
@@ -414,7 +417,9 @@ module.exports = function getVisitor(options = {}) {
                             return;
                         }
                         // 处理生命周期的AOP
-                        lifeItem = bindAOPEvents(lifeItem, t, key, isApp);
+                        if (useAOP) {
+                            lifeItem = bindAOPEvents(lifeItem, t, key, isApp);
+                        }
                         mapSwanLifeTime(properties, t, key, lifeItem, lifeMapKey, options);
                     });
                     // 处理swan component 生命周期：created、 attached 、ready 、detached、show、hide
