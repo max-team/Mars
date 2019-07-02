@@ -16,14 +16,9 @@ import {callHook} from './lifecycle';
 
 import {
     makeCreateComponent,
-    makeMarkComponent,
     makeVueCompCreator
 } from '../base/createComponent';
 
 export const vueCompCreator = makeVueCompCreator(getCompMixin);
 
-const markComponent = makeMarkComponent(setData);
-
-export default makeCreateComponent(handleProxy, handleModel, callHook, {
-    created: markComponent
-});
+export default makeCreateComponent(handleProxy, handleModel, setData, callHook);

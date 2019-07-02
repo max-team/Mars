@@ -144,46 +144,12 @@ function getFiltersData(vm, $mp, data = {}) {
         }
         Object.keys(vm._fData).forEach(k => {
             // if vnode equals null, means its vif equals false
-            let vnode = vm._fData[k];
-            const vnodeFData = vnode
-                ? (vnode.data && vnode.data.f || {})
-                : {if: false};
-
-            const {t: texts, p: props, for: _for} = vnodeFData;
-            const _if = !!vnodeFData.if;
-            let propsData = {};
-            let styleData = {};
-            if (vnode && props) {
-                styleData = vnode.data;
-                propsData = vnode.componentOptions
-                    ? vnode.componentOptions.propsData
-                    : (vnode.data && vnode.data.attrs);
-            }
+            let f = vm._fData[k];
+            const {_t, _p, _if, _for} = f;
 
             const curData = originFData && originFData[k];
             if (!curData) {
-                let kData = {};
-                kData = {
-                    _if,
-                    _for
-                };
-                if (props) {
-                    kData._p = kData._p || {};
-                    props.forEach(key => {
-                        if (key === 'class' || key === 'style') {
-                            kData._p[key] = styleData[key];
-                        }
-                        else {
-                            kData._p[key] = propsData[key];
-                        }
-                    });
-                }
-                if (texts) {
-                    kData._t = kData._t || {};
-                    texts.forEach((t, index) => {
-                        kData._t[index] = t + '';
-                    });
-                }
+                let kData = f;
                 if (originFData) {
                     const key = `_f_.${k}`;
                     data[key] = kData;
@@ -193,18 +159,15 @@ function getFiltersData(vm, $mp, data = {}) {
                 }
             }
             else {
-                compareAndSetData(k, _if, curData._if, '_if', data);
-                compareAndSetData(k, _for, curData._for, '_for', data);
+                _if && compareAndSetData(k, _if, curData._if, '_if', data);
+                _for && compareAndSetData(k, _for, curData._for, '_for', data);
                 // compare texts
-                if (texts) {
-                    texts.forEach((t, index) => {
-                        compareAndSetData(k, t + '', curData._t[index], `_t.${index}`, data);
-                    });
-                }
+                _t && compareAndSetData(k, _t + '', curData._t, '_t', data);
+
                 // compare props
-                if (props) {
-                    props.forEach(key => {
-                        compareAndSetData(k, propsData[key], curData._p[key], `_p.${key}`, data);
+                if (_p) {
+                    Object.keys(_p).forEach(key => {
+                        compareAndSetData(k, _p[key], curData._p[key], `_p.${key}`, data);
                     });
                 }
             }

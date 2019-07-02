@@ -36,8 +36,10 @@ export function makeCreatePage(pageMixin, {handleProxy, handleModel}, setData, c
                 if (state.store && !options.store) {
                     options.store = state.store;
                 }
+                options.mpType = 'page';
 
                 const vm = new Vue(options);
+
                 vm.__vms__ = {};
                 this.$vue = vm;
                 vm.$mp = {

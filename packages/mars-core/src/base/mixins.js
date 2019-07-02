@@ -20,27 +20,6 @@ export function makePageMixin($api) {
     };
 }
 
-// function markComponentInVue(pms, vms) {
-//     let pm = this.$mp;
-//     if (!pm) {
-//         pm = pms.find((item, index) => {
-//             if (item[0].data.compId === this.compId) {
-//                 pms.splice(index, 1);
-//                 return true;
-//             }
-//             return false;
-//         });
-//     }
-
-//     if (!pm) {
-//         vms.push(this);
-//     }
-//     else {
-//         pm[0].$vue = this;
-//         pm[1]();
-//     }
-// }
-
 export function makeGetCompMixin($api) {
     return function getCompMixin(options) {
         return {
@@ -61,9 +40,15 @@ export function makeGetCompMixin($api) {
                 vms[this.compId] = vms[this.compId] || {cur: -1, curSwan: -1};
                 const curIndex = ++vms[this.compId].cur;
                 vms[this.compId][curIndex] = this;
+
+                // 此时还没有 .$mp
+                this.$options.mpInstance.__curSwan__ = curIndex;
             },
             updated() {
                 this.$emit('vm.updated');
+            },
+            mounted() {
+                this.$emit('vm.mounted');
             }
         };
     };
@@ -86,12 +71,12 @@ export function handleProxy(event) {
         args = args.map(a => a === '_$event_' ? event : a);
 
         // swan 组件的事件可能在其 created 生命周期前触发，此时 this.$vue 还没有绑定上
-        if (this.__isComponent__ && !this.__created__) {
-            // console.log('====!this.__created__', this.__isComponent__, this);
-            this.__cbs__ = this.__cbs__ || [];
-            this.__cbs__.push([realHandler, args]);
-            return;
-        }
+        // if (this.__isComponent__ && !this.__created__) {
+        //     // console.log('====!this.__created__', this.__isComponent__, this);
+        //     this.__cbs__ = this.__cbs__ || [];
+        //     this.__cbs__.push([realHandler, args]);
+        //     return;
+        // }
 
         if (!this.$vue) {
             const page = getPageInstance(this);

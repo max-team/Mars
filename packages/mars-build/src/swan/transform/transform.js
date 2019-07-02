@@ -92,22 +92,25 @@ function processScopedSlots(node, options) {
 function transFilters(node, options) {
     // filters 的处理
     /* eslint-disable fecs-camelcase */
-    const {_fid: fid, _filters: filters} = node;
+    const filtersList = node._filters;
     /* eslint-enable fecs-camelcase */
-    if (fid !== undefined) {
-        filters.p.forEach(name => {
+    if (!filtersList) {
+        return node;
+    }
+
+    Object.keys(filtersList).forEach(fid => {
+        const filters = filtersList[fid];
+
+        filters.p && filters.p.forEach(name => {
             const val = `_f_[${fid}]._p.${name}`;
             node.attrsMap['v-bind:' + name] = val;
         });
 
-        filters.t.forEach((item, index) => {
-            if (item && node.children && node.children[index]) {
-                let child = node.children[index];
-                let token = `_f_[${fid}]._t[${index}]`;
-                child.tokens = [{'@binding': token}];
-                child.text = `{{ ${token} }}`;
-            }
-        });
+        if (filters.t) {
+            let token = `_f_[${fid}]._t`;
+            node.tokens = [{'@binding': token}];
+            node.text = `{{ ${token} }}`;
+        }
 
         if (filters.vfor) {
             node.for = `_f_[${fid}]._for`;
@@ -120,7 +123,7 @@ function transFilters(node, options) {
         if (filters.velseif) {
             node.attrsMap['v-else-if'] = `_f_[${fid}]._if`;
         }
-    }
+    });
 
     return node;
 }

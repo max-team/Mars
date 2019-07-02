@@ -5,6 +5,7 @@
 
 import {normalizeProps} from '../helper/props';
 import {getPageInstance} from '../helper/instance';
+import Vue from './vue/index';
 
 export function makeVueCompCreator(getCompMixin) {
     return function vueCompCreator(options) {
@@ -13,39 +14,7 @@ export function makeVueCompCreator(getCompMixin) {
     };
 }
 
-export function makeMarkComponent(setData) {
-    return function markComponent(callback) {
-        const page = getPageInstance(this);
-        const vms = page.$vue.__vms__;
-        const vmData = vms[this.data.compId];
-        if (vmData) {
-            // make sure curSwan <= cur
-            const curSwanIndex = vmData.curSwan < vmData.cur ? ++vmData.curSwan : vmData.curSwan;
-            const vm = vmData[curSwanIndex];
-            this.__curSwan__ = curSwanIndex;
-            if (vm) {
-                this.$vue = vm;
-                vm.$mp = {
-                    scope: this
-                };
-                vm.$off('vm.updated');
-                vm.$on('vm.updated', _ => {
-                    setData(vm, this);
-                });
-                // vue 实例会在根实例 mount 时就创建，比 swan 更早
-                // 需要在 swan created 后同步一下 vue 实例的数据
-                setData(vm, this);
-                callback();
-                return;
-            }
-        }
-
-        console.warn('[swan instance mismatch]', this.data.compId, this, vms);
-        callback();
-    };
-}
-
-export function makeCreateComponent(handleProxy, handleModel, callHook, hooks = {}) {
+export function makeCreateComponent(handleProxy, handleModel, setData, callHook, hooks = {}) {
     return function (options) {
         // TODO initData 包括 vue 实例的 data defaultProps 和 computed
         let initData = typeof options.data === 'function' ? options.data() : (options.data || {});
@@ -59,6 +28,8 @@ export function makeCreateComponent(handleProxy, handleModel, callHook, hooks = 
             rootComputed: Object,
             rootUID: Number
         });
+
+        let [VueComponent, vueOptions] = initVueComponent(Vue, options);
 
         return {
             __isComponent__: true,
@@ -77,6 +48,9 @@ export function makeCreateComponent(handleProxy, handleModel, callHook, hooks = 
                 hide(...args) {
                     return callHook.call(this, this.$vue, 'comp', 'hide', args);
                 }
+            },
+            attached() {
+                console.log('attached outter');
             },
             lifetimes: {
                 created(...args) {
@@ -98,8 +72,50 @@ export function makeCreateComponent(handleProxy, handleModel, callHook, hooks = 
                     }
                 },
                 attached(...args) {
+                    console.log('attached inner');
                     // console.log('===swan attached', this, this.data.compId);
                     callHook.call(this, this.$vue, 'comp', 'attached', args);
+
+                    const properties = this.properties;
+
+                    // 处理父子关系
+                    // 根据 rootUID 找到根元素，进而找到 page 中的 __vms__
+                    // 根据 compId 算出父实例的 comId
+                    const rootUID = this.data.rootUID;
+                    const rootMp = getApp().__pages__[rootUID];
+                    const currentCompId = properties.compId;
+                    const parentCompid = currentCompId.slice(0, currentCompId.lastIndexOf(','));
+                    let parent;
+                    if (parentCompid === '$root') {
+                        parent = rootMp.$vue;
+                    }
+                    else {
+                        const vmList = rootMp.$vue.__vms__[parentCompid];
+                        parent = vmList[vmList.cur];
+                    }
+
+                    const options = {
+                        mpType: 'component',
+                        mpInstance: this,
+                        propsData: properties,
+                        parent
+                    };
+
+                    // 初始化 vue 实例
+                    this.$vue = new VueComponent(options);
+                    this.$vue.$mp = {
+                        scope: this
+                    };
+
+                    this.$vue.$on('vm.updated', _ => {
+                        setData(this.$vue, this);
+                    });
+                    this.$vue.$on('vm.mounted', _ => {
+                        setData(this.$vue, this);
+                    });
+
+                    // 触发首次 setData
+                    this.$vue.$mount();
                 },
                 ready(...args) {
                     // console.log('===swan ready', this, this.data.compId);
@@ -125,9 +141,21 @@ export function makeCreateComponent(handleProxy, handleModel, callHook, hooks = 
                         vmData[curSwan] = null;
                         delete vmData[curSwan];
                     }
-
                 }
             }
         };
     };
+}
+
+export function initVueComponent(Vue, vueOptions) {
+    vueOptions = vueOptions.default || vueOptions;
+    let VueComponent;
+    if (typeof vueOptions === 'function') {
+        VueComponent = vueOptions;
+        vueOptions = VueComponent.extendOptions;
+    }
+    else {
+        VueComponent = Vue.extend(vueOptions);
+    }
+    return [VueComponent, vueOptions];
 }
