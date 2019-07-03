@@ -1,5 +1,24 @@
 # @marsjs/build
 
+
+## [0.2.48](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.47...@marsjs/build@0.2.48) (2019-07-03)
+
+
+### Bug Fixes
+
+* **build:** swan 中将 v-for 上的 key 编译为 trackBy ([#124](https://github.com/max-team/Mars/issues/124)) ([30febdf](https://github.com/max-team/Mars/commit/30febdf))
+
+
+
+## [0.2.47](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.46...@marsjs/build@0.2.47) (2019-07-01)
+
+
+### Bug Fixes
+
+* **build:** add h5.useAOP option ([b90ffc6](https://github.com/max-team/Mars/commit/b90ffc6))
+
+
+
 ## [0.2.46](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.45...@marsjs/build@0.2.46) (2019-07-01)
 
 
