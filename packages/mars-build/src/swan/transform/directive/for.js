@@ -18,19 +18,20 @@ module.exports = function dirFor(param, value, attrs, node) {
     } = node;
 
     if (forText) {
-        attrs[MAP_FOR['v-for']] = `${alias || 'item'}, ${iterator1 || 'index'} in ${forText}`;
+        let forExp = `${alias || 'item'}, ${iterator1 || 'index'} in ${forText}`;
+
+        if (key) {
+            forExp += ` trackBy ${key}`;
+        }
+
+        attrs[MAP_FOR['v-for']] = forExp;
 
         if (iterator1) {
             attrs[MAP_FOR.iterator1] = iterator1;
-        }
-
-        if (key) {
-            attrs[MAP_FOR.key] = key;
         }
 
         if (alias) {
             attrs[MAP_FOR.alias] = alias;
         }
     }
-
 };
