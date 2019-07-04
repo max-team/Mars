@@ -157,13 +157,7 @@ describe('[swan]createComponent', () => {
         // mock call methods
         component.lifetimes.created.call(component);
         expect(component.$vue).not.toBe(undefined);
-        // component intial setData omited
-        expect(setData).toHaveBeenCalledTimes(1);
-        component.$vue.a = 2;
-        component.$vue.$nextTick(() => {
-            expect(setData).toHaveBeenCalledTimes(2);
-        });
-
+        expect(setData).toHaveBeenCalledTimes(2);
         component.lifetimes.attached.call(component);
         component.lifetimes.ready.call(component);
     });

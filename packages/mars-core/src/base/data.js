@@ -37,15 +37,14 @@ export function setData(vm, $mp, isRoot = false) {
 
     if (!vm.__swan_inited__) {
         vm.__swan_inited__ = true;
+        data.__inited__ = true;
+        isRoot && (data.rootUID = $mp.__uid__);
         data = getData(vm, data);
-        // compare initial data with $mp data
-        // 从 swan properties 和 data 取到的初始数据都是 plain Object 不是 Vue 数据的引用
-        data = compareInitialData($mp, data);
-
         if (isRoot) {
             const rootComputed = getAllComputed(vm);
-            data.rootComputed = rootComputed;
-            data.rootUID = $mp.__uid__;
+            data = Object.assign(data, {
+                rootComputed
+            });
         }
     }
     else {
@@ -66,17 +65,6 @@ export function setData(vm, $mp, isRoot = false) {
                 })
                 : data;
         }
-    }
-
-    // if vm has _computedWatchers and has new data
-    // set __inited__ true to use VM _computedWatchers data
-    if (
-        vm._computedWatchers
-        && !$mp.data.__inited__
-        && Object.keys(vm._computedWatchers).length > 0
-        && Object.keys(data).length > 0
-    ) {
-        data.__inited__ = true;
     }
 
     if (process.env.NODE_ENV !== 'production' && config.performance && mark) {
@@ -112,36 +100,11 @@ export function setData(vm, $mp, isRoot = false) {
         }
         else {
             const flushMpUpdatedCallbacks = getMpUpdatedCallbacks(vm);
-            // console.log('[perf setData]:', data);
             $mp.setData(data, () => {
                 flushMpUpdatedCallbacks();
             });
         }
     }
-}
-
-/**
- * compare Initial data with $mp.data and omit the same data
- *
- * @param {Object} $mp swan instance
- * @param {Object} data collected data from vm
- * @return {Object} data omited
- */
-function compareInitialData($mp, data) {
-    const mpData = $mp.data;
-    const {rootComputed, compId} = mpData;
-    let computedProps = {};
-    if (rootComputed && compId) {
-        computedProps = rootComputed[compId] || {};
-    }
-    Object.keys(data).forEach(key => {
-        let mpVal = mpData[key] !== undefined ? mpData[key] : computedProps[key];
-        if (mpVal !== undefined && deepEqual(data[key], mpVal)) {
-            delete data[key];
-        }
-    });
-
-    return data;
 }
 
 function compareAndSetData(k, val, old, key, data) {
