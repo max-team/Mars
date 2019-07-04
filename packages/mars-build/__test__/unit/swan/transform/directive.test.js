@@ -11,7 +11,6 @@ import bindClass from '../../../../src/swan/transform/directive/class';
 // import bindStyle from '../../../../src/swan/transform/directive/style';
 import vShow from '../../../../src/swan/transform/directive/show';
 import vModel from '../../../../src/swan/transform/directive/model';
-import { isTemplateElement } from '@babel/types';
 
 describe('[swan]directive', () => {
     test('directive function exists', () => {
@@ -115,9 +114,6 @@ describe('[swan]directive:for', () => {
             for: 'items',
             key: 'item.id',
             alias: 'item',
-            attrsMap: {
-                // 'use-trackby': ''
-            }
         };
         let attrs = {};
         dirFor(undefined, undefined, attrs, node);
