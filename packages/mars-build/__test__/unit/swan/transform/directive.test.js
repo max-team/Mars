@@ -119,9 +119,10 @@ describe('[swan]directive:for', () => {
         dirFor(undefined, undefined, attrs, node);
 
         expect(attrs).toEqual({
-            's-for': 'item, index in items trackBy item.id',
+            's-for': 'item, index in items',
             's-for-index': 'index',
-            's-for-item': 'item'
+            's-for-item': 'item',
+            's-for-key': 'item.id'
         });
     });
 
