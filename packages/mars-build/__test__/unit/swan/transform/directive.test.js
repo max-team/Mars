@@ -113,7 +113,29 @@ describe('[swan]directive:for', () => {
             iterator1: 'index',
             for: 'items',
             key: 'item.id',
-            alias: 'item'
+            alias: 'item',
+        };
+        let attrs = {};
+        dirFor(undefined, undefined, attrs, node);
+
+        expect(attrs).toEqual({
+            's-for': 'item, index in items',
+            's-for-index': 'index',
+            's-for-item': 'item',
+            // 's-for-key': 'item.id'
+        });
+    });
+
+    test('v-for="(item, index) in items trackBy item.id"', () => {
+        // const key = 'v-on:tap';
+        const node = {
+            iterator1: 'index',
+            for: 'items',
+            key: 'item.id',
+            alias: 'item',
+            attrsMap: {
+                'use-trackby': ''
+            }
         };
         let attrs = {};
         dirFor(undefined, undefined, attrs, node);
@@ -121,7 +143,8 @@ describe('[swan]directive:for', () => {
         expect(attrs).toEqual({
             's-for': 'item, index in items trackBy item.id',
             's-for-index': 'index',
-            's-for-item': 'item'
+            's-for-item': 'item',
+            // 's-for-key': 'item.id'
         });
     });
 

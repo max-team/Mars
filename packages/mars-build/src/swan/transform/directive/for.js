@@ -14,13 +14,14 @@ module.exports = function dirFor(param, value, attrs, node) {
         iterator1,
         for: forText,
         key,
-        alias
+        alias,
+        attrsMap
     } = node;
 
     if (forText) {
         let forExp = `${alias || 'item'}, ${iterator1 || 'index'} in ${forText}`;
 
-        if (key) {
+        if (key && attrsMap && attrsMap.hasOwnProperty('use-trackby')) {
             forExp += ` trackBy ${key}`;
         }
 
@@ -34,4 +35,5 @@ module.exports = function dirFor(param, value, attrs, node) {
             attrs[MAP_FOR.alias] = alias;
         }
     }
+
 };
