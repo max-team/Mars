@@ -5,16 +5,25 @@
 
 import {getPageInstance} from '../helper/instance';
 import {setObjectData} from '../helper/util';
+import config from '../config';
 
 export function makePageMixin($api) {
     return {
         beforeCreate() {
             this.$api = $api;
         },
+        created() {
+            if (process.env.NODE_ENV !== 'production' && config.debug) {
+                console.log('[debug: Vue] created', this.compId);
+            }
+        },
         updated() {
             this.$emit('vm.updated');
         },
         mounted() {
+            if (process.env.NODE_ENV !== 'production' && config.debug) {
+                console.log('[debug: Vue] mounted', this.compId);
+            }
             this.$emit('vm.mounted');
         }
     };
@@ -34,8 +43,10 @@ export function makeGetCompMixin($api) {
                 });
             },
             created() {
-                // console.log('===vue created', this.compId);
-                // markComponentInVue.call(this, pms, vms);
+                if (process.env.NODE_ENV !== 'production' && config.debug) {
+                    console.log('[debug: Vue] created', this.compId);
+                }
+
                 const vms = this.$root.__vms__;
                 vms[this.compId] = vms[this.compId] || {cur: -1, curSwan: -1};
                 const curIndex = ++vms[this.compId].cur;
@@ -48,6 +59,9 @@ export function makeGetCompMixin($api) {
                 this.$emit('vm.updated');
             },
             mounted() {
+                if (process.env.NODE_ENV !== 'production' && config.debug) {
+                    console.log('[debug: Vue] mounted', this.compId);
+                }
                 this.$emit('vm.mounted');
             }
         };
@@ -55,8 +69,10 @@ export function makeGetCompMixin($api) {
 }
 
 export function handleProxy(event) {
+    if (process.env.NODE_ENV !== 'production' && config.debug) {
+        console.log('[debug: handleProxy]', this.data.compId, event);
+    }
     // get event dataSet
-    // console.log('===handleProxy:', this.data.compId, event);
     const data = event.currentTarget.dataset;
     const eventType = event.type;
 
@@ -71,12 +87,11 @@ export function handleProxy(event) {
         args = args.map(a => a === '_$event_' ? event : a);
 
         // swan 组件的事件可能在其 created 生命周期前触发，此时 this.$vue 还没有绑定上
-        // if (this.__isComponent__ && !this.__created__) {
-        //     // console.log('====!this.__created__', this.__isComponent__, this);
-        //     this.__cbs__ = this.__cbs__ || [];
-        //     this.__cbs__.push([realHandler, args]);
-        //     return;
-        // }
+        if (this.__isComponent__ && !this.__created__) {
+            this.__cbs__ = this.__cbs__ || [];
+            this.__cbs__.push([realHandler, args]);
+            return;
+        }
 
         if (!this.$vue) {
             const page = getPageInstance(this);

@@ -26,10 +26,10 @@ function cleanKeyPath(vm) {
 }
 
 export function setData(vm, $mp, isRoot = false) {
+    let perfTagPre;
     if (process.env.NODE_ENV !== 'production' && config.performance && mark) {
-        const prefix = `${vm.$root.$mp.scope.__uid__}$${vm._name}`;
-        const perfTagStart = `${prefix}-data-start`;
-        // const perfTagEnd = `${this.route}-end`;
+        perfTagPre = `${vm._uid}-(${vm.compId})`;
+        const perfTagStart = `${perfTagPre}-data-start`;
         mark(perfTagStart);
     }
     let data = {};
@@ -68,35 +68,28 @@ export function setData(vm, $mp, isRoot = false) {
     }
 
     if (process.env.NODE_ENV !== 'production' && config.performance && mark) {
-        const prefix = `${vm.$root.$mp.scope.__uid__}$${vm._name}`;
-        const perfTagStart = `${prefix}-data-start`;
-        const perfTagEnd = `${prefix}-data-end`;
+        const perfTagStart = `${perfTagPre}-data-start`;
+        const perfTagEnd = `${perfTagPre}-data-end`;
         mark(perfTagEnd);
-        measure(`${prefix}-data-collect`, perfTagStart, perfTagEnd);
+        measure(`${perfTagPre}-data-collect`, perfTagStart, perfTagEnd);
     }
 
     if (Object.keys(data).length > 0) {
         if (process.env.NODE_ENV !== 'production' && config.performance && mark) {
-            const prefix = `${vm.$root.$mp.scope.__uid__}$${vm._name}`;
+            // const perfTagPre = `${vm.$root.$mp.scope.__uid__}$${vm._name}`;
             const size = JSON.stringify(data).length / 1024;
-            const perfTagStart = `${prefix}-updated-start`;
-            const perfTagEnd = `${prefix}-updated-end`;
-            let perfShowDataSize = false;
-            if (size > 1) {
-                perfShowDataSize = true;
-                mark(perfTagStart);
-                console.info('[perf: data size]', prefix, (size).toFixed(3) + 'KB', data);
-            }
+            const perfTagStart = `${perfTagPre}-updated-start`;
+            const perfTagEnd = `${perfTagPre}-updated-end`;
+
+            mark(perfTagStart);
 
             const flushMpUpdatedCallbacks = getMpUpdatedCallbacks(vm);
             $mp.setData(data, () => {
-                if (perfShowDataSize) {
-                    mark(perfTagEnd);
-                    measure(`${prefix}-data-updated`, perfTagStart, perfTagEnd);
-                }
-
+                mark(perfTagEnd);
+                measure(`${perfTagPre}-mpUpdated`, perfTagStart, perfTagEnd);
                 flushMpUpdatedCallbacks();
             });
+            console.info('[perf: setData]', perfTagPre, (size).toFixed(3) + 'KB', data);
         }
         else {
             const flushMpUpdatedCallbacks = getMpUpdatedCallbacks(vm);

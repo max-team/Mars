@@ -4,3 +4,4 @@
  */
 
 export {default as Vue} from 'vue';
+export {default as config} from '../config';

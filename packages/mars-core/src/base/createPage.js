@@ -27,6 +27,10 @@ export function makeCreatePage(pageMixin, {handleProxy, handleModel}, setData, c
                 pages[uid] = this;
                 this.__uid__ = uid;
 
+                if (process.env.NODE_ENV !== 'production' && config.debug) {
+                    console.log('[debug: swan pageHooks] onLoad', this.__uid__);
+                }
+
                 if (process.env.NODE_ENV !== 'production' && config.performance && mark) {
                     const perfTagStart = `${this.route}-start`;
                     // const perfTagEnd = `${this.route}-end`;
@@ -77,11 +81,13 @@ export function makeCreatePage(pageMixin, {handleProxy, handleModel}, setData, c
                 return ret;
             },
             onUnload(...args) {
+                if (process.env.NODE_ENV !== 'production' && config.debug) {
+                    console.log('[debug: swan pageHooks] onUnload', this.__uid__);
+                }
                 const ret = callHook.call(this, this.$vue, 'page', 'onUnload', args);
                 if (this.$vue) {
                     this.$vue.$destroy();
                 }
-
                 // on wx page unload will be triggered before component detached
                 setTimeout(_ => {
                     const pages = getApp().__pages__;
@@ -95,13 +101,21 @@ export function makeCreatePage(pageMixin, {handleProxy, handleModel}, setData, c
                 return ret;
             },
             onReady(...args) {
-                // console.log('[pref] onReady');
+                if (process.env.NODE_ENV !== 'production' && config.debug) {
+                    console.log('[debug: swan pageHooks] onReady', this.__uid__);
+                }
                 return callHook.call(this, this.$vue, 'page', 'onReady', args);
             },
             onShow(...args) {
+                if (process.env.NODE_ENV !== 'production' && config.debug) {
+                    console.log('[debug: swan pageHooks] onShow', this.__uid__);
+                }
                 return callHook.call(this, this.$vue, 'page', 'onShow', args);
             },
             onHide(...args) {
+                if (process.env.NODE_ENV !== 'production' && config.debug) {
+                    console.log('[debug: swan pageHooks] onHide', this.__uid__);
+                }
                 return callHook.call(this, this.$vue, 'page', 'onHide', args);
             },
             onPullDownRefresh(...args) {
