@@ -1,5 +1,17 @@
 # @marsjs/core
 
+## [0.2.13](https://github.com/max-team/Mars/compare/@marsjs/core@0.2.12...@marsjs/core@0.2.13) (2019-06-20)
+
+**Note:** Version bump only for package @marsjs/core
+
+
+## [0.2.12](https://github.com/max-team/Mars/compare/@marsjs/core@0.2.11...@marsjs/core@0.2.12) (2019-06-19)
+
+### Bug Fixes
+
+* **core:** v-model 支持绑定 obj.key [#94](https://github.com/max-team/Mars/issues/94) ([6f29098](https://github.com/max-team/Mars/commit/6f29098))
+
+
 ## [0.2.11](https://github.com/max-team/Mars/compare/@marsjs/core@0.2.10...@marsjs/core@0.2.11) (2019-06-11)
 
 ### Features

@@ -3,6 +3,66 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.50](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.49...@marsjs/build@0.2.50) (2019-07-04)
+
+**Note:** Version bump only for package @marsjs/build
+
+
+
+
+
+## [0.2.49](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.48...@marsjs/build@0.2.49) (2019-07-04)
+
+**Note:** Version bump only for package @marsjs/build
+
+
+
+
+
+## [0.2.48](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.47...@marsjs/build@0.2.48) (2019-07-03)
+
+
+### Bug Fixes
+
+* **build:** swan 中将 v-for 上的 key 编译为 trackBy ([#124](https://github.com/max-team/Mars/issues/124)) ([30febdf](https://github.com/max-team/Mars/commit/30febdf))
+
+
+
+
+
+## [0.2.47](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.46...@marsjs/build@0.2.47) (2019-07-01)
+
+
+### Bug Fixes
+
+* **build:** add h5.useAOP option ([b90ffc6](https://github.com/max-team/Mars/commit/b90ffc6))
+
+
+
+
+
+## [0.2.46](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.45...@marsjs/build@0.2.46) (2019-07-01)
+
+
+### Bug Fixes
+
+* **build:** 解决同步进入页面，跳转后在返回刷新的问题 & 添加使用AOP开关 ([acf39b7](https://github.com/max-team/Mars/commit/acf39b7))
+
+
+
+
+
+## [0.2.45](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.44...@marsjs/build@0.2.45) (2019-06-27)
+
+
+### Features
+
+* **build:** 支持小程序AOP机制 ([#114](https://github.com/max-team/Mars/issues/114)) ([67c031a](https://github.com/max-team/Mars/commit/67c031a))
+
+
+
+
+
 ## [0.2.44](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.43...@marsjs/build@0.2.44) (2019-06-25)
 
 

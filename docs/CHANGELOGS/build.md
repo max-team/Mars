@@ -1,6 +1,126 @@
 # @marsjs/build
 
 
+## [0.2.48](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.47...@marsjs/build@0.2.48) (2019-07-03)
+
+
+### Bug Fixes
+
+* **build:** swan 中将 v-for 上的 key 编译为 trackBy ([#124](https://github.com/max-team/Mars/issues/124)) ([30febdf](https://github.com/max-team/Mars/commit/30febdf))
+
+
+
+## [0.2.47](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.46...@marsjs/build@0.2.47) (2019-07-01)
+
+
+### Bug Fixes
+
+* **build:** add h5.useAOP option ([b90ffc6](https://github.com/max-team/Mars/commit/b90ffc6))
+
+
+
+## [0.2.46](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.45...@marsjs/build@0.2.46) (2019-07-01)
+
+
+### Bug Fixes
+
+* **build:** 解决同步进入页面，跳转后在返回刷新的问题 & 添加使用AOP开关 ([acf39b7](https://github.com/max-team/Mars/commit/acf39b7))
+
+
+## [0.2.45](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.44...@marsjs/build@0.2.45) (2019-06-27)
+
+
+### Features
+
+* **build:** 支持小程序AOP机制 ([#114](https://github.com/max-team/Mars/issues/114)) ([67c031a](https://github.com/max-team/Mars/commit/67c031a))
+
+
+## [0.2.44](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.43...@marsjs/build@0.2.44) (2019-06-25)
+
+
+### Bug Fixes
+
+* 修复 vueComponentTagMap 中slider 的拼写错误 ([dbe5ee7](https://github.com/max-team/Mars/commit/dbe5ee7))
+
+
+### Features
+
+* **build:** 解决动态团片require context影响webpack打包的问题 ([#108](https://github.com/max-team/Mars/issues/108)) ([810dbb8](https://github.com/max-team/Mars/commit/810dbb8))
+
+
+## [0.2.43](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.42...@marsjs/build@0.2.43) (2019-06-21)
+
+
+### Features
+
+* **build:** 去除多余overflow，支持页面内sticky ([1ef2fa9](https://github.com/max-team/Mars/commit/1ef2fa9))
+
+
+## [0.2.42](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.41...@marsjs/build@0.2.42) (2019-06-20)
+
+**Note:** Version bump only for package @marsjs/build
+
+
+## [0.2.41](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.40...@marsjs/build@0.2.41) (2019-06-20)
+
+
+
+### Bug Fixes
+
+* **build:** 修复components检查时遇到的v-if/v-else 节点信息缺失问题 ([b2b3e5e](https://github.com/max-team/Mars/commit/b2b3e5e))
+
+
+### Features
+
+* **build:** 删除overflow-y，避免对 sticky 属性影响 ([440ed5f](https://github.com/max-team/Mars/commit/440ed5f))
+
+
+
+
+## [0.2.40](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.39...@marsjs/build@0.2.40) (2019-06-20)
+
+
+### Features
+
+* **build:** 支持navigationStyle: custom & 升级转场动画和背景配置 ([#98](https://github.com/max-team/Mars/issues/98)) ([3a526aa](https://github.com/max-team/Mars/commit/3a526aa))
+
+
+
+
+## [0.2.39](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.38...@marsjs/build@0.2.39) (2019-06-19)
+
+
+### Bug Fixes
+
+* **build:** 修复 ast 节点 component 信息收集问题 ([#96](https://github.com/max-team/Mars/issues/96)) ([c8d4352](https://github.com/max-team/Mars/commit/c8d4352))
+
+
+
+
+## [0.2.38](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.37...@marsjs/build@0.2.38) (2019-06-19)
+
+
+### Bug Fixes
+
+* **build:** 修复因components属性type为StringLiteral时编译问题 ([5d2a898](https://github.com/max-team/Mars/commit/5d2a898))
+
+
+### Features
+
+* **build:** hideTabBar时 屏幕高度 & 单端文件打包优化，去掉非本端文件 ([fb67de2](https://github.com/max-team/Mars/commit/fb67de2))
+
+
+
+
+## [0.2.37](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.36...@marsjs/build@0.2.37) (2019-06-19)
+
+
+### Features
+
+* **build:** hideTabBar时 屏幕高度 & 去掉模板中未用到的组件JS ([#86](https://github.com/max-team/Mars/issues/86)) ([6e10522](https://github.com/max-team/Mars/commit/6e10522))
+
+
+
 ## [0.2.36](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.35...@marsjs/build@0.2.36) (2019-06-11)
 
 

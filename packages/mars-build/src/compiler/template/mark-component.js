@@ -247,7 +247,7 @@ function getPostTrans(options) {
 
 module.exports = function mark(source, options) {
     const {
-        components
+        components = {}
     } = options;
 
     let componentsInUsed = {};

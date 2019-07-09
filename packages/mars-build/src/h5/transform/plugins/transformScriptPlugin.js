@@ -25,12 +25,11 @@ const PAGE_LIFECYCLE_HOOKS = {
 };
 
 const PAGE_LIFE_MAP_VUE = {
-    onLoad: 'beforeMount',
+    onLoad: 'created',
     onReady: 'mounted',
     onUnload: 'destroyed',
     onShow: 'activated',
-    onHide: 'deactivated',
-    onLaunch: 'beforeMount' // 入口文件 app.vue 生命周期
+    onHide: 'deactivated'
 };
 
 // 小程序component生命周期
@@ -66,12 +65,28 @@ const COMP_LIFE_MAP_VUE = {
     }
 };
 const APP_PAOGE_LIFE_MAP_VUE = {
-    onLaunch: 'beforeMount',
+    onLaunch: 'created',
     onShow: 'mounted',
     onHide: 'destroyed'
     // onLoad: true,
     // onReady: true,
     // onUnload: true
+};
+
+// MAP: AOP 注册的生命周期方法的映射
+const AOP_MAP = {
+    App: {
+        onLaunch: 'marsAppAfterCreated',
+        onShow: 'marsAppAfterMounted',
+        onHide: 'marsAppAfterDestroyed'
+    },
+    Page: {
+        onLoad: 'marsPageAfterCreated',
+        onReady: 'marsPageAfterMounted',
+        onUnload: 'marsPageAfterDestroyed',
+        onShow: 'marsPageAfterActivated',
+        onHide: 'marsPageAfterDeactivated'
+    }
 };
 
 function getPlainObjectNodeValue(node, path, t) {
@@ -182,6 +197,74 @@ const Property = (t, options) => {
 /* eslint-enable */
 
 /**
+ * 判断当前vue sfc 是否是component
+ * @param {Object} properties node ast
+ * @return {boolean} true | false
+ */
+function judgeComponent(properties) {
+    return properties.some(property => {
+        return property.type === 'ObjectProperty'
+        && property.key.name === 'config'
+        && (function () {
+            const value = property.value.properties;
+            return value.some(item => {
+                return item.key.name === 'component' && item.value.value;
+            });
+        })();
+    });
+}
+
+/**
+ * Map SWAN Life Time  映射小程序生命周期到vue hook
+ * @param {Object} lifeItem 生命周期 node ast
+ * @param {Object} t ast plugin param
+ * @param {string} key 小程序原生生命周期
+ * @param {boolean} isApp 是否是app.vue
+ * @return {Object} 处理的lifeItem
+ */
+function bindAOPEvents(lifeItem, t, key, isApp) {
+    const lifeTime = isApp ? APP_PAOGE_LIFE_MAP_VUE[key] : PAGE_LIFE_MAP_VUE[key];
+    if (!lifeTime) {
+        // 非该页面生命周期则返回
+        return;
+    }
+    // 在生命周期内调用相应AOP事件
+    const AOPEventHookExpression = t.expressionStatement(
+        t.callExpression(
+            t.memberExpression(
+                t.memberExpression(
+                    t.thisExpression(),
+                    t.identifier('$root')
+                ),
+                t.identifier('$emit')
+            ),
+            [t.stringLiteral(isApp ? AOP_MAP['App'][key] : AOP_MAP['Page'][key]), t.thisExpression()]
+        )
+    );
+    if (!lifeItem) {
+        lifeItem = t.objectMethod(
+            'method',
+            t.identifier(key),
+            [],
+            t.blockStatement([
+                AOPEventHookExpression
+            ])
+        );
+    }
+    else {
+        // 获取 lifeItem 不同type下的body
+        let lifeItemBody = null;
+        lifeItemBody = lifeItem.type === 'ObjectMethod'
+        ? lifeItem.body.body
+        : lifeItem.type === 'ObjectProperty'
+            ? lifeItem.value.body.body
+            : null;
+        lifeItemBody && lifeItemBody.push(AOPEventHookExpression);
+    }
+    return lifeItem;
+}
+
+/**
  * Map SWAN Life Time  映射小程序生命周期到vue hook
  * @param {Object} properties node ast
  * @param {Object} t ast plugin param
@@ -191,6 +274,9 @@ const Property = (t, options) => {
  * @param {Object} options plugin option
  */
 function mapSwanLifeTime(properties, t, lifeKey, lifeItem, lifeMapKey, options) {
+    if (!lifeItem) {
+        return;
+    }
     const type = lifeItem.type;
     // 获取 time 函数体
     const timeMethodBlock = type === 'ObjectMethod'
@@ -198,14 +284,12 @@ function mapSwanLifeTime(properties, t, lifeKey, lifeItem, lifeMapKey, options) 
         : type === 'ObjectProperty'
             ? lifeItem.value.body
             : null;
-
     // 获取 time 函数 参数名
     const timeMethodParamName = type === 'ObjectMethod'
         ? lifeItem.params[0] && lifeItem.params[0].name || 'option'
         : type === 'ObjectProperty'
             ? lifeItem.value.params[0] && lifeItem.value.params[0].name || 'option'
             : 'option';
-
     // 生成匿名函数调用
     const anonymousFuncExpression = t.expressionStatement(
         t.callExpression(
@@ -248,9 +332,7 @@ function mapSwanLifeTime(properties, t, lifeKey, lifeItem, lifeMapKey, options) 
             ? originLifeItem.value.body.body
             : null;
 
-        lifeMapKey !== 'beforeMount' // onLoad 在beforeMount之前执行
-            ? originLifeItemBody.push(lifeHookExpression)
-            : originLifeItemBody.unshift(lifeHookExpression);
+        originLifeItemBody.push(lifeHookExpression);
     }
     else {
         properties.push(t.objectMethod(
@@ -266,7 +348,10 @@ function mapSwanLifeTime(properties, t, lifeKey, lifeItem, lifeMapKey, options) 
 
 module.exports = function getVisitor(options = {}) {
     return ({types: t}) => {
-        const isApp = options.isApp;
+        const {
+            useAOP,
+            isApp
+        } = options;
         return {
             visitor: {
                 ExportDefaultDeclaration(path, state) {
@@ -278,6 +363,7 @@ module.exports = function getVisitor(options = {}) {
                     options.baseOptions && (options.baseOptions.config = {});
                     options.baseOptions && (options.baseOptions.components = {});
                     options.baseOptions && (options.baseOptions.enableConfig = {});
+
 
                     // 处理 onPullDownRefresh 到 methods
                     function dealSwanPageApi(apiName) {
@@ -323,15 +409,19 @@ module.exports = function getVisitor(options = {}) {
                     // 处理swan page 生命周期：onLoad 、onReady 、onUnload、onShow 、onHide
                     // 收集 app.vue 周期：onLaunch 、 onShow 、 onHide
                     ['onLoad', 'onReady', 'onUnload', 'onLaunch', 'onShow', 'onHide'].forEach(key => {
-                        const lifeItem = properties.find(item => item.key.name === key);
-                        if (!lifeItem) {
+                        let lifeItem = properties.find(item => item.key.name === key);
+                        let lifeMapKey = isApp ? APP_PAOGE_LIFE_MAP_VUE[key] : PAGE_LIFE_MAP_VUE[key];
+                        // 判断当前 vue sfc 是否是组件component
+                        const isComponent = judgeComponent(properties);
+                        if (isComponent) {
                             return;
                         }
-
-                        let lifeMapKey = isApp ? APP_PAOGE_LIFE_MAP_VUE[key] : PAGE_LIFE_MAP_VUE[key];
+                        // 处理生命周期的AOP
+                        if (useAOP) {
+                            lifeItem = bindAOPEvents(lifeItem, t, key, isApp);
+                        }
                         mapSwanLifeTime(properties, t, key, lifeItem, lifeMapKey, options);
                     });
-
                     // 处理swan component 生命周期：created、 attached 、ready 、detached、show、hide
                     Object.keys(COMP_LIFE_MAP_VUE).forEach(key => {
                         const {
@@ -350,6 +440,7 @@ module.exports = function getVisitor(options = {}) {
 
                         mapSwanLifeTime(properties, t, key, lifeItem, lifeMapKey, options);
                     });
+                    /* eslint-disable */
                     path.traverse(Property(t, options));
                 }
             }

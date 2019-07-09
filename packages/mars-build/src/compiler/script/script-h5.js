@@ -143,9 +143,9 @@ exports.compileScript = async function (content, options = {}) {
         isApp = false,
         target,
         dest,
-        path: filePath
+        path: filePath,
+        mars
     } = options;
-
     let baseOptions = {}; // 收集 config 和 components
     content = content.replace(
         /process\.env\.MARS_ENV/g,
@@ -154,11 +154,13 @@ exports.compileScript = async function (content, options = {}) {
         /process\.env\.NODE_ENV/g,
         JSON.stringify(process.env.NODE_ENV || 'development')
     );
+    const useAOP = mars.useAOP === undefined ? true : mars.useAOP;
     const scriptRet = babel.transform(content, {
         plugins: [
             transformScriptPlugin({
                 baseOptions,
-                isApp
+                isApp,
+                useAOP
             })
         ]
     });
@@ -211,45 +213,33 @@ exports.postCompileScript = function (content, options = {}) {
 
 exports.compileApp = function (script) {
     const content = script.content;
-    let customExp = {}; // 收集 用户 自定义 数据和方法
-    const scriptRet = babel.transform(content, {
-        plugins: [
-            transformAppPlugin({
-                customExp
-            })
-        ]
-    });
-    let scriptStr = babel.transformFromAst(scriptRet.ast).code;
+    // let customExp = {}; // 收集 用户 自定义 数据和方法
+    // console.log(content.toString());
+    // const scriptRet = babel.transform(content, {
+    //     plugins: [
+    //         transformAppPlugin({
+    //             customExp
+    //         })
+    //     ]
+    // });
+    // let scriptStr = babel.transformFromAst(scriptRet.ast).code;
     // 处理完再进行minify，发现minify和定制的插件会有坑
-    const cleanScriptAst = babel.transform(scriptStr, {
+    const cleanScriptAst = babel.transform(content, {
         plugins: [
             'minify-guarded-expressions',
             'minify-dead-code-elimination'
         ]
     });
-    scriptStr = babel.transformFromAst(cleanScriptAst.ast).code;
-    script.content = new Buffer(scriptStr);
-    return customExp;
-};
+    const scriptStr = babel.transformFromAst(cleanScriptAst.ast).code;
 
-exports.compileGetApp = function (content, api) {
-    const scriptRet = babel.transform(content.toString(), {
-        plugins: [
-            transformGetAppPlugin({
-                api
-            })
-        ]
-    });
-    let scriptStr = babel.transformFromAst(scriptRet.ast).code;
-    // 处理完再进行minify，发现minify和定制的插件会有坑
-    const cleanScriptAst = babel.transform(scriptStr, {
-        plugins: [
-            'minify-guarded-expressions',
-            'minify-dead-code-elimination'
-        ]
-    });
-    scriptStr = babel.transformFromAst(cleanScriptAst.ast).code;
-    return new Buffer(scriptStr);
+    // 更新 APP.vue script
+    const newContent = `
+import app from './appApi.js';
+export default app;    
+    `;
+    script.content = new Buffer(newContent);
+
+    return scriptStr;
 };
 
 exports.compileApi = function (content, options) {

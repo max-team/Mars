@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.25](https://github.com/max-team/Mars/compare/@marsjs/cli@0.1.24...@marsjs/cli@0.1.25) (2019-06-27)
+
+
+### Features
+
+* 支持自定义 NODE_ENV ([bff0984](https://github.com/max-team/Mars/commit/bff0984))
+
+
+
+
+
 ## [0.1.24](https://github.com/max-team/Mars/compare/@marsjs/cli@0.1.23...@marsjs/cli@0.1.24) (2019-05-29)
 
 
