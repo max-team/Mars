@@ -54,6 +54,7 @@ module.exports = (...args) =>
         stopSpinner(false); // do not persist
         error(err);
         if (!process.env.VUE_CLI_TEST) {
+            console.log(err);
             process.exit(1);
         }
     });
