@@ -178,16 +178,16 @@ function genData(el, state) {
     }
 
     if (el.classBinding) {
-        data += `${el.classBinding},`;
-    }
-
-    // attributes
-    if (el.attrs) {
-        data += `[${genProps(el.attrs, state, el)}],`;
+        data += `(${el.classBinding}),`;
     }
 
     if (el.styleBinding) {
         data += `(${el.styleBinding}),`;
+    }
+
+    // attributes
+    if (el.attrs) {
+        data += `[_pp(${genProps(el.attrs, state, el)})],`;
     }
 
     // DOM props
@@ -359,13 +359,14 @@ function genSlot(el, state) {
  * @return {string}
  */
 function genProps(props, state, el) {
-    let res = '';
+    let res = '{';
     const fData = [];
     for (let i = 0; i < props.length; i++) {
         const prop = props[i];
         const value = transformSpecialNewlines(prop.value);
+        const name = prop.name;
         if (!state.isComplexExp(value) && !state.isFilter(value)) {
-            res += `${value},`;
+            res += `'${name}':${value},`;
         }
         else {
             fData.push([prop.name, value]);
@@ -373,9 +374,9 @@ function genProps(props, state, el) {
     }
 
     if (fData.length) {
-        res += `${state.processFilterData(fData, 'p', el)},`;
+        res += `_p:${state.processFilterData(fData, 'p', el)},`;
     }
-    return res.slice(0, -1);
+    return res.slice(0, -1) + '}';
 }
 
 /**

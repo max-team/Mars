@@ -28,7 +28,7 @@ function cleanKeyPath(vm) {
 export function setData(vm, $mp, isRoot = false) {
     let perfTagPre;
     if (process.env.NODE_ENV !== 'production' && config.performance && mark) {
-        perfTagPre = `${vm._uid}-(${vm.compId})`;
+        perfTagPre = `${vm._uid}-(${vm.compId})-${Date.now()}`;
         const perfTagStart = `${perfTagPre}-data-start`;
         mark(perfTagStart);
     }
@@ -196,10 +196,10 @@ function getFiltersData(vm, $mp, data = {}) {
                 }
             }
             else {
-                _if && compareAndSetData(k, _if, curData._if, '_if', data);
-                _for && compareAndSetData(k, _for, curData._for, '_for', data);
+                _if !== undefined && compareAndSetData(k, _if, curData._if, '_if', data);
+                _for !== undefined && compareAndSetData(k, _for, curData._for, '_for', data);
                 // compare texts
-                _t && compareAndSetData(k, _t + '', curData._t, '_t', data);
+                _t !== undefined && compareAndSetData(k, _t + '', curData._t, '_t', data);
 
                 // compare props
                 if (_p) {

@@ -13,7 +13,7 @@ export function makePageMixin($api) {
             this.$api = $api;
         },
         created() {
-            if (process.env.NODE_ENV !== 'production' && config.debug) {
+            if (process.env.NODE_ENV !== 'production' && config.debug && config.debug.lifetimes) {
                 console.log('[debug: Vue] created', this.compId);
             }
         },
@@ -21,7 +21,7 @@ export function makePageMixin($api) {
             this.$emit('vm.updated');
         },
         mounted() {
-            if (process.env.NODE_ENV !== 'production' && config.debug) {
+            if (process.env.NODE_ENV !== 'production' && config.debug && config.debug.lifetimes) {
                 console.log('[debug: Vue] mounted', this.compId);
             }
             this.$emit('vm.mounted');
@@ -43,7 +43,7 @@ export function makeGetCompMixin($api) {
                 });
             },
             created() {
-                if (process.env.NODE_ENV !== 'production' && config.debug) {
+                if (process.env.NODE_ENV !== 'production' && config.debug && config.debug.lifetimes) {
                     console.log('[debug: Vue] created', this.compId);
                 }
 
@@ -59,7 +59,7 @@ export function makeGetCompMixin($api) {
                 this.$emit('vm.updated');
             },
             mounted() {
-                if (process.env.NODE_ENV !== 'production' && config.debug) {
+                if (process.env.NODE_ENV !== 'production' && config.debug && config.debug.lifetimes) {
                     console.log('[debug: Vue] mounted', this.compId);
                 }
                 this.$emit('vm.mounted');
@@ -69,7 +69,7 @@ export function makeGetCompMixin($api) {
 }
 
 export function handleProxy(event) {
-    if (process.env.NODE_ENV !== 'production' && config.debug) {
+    if (process.env.NODE_ENV !== 'production' && config.debug && config.debug.events) {
         console.log('[debug: handleProxy]', this.data.compId, event);
     }
     // get event dataSet
@@ -81,10 +81,19 @@ export function handleProxy(event) {
     }
 
     const realHandler = data[`${eventType}eventproxy`.toLowerCase()];
-
     if (eventType && realHandler) {
-        let args = data[`${eventType}argumentsproxy`.toLowerCase()] || [event];
-        args = args.map(a => a === '_$event_' ? event : a);
+        const detail = event.detail || {};
+        let {trigger, args = []} = detail;
+        if (trigger !== '$emit') {
+            args = [event];
+        }
+        // args via argumentsproxy
+        let argumentsproxy = data[`${eventType}argumentsproxy`.toLowerCase()];
+        if (argumentsproxy) {
+            // inline $event can pass only 1 parameter, won't support `...arguments`
+            // see https://github.com/vuejs/vue/issues/5527
+            args = argumentsproxy.map(a => a === '_$event_' ? args[0] : a);
+        }
 
         // swan 组件的事件可能在其 created 生命周期前触发，此时 this.$vue 还没有绑定上
         if (this.__isComponent__ && !this.__created__) {

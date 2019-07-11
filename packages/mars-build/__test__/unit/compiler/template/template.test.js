@@ -22,9 +22,9 @@ describe('[swan]template basic', () => {
         const source = '<view @tap="tap" :prop="prop">{{text}}</view>';
         const expectRet = {
             code: '<view bindtap="handleProxy" datatapeventproxy="tap" prop="{{ prop }}">{{text}}</view>',
-            render: '({ render: function() { '
+            render: '({ render: function() {'
                 + 'var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;'
-                + 'return _c(\'view\',{attrs:{"prop":_vm.prop},on:{"tap":_vm.tap}},[_vm._v(_vm._s(_vm.text))]) }, '
+                + 'return [,[[_vm._pp({\'prop\':_vm.prop})]],[(_vm.text)]]}, '
                 + 'staticRenderFns: [] })'
         };
         const {render, code} = templateCompiler(source, {});
@@ -46,9 +46,9 @@ describe('[swan]template basic', () => {
 
         const expectRet = {
             code: '<view><slot name="aaa" var-slotProps="{{ {bbb: bbb,ccc: ccc} }}"></slot><slot></slot></view>',
-            render: '({ render: function() { var _vm=this;var _h=_vm.$createElement;'
-                + 'var _c=_vm._self._c||_h;return _c(\'view\',[_vm._t("aaa",null,'
-                + '{bbb:_vm.bbb,ccc:_vm.ccc}),_vm._t("default")],2) }, staticRenderFns: [] })'
+            render: '({ render: function() {'
+                + 'var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;'
+                + 'return [,[[,JSON.stringify([_vm.bbb,_vm.ccc])],[]]]}, staticRenderFns: [] })'
         };
 
         expect(code).toBe(expectRet.code);
@@ -72,12 +72,9 @@ describe('[swan]template basic', () => {
             code: `<test><div>{{ text.text }}</div><view slot=\"aaa\" aaa=\"{{ slotProps['ccc'] }}\">
                     {{slotProps.bbb}}
                     <view>{{slotProps.ccc}}</view></view></test>`,
-            render: '({ render: function() { var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;'
-                + 'return _c(\'test\',{scopedSlots:_vm._u([{key:\"aaa\",fn:function(someSlotProps){'
-                + 'return _c(\'view\',{attrs:{\"aaa\":someSlotProps[\'ccc\']}},[_vm._v(\"\\n                    '
-                + '\"+_vm._s(someSlotProps.bbb)+\"\\n                    \"),_c(\'view\','
-                + '[_vm._v(_vm._s(someSlotProps.ccc))])])}}])},[_c(\'div\','
-                + '[_vm._v(_vm._s(_vm.text.text))])]) }, staticRenderFns: [] })'
+            render: '({ render: function() {'
+                + 'var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;'
+                + 'return [,[,[(_vm.text.text)]]]}, staticRenderFns: [] })'
         };
 
         expect(code).toBe(expectRet.code);

@@ -44,13 +44,13 @@ export function makeCreateComponent(handleProxy, handleModel, setData, callHook,
             },
             pageLifetimes: {
                 show(...args) {
-                    // if (process.env.NODE_ENV !== 'production' && config.debug) {
+                    // if (process.env.NODE_ENV !== 'production' && config.debug && config.debug.lifetimes) {
                     //     console.log('[debug: swan pageLifetimes] show', this.data.compId);
                     // }
                     return callHook.call(this, this.$vue, 'comp', 'show', args);
                 },
                 hide(...args) {
-                    // if (process.env.NODE_ENV !== 'production' && config.debug) {
+                    // if (process.env.NODE_ENV !== 'production' && config.debug && config.debug.lifetimes) {
                     //     console.log('[debug: swan pageLifetimes] hide', this.data.compId);
                     // }
                     return callHook.call(this, this.$vue, 'comp', 'hide', args);
@@ -58,7 +58,7 @@ export function makeCreateComponent(handleProxy, handleModel, setData, callHook,
             },
             lifetimes: {
                 created(...args) {
-                    if (process.env.NODE_ENV !== 'production' && config.debug) {
+                    if (process.env.NODE_ENV !== 'production' && config.debug && config.debug.lifetimes) {
                         console.log('[debug: swan lifetimes] created', this.data.compId);
                     }
                     const properties = this.properties;
@@ -117,13 +117,13 @@ export function makeCreateComponent(handleProxy, handleModel, setData, callHook,
                     // }
                 },
                 attached(...args) {
-                    if (process.env.NODE_ENV !== 'production' && config.debug) {
+                    if (process.env.NODE_ENV !== 'production' && config.debug && config.debug.lifetimes) {
                         console.log('[debug: swan lifetimes] attached', this.data.compId);
                     }
                     callHook.call(this, this.$vue, 'comp', 'attached', args);
                 },
                 ready(...args) {
-                    if (process.env.NODE_ENV !== 'production' && config.debug) {
+                    if (process.env.NODE_ENV !== 'production' && config.debug && config.debug.lifetimes) {
                         console.log('[debug: swan lifetimes] ready', this.data.compId);
                     }
                     // if (hooks.ready) {
@@ -136,7 +136,7 @@ export function makeCreateComponent(handleProxy, handleModel, setData, callHook,
                     // }
                 },
                 detached(...args) {
-                    if (process.env.NODE_ENV !== 'production' && config.debug) {
+                    if (process.env.NODE_ENV !== 'production' && config.debug && config.debug.lifetimes) {
                         console.log('[debug: swan lifetimes] detached', this.data.compId);
                     }
                     callHook.call(this, this.$vue, 'comp', 'dettached', args);

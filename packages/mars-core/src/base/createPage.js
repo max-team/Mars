@@ -27,7 +27,7 @@ export function makeCreatePage(pageMixin, {handleProxy, handleModel}, setData, c
                 pages[uid] = this;
                 this.__uid__ = uid;
 
-                if (process.env.NODE_ENV !== 'production' && config.debug) {
+                if (process.env.NODE_ENV !== 'production' && config.debug && config.debug.lifetimes) {
                     console.log('[debug: swan pageHooks] onLoad', this.__uid__);
                 }
 
@@ -81,7 +81,7 @@ export function makeCreatePage(pageMixin, {handleProxy, handleModel}, setData, c
                 return ret;
             },
             onUnload(...args) {
-                if (process.env.NODE_ENV !== 'production' && config.debug) {
+                if (process.env.NODE_ENV !== 'production' && config.debug && config.debug.lifetimes) {
                     console.log('[debug: swan pageHooks] onUnload', this.__uid__);
                 }
                 const ret = callHook.call(this, this.$vue, 'page', 'onUnload', args);
@@ -101,19 +101,19 @@ export function makeCreatePage(pageMixin, {handleProxy, handleModel}, setData, c
                 return ret;
             },
             onReady(...args) {
-                if (process.env.NODE_ENV !== 'production' && config.debug) {
+                if (process.env.NODE_ENV !== 'production' && config.debug && config.debug.lifetimes) {
                     console.log('[debug: swan pageHooks] onReady', this.__uid__);
                 }
                 return callHook.call(this, this.$vue, 'page', 'onReady', args);
             },
             onShow(...args) {
-                if (process.env.NODE_ENV !== 'production' && config.debug) {
+                if (process.env.NODE_ENV !== 'production' && config.debug && config.debug.lifetimes) {
                     console.log('[debug: swan pageHooks] onShow', this.__uid__);
                 }
                 return callHook.call(this, this.$vue, 'page', 'onShow', args);
             },
             onHide(...args) {
-                if (process.env.NODE_ENV !== 'production' && config.debug) {
+                if (process.env.NODE_ENV !== 'production' && config.debug && config.debug.lifetimes) {
                     console.log('[debug: swan pageHooks] onHide', this.__uid__);
                 }
                 return callHook.call(this, this.$vue, 'page', 'onHide', args);

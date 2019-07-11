@@ -58,7 +58,7 @@ describe('[swan]createPage', () => {
                 let _vm = this;
                 let _h = _vm.$createElement;
                 let _c = _vm._self._c || _h;
-                return _c('view', [_vm._v(_vm._s(_vm.a))]);
+                return [, [_vm._s(_vm.a)]];
             }
         };
         const query = {a: 1};
@@ -114,7 +114,7 @@ describe('[swan]createComponent', () => {
                 let _vm = this;
                 let _h = _vm.$createElement;
                 let _c = _vm._self._c || _h;
-                return _c('view', [_vm._v(_vm._s(_vm.text))]);
+                return [, [_vm._s(_vm.text)]];
             }
         };
         const comp = vueCompCreator(compOptions);
@@ -126,12 +126,10 @@ describe('[swan]createComponent', () => {
                 let _vm = this;
                 let _h = _vm.$createElement;
                 let _c = _vm._self._c || _h;
-                return _c('comp', {
-                    attrs: {
-                        'compId': '$root,0',
-                        'text': 'text'
-                    }
-                });
+                return [, [_vm._pp({
+                    'compId': '$root,0',
+                    'text': 'text'
+                })]];
             }
         };
 
