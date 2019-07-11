@@ -177,17 +177,27 @@ function genData(el, state) {
         data += dirs + ',';
     }
 
+    // treat classBinding/styleBinding as attrs for filters/complex binding
+    // TODO: better filters/complex binding
+    let attrs = el.attrs || [];
     if (el.classBinding) {
-        data += `(${el.classBinding}),`;
+        attrs.push({
+            name: 'class',
+            value: el.classBinding
+        });
     }
-
     if (el.styleBinding) {
-        data += `(${el.styleBinding}),`;
+        attrs.push({
+            name: 'style',
+            value: el.styleBinding
+        });
     }
 
+    // TODO: better genProps, omit static attrs
     // attributes
-    if (el.attrs) {
-        data += `[_pp(${genProps(el.attrs, state, el)})],`;
+    if (attrs.length > 0) {
+        const props = genProps(attrs, state, el);
+        data += el.isComp ? `[_pp(${props})],` : `[${props}],`;
     }
 
     // DOM props

@@ -95,6 +95,6 @@ describe('render codegen test', () => {
         </template>`;
 
         const res = gen(template);
-        expect(res.render).toBe('with(this){return [[,[[_pp({\'b\':aaa,_p:_ff({fid: 0,value: {a: (someFnB(bbb))}}, \'p\')})]]]]}');
+        expect(res.render).toBe('with(this){return [[,[[{\'b\':aaa,_p:_ff({fid: 0,value: {a: (someFnB(bbb))}}, \'p\')}]]]]}');
     });
 });

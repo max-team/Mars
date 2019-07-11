@@ -24,7 +24,7 @@ describe('[swan]template basic', () => {
             code: '<view bindtap="handleProxy" datatapeventproxy="tap" prop="{{ prop }}">{{text}}</view>',
             render: '({ render: function() {'
                 + 'var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;'
-                + 'return [,[[_vm._pp({\'prop\':_vm.prop})]],[(_vm.text)]]}, '
+                + 'return [,[[{\'prop\':_vm.prop}]],[(_vm.text)]]}, '
                 + 'staticRenderFns: [] })'
         };
         const {render, code} = templateCompiler(source, {});

@@ -86,6 +86,7 @@ export function makeCreateComponent(handleProxy, handleModel, setData, callHook,
                         parent
                     };
 
+                    // TODO: check if is ok when swan instance reused with trackBy
                     // 初始化 vue 实例
                     this.$vue = new VueComponent(options);
                     this.$vue.$mp = {

@@ -114,7 +114,7 @@ function isComplexExp(exp) {
 }
 
 function isFilter(value) {
-    return /[^|]+\|[^|]+/.test(value);
+    return value.indexOf('_f(') >= 0;
 }
 
 function getFilters(node) {
