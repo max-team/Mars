@@ -33,5 +33,6 @@
         "vue-template-compiler": "2.5.21",
         "vue-template-es2015-compiler": "^1.8.1",
         "webpack": "^4.30.0"
-    }
+    },
+    "gitHead": "f0353f53042da6ddaac42c517bdcc74701c691d4"
 }
