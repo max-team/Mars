@@ -70,13 +70,20 @@ export function setData(vm, $mp, isRoot = false) {
 
     // if vm has _computedWatchers and has new data
     // set __inited__ true to use VM _computedWatchers data
+    // need to sync comp rootComputed data
     if (
-        vm._computedWatchers
-        && !$mp.data.__inited__
+        !$mp.data.__inited__
+        && vm._computedWatchers
         && Object.keys(vm._computedWatchers).length > 0
         && Object.keys(data).length > 0
     ) {
         data.__inited__ = true;
+        const {rootComputed, compId} = $mp.data;
+        let computedProps = {};
+        if (rootComputed && compId) {
+            computedProps = rootComputed[compId] || {};
+        }
+        data = Object.assign(computedProps, data);
     }
 
     if (process.env.NODE_ENV !== 'production' && config.performance && mark) {

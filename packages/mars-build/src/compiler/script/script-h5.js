@@ -46,7 +46,14 @@ exports.compileRouter = function (content, options) {
             }
         });
     }
-    const routes = pages.concat(subPages);
+
+    // 判断当前MARS_ENV模式下是否有对应的页面数组
+    let envPages = [];
+    if (config && config['pages-' + MARS_ENV]) {
+        envPages = config['pages-' + MARS_ENV];
+    }
+    const routes = pages.concat(subPages, envPages);
+
     const mode = mars && mars.mode ? mars.mode : 'history';
     const routerRet = babel.transform(content.toString(), {
         plugins: [transformRouterPlugin({

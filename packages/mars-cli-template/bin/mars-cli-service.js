@@ -93,6 +93,7 @@ process.env.MARS_CLI_OPTIONS = process.env.MARS_CLI_OPTIONS || JSON.stringify({
     });
 
     service.run(command, args, rawArgv).catch(err => {
+        console.log(err);
         process.exit(1);
     });
 })();
