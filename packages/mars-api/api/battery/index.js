@@ -3,7 +3,7 @@
  * @author zhaolongfei
  */
 
-import {callback} from '../utils';
+import {callback} from '../../lib/utils';
 
 export function getBatteryInfo(options = {}) {
     const {success, fail, complete} = options;

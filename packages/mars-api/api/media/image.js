@@ -5,7 +5,7 @@
  */
 
 import {uploader} from '../file/upload';
-import {callback} from '../utils';
+import {callback} from '../../lib/utils';
 
 export function chooseImage(options) {
     const {count = 9, sourceType = ['album', 'camera'], success, fail, complete} = options;

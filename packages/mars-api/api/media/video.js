@@ -4,7 +4,7 @@
  */
 
 import {uploader} from '../file/upload';
-import {callback} from '../utils';
+import {callback} from '../../lib/utils';
 
 export function chooseVideo(options = {}) {
     const {sourceType = ['album', 'camera'], compressed = true, maxDuration = 60, success, fail, complete} = options;

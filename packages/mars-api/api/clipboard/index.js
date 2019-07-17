@@ -3,7 +3,7 @@
  * @author zhaolongfei
  */
 
-import {callback, isIOS} from '../utils';
+import {callback, isIOS} from '../../lib/utils';
 import {showToast} from '../interactive';
 
 class FakeClipboard {
