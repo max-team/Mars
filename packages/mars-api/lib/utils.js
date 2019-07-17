@@ -95,10 +95,20 @@ function callback(fn, data) {
     typeof fn === 'function' && fn(data);
 }
 
+function isAndroid() {
+    return /Android/.test(navigator.userAgent);
+}
+
+function isIOS() {
+    return /iPhone|iPad/.test(navigator.userAgent);
+}
+
 /* eslint-disable fecs-export-on-declare */
 export {
     loadScript,
     callback,
     shouleBeObject,
-    getParameterError
+    getParameterError,
+    isAndroid,
+    isIOS
 };
