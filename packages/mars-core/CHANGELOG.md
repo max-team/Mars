@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.15](https://github.com/max-team/Mars/compare/@marsjs/core@0.2.14...@marsjs/core@0.2.15) (2019-07-11)
+
+
+### Bug Fixes
+
+* **core:** fix 切换组件 __inited__ 时 computed 数据错误 ([#133](https://github.com/max-team/Mars/issues/133)) ([803bac8](https://github.com/max-team/Mars/commit/803bac8))
+
+
+
+
+
 ## [0.2.14](https://github.com/max-team/Mars/compare/@marsjs/core@0.2.13...@marsjs/core@0.2.14) (2019-07-04)
 
 

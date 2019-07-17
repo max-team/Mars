@@ -1,21 +1,16 @@
 /**
  * @file image
  * @Date 2019/2/21
- * @author zhaolongfei(izhaolongfei@gmail.com)
+ * @author zhaolongfei
  */
 
-import {uploader} from './upload';
+import {uploader} from '../file/upload';
 import {callback} from '../../lib/utils';
 
 export function chooseImage(options) {
-    const {
-        count = 9,
-        success,
-        fail,
-        complete
-    } = options;
+    const {count = 9, sourceType = ['album', 'camera'], success, fail, complete} = options;
 
-    return uploader('image', count, 'image').then(data => {
+    return uploader('image', count, sourceType).then(data => {
         callback(success, data);
         callback(complete, data);
         return data;
@@ -26,13 +21,41 @@ export function chooseImage(options) {
             callback(complete, e);
             return e;
         }
-
         throw e;
     });
 }
 
-export function getImageInfo() {
-    // TODO
+export function getImageInfo(options = {}) {
+    const {src, success, fail, complete} = options;
+    if (!src) {
+        const err = {
+            errCode: 904,
+            errMsg: 'src is required and must be "string"'
+        };
+        callback(fail, err);
+        return Promise.reject(err);
+    }
+    return new Promise((resolve, reject) => {
+        const types = ['png', 'jpg', 'jpeg', 'bmp', 'gif', 'webp', 'psd', 'svg', 'tiff'];
+        const imgType = src.substr(src.lastIndexOf('.') + 1) || '';
+        const img = new Image();
+        img.src = src;
+        img.onload = e => {
+            const info = {
+                path: src,
+                width: e.target.naturalWidth || e.target.width,
+                width: e.target.naturalHeight || e.target.height,
+                type: types.includes(imgType) ? imgType : null,
+                orientation: null
+            };
+            callback(success, info);
+            resolve(info);
+        };
+        img.onerror = e => {
+            callback(fail, e);
+            reject(e);
+        };
+    });
 }
 
 export function previewImage(options = {}) {
