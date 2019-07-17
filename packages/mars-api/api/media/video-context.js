@@ -1,6 +1,6 @@
 /**
  * @file video context
- * @author zhaolongfei(zhaolongfei@baidu.com)
+ * @author zhaolongfei
  */
 
 class VideoContext {

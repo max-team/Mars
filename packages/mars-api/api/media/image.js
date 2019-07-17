@@ -1,7 +1,7 @@
 /**
  * @file image
  * @Date 2019/2/21
- * @author zhaolongfei(zhaolongfei@baidu.com)
+ * @author zhaolongfei
  */
 
 import {uploader} from '../file/upload';

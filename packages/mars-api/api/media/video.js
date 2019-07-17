@@ -1,6 +1,6 @@
 /**
  * @file video
- * @author zhaolongfei(zhaolongfei@baidu.com)
+ * @author zhaolongfei
  */
 
 import {uploader} from '../file/upload';
