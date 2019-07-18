@@ -194,7 +194,7 @@ exports.compileScript = async function (content, options = {}) {
                 {
                     filePath,
                     cwd: path.resolve(process.cwd(), dest.path),
-                    modules: uiModules,
+                    modules: Object.assign(compileModules.H5Modules, uiModules),
                     resolvedPaths
                 }
             ]
@@ -261,12 +261,12 @@ ${contentStr}
 };
 
 // 处理tabBar iconPath，更改icon目录为默认目录，解决动态require 引发的context为src目录情况
-exports.compileTabBar = function (options, dest) {
+exports.compileTabBar = function (options, {dest, baseDir}) {
     // 处理tabBar iconPath
     function dealIconPath(path) {
         let pathArr = path.split('/');
         let newPath = `${pathArr[pathArr.length - 1]}`;
-        let iconContent = fs.readFileSync(`${process.cwd()}/src/${path}`);
+        let iconContent = fs.readFileSync(`${baseDir}${path}`);
         fs.writeFileSync(process.cwd() + `/${dest}/tabBarIcons/${newPath}`, iconContent);
         return newPath;
     }
