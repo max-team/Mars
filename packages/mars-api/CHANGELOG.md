@@ -9,8 +9,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
-
-
 ## [1.0.23](https://github.com/max-team/Mars/compare/@marsjs/api@1.0.22...@marsjs/api@1.0.23) (2019-07-17)
 
 
