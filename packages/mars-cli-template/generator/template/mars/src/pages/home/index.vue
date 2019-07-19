@@ -5,22 +5,27 @@
     </view>
 </template>
 
+<script type="config">
+{
+    config: {
+        navigationBarTitleText: 'Mars'
+    }
+}
+</script>
+
 <script>
 import Hello from '../../components/Hello/Hello';
 
 export default {
-    config: {
-        navigationBarTitleText: 'Mars'
-    },
     data() {
         return {};
     },
     components: {
-        hello: Hello
+        Hello
     }
 };
-
 </script>
+
 <style>
 .home-wrap {
     width: 100vw;
