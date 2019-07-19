@@ -71,6 +71,7 @@ async function compile(file, opt) {
         config: blockConfig
     } = sfcParser(file, opt, false);
 
+    const mpConfig = blockConfig && blockConfig.config;
     // 处理 script
     let scriptRet = null;
     let config = null;
@@ -79,13 +80,21 @@ async function compile(file, opt) {
     if (script) {
         scriptRet = await compileScript(script.content, {
             isApp,
+            mpConfig,
             target: opt.target,
             path: fPath + '.vue',
             dest: opt._config.dest,
             mars: opt._config.h5 || {}
         });
         // use blockConfig first
-        config = blockConfig && blockConfig.config ? blockConfig.config : (scriptRet && scriptRet.config);
+        config = mpConfig ? mpConfig : (scriptRet && scriptRet.config);
+        if (config && config.pages) {
+            config.pages = config.pages.filter(item => !/\.(swan|mp)$/.test(item));
+        }
+        if (config && config.tabBar && config.tabBar.list) {
+            config.tabBar.list = config.tabBar.list.filter(item => !/\.(swan|mp)$/.test(item.pagePath));
+        }
+
         enableConfig = scriptRet && scriptRet.enableConfig;
         scriptRet.components && Object.keys(scriptRet.components).forEach(name => {
             if (!componentsInUsed[name]) {

@@ -148,6 +148,7 @@ exports.compileScript = async function (content, options = {}) {
 
     const {
         isApp = false,
+        mpConfig,
         target,
         dest,
         path: filePath,
@@ -167,6 +168,7 @@ exports.compileScript = async function (content, options = {}) {
             transformScriptPlugin({
                 baseOptions,
                 isApp,
+                mpConfig,
                 useAOP
             })
         ]
@@ -183,7 +185,6 @@ exports.compileScript = async function (content, options = {}) {
     content = new Buffer(scriptStr);
 
     const {config = {}, components = {}, enableConfig = null} = baseOptions;
-
     const destPath = path.resolve(dest.path);
     const uiModules = getUIModules(components, target);
     let resolvedPaths = {};
