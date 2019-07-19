@@ -5,6 +5,8 @@
 
 /* eslint-disable fecs-camelcase */
 /* eslint-disable babel/new-cap */
+const {hyphenate} = require('../../helper/util');
+
 function getPlainObjectNodeValue(node, path, t) {
     let result;
     if (t.isObjectExpression(node)) {
@@ -49,7 +51,8 @@ const getPropertyVisitor = (t, options) => {
         ObjectProperty(path, state) {
             const propName = path.node.key.name;
 
-            if (propName === 'config') {
+            // 如果没有定义区块级的 config
+            if (propName === 'config' && !options.mpConfig) {
                 const configValue = getPlainObjectNodeValue(path.node.value, path, t) || {};
 
                 if (options.isApp) {
@@ -90,7 +93,9 @@ const getPropertyVisitor = (t, options) => {
                                 throw path.buildCodeFrameError(`cannot find binding for component "${p.value.name}"`);
                             }
 
-                            const keyName = t.isLiteral(p.key) ? p.key.value : p.key.name;
+                            let keyName = t.isLiteral(p.key) ? p.key.value : p.key.name;
+                            keyName = hyphenate(keyName);
+
                             const bindPath = binding.path;
                             const bindParentNode = bindPath.parent;
                             const bindNode = bindPath.node;
@@ -161,7 +166,8 @@ module.exports = function getVisitor(options = {}) {
         let declarationPath;
         const {
             file,
-            isApp
+            isApp,
+            mpConfig
         } = options;
         return {
             visitor: {
@@ -192,9 +198,10 @@ module.exports = function getVisitor(options = {}) {
                             throw path.buildCodeFrameError('should has export in SFC');
                         }
 
+                        const isComponent = mpConfig ? mpConfig.component : (file.config && file.config.component);
                         const mpType = isApp
                             ? 'app'
-                            : (file.config && file.config.component) ? 'component' : 'page';
+                            : isComponent ? 'component' : 'page';
 
                         if (mpType === 'app' || mpType === 'page') {
                             const fnName = capitalize(mpType);

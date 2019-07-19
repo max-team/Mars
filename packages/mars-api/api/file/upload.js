@@ -4,9 +4,9 @@
  * @author zhaolongfei(izhaolongfei@gmail.com)
  */
 
-import {callback} from '../../lib/utils';
+import {callback, isIOS} from '../../lib/utils';
 
-export function uploader(type = 'image', count = 1) {
+export function uploader(type = 'image', count = 1, sourceType) {
     return new Promise((resolve, reject) => {
         const input = document.getElementById('mars-uploader') || document.createElement('input');
         input.id = 'mars-uploader';
@@ -15,6 +15,10 @@ export function uploader(type = 'image', count = 1) {
         input.accept = type + '/*';
         input.style.width = 0;
         input.style.height = 0;
+        // iOS 下存在 capture 属性时，默认打开相机
+        if (type === 'image' && isIOS() && !sourceType.includes('album')) {
+            input.capture = 'camera';
+        }
 
         document.body.appendChild(input);
 
@@ -55,7 +59,6 @@ function upload(url, header = null, data) {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 resolve(xhr.response);
             }
-
         };
 
         xhr.onerror = e => {
@@ -66,16 +69,7 @@ function upload(url, header = null, data) {
 }
 
 export function uploadFile(options) {
-    const {
-        url,
-        filePath,
-        name,
-        header = null,
-        formData = null,
-        success,
-        fail,
-        complete
-    } = options;
+    const {url, filePath, name, header = null, formData = null, success, fail, complete} = options;
 
     const rformData = new FormData();
 
@@ -95,7 +89,6 @@ export function uploadFile(options) {
             callback(complete, e);
             return e;
         }
-
         throw e;
     });
 }

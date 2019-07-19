@@ -16,6 +16,10 @@ import * as canvas from './api/canvas';
 import * as pageInfo from './api/pageInfo';
 import request from './api/request';
 import {createAnimation, animationDirective} from './api/createAnimation';
+import * as media from './api/media';
+import * as battery from './api/battery';
+import * as motion from './api/motion';
+import * as clipboard from './api/clipboard';
 
 export const directives = {
     animation: animationDirective
@@ -38,6 +42,10 @@ export default function initNativeApi(mars) {
         {
             request,
             createAnimation
-        }
+        },
+        media,
+        battery,
+        motion,
+        clipboard
     );
 }

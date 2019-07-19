@@ -26,6 +26,7 @@ const modules = compileModules.modules;
 async function compile(source, options) {
     const {
         isApp,
+        mpConfig,
         renderStr,
         coreRelativePath,
         target,
@@ -46,6 +47,7 @@ async function compile(source, options) {
                 file: ret,
                 coreRelativePath,
                 isApp,
+                mpConfig,
                 renderStr,
                 target
             })

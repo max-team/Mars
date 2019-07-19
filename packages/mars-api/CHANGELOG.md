@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.24](https://github.com/max-team/Mars/compare/@marsjs/api@1.0.23...@marsjs/api@1.0.24) (2019-07-19)
+
+**Note:** Version bump only for package @marsjs/api
+
+
+
+## [1.0.23](https://github.com/max-team/Mars/compare/@marsjs/api@1.0.22...@marsjs/api@1.0.23) (2019-07-17)
+
+
+### Features
+
+* **api:** support battery/clipboard/motion/part of media apis ([#139](https://github.com/max-team/Mars/issues/139)) ([bf9dd89](https://github.com/max-team/Mars/commit/bf9dd89))
+
+
+
+
+
 ## [1.0.22](https://github.com/max-team/Mars/compare/@marsjs/api@1.0.21...@marsjs/api@1.0.22) (2019-06-27)
 
 
