@@ -18,7 +18,7 @@ const {parse: sfcParser} = require('./compiler/sfc/parser');
 const {compile: sfcCompiler} = require('./compiler/sfc/compiler');
 const log = require('./helper/log');
 
-function compile(file, opt, compilers) {
+async function compile(file, opt, compilers) {
     const {
         target = 'swan',
         fileSuffix = {
