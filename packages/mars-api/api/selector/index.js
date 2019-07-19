@@ -26,7 +26,7 @@ class Selector {
     }
 
     /* eslint-disable */
-    in (component) {
+    in(component) {
         this.$root = component.$el;
         return this;
     }
@@ -51,7 +51,7 @@ class Selector {
     }
 
     selectViewport() {
-        this.$doms.push(this.$root.querySelector('html'));
+        this.$doms.push(document.querySelector('html'));
         return this;
     }
 

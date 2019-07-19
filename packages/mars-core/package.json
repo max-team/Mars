@@ -1,7 +1,8 @@
 {
     "name": "@marsjs/core",
-    "version": "0.2.14",
+    "version": "0.3.0-alpha.0",
     "scripts": {
         "test": "jest --coverage"
-    }
+    },
+    "gitHead": "f0353f53042da6ddaac42c517bdcc74701c691d4"
 }

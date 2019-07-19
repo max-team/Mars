@@ -61,7 +61,9 @@ filters 可以在插值和 props 中使用，复杂表达式可以在插值、pr
 - **注意**：小程序内用 `<block>` 来表示不可见的虚拟包裹元素，在 `<template>` 上使用 v-for 需要使用小程序的 `<block>` 标签
 - **注意**：由于小程序视图模板限制 v-if 与 v-for 不能同时用于同一节点，需自行处理）
 
-
+::: warning
+`build@0.2.50` 起支持可选将 v-for 上的 key 编译为 swan 的 trackBy，开启方法为在 v-for 节点上加上 `use-trackby` 属性。
+:::
 
 ## 事件处理
 

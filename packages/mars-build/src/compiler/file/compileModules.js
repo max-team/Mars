@@ -25,6 +25,13 @@ const modules = {
     }
 };
 
+const H5Modules = {
+    '@marsjs/core': {
+        needCompile: false,
+        path: './mars-core'
+    }
+};
+
 const inProcessingModules = new Set();
 
 /**
@@ -122,5 +129,6 @@ async function compileUIModules(uiModules, destPath) {
 module.exports = {
     compile,
     modules,
+    H5Modules,
     compileUIModules
 };

@@ -1,5 +1,30 @@
 # @marsjs/core
 
+## [0.2.16](https://github.com/max-team/Mars/compare/@marsjs/core@0.2.15...@marsjs/core@0.2.16) (2019-07-19)
+
+
+### Features
+
+* **core:** export config ([94b1173](https://github.com/max-team/Mars/commit/94b1173))([#142](https://github.com/max-team/Mars/issues/142)) ([c4dfa54](https://github.com/max-team/Mars/commit/c4dfa54))
+
+
+## [0.2.15](https://github.com/max-team/Mars/compare/@marsjs/core@0.2.14...@marsjs/core@0.2.15) (2019-07-11)
+
+
+### Bug Fixes
+
+* **core:** fix 切换组件 __inited__ 时 computed 数据错误 ([#133](https://github.com/max-team/Mars/issues/133)) ([803bac8](https://github.com/max-team/Mars/commit/803bac8))
+
+
+
+## [0.2.14](https://github.com/max-team/Mars/compare/@marsjs/core@0.2.13...@marsjs/core@0.2.14) (2019-07-04)
+
+
+### Performance Improvements
+
+* **core:** 去掉不需要的初始 setData 和数据字段 ([#129](https://github.com/max-team/Mars/issues/129)) ([8a19371](https://github.com/max-team/Mars/commit/8a19371))
+
+
 ## [0.2.13](https://github.com/max-team/Mars/compare/@marsjs/core@0.2.12...@marsjs/core@0.2.13) (2019-06-20)
 
 **Note:** Version bump only for package @marsjs/core

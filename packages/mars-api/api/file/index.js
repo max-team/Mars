@@ -4,16 +4,9 @@
  */
 
 import {
-    chooseImage,
-    previewImage
-} from './image';
-
-import {
     uploadFile
 } from './upload';
 
 export {
-    chooseImage,
-    previewImage,
     uploadFile
 };

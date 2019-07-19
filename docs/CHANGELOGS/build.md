@@ -1,5 +1,38 @@
 # @marsjs/build
 
+## [0.2.52](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.51...@marsjs/build@0.2.52) (2019-07-19)
+
+
+### Bug Fixes
+
+* **build:** fix block config in component ([67515f0](https://github.com/max-team/Mars/commit/67515f0))
+
+
+### Features
+
+* **build:** components field support PascalCase ([#143](https://github.com/max-team/Mars/issues/143)) ([e7c08b2](https://github.com/max-team/Mars/commit/e7c08b2))
+* **build:** support SFC config block ([#142](https://github.com/max-team/Mars/issues/142)) ([c4dfa54](https://github.com/max-team/Mars/commit/c4dfa54))
+
+
+## [0.2.51](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.50...@marsjs/build@0.2.51) (2019-07-11)
+
+**Note:** Version bump only for package @marsjs/build
+
+
+## [0.2.50](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.49...@marsjs/build@0.2.50) (2019-07-04)
+
+
+### Bug Fixes
+
+* **build:** 支持用 use-trackby 开启 v-for 的 key 编译为 swan 的 trackBy (#128)
+
+
+## [0.2.49](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.48...@marsjs/build@0.2.49) (2019-07-04)
+
+### Revert
+
+* **build:** swan 中将 v-for 上的 key 编译为 trackBy ([#124](https://github.com/max-team/Mars/issues/124)) ([30febdf](https://github.com/max-team/Mars/commit/30febdf))
+
 
 ## [0.2.48](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.47...@marsjs/build@0.2.48) (2019-07-03)
 

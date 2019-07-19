@@ -10,6 +10,7 @@
 const {compile: compileTemplate} = require('vue-template-compiler/build');
 const transpile = require('vue-template-es2015-compiler');
 const customTemplate = 'template-mars';
+const {generate} = require('./render');
 
 function getIterator(node) {
     if (!node) {
@@ -112,35 +113,28 @@ function isComplexExp(exp) {
     return typeof exp === 'string' ? /^\(.+\)$/.test(exp) : false;
 }
 
-function getFilters(node) {
-    let props = node.attrsMap
-        ? Object.keys(node.attrsMap).filter(name => {
-            const value = node.attrsMap[name];
-            return name.indexOf(':') >= 0 && (/[^|]+\|[^|]+/.test(value) || isComplexExp(value));
-        })
-        : [];
-    props = props.map(name => name.replace(/^(v-bind)?:/, ''));
+function isFilter(value) {
+    return value.indexOf('_f(') >= 0;
+}
 
-    let texts = node.children
-        ? node.children.map(c => {
-            if (c.type !== 2) {
-                return null;
-            }
-            const isComplex = c.tokens.some(token => typeof token === 'object' && isComplexExp(token['@binding']));
-            const isFilter = c.expression.indexOf('_s(_f(') >= 0;
-            return (isComplex || isFilter) ? c.expression : null;
-        })
-        : [];
+function getFilters(node) {
+    const props = '{' + Object.keys(node.attrsMap).reduce((res, name) => {
+        const value = node.attrsMap[name];
+        if (name.indexOf(':') >= 0 && (isFilter(value) || isComplexExp(value))) {
+            const nName = name.replace(/^(v-bind)?:/, '');
+            res += `${nName}: ${value},`;
+        }
+        return res;
+    }, '').slice(0, -1) + '}';
 
     let vfor = isComplexExp(node.for) ? node.for : undefined;
     let vif = isComplexExp(node.if) ? node.if : undefined;
     let velseif = isComplexExp(node.elseif) ? node.elseif : undefined;
 
-    const hasFilter = (props.length + texts.filter(t => t).length) > 0;
+    const hasFilter = props !== '{}';
     return (hasFilter || vfor || vif || velseif)
         ? {
             p: props,
-            t: texts,
             vfor,
             vif,
             velseif
@@ -150,23 +144,82 @@ function getFilters(node) {
 
 function getGenData(options) {
     let filterIdCounter = 0;
-    return function markNode(el, options) {
-        let filters = getFilters(el);
-        if (filters) {
+    return function markNode(value, type, el) {
+        if (type === 'if') {
+            // if 里面不会有 filter
+            if (!isComplexExp(value)) {
+                return value;
+            }
+
             const fid = filterIdCounter++;
-            el._fid = fid;
-            el._filters = filters;
-            let data = [
+            const data = [
                 `fid: ${fid}`,
-                `t: [${filters.t.join(',')}]`,
-                `p: ${JSON.stringify(filters.p)}`
+                `value: ${value}`
             ];
-            filters.vfor && data.push(`for: ${filters.vfor}`);
-            filters.velseif && data.push('if: true');
-            filters.vif && data.push('if: true');
-            const dataStr = `f: { ${data.join(', ')} },`;
-            return dataStr;
+            const kind = el.if ? 'vif' : (el.elseif ? 'velseif' : '');
+            if (kind) {
+                el._filters = el._filters || {};
+                el._filters[fid] = {
+                    [kind]: true
+                };
+            }
+            return `_ff({${data.join(',')}}, '${type}')`;
         }
+
+        if (type === 'p') {
+            const fid = filterIdCounter++;
+            const data = [
+                `fid: ${fid}`,
+                `value: {${value.map(item => `${item[0]}: ${item[1]}`).join(',')}}`
+            ];
+
+            el._filters = el._filters || {};
+            el._filters[fid] = {
+                p: value.map(item => item[0])
+            };
+
+            return `_ff({${data.join(',')}}, '${type}')`;
+        }
+
+        if (type === 't') {
+            const isComplex = value.tokens.some(token => typeof token === 'object' && isComplexExp(token['@binding']));
+            const isFilter = value.expression.indexOf('_s(_f(') >= 0;
+            const expression = value.expression.replace('_s', '');
+            if (isComplex || isFilter) {
+                const fid = filterIdCounter++;
+                const data = [
+                    `fid: ${fid}`,
+                    `value: ${expression}`
+                ];
+
+                el._filters = el._filters || {};
+                el._filters[fid] = {
+                    t: true
+                };
+
+                return `_ff({${data.join(',')}}, '${type}')`;
+            }
+            return expression;
+        }
+
+        if (type === 'for') {
+            if (!isComplexExp(value)) {
+                return value;
+            }
+            const fid = filterIdCounter++;
+            const data = [
+                `fid: ${fid}`,
+                `value: ${value}`
+            ];
+
+            el._filters = el._filters || {};
+            el._filters[fid] = {
+                vfor: true
+            };
+
+            return `_ff({${data.join(',')}}, '${type}')`;
+        }
+
         return '';
     };
 }
@@ -209,7 +262,6 @@ module.exports = function mark(source, options) {
 
     const {
         ast,
-        render,
         staticRenderFns,
         errors
     } = compileTemplate(source, {
@@ -217,17 +269,26 @@ module.exports = function mark(source, options) {
         modules: [
             {
                 transformNode: getMarkNode(options, componentsInUsed),
-                postTransformNode: getPostTrans(options),
-                genData: getGenData(options)
+                postTransformNode: getPostTrans(options)
             }
         ]
     });
 
+    const render = generate(ast, {
+        processFilterData: getGenData(),
+        isComplexExp,
+        isFilter
+    });
+
     updateComponents(components, componentsInUsed);
-    let code = `({ render: function() { ${render} }, staticRenderFns: [\
+    let code = `({ render: function() {${render.render}}, staticRenderFns: [\
 ${staticRenderFns.map(fn => `function() { ${fn} },)}`)}\
 ] })`;
     code = transpile(code);
 
     return {ast, render: code, errors, componentsInUsed};
 };
+
+module.exports.getGenData = getGenData;
+module.exports.isComplexExp = isComplexExp;
+module.exports.isFilter = isFilter;

@@ -46,7 +46,14 @@ exports.compileRouter = function (content, options) {
             }
         });
     }
-    const routes = pages.concat(subPages);
+
+    // 判断当前MARS_ENV模式下是否有对应的页面数组
+    let envPages = [];
+    if (config && config['pages-' + MARS_ENV]) {
+        envPages = config['pages-' + MARS_ENV];
+    }
+    const routes = pages.concat(subPages, envPages);
+
     const mode = mars && mars.mode ? mars.mode : 'history';
     const routerRet = babel.transform(content.toString(), {
         plugins: [transformRouterPlugin({
@@ -141,6 +148,7 @@ exports.compileScript = async function (content, options = {}) {
 
     const {
         isApp = false,
+        mpConfig,
         target,
         dest,
         path: filePath,
@@ -160,6 +168,7 @@ exports.compileScript = async function (content, options = {}) {
             transformScriptPlugin({
                 baseOptions,
                 isApp,
+                mpConfig,
                 useAOP
             })
         ]
@@ -176,7 +185,6 @@ exports.compileScript = async function (content, options = {}) {
     content = new Buffer(scriptStr);
 
     const {config = {}, components = {}, enableConfig = null} = baseOptions;
-
     const destPath = path.resolve(dest.path);
     const uiModules = getUIModules(components, target);
     let resolvedPaths = {};
@@ -187,7 +195,7 @@ exports.compileScript = async function (content, options = {}) {
                 {
                     filePath,
                     cwd: path.resolve(process.cwd(), dest.path),
-                    modules: uiModules,
+                    modules: Object.assign(compileModules.H5Modules, uiModules),
                     resolvedPaths
                 }
             ]
@@ -254,12 +262,12 @@ ${contentStr}
 };
 
 // 处理tabBar iconPath，更改icon目录为默认目录，解决动态require 引发的context为src目录情况
-exports.compileTabBar = function (options, dest) {
+exports.compileTabBar = function (options, {dest, baseDir}) {
     // 处理tabBar iconPath
     function dealIconPath(path) {
         let pathArr = path.split('/');
         let newPath = `${pathArr[pathArr.length - 1]}`;
-        let iconContent = fs.readFileSync(`${process.cwd()}/src/${path}`);
+        let iconContent = fs.readFileSync(`${baseDir}${path}`);
         fs.writeFileSync(process.cwd() + `/${dest}/tabBarIcons/${newPath}`, iconContent);
         return newPath;
     }
