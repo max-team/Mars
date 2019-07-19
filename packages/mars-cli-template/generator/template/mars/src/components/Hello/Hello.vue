@@ -6,13 +6,16 @@
     </view>
 </template>
 
-<script>
-
-export default {
+<script type="config">
+{
     config: {
         component: true
     }
-};
+}
+</script>
+
+<script>
+export default {};
 </script>
 
 <style>

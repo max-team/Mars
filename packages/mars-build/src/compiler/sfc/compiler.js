@@ -8,6 +8,10 @@ const {getFileCompilers} = require('../file/base');
 
 exports.compile = async function compile(file, options) {
     const {template, script, styles, config: configFile} = file;
+    const blockConfig = configFile.$options.config;
+    const mpConfig = blockConfig && blockConfig.config;
+    // const isComponent = mpConfig && mpConfig.component === true;
+
     const {compilers, isApp, fPath, target, coreRelativePath, baseName} = options;
     const {
         templateCompiler,
@@ -16,13 +20,18 @@ exports.compile = async function compile(file, options) {
         styleCompiler,
         configCompiler
     } = getFileCompilers(compilers, options);
-    const {components, config, computedKeys, moduleType} = await scriptCompiler(script, {
+    let {components, config, computedKeys, moduleType} = await scriptCompiler(script, {
         isApp,
+        mpConfig,
         coreRelativePath,
         target,
         renderStr: !isApp ? renderFunctionName : null,
         dest: options._config.dest
     });
+
+    // use configFile.$options.config first
+    config = mpConfig ? mpConfig : config;
+
     // app.vue has no template
     if (!isApp) {
         const {render, componentsInUsed} = await templateCompiler(template, {

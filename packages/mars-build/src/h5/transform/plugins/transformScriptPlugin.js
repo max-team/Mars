@@ -6,7 +6,6 @@
 /* eslint-disable fecs-camelcase */
 
 /* eslint-disable babel/new-cap */
-
 // 小程序page生命周期
 const PAGE_LIFECYCLE_HOOKS = {
     onLoad: true,
@@ -128,6 +127,7 @@ function getPlainObjectNodeValue(node, path, t) {
     return result;
 }
 
+const {hyphenate} = require('../../../helper/util');
 /* eslint-disable */
 const Property = (t, options) => {
     return {
@@ -148,15 +148,8 @@ const Property = (t, options) => {
                 return;
             }
 
-            if (path.node.key.name === 'config') {
+            if (path.node.key.name === 'config' && !options.mpConfig) {
                 const configValue = getPlainObjectNodeValue(path.node.value, path, t) || {};
-
-                if (configValue.pages) {
-                    configValue.pages = configValue.pages.filter(item => !/\.(swan|mp)$/.test(item));
-                }
-                if (configValue.tabBar && configValue.tabBar.list) {
-                    configValue.tabBar.list = configValue.tabBar.list.filter(item => !/\.(swan|mp)$/.test(item.pagePath));
-                }
                 options.baseOptions && (options.baseOptions.config = configValue);
                 path.remove();
             }
@@ -166,13 +159,16 @@ const Property = (t, options) => {
                     let props = JSON.parse(JSON.stringify(path.node.value.properties));
                     props.forEach(p => {
                         if (t.isIdentifier(p.value)) {
+                            let keyName = t.isLiteral(p.key) ? p.key.value : p.key.name;
+                            keyName = hyphenate(keyName);
+                            p.key = t.stringLiteral(keyName);
+
                             const bindPath = path.scope.bindings[p.value.name].path;
                             const bindParentNode = bindPath.parent;
                             const bindVaule = bindParentNode.source;
                             bindParentNode.source = t.stringLiteral(bindVaule.value + '.vue');
                             p.value = bindParentNode.source;
                         }
-
                     });
 
                     path.node.value.properties.push();
@@ -350,7 +346,8 @@ module.exports = function getVisitor(options = {}) {
     return ({types: t}) => {
         const {
             useAOP,
-            isApp
+            isApp,
+            mpConfig
         } = options;
         return {
             visitor: {
@@ -363,7 +360,6 @@ module.exports = function getVisitor(options = {}) {
                     options.baseOptions && (options.baseOptions.config = {});
                     options.baseOptions && (options.baseOptions.components = {});
                     options.baseOptions && (options.baseOptions.enableConfig = {});
-
 
                     // 处理 onPullDownRefresh 到 methods
                     function dealSwanPageApi(apiName) {
@@ -406,13 +402,14 @@ module.exports = function getVisitor(options = {}) {
                         dealSwanPageApi(key);
                     });
 
+                    // 如果有区别级别的 mpConfig 从 mpConfig 获取是否为组件
+                    const isComponent = mpConfig ? mpConfig.component : judgeComponent(properties);
                     // 处理swan page 生命周期：onLoad 、onReady 、onUnload、onShow 、onHide
                     // 收集 app.vue 周期：onLaunch 、 onShow 、 onHide
                     ['onLoad', 'onReady', 'onUnload', 'onLaunch', 'onShow', 'onHide'].forEach(key => {
                         let lifeItem = properties.find(item => item.key.name === key);
                         let lifeMapKey = isApp ? APP_PAOGE_LIFE_MAP_VUE[key] : PAGE_LIFE_MAP_VUE[key];
                         // 判断当前 vue sfc 是否是组件component
-                        const isComponent = judgeComponent(properties);
                         if (isComponent) {
                             return;
                         }

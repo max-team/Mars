@@ -5,6 +5,8 @@
 
 /* eslint-disable fecs-camelcase */
 /* eslint-disable babel/new-cap */
+const {hyphenate} = require('../../helper/util');
+
 module.exports = function getVisitor(options = {}) {
     return ({types: t}) => {
         const {
@@ -33,6 +35,7 @@ module.exports = function getVisitor(options = {}) {
                                 : path.node.key.type === 'StringLiteral'
                                     ? path.node.key.value
                                     : null;
+                            componentName = hyphenate(componentName);
                             if (componentName && !componentsInUsed[componentName].using) {
                                 path.remove();
                             }

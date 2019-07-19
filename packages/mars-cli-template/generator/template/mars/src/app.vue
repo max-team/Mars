@@ -1,5 +1,5 @@
-<script>
-export default {
+<script type="config">
+{
     config: {
         pages: [
             'pages/home/index'
@@ -11,7 +11,12 @@ export default {
         networkTimeout: {
             request: 30000
         }
-    },
+    }
+}
+</script>
+
+<script>
+export default {
     onLaunch() {},
     onShow() {}
 };
