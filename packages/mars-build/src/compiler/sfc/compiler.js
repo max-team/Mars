@@ -16,13 +16,17 @@ exports.compile = async function compile(file, options) {
         styleCompiler,
         configCompiler
     } = getFileCompilers(compilers, options);
-    const {components, config, computedKeys, moduleType} = await scriptCompiler(script, {
+    let {components, config, computedKeys, moduleType} = await scriptCompiler(script, {
         isApp,
         coreRelativePath,
         target,
         renderStr: !isApp ? renderFunctionName : null,
         dest: options._config.dest
     });
+
+    // use configFile.$options.config first
+    const configOptions = configFile.$options.config;
+    config = configOptions && configOptions.config ? configOptions.config : config;
     // app.vue has no template
     if (!isApp) {
         const {render, componentsInUsed} = await templateCompiler(template, {

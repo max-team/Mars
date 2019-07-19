@@ -26,6 +26,8 @@ const Vinyl = require('vinyl');
 const log = require('./helper/log');
 const slash = require('slash');
 
+
+const {parse: sfcParser} = require('./compiler/sfc/parser');
 const {
     compileScript,
     postCompileScript,
@@ -65,8 +67,9 @@ async function compile(file, opt) {
     const {
         script,
         template,
-        styles
-    } = vueCompiler.parseComponent(file.contents.toString(), {});
+        styles,
+        config: blockConfig
+    } = sfcParser(file, opt, false);
 
     // 处理 script
     let scriptRet = null;
@@ -81,7 +84,8 @@ async function compile(file, opt) {
             dest: opt._config.dest,
             mars: opt._config.h5 || {}
         });
-        config = scriptRet && scriptRet.config;
+        // use blockConfig first
+        config = blockConfig && blockConfig.config ? blockConfig.config : (scriptRet && scriptRet.config);
         enableConfig = scriptRet && scriptRet.enableConfig;
         scriptRet.components && Object.keys(scriptRet.components).forEach(name => {
             if (!componentsInUsed[name]) {
@@ -128,6 +132,9 @@ async function compile(file, opt) {
 
     // 处理 app.vue 生成 对应 router.js ，处理框架入口App.vue，并合并app.vue的生命周期
     if (isApp) {
+        // 获取小程序 app.vue里的config eg.onReachBottomDistance
+        mainOptions = Object.assign(mainOptions, config);
+
         // 生成router.js
         let routerContent = fs.readFileSync(__dirname + '/h5/template/router.js');
         routerContent = compileRouter(routerContent, {
@@ -147,12 +154,12 @@ async function compile(file, opt) {
         let apiPluginContent = fs.readFileSync(__dirname + '/h5/template/globalApi.js');
         apiPluginContent = compileApi(apiPluginContent, opt);
         fs.writeFileSync(opt.dest + '/globalApi.js', apiPluginContent);
-
         // 处理 tabBar.vue里的图片引入路径
-        compileTabBar(config, opt.dest);
-
-        // 获取小程序 app.vue里的config eg.onReachBottomDistance
-        mainOptions = Object.assign(mainOptions, config);
+        // 认为入口文件的目录为 baseDir 目录
+        compileTabBar(config, {
+            dest: opt.dest,
+            baseDir: file.base
+        });
     }
 
     // 持续集成 main.js pageTitleMap
