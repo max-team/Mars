@@ -5,6 +5,8 @@
 
 /* eslint-disable fecs-camelcase */
 /* eslint-disable babel/new-cap */
+const {hyphenate} = require('../../helper/util');
+
 function getPlainObjectNodeValue(node, path, t) {
     let result;
     if (t.isObjectExpression(node)) {
@@ -90,7 +92,9 @@ const getPropertyVisitor = (t, options) => {
                                 throw path.buildCodeFrameError(`cannot find binding for component "${p.value.name}"`);
                             }
 
-                            const keyName = t.isLiteral(p.key) ? p.key.value : p.key.name;
+                            let keyName = t.isLiteral(p.key) ? p.key.value : p.key.name;
+                            keyName = hyphenate(keyName);
+
                             const bindPath = binding.path;
                             const bindParentNode = bindPath.parent;
                             const bindNode = bindPath.node;

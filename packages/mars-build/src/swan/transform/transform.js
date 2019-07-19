@@ -47,7 +47,6 @@ function transAttrs(node, options) {
                 attrs[key] = val;
             }
         }
-
     });
 
     if (null !== showAttr) {

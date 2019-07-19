@@ -6,7 +6,6 @@
 /* eslint-disable fecs-camelcase */
 
 /* eslint-disable babel/new-cap */
-
 // 小程序page生命周期
 const PAGE_LIFECYCLE_HOOKS = {
     onLoad: true,
@@ -128,6 +127,7 @@ function getPlainObjectNodeValue(node, path, t) {
     return result;
 }
 
+const {hyphenate} = require('../../../helper/util');
 /* eslint-disable */
 const Property = (t, options) => {
     return {
@@ -166,13 +166,16 @@ const Property = (t, options) => {
                     let props = JSON.parse(JSON.stringify(path.node.value.properties));
                     props.forEach(p => {
                         if (t.isIdentifier(p.value)) {
+                            let keyName = t.isLiteral(p.key) ? p.key.value : p.key.name;
+                            keyName = hyphenate(keyName);
+                            p.key = t.stringLiteral(keyName);
+
                             const bindPath = path.scope.bindings[p.value.name].path;
                             const bindParentNode = bindPath.parent;
                             const bindVaule = bindParentNode.source;
                             bindParentNode.source = t.stringLiteral(bindVaule.value + '.vue');
                             p.value = bindParentNode.source;
                         }
-
                     });
 
                     path.node.value.properties.push();
