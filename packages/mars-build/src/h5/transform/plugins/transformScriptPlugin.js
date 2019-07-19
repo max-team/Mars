@@ -148,15 +148,8 @@ const Property = (t, options) => {
                 return;
             }
 
-            if (path.node.key.name === 'config') {
+            if (path.node.key.name === 'config' && !options.mpConfig) {
                 const configValue = getPlainObjectNodeValue(path.node.value, path, t) || {};
-
-                if (configValue.pages) {
-                    configValue.pages = configValue.pages.filter(item => !/\.(swan|mp)$/.test(item));
-                }
-                if (configValue.tabBar && configValue.tabBar.list) {
-                    configValue.tabBar.list = configValue.tabBar.list.filter(item => !/\.(swan|mp)$/.test(item.pagePath));
-                }
                 options.baseOptions && (options.baseOptions.config = configValue);
                 path.remove();
             }
@@ -353,7 +346,8 @@ module.exports = function getVisitor(options = {}) {
     return ({types: t}) => {
         const {
             useAOP,
-            isApp
+            isApp,
+            mpConfig
         } = options;
         return {
             visitor: {
@@ -366,7 +360,6 @@ module.exports = function getVisitor(options = {}) {
                     options.baseOptions && (options.baseOptions.config = {});
                     options.baseOptions && (options.baseOptions.components = {});
                     options.baseOptions && (options.baseOptions.enableConfig = {});
-
 
                     // 处理 onPullDownRefresh 到 methods
                     function dealSwanPageApi(apiName) {
@@ -409,13 +402,14 @@ module.exports = function getVisitor(options = {}) {
                         dealSwanPageApi(key);
                     });
 
+                    // 如果有区别级别的 mpConfig 从 mpConfig 获取是否为组件
+                    const isComponent = mpConfig ? mpConfig.component : judgeComponent(properties);
                     // 处理swan page 生命周期：onLoad 、onReady 、onUnload、onShow 、onHide
                     // 收集 app.vue 周期：onLaunch 、 onShow 、 onHide
                     ['onLoad', 'onReady', 'onUnload', 'onLaunch', 'onShow', 'onHide'].forEach(key => {
                         let lifeItem = properties.find(item => item.key.name === key);
                         let lifeMapKey = isApp ? APP_PAOGE_LIFE_MAP_VUE[key] : PAGE_LIFE_MAP_VUE[key];
                         // 判断当前 vue sfc 是否是组件component
-                        const isComponent = judgeComponent(properties);
                         if (isComponent) {
                             return;
                         }

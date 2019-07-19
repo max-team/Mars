@@ -89,17 +89,13 @@ function parseConfig(blocks = []) {
     const configObjs = blocks.map(block => {
         let {content} = block;
         content = content.trim();
-        if (content) {
-            const fnStr = `return ${content};`;
-            try {
-                return (new Function(fnStr))();
-            }
-            catch (e) {
-                throw new Error(`config parse error: ${content}`);
-            }
+        const fnStr = `return ${content};`;
+        try {
+            return (new Function(fnStr))();
         }
-
-        return {};
+        catch (e) {
+            throw new Error(`config parse error: ${content}`);
+        }
     });
     return configObjs.length > 0
         ? merge.apply(null, configObjs)
