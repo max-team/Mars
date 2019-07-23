@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0-alpha.1](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.52...@marsjs/build@0.3.0-alpha.1) (2019-07-23)
+
+
+### Bug Fixes
+
+* class and style filters binding ([3d20370](https://github.com/max-team/Mars/commit/3d20370))
+
+
+### Features
+
+* fix update child props, fix ([4901ca4](https://github.com/max-team/Mars/commit/4901ca4))
+* 去除 VNode ([3137556](https://github.com/max-team/Mars/commit/3137556))
+
+
+
+
+
 ## [0.2.52](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.51...@marsjs/build@0.2.52) (2019-07-19)
 
 
