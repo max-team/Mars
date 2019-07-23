@@ -167,7 +167,8 @@ module.exports = function getVisitor(options = {}) {
         const {
             file,
             isApp,
-            mpConfig
+            mpConfig,
+            target
         } = options;
         return {
             visitor: {
@@ -204,8 +205,12 @@ module.exports = function getVisitor(options = {}) {
                             : isComponent ? 'component' : 'page';
 
                         if (mpType === 'app' || mpType === 'page') {
-                            const fnName = capitalize(mpType);
+                            let fnName = capitalize(mpType);
                             const createFnName = `create${fnName}`;
+                            // use Component create Page for right comp sequence
+                            if (target === 'wx' && mpType === 'page') {
+                                fnName = 'Component';
+                            }
                             exportPath.replaceWith(t.callExpression(
                                 t.identifier(fnName),
                                 [t.callExpression(

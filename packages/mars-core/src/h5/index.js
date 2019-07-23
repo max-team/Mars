@@ -4,4 +4,6 @@
  * @author zhangwentao
  */
 export {default as Vue} from 'vue';
-export const config = {};
+export const config = {
+    $platform: 'h5'
+};
