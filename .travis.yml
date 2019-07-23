@@ -17,14 +17,14 @@ jobs:
         on:
           branch: master
     - stage: release
-      if: branch = release
+      if: branch = release-0.3.x
       script: 
-        - git remote set-url origin https://${GITHUB_TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git
-        - git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'
-        - git fetch --all
-        - git checkout master
+        # - git remote set-url origin https://${GITHUB_TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git
+        # - git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'
+        # - git fetch --all
+        # - git checkout master
       # before_deploy:
-        - git stash
+        # - git stash
         - echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
       # deploy:
       #   provider: script
