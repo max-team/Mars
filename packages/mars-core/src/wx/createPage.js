@@ -14,6 +14,7 @@ import Vue from '../base/vue/index';
 import {state} from '../base/state';
 import {mark, measure} from '../helper/perf';
 import config from '../config';
+import {createVue, mountVue} from '../base/createPage';
 
 function makeCreatePage(pageMixin, {handleProxy, handleModel}, setData, callHook) {
     return function (options) {
@@ -32,51 +33,8 @@ function makeCreatePage(pageMixin, {handleProxy, handleModel}, setData, callHook
                         console.log('[debug: mp pageHooks] attached', this.__uid__);
                     }
 
-                    if (process.env.NODE_ENV !== 'production' && config.performance && mark) {
-                        const perfTagStart = `${this.route}-start`;
-                        // const perfTagEnd = `${this.route}-end`;
-                        mark(perfTagStart);
-                    }
-
-                    if (state.store && !options.store) {
-                        options.store = state.store;
-                    }
-                    options.mpType = 'page';
-
-                    const vm = new Vue(options);
-
-                    vm.__vms__ = {};
-                    this.$vue = vm;
-                    vm.$mp = {
-                        scope: this,
-                        query: args[0],
-                        options: args[0]
-                    };
-                    vm.$on('vm.updated', _ => {
-                        setData(vm, this, true);
-                    });
-                    vm.$on('vm.mounted', _ => {
-                        setData(vm, this, true);
-                    });
-
-                    if (process.env.NODE_ENV !== 'production' && config.performance && mark) {
-                        const perfTagStart = `${this.route}-start`;
-                        const perfTagEnd = `${this.route}-end`;
-                        mark(perfTagEnd);
-                        measure(`${this.route}:new`, perfTagStart, perfTagEnd);
-                    }
-
-                    if (process.env.NODE_ENV !== 'production' && config.performance && mark) {
-                        const perfTagStart = `${this.route}-start`;
-                        const perfTagEnd = `${this.route}-end`;
-                        mark(perfTagStart);
-                        vm.$mount();
-                        mark(perfTagEnd);
-                        measure(`${this.route}:mount`, perfTagStart, perfTagEnd);
-                    }
-                    else {
-                        vm.$mount();
-                    }
+                    const vm = createVue.call(this, options, args, {setData});
+                    mountVue.call(this, vm);
                 }
             },
             methods: {

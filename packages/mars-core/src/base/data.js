@@ -112,7 +112,7 @@ export function setData(vm, $mp, isRoot = false) {
         }
         else {
             const flushMpUpdatedCallbacks = getMpUpdatedCallbacks(vm);
-            // console.log('[perf setData]:', data);
+            console.log('[perf setData]:', data);
             $mp.setData(data, () => {
                 flushMpUpdatedCallbacks();
             });
@@ -245,19 +245,23 @@ function getChangedData(vm, _data, keyPath = '', ret = {}) {
     if (!ob) {
         return ret;
     }
-    const {__changedKeys__: changedKeys} = ob;
+    const {__changedKeys__: changedKeys, __isArray__: isArray} = ob;
     vm.__mpKeyPath = vm.__mpKeyPath || {};
 
     if (ob.__changed__ || ob.__changedKeys__) {
         vm.__mpKeyPath[ob.dep.id] = ob;
     }
-    if (ob.__changed__) {
+    // wx 通过下标更新数组有问题 暂时全部更新
+    if (
+        ob.__changed__
+        || (config.$platform === 'wx' && ob.__isArray__ && changedKeys)
+    ) {
         ret[keyPath] = _data;
     }
     else {
         Object.keys(_data).forEach(key => {
             const data = _data[key];
-            const path = (keyPath ? `${keyPath}.` : '') + key;
+            let path = (keyPath ? `${keyPath}.` : '') + key;
             if (changedKeys && changedKeys[key]) {
                 ret[path] = data;
             }

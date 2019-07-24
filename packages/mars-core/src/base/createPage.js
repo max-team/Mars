@@ -13,6 +13,58 @@ import {mark, measure} from '../helper/perf';
 import config from '../config';
 import {state} from './state';
 
+export function createVue(options, args, {setData}) {
+    if (process.env.NODE_ENV !== 'production' && config.performance && mark) {
+        const perfTagStart = `${this.route}-start`;
+        // const perfTagEnd = `${this.route}-end`;
+        mark(perfTagStart);
+    }
+
+    if (state.store && !options.store) {
+        options.store = state.store;
+    }
+    options.mpType = 'page';
+
+    const vm = new Vue(options);
+
+    vm.__vms__ = {};
+    this.$vue = vm;
+    vm.$mp = {
+        scope: this,
+        query: args[0],
+        options: args[0]
+    };
+    vm.$on('vm.updated', _ => {
+        setData(vm, this, true);
+    });
+    vm.$on('vm.mounted', _ => {
+        setData(vm, this, true);
+    });
+
+    if (process.env.NODE_ENV !== 'production' && config.performance && mark) {
+        const perfTagStart = `${this.route}-start`;
+        const perfTagEnd = `${this.route}-end`;
+        mark(perfTagEnd);
+        measure(`${this.route}:new`, perfTagStart, perfTagEnd);
+    }
+
+    return vm;
+}
+
+export function mountVue(vm) {
+    if (process.env.NODE_ENV !== 'production' && config.performance && mark) {
+        const perfTagStart = `${this.route}-start`;
+        const perfTagEnd = `${this.route}-end`;
+        mark(perfTagStart);
+        vm.$mount();
+        mark(perfTagEnd);
+        measure(`${this.route}:mount`, perfTagStart, perfTagEnd);
+    }
+    else {
+        vm.$mount();
+    }
+}
+
 export function makeCreatePage(pageMixin, {handleProxy, handleModel}, setData, callHook) {
     return function (options) {
         options.mixins = [pageMixin];
@@ -31,53 +83,10 @@ export function makeCreatePage(pageMixin, {handleProxy, handleModel}, setData, c
                     console.log('[debug: mp pageHooks] onLoad', this.__uid__);
                 }
 
-                if (process.env.NODE_ENV !== 'production' && config.performance && mark) {
-                    const perfTagStart = `${this.route}-start`;
-                    // const perfTagEnd = `${this.route}-end`;
-                    mark(perfTagStart);
-                }
-
-                if (state.store && !options.store) {
-                    options.store = state.store;
-                }
-                options.mpType = 'page';
-
-                const vm = new Vue(options);
-
-                vm.__vms__ = {};
-                this.$vue = vm;
-                vm.$mp = {
-                    scope: this,
-                    query: args[0],
-                    options: args[0]
-                };
-                vm.$on('vm.updated', _ => {
-                    setData(vm, this, true);
-                });
-                vm.$on('vm.mounted', _ => {
-                    setData(vm, this, true);
-                });
-
-                if (process.env.NODE_ENV !== 'production' && config.performance && mark) {
-                    const perfTagStart = `${this.route}-start`;
-                    const perfTagEnd = `${this.route}-end`;
-                    mark(perfTagEnd);
-                    measure(`${this.route}:new`, perfTagStart, perfTagEnd);
-                }
-
+                const vm = createVue.call(this, options, args, {setData});
                 // 先 callHook 保证数据可以初始化
                 const ret = callHook.call(this, this.$vue, 'page', 'onLoad', args);
-                if (process.env.NODE_ENV !== 'production' && config.performance && mark) {
-                    const perfTagStart = `${this.route}-start`;
-                    const perfTagEnd = `${this.route}-end`;
-                    mark(perfTagStart);
-                    vm.$mount();
-                    mark(perfTagEnd);
-                    measure(`${this.route}:mount`, perfTagStart, perfTagEnd);
-                }
-                else {
-                    vm.$mount();
-                }
+                mountVue.call(this, vm);
                 return ret;
             },
             onUnload(...args) {
