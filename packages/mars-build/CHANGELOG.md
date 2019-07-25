@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0-alpha.3](https://github.com/max-team/Mars/compare/@marsjs/build@0.3.0-alpha.2...@marsjs/build@0.3.0-alpha.3) (2019-07-25)
+
+
+### Bug Fixes
+
+* **build:** fix NavigationBar borderBottom with custom navigationStyle ([88e3e24](https://github.com/max-team/Mars/commit/88e3e24))
+
+
+### Features
+
+* **build & core:** support wx ([#148](https://github.com/max-team/Mars/issues/148)) ([5d084f1](https://github.com/max-team/Mars/commit/5d084f1))
+
+
+
+
+
 # [0.3.0-alpha.2](https://github.com/max-team/Mars/compare/@marsjs/build@0.3.0-alpha.1...@marsjs/build@0.3.0-alpha.2) (2019-07-23)
 
 **Note:** Version bump only for package @marsjs/build
