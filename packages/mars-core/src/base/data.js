@@ -112,7 +112,7 @@ export function setData(vm, $mp, isRoot = false) {
         }
         else {
             const flushMpUpdatedCallbacks = getMpUpdatedCallbacks(vm);
-            console.log('[perf setData]:', data);
+            // console.log('[perf setData]:', data);
             $mp.setData(data, () => {
                 flushMpUpdatedCallbacks();
             });
