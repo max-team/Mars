@@ -3,15 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [0.3.0-alpha.4](https://github.com/max-team/Mars/compare/@marsjs/build@0.3.0-alpha.3...@marsjs/build@0.3.0-alpha.4) (2019-07-25)
+
+## [0.3.0-alpha.4](https://github.com/max-team/Mars/compare/@marsjs/build@0.3.0-alpha.3...@marsjs/build@0.3.0-alpha.4) (2019-07-25)
 
 **Note:** Version bump only for package @marsjs/build
 
 
-
-
-
-# [0.3.0-alpha.3](https://github.com/max-team/Mars/compare/@marsjs/build@0.3.0-alpha.2...@marsjs/build@0.3.0-alpha.3) (2019-07-25)
+## [0.3.0-alpha.3](https://github.com/max-team/Mars/compare/@marsjs/build@0.3.0-alpha.2...@marsjs/build@0.3.0-alpha.3) (2019-07-25)
 
 
 ### Bug Fixes
@@ -25,13 +23,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
-# [0.3.0-alpha.2](https://github.com/max-team/Mars/compare/@marsjs/build@0.3.0-alpha.1...@marsjs/build@0.3.0-alpha.2) (2019-07-23)
+## [0.3.0-alpha.2](https://github.com/max-team/Mars/compare/@marsjs/build@0.3.0-alpha.1...@marsjs/build@0.3.0-alpha.2) (2019-07-23)
 
 **Note:** Version bump only for package @marsjs/build
 
 
 
-# [0.3.0-alpha.1](https://github.com/max-team/Mars/compare/@marsjs/build@0.3.0-alpha.0...@marsjs/build@0.3.0-alpha.1) (2019-07-23)
+## [0.3.0-alpha.1](https://github.com/max-team/Mars/compare/@marsjs/build@0.3.0-alpha.0...@marsjs/build@0.3.0-alpha.1) (2019-07-23)
 
 
 ### Features
@@ -41,7 +39,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
-# [0.3.0-alpha.0](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.51...@marsjs/build@0.3.0-alpha.1) (2019-07-23)
+## [0.3.0-alpha.0](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.51...@marsjs/build@0.3.0-alpha.1) (2019-07-11)
 
 
 * fix update child props, fix ([4901ca4](https://github.com/max-team/Mars/commit/4901ca4))

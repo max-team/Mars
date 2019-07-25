@@ -4,7 +4,6 @@
   "private": true,
   "scripts": {
     "version": "lerna version prerelease --conventional-commits",
-    "version:main": "npm run version -- --ignore-changes 'packages/!(mars-core|mars-build)/**'",
     "publish": "lerna publish from-git --dist-tag alpha --registry https://registry.npmjs.org",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs && cp docs/.vuepress/index.html docs/.vuepress/dist",

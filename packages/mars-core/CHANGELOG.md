@@ -3,16 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [0.3.0-alpha.4](https://github.com/max-team/Mars/compare/@marsjs/core@0.3.0-alpha.3...@marsjs/core@0.3.0-alpha.4) (2019-07-25)
+
+## [0.3.0-alpha.4](https://github.com/max-team/Mars/compare/@marsjs/core@0.3.0-alpha.3...@marsjs/core@0.3.0-alpha.4) (2019-07-25)
 
 **Note:** Version bump only for package @marsjs/core
 
 
 
-
-
-# [0.3.0-alpha.3](https://github.com/max-team/Mars/compare/@marsjs/core@0.3.0-alpha.2...@marsjs/core@0.3.0-alpha.3) (2019-07-25)
-
+## [0.3.0-alpha.3](https://github.com/max-team/Mars/compare/@marsjs/core@0.3.0-alpha.2...@marsjs/core@0.3.0-alpha.3) (2019-07-25)
 
 ### Features
 
@@ -22,13 +20,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
-# [0.3.0-alpha.2](https://github.com/max-team/Mars/compare/@marsjs/core@0.3.0-alpha.1...@marsjs/core@0.3.0-alpha.2) (2019-07-23)
+## [0.3.0-alpha.2](https://github.com/max-team/Mars/compare/@marsjs/core@0.3.0-alpha.1...@marsjs/core@0.3.0-alpha.2) (2019-07-23)
 
 **Note:** Version bump only for package @marsjs/core
 
 
 
-# [0.3.0-alpha.1](https://github.com/max-team/Mars/compare/@marsjs/core@0.3.0-alpha.0...@marsjs/core@0.3.0-alpha.1) (2019-07-23)
+## [0.3.0-alpha.1](https://github.com/max-team/Mars/compare/@marsjs/core@0.3.0-alpha.0...@marsjs/core@0.3.0-alpha.1) (2019-07-23)
 
 ### Features
 
@@ -38,7 +36,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
-# [0.3.0-alpha.0](https://github.com/max-team/Mars/compare/@marsjs/core@0.2.15...@marsjs/core@0.3.0-alpha.1) (2019-07-23)
+## [0.3.0-alpha.0](https://github.com/max-team/Mars/compare/@marsjs/core@0.2.15...@marsjs/core@0.3.0-alpha.1) (2019-07-11)
 
 ### Features
 
@@ -55,8 +53,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Bug Fixes
 
 * **core:** fix 切换组件 __inited__ 时 computed 数据错误 ([#133](https://github.com/max-team/Mars/issues/133)) ([803bac8](https://github.com/max-team/Mars/commit/803bac8))
-
-
 
 
 
