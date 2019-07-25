@@ -17,39 +17,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
-
-
 # [0.3.0-alpha.2](https://github.com/max-team/Mars/compare/@marsjs/build@0.3.0-alpha.1...@marsjs/build@0.3.0-alpha.2) (2019-07-23)
 
 **Note:** Version bump only for package @marsjs/build
 
 
 
-
-
-# [0.3.0-alpha.1](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.52...@marsjs/build@0.3.0-alpha.1) (2019-07-23)
-
-
-### Bug Fixes
-
-* class and style filters binding ([3d20370](https://github.com/max-team/Mars/commit/3d20370))
-
-
-### Features
-
-* fix update child props, fix ([4901ca4](https://github.com/max-team/Mars/commit/4901ca4))
-* 去除 VNode ([3137556](https://github.com/max-team/Mars/commit/3137556))
-
-
-
-
-
-## [0.2.52](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.51...@marsjs/build@0.2.52) (2019-07-19)
-
-
-### Bug Fixes
-
-* **build:** fix block config in component ([67515f0](https://github.com/max-team/Mars/commit/67515f0))
+# [0.3.0-alpha.1](https://github.com/max-team/Mars/compare/@marsjs/build@0.3.0-alpha.0...@marsjs/build@0.3.0-alpha.1) (2019-07-23)
 
 
 ### Features
@@ -59,6 +33,12 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
+# [0.3.0-alpha.0](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.51...@marsjs/build@0.3.0-alpha.1) (2019-07-23)
+
+
+* fix update child props, fix ([4901ca4](https://github.com/max-team/Mars/commit/4901ca4))
+* 去除 VNode ([3137556](https://github.com/max-team/Mars/commit/3137556))
+
 
 
 ## [0.2.51](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.50...@marsjs/build@0.2.51) (2019-07-11)
@@ -66,23 +46,19 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 **Note:** Version bump only for package @marsjs/build
 
 
-
-
-
 ## [0.2.50](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.49...@marsjs/build@0.2.50) (2019-07-04)
 
-**Note:** Version bump only for package @marsjs/build
 
+### Bug Fixes
 
-
+* **build:** 支持用 use-trackby 开启 v-for 的 key 编译为 swan 的 trackBy (#128)
 
 
 ## [0.2.49](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.48...@marsjs/build@0.2.49) (2019-07-04)
 
-**Note:** Version bump only for package @marsjs/build
+### Revert
 
-
-
+* **build:** swan 中将 v-for 上的 key 编译为 trackBy ([#124](https://github.com/max-team/Mars/issues/124)) ([30febdf](https://github.com/max-team/Mars/commit/30febdf))
 
 
 ## [0.2.48](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.47...@marsjs/build@0.2.48) (2019-07-03)

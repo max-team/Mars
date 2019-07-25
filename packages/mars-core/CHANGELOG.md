@@ -14,36 +14,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
-
 # [0.3.0-alpha.2](https://github.com/max-team/Mars/compare/@marsjs/core@0.3.0-alpha.1...@marsjs/core@0.3.0-alpha.2) (2019-07-23)
 
 **Note:** Version bump only for package @marsjs/core
 
 
 
-
-
-# [0.3.0-alpha.1](https://github.com/max-team/Mars/compare/@marsjs/core@0.2.16...@marsjs/core@0.3.0-alpha.1) (2019-07-23)
-
-
-### Bug Fixes
-
-* class and style filters binding ([3d20370](https://github.com/max-team/Mars/commit/3d20370))
-
-
-### Features
-
-* **core:** add debug and fix events before Vue instance created ([e9881c5](https://github.com/max-team/Mars/commit/e9881c5))
-* **core:** 删除 Vue 中用不到的 render-helpers ([1fa5515](https://github.com/max-team/Mars/commit/1fa5515))
-* fix update child props, fix ([4901ca4](https://github.com/max-team/Mars/commit/4901ca4))
-* 去除 VNode ([3137556](https://github.com/max-team/Mars/commit/3137556))
-
-
-
-
-
-## [0.2.16](https://github.com/max-team/Mars/compare/@marsjs/core@0.2.15...@marsjs/core@0.2.16) (2019-07-19)
-
+# [0.3.0-alpha.1](https://github.com/max-team/Mars/compare/@marsjs/core@0.3.0-alpha.0...@marsjs/core@0.3.0-alpha.1) (2019-07-23)
 
 ### Features
 
@@ -51,6 +28,16 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 * **core:** export config ([94b1173](https://github.com/max-team/Mars/commit/94b1173))
 
 
+
+
+# [0.3.0-alpha.0](https://github.com/max-team/Mars/compare/@marsjs/core@0.2.15...@marsjs/core@0.3.0-alpha.1) (2019-07-23)
+
+### Features
+
+* **core:** add debug and fix events before Vue instance created ([e9881c5](https://github.com/max-team/Mars/commit/e9881c5))
+* **core:** 删除 Vue 中用不到的 render-helpers ([1fa5515](https://github.com/max-team/Mars/commit/1fa5515))
+* fix update child props, fix ([4901ca4](https://github.com/max-team/Mars/commit/4901ca4))
+* 去除 VNode ([3137556](https://github.com/max-team/Mars/commit/3137556))
 
 
 
@@ -75,12 +62,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
-
 ## [0.2.13](https://github.com/max-team/Mars/compare/@marsjs/core@0.2.12...@marsjs/core@0.2.13) (2019-06-20)
 
 **Note:** Version bump only for package @marsjs/core
-
-
 
 
 
