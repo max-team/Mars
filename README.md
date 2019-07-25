@@ -51,8 +51,8 @@ mars build [--target, -t swan (default) | wx | h5]
 
 | package | version | CHANGELOG |
 |-|-|-|
-| @marsjs/core | [![](https://img.shields.io/npm/v/@marsjs/core.svg)](https://www.npmjs.com/package/@marsjs/core/alpha) | [CHANGELOG](./packages/mars-core/CHANGELOG.md) |
-| @marsjs/build | [![](https://img.shields.io/npm/v/@marsjs/build.svg)](https://www.npmjs.com/package/@marsjs/build/alpha) | [CHANGELOG](./packages/mars-build/CHANGELOG.md) |
+| @marsjs/core | [![](https://img.shields.io/npm/v/@marsjs/core/alpha.svg)](https://www.npmjs.com/package/@marsjs/core) | [CHANGELOG](./packages/mars-core/CHANGELOG.md) |
+| @marsjs/build | [![](https://img.shields.io/npm/v/@marsjs/build/alpha.svg)](https://www.npmjs.com/package/@marsjs/build) | [CHANGELOG](./packages/mars-build/CHANGELOG.md) |
 | @marsjs/cli | [![](https://img.shields.io/npm/v/@marsjs/cli.svg)](https://www.npmjs.com/package/@marsjs/cli) | [CHANGELOG](https://max-team.github.io/Mars/CHANGELOGS/cli.html) |
 | @marsjs/cli-template | [![](https://img.shields.io/npm/v/@marsjs/cli-template.svg)](https://www.npmjs.com/package/@marsjs/cli-template) | [CHANGELOG](https://max-team.github.io/Mars/CHANGELOGS/cli-template.html) |
 | @marsjs/api | [![](https://img.shields.io/npm/v/@marsjs/api.svg)](https://www.npmjs.com/package/@marsjs/api) | [CHANGELOG](https://max-team.github.io/Mars/CHANGELOGS/api.html) |
