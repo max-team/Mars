@@ -707,25 +707,45 @@ methodsToPatch.forEach(function (method) {
   // cache original method
   var original = arrayProto[method];
   def(arrayMethods, method, function mutator () {
-    var args = [], len = arguments.length;
-    while ( len-- ) args[ len ] = arguments[ len ];
+    var args = [], len$1 = arguments.length;
+    while ( len$1-- ) args[ len$1 ] = arguments[ len$1 ];
 
     var result = original.apply(this, args);
     var ob = this.__ob__;
     var inserted;
+    var obChanged = true;
+    var hasChanged = ob.__changed__;
+    ob.__changedKeys__ = ob.__changedKeys__ ? ob.__changedKeys__ : {};
     switch (method) {
       case 'push':
+        inserted = args;
+        if (!hasChanged) {
+          obChanged = false;
+          var len = inserted.length;
+          var startPos = this.length - len;
+          for (var i = 0; i < len; i++) {
+            ob.__changedKeys__[startPos + i] = true;
+          }
+        }
+        break
       case 'unshift':
         inserted = args;
         break
       case 'splice':
         inserted = args.slice(2);
+        if (!hasChanged && inserted.length === 1 && args[1] === 1) {
+          obChanged = false;
+          ob.__changedKeys__[args[0]] = true;
+        }
         break
     }
     if (inserted) { ob.observeArray(inserted); }
     // notify change
     ob.dep.notify();
-    ob.__changed__ = true;
+    if (obChanged) {
+      ob.__changed__ = true;
+      delete ob.__changedKeys__;
+    }
     return result
   });
 });
@@ -762,6 +782,7 @@ var Observer = function Observer (value) {
       copyAugment(value, arrayMethods, arrayKeys);
     }
     this.observeArray(value);
+    this.__isArray__ = true;
   } else {
     this.walk(value);
   }

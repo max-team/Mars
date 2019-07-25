@@ -17,18 +17,18 @@ const path = require('path');
 const modules = {
     '@marsjs/core': {
         needCompile: false,
-        path: './mars-core'
+        path: './mars-core/index'
     },
     'vuex': {
         needCompile: true,
-        path: './mars_modules/vuex'
+        path: './mars_modules/vuex/index'
     }
 };
 
 const H5Modules = {
     '@marsjs/core': {
         needCompile: false,
-        path: './mars-core'
+        path: './mars-core/index'
     }
 };
 
@@ -54,7 +54,8 @@ function compile(val, key, destPath) {
     let modulePath;
     if (val === modules[key].path) {
         // 直接写的包名，为了能引用到，生成为 index.js
-        modulePath = val + '/index.js';
+        modulePath = val + '.js';
+        // modulePath = val + '/index.js';
     }
     else {
         modulePath = './mars_modules' + entry.slice(entry.lastIndexOf('node_modules')).replace('node_modules', '');
