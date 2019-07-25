@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0-alpha.4](https://github.com/max-team/Mars/compare/@marsjs/core@0.3.0-alpha.3...@marsjs/core@0.3.0-alpha.4) (2019-07-25)
+
+**Note:** Version bump only for package @marsjs/core
+
+
+
+
+
 # [0.3.0-alpha.3](https://github.com/max-team/Mars/compare/@marsjs/core@0.3.0-alpha.2...@marsjs/core@0.3.0-alpha.3) (2019-07-25)
 
 
