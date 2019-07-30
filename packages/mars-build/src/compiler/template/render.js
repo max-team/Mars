@@ -195,7 +195,7 @@ function genData(el, state) {
 
     // TODO: better genProps, omit static attrs
     // attributes
-    if (attrs.length > 0) {
+    if (attrs.length > 0 || el.ref) {
         const props = genProps(attrs, state, el);
         data += el.isComp ? `[_pp(${props})],` : `[${props}],`;
     }
@@ -385,6 +385,10 @@ function genProps(props, state, el) {
 
     if (fData.length) {
         res += `_p:${state.processFilterData(fData, 'p', el)},`;
+    }
+
+    if (el.ref) {
+        res += `'ref': ${el.ref},`;
     }
     return res.slice(0, -1) + '}';
 }

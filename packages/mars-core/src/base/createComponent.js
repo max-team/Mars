@@ -76,6 +76,7 @@ export function makeCreateComponent(handleProxy, handleModel, setData, callHook)
         let props = normalizeProps(options.props);
         props = Object.assign(props, {
             compId: String,
+            ref: String,
             rootComputed: Object,
             rootUID: Number
         });
