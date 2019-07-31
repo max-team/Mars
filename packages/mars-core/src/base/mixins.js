@@ -4,7 +4,7 @@
  */
 
 import {getPageInstance} from '../helper/instance';
-import {setObjectData} from '../helper/util';
+import {setObjectData, remove} from '../helper/util';
 import config from '../config';
 
 export function makePageMixin($api) {
@@ -33,7 +33,8 @@ export function makeGetCompMixin($api) {
     return function getCompMixin(options) {
         return {
             props: {
-                compId: String
+                compId: String,
+                ref: String
             },
             beforeCreate() {
                 this.$api = $api;
@@ -54,6 +55,20 @@ export function makeGetCompMixin($api) {
 
                 // 此时还没有 .$mp
                 this.$options.mpInstance.__curSwan__ = curIndex;
+
+                registerRef(this, this.ref);
+            },
+            destroyed() {
+                registerRef(this, this.ref, true);
+            },
+            watch: {
+                ref(newVal, val) {
+                    if (val !== newVal) {
+                        registerRef(this, val, true);
+                        registerRef(this, newVal);
+                        return;
+                    }
+                }
             },
             updated() {
                 this.$emit('vm.updated');
@@ -141,4 +156,35 @@ export function handleModel(event) {
     }
 
 
+}
+
+function registerRef(vm, key, isRemoval) {
+    if (!key) {
+        return;
+    }
+
+    const refs = vm.$parent.$refs;
+    const ref = vm;
+
+    if (isRemoval) {
+        if (Array.isArray(refs[key])) {
+            remove(refs[key], ref);
+        }
+        else if (refs[key] === ref) {
+            refs[key] = undefined;
+        }
+    }
+    else {
+        if (vm.compId && vm.compId.split(',').pop().indexOf('-') !== -1) {
+            if (!Array.isArray(refs[key])) {
+                refs[key] = [ref];
+            }
+            else if (refs[key].indexOf(ref) < 0) {
+                refs[key].push(ref);
+            }
+        }
+        else {
+            refs[key] = ref;
+        }
+    }
 }
