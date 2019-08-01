@@ -104,7 +104,7 @@ var isBuiltInTag = makeMap('slot,component', true);
 /**
  * Check if an attribute is a reserved attribute.
  */
-var isReservedAttribute = makeMap('key,ref,slot,slot-scope,is');
+var isReservedAttribute = makeMap('key,slot,slot-scope,is');
 
 /**
  * Remove an item from an array.
