@@ -42,9 +42,9 @@ const modalBoxStyle = {
 
 const modalTitleStyle = {
     fontSize: '24px',
-    color: '#000',
+    color: '#555',
     width: '100%',
-    padding: '10px 10px 6px',
+    padding: '20px 10px 10px',
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
     overflow: 'hidden',
@@ -57,7 +57,7 @@ const modalContentStyle = {
     lineHeight: '20px',
     color: '#999',
     width: '100%',
-    padding: '0 10px 30px',
+    padding: '0 16px 30px',
     textAlign: 'center',
     boxSizing: 'border-box'
 };
@@ -177,13 +177,13 @@ function create(option) {
         callback(complete, resInfo);
         return Promise.resolve(resInfo);
     };
-    marsCancelBtn.onclick = () => {
+    marsCancelBtn && (marsCancelBtn.onclick = () => {
         resInfo.cancel = true;
         remove();
         callback(success, resInfo);
         callback(complete, resInfo);
         return Promise.resolve(resInfo);
-    };
+    });
 
 }
 
