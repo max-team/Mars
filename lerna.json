@@ -4,7 +4,7 @@
   ],
   "command": {
     "publish": {
-      "ignoreChanges": ["__test__/**", "*.md"],
+      "ignoreChanges": ["__test__/**", "**/*.md"],
       "message": "chore: publish"
     }
   },

@@ -38,21 +38,23 @@ mars build [--target, -t swan (default) | wx | h5]
 |-|-|-|
 | 装馨家 | ![](./docs/assets/qr-jiazhuang.png) | [![](./docs/assets/qr-jiazhuang-h5.png)](https://jia.baidu.com/m#/pages/home/index) |
 | 健康养生说 | ![](./docs/assets/qr-yangsheng.png) | [![](./docs/assets/qr-yangsheng-h5.png)](https://sp0.baidu.com/5LMDcjW6BwF3otqbppnN2DJv/health.pae.baidu.com/medauth/healthpage/#/pages/list/index) |
+| 百股精 |  | [![](./docs/assets/qr-baigujing-h5.png)](http://finance.pae.baidu.com/selfselect/#/pages/index/index) |
+
 
 ### 小程序案例
 
-| 百度百聘 | AI 画报大师 | AI 福利图 | 百度作业模式 |
-|-|-|-|-|
-| ![](./docs/assets/qr-baipin.png) | ![](./docs/assets/qr-huabao.png) | ![](./docs/assets/qr-fuli.png) | ![](./docs/assets/qr-zuoye.png) |
+| 百度百聘 | 百拍智能构图 | 百看君 | 百度作业模式 | 爱眼日 |
+|-|-|-|-|-|
+| ![](./docs/assets/qr-baipin.png) | ![](./docs/assets/qr-huabao.png) | ![](./docs/assets/qr-fuli.png) | ![](./docs/assets/qr-zuoye.png) | ![](./docs/assets/qr-aiyan.png) |
 
 ## Packages & CHANGELOGs
 
 | package | version | CHANGELOG |
 |-|-|-|
-| @marsjs/cli | [![](https://img.shields.io/npm/v/@marsjs/cli.svg)](https://www.npmjs.com/package/@marsjs/cli) | [CHANGELOG](https://max-team.github.io/Mars/CHANGELOGS/cli.html) |
-| @marsjs/cli-template | [![](https://img.shields.io/npm/v/@marsjs/cli-template.svg)](https://www.npmjs.com/package/@marsjs/cli-template) | [CHANGELOG](https://max-team.github.io/Mars/CHANGELOGS/cli-template.html) |
 | @marsjs/core | [![](https://img.shields.io/npm/v/@marsjs/core.svg)](https://www.npmjs.com/package/@marsjs/core) | [CHANGELOG](https://max-team.github.io/Mars/CHANGELOGS/core.html) |
 | @marsjs/build | [![](https://img.shields.io/npm/v/@marsjs/build.svg)](https://www.npmjs.com/package/@marsjs/build) | [CHANGELOG](https://max-team.github.io/Mars/CHANGELOGS/build.html) |
+| @marsjs/cli | [![](https://img.shields.io/npm/v/@marsjs/cli.svg)](https://www.npmjs.com/package/@marsjs/cli) | [CHANGELOG](https://max-team.github.io/Mars/CHANGELOGS/cli.html) |
+| @marsjs/cli-template | [![](https://img.shields.io/npm/v/@marsjs/cli-template.svg)](https://www.npmjs.com/package/@marsjs/cli-template) | [CHANGELOG](https://max-team.github.io/Mars/CHANGELOGS/cli-template.html) |
 | @marsjs/api | [![](https://img.shields.io/npm/v/@marsjs/api.svg)](https://www.npmjs.com/package/@marsjs/api) | [CHANGELOG](https://max-team.github.io/Mars/CHANGELOGS/api.html) |
 | @marsjs/components | [![](https://img.shields.io/npm/v/@marsjs/components.svg)](https://www.npmjs.com/package/@marsjs/components) | |
 

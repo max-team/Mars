@@ -101,7 +101,7 @@ const getPropertyVisitor = (t, options) => {
                             const bindNode = bindPath.node;
 
                             if (t.isImportDeclaration(bindParentNode)) {
-                                const bindVaule = bindParentNode.source.value + '.vue';
+                                const bindVaule = bindParentNode.source.value.replace(/\.vue$/, '') + '.vue';
                                 components[keyName] = bindVaule;
                                 bindParentNode.source = t.stringLiteral(bindVaule);
                             }
@@ -112,7 +112,7 @@ const getPropertyVisitor = (t, options) => {
                                 && bindNode.init.callee.name === 'require'
                                 && t.isStringLiteral(bindNode.init.arguments[0])
                             ) {
-                                const bindVaule = bindNode.init.arguments[0].value + '.vue';
+                                const bindVaule = bindNode.init.arguments[0].value.replace(/\.vue$/, '') + '.vue';
                                 components[keyName] = bindVaule;
                                 bindNode.init.arguments[0] = t.stringLiteral(bindVaule);
                             }

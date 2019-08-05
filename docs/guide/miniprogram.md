@@ -28,6 +28,37 @@ App 是小程序的入口文件，约定其文件名为 `app.vue`。可以在 Ap
 
 Mars 中 App、Page、Component 的相关配置，需要配置到 Vue 文件 script 部分导出对象的 `config` 字段中。
 
+
+::: warning
+`build@0.2.52` 起支持用单独的 `<script type="config"></script>` 区块配置 `config`，且支持区块级条件编译，即：
+
+```html
+<script type="config" target="h5">
+{
+   config: {
+        pages: [
+            'pages/home/index'
+        ]
+    }
+}
+</script>
+
+<script type="config">
+{
+   config: {
+        pages: [
+            'pages/home/index',
+            'pages/example/index'
+        ]
+    }
+}
+</script>
+```
+
+详见 [[FEATURE]优化 SFC config 配置条件编译能力](https://github.com/max-team/Mars/issues/35)
+:::
+
+
 App 示例代码: `app.vue`
 
 ```html
@@ -101,6 +132,40 @@ export default {
 <style lang="less">
 </style>
 ```
+
+::: warning
+`build@0.2.52` 起支持定义组件时使用 PascalCase 并支持 ES6 对象属性简写，在模板里需要用对应的 kebab-case 引用，即：
+
+```html
+<template>
+    <my-hello :helloText="helloText">
+        <text>Mars!</text>
+    </my-hello>
+</template>
+
+<script type="config">
+{
+    config: {
+        navigationBarTitleText: 'Examples'
+    }
+}
+</script>
+
+<script>
+import MyHello from '../../components/Hello/Hello.vue';
+
+export default {
+    components: {
+        MyHello
+    }
+};
+</script>
+<style lang="less">
+</style>
+```
+
+:::
+
 
 ## Component
 
