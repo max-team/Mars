@@ -5,12 +5,13 @@
 const chalk = require('chalk');
 
 function print(args, level, labelColor) {
-    const [label, info = ''] = args;
+    const [label, info = '', ...rest] = args;
+    const target = process.env.MARS_ENV_TARGET;
     if (info instanceof Error) {
-        console[level](labelColor(label), labelColor(info.stack));
+        console[level](chalk.yellow(`[${target}]`), labelColor(label), labelColor(info.stack));
     }
     else {
-        console[level](labelColor(label), info);
+        console[level](chalk.yellow(`[${target}]`), labelColor(label), [info].concat(rest || []).join(''));
     }
 }
 

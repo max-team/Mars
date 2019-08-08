@@ -27,6 +27,9 @@ function changeExt(filePath, ext) {
 }
 
 function getModuleName(mod) {
+    if (mod[0] === '.') {
+        return null;
+    }
     let [name, temp] = mod.split('/');
     if (name[0] === '@') {
         name = `${name}/${temp}`;

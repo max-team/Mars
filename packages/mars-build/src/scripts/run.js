@@ -15,6 +15,7 @@ const {
 
 // const getDefaultConf = require('./defaultConfig');
 const getConfig = require('./getConfig');
+const log = require('../helper/log');
 
 /**
  * getBuildTasks
@@ -45,7 +46,7 @@ function clean(options = {}) {
     const config = getConfig(options);
     gulp.task('clean', getTaskClean(config, options));
 
-    console.log('[start task] clean');
+    log.info('[start task]', 'clean');
     return gulp.start('clean');
 }
 
@@ -59,7 +60,7 @@ function build(options = {}) {
     const config = getConfig(options);
     const buildTasks = getBuildTasks(config, options);
     gulp.task('build', buildTasks);
-    console.log('[start task] build');
+    log.info('[start task]', 'build');
     return gulp.start('build');
 }
 
@@ -69,7 +70,7 @@ function watch(options = {}) {
     gulp.task('build', buildTasks);
     gulp.task('watch', ['build'], getTaskWatch(config, options));
 
-    console.log('[start task] watch');
+    log.info('[start task]', 'watch');
     return gulp.start('watch');
 }
 

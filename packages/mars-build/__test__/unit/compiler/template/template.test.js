@@ -48,7 +48,7 @@ describe('[swan]template basic', () => {
             code: '<view><slot name="aaa" var-slotProps="{{ {bbb: bbb,ccc: ccc} }}"></slot><slot></slot></view>',
             render: '({ render: function() { var _vm=this;var _h=_vm.$createElement;'
                 + 'var _c=_vm._self._c||_h;return _c(\'view\',[_vm._t("aaa",null,'
-                + '{bbb:_vm.bbb,ccc:_vm.ccc}),_vm._t("default")],2) }, staticRenderFns: [] })'
+                + '{"bbb":_vm.bbb,"ccc":_vm.ccc}),_vm._t("default")],2) }, staticRenderFns: [] })'
         };
 
         expect(code).toBe(expectRet.code);
