@@ -14,7 +14,7 @@ const {getModuleName} = require('../../helper/path');
 const transformPlugin = require('./babel-plugin-script');
 const postTransformPlugin = require('./babel-plugin-script-post');
 const compileModules = require('../file/compileModules');
-const modules = compileModules.modules;
+const {resolveComponentsPath, getUIModules, modules} = compileModules;
 
 /**
  * compile script
@@ -53,33 +53,7 @@ async function compile(source, options) {
             })
         ]
     });
-    // 处理完再进行minify，发现minify和定制的插件会有坑
     let code = scriptRet.code;
-    let usedModules = {};
-    const minifyScriptRet = transformSync(code, {
-        plugins: [
-            [
-                path.resolve(__dirname, '../file/babel-plugin-relative-import.js'),
-                {
-                    filePath: options.path,
-                    cwd: path.resolve(process.cwd(), dest.path),
-                    modules,
-                    usedModules
-                }
-            ],
-            'minify-guarded-expressions',
-            'minify-dead-code-elimination'
-        ]
-    });
-
-    const destPath = path.resolve(dest.path);
-    const usedModuleKeys = Object.keys(usedModules);
-    for (let i = 0; i < usedModuleKeys.length; i++) {
-        const item = usedModuleKeys[i];
-        await compileModules.compile(item, usedModules[item], destPath);
-    }
-
-    code = minifyScriptRet.code;
     const {
         config = {},
         components = {},
@@ -88,22 +62,38 @@ async function compile(source, options) {
     } = ret;
 
     const uiModules = getUIModules(components, target);
-    let resolvedPaths = {};
-    code = transformSync(code, {
+    // 处理完再进行minify，发现minify和定制的插件会有坑
+    const destPath = path.resolve(dest.path);
+    const rPath = path.relative(path.dirname(options.path), destPath);
+    let usedModules = {};
+    const minifyScriptRet = transformSync(code, {
         plugins: [
             [
                 path.resolve(__dirname, '../file/babel-plugin-relative-import.js'),
                 {
-                    filePath: options.path,
-                    cwd: path.resolve(process.cwd(), dest.path),
-                    modules: uiModules,
-                    resolvedPaths
+                    rPath,
+                    modules: Object.assign({}, modules, uiModules),
+                    usedModules,
+                    compileNPM: process.env.MARS_ENV_TARGET === 'wx'
                 }
-            ]
+            ],
+            'minify-guarded-expressions',
+            'minify-dead-code-elimination'
         ]
-    }).code;
+    });
+    code = minifyScriptRet.code;
 
-    resolveComponentsPath(components, resolvedPaths);
+    const usedModuleKeys = Object.keys(usedModules);
+    for (let i = 0; i < usedModuleKeys.length; i++) {
+        const key = usedModuleKeys[i];
+        const info = usedModules[key];
+        const {modName, path} = info;
+        if (!uiModules[modName]) {
+            await compileModules.compile(key, path, destPath);
+        }
+    }
+
+    resolveComponentsPath(components, usedModules);
     await compileModules.compileUIModules(uiModules, destPath);
 
     return {code, config, components, computedKeys, moduleType};
@@ -128,33 +118,7 @@ async function postCompile(source, options) {
     return {code: scriptRet.code};
 }
 
-function resolveComponentsPath(components, resolvedPaths) {
-    Object.keys(components).forEach(key => {
-        const name = components[key];
-        components[key] = resolvedPaths[name] || name;
-    });
-}
-
-function getUIModules(components, target) {
-    const modules = {};
-    Object.keys(components).forEach(key => {
-        const mod = components[key];
-        if (mod[0] !== '.') {
-            const name = getModuleName(mod);
-            const path = `mars_modules/${name}/dist/${target}`;
-            const realName = `${name}/dist/${target}`;
-            modules[name] = {
-                path,
-                realName
-            };
-        }
-    });
-    return modules;
-}
-
 module.exports = {
     compile,
-    postCompile,
-    getUIModules,
-    resolveComponentsPath
+    postCompile
 };
