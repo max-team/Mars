@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.54](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.53...@marsjs/build@0.2.54) (2019-08-08)
+
+
+### Features
+
+* **build:** support use npm in wx ([9564c89](https://github.com/max-team/Mars/commit/9564c89))
+
+
+
+
+
 ## [0.2.53](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.52...@marsjs/build@0.2.53) (2019-08-05)
 
 
