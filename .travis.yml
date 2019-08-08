@@ -17,7 +17,7 @@ jobs:
         on:
           branch: master
     - stage: release
-      if: branch = release OR (branch = master AND tag =~ ^v)
+      if: branch = release OR (branch =~ ^v AND tag =~ ^v)
       script: 
         - git remote set-url origin https://${GITHUB_TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git
         - git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'
