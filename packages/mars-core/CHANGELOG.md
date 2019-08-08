@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.17](https://github.com/max-team/Mars/compare/@marsjs/core@0.2.16...@marsjs/core@0.2.17) (2019-08-08)
+
+
+### Features
+
+* **core:** export Vue and config in wx ([87662a3](https://github.com/max-team/Mars/commit/87662a3))
+
+
+
+
+
 ## [0.2.16](https://github.com/max-team/Mars/compare/@marsjs/core@0.2.15...@marsjs/core@0.2.16) (2019-07-19)
 
 
