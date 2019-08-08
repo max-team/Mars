@@ -17,10 +17,11 @@ jobs:
         on:
           branch: master
     - stage: release
-      if: branch = release
+      if: branch = release OR (branch = master AND commit_message =~ /^[release]:/)
       script: 
         - git remote set-url origin https://${GITHUB_TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git
         - git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'
+        - git config user.email deploy@travis-ci.org
         - git fetch --all
         - git checkout master
       # before_deploy:
