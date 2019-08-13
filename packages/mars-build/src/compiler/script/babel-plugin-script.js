@@ -140,7 +140,7 @@ const getPropertyVisitor = (t, options) => {
 
 function transfromSFCExport(t, declarationPath, options) {
     if (!t.isObjectExpression(declarationPath)) {
-        throw declarationPath.buildCodeFrameError('should export plain object in SFC');
+        throw declarationPath.buildCodeFrameError('should export plain object or Vue.extend() in SFC');
     }
 
     declarationPath.traverse(getPropertyVisitor(t, options));
@@ -173,6 +173,14 @@ module.exports = function getVisitor(options = {}) {
             visitor: {
                 ExportDefaultDeclaration(path, state) {
                     declarationPath = path.get('declaration');
+
+                    // 只取 Vue.extend() 的参数部分
+                    if (t.isCallExpression(declarationPath)) {
+                        const objectExpression = declarationPath.get('arguments')[0];
+                        path.set('declaration', objectExpression);
+                        declarationPath = objectExpression;
+                    }
+
                     transfromSFCExport(t, declarationPath, options);
                     exportPath = path;
                     file.moduleType = 'esm';
