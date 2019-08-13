@@ -177,8 +177,7 @@ module.exports = function getVisitor(options = {}) {
                     // 只取 Vue.extend() 的参数部分
                     if (t.isCallExpression(declarationPath)) {
                         const objectExpression = declarationPath.get('arguments')[0];
-                        path.set('declaration', objectExpression);
-                        declarationPath = objectExpression;
+                        declarationPath.replaceWith(objectExpression);
                     }
 
                     transfromSFCExport(t, declarationPath, options);
