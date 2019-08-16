@@ -1,6 +1,13 @@
+import {
+    swan,
+    swanApiOptionsNavigateToSmartProgram,
+    swanApiOptionsGetStorage,
+    backgroundAudioManager
+} from './swan';
 declare global {
-    const getApp: () => app;
+    const getApp: () => swanApp;
     const getCurrentPages: () => any[];
+    const swan: swan;
 }
 
 export interface swanApp {
@@ -8,10 +15,10 @@ export interface swanApp {
 }
 
 export interface marsApis {
-    navigateToSmartProgram: (options: swan.swanApiOptionsNavigateToSmartProgram) => Promise<void>;
-    getStorage: (options: swan.swanApiOptionsGetStorage) => Promise<any>;
+    navigateToSmartProgram: (options: swanApiOptionsNavigateToSmartProgram) => Promise<void>;
+    getStorage: (options: swanApiOptionsGetStorage) => Promise<any>;
     setStorage: (options: any) => Promise<any>;
-    getBackgroundAudioManager: () => Promise<swan.backgroundAudioManager>;
+    getBackgroundAudioManager: () => Promise<backgroundAudioManager>;
     request: (options: any) => Promise<any>;
     login: (options?: any) => Promise<any>;
     showModal: (options?: any) => Promise<any>;

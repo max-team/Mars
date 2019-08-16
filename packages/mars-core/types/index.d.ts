@@ -1,8 +1,6 @@
-export {default as Vue} from './vue/index';
+export {default as Vue, PropType} from './vue/index';
 import Vue from './vue/index';
 import {swanApp, marsApis} from './mars';
-import './swan';
-
 export {swanApp} from './mars';
 
 // 补充 this. 上的属性和方法
