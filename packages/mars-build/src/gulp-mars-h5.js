@@ -185,7 +185,7 @@ async function compile(file, opt) {
         navigationBarTextStyle: config.navigationBarTextStyle,
         backgroundColor: config.backgroundColor,
         backgroundTextStyle: config.backgroundTextStyle,
-        navigationStyle: config.navigationStyle || 'default'
+        navigationStyle: config.navigationStyle
     });
 
     mainOptions = Object.assign(mainOptions, {

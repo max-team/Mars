@@ -113,6 +113,10 @@ export default {
             type: String,
             default: '#fff'
         },
+        navigationStyle: {
+            type: String,
+            default: 'default'
+        },
         onReachBottomDistance: {
             type: Number,
             default: 50
