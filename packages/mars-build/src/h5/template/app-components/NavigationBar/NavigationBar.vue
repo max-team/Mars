@@ -11,7 +11,7 @@
                 transitionTimingFunction: transitionTimingFunc,
                 backgroundColor: backgroundColor,
                 color: textStyle,
-                borderBottom: showBottomBorder ? '1px #ccc solid' : null
+                borderBottom: (navigationStyle === 'default' && showBottomBorder) ? '1px #ccc solid' : null
             }"
         >
             <router-link
