@@ -66,6 +66,22 @@ export interface swanApiOptionsGetStorage extends swanApiOptionsBase {
     key: string;
 }
 
+export interface swanApiOptionsRecognizeImage extends swanApiOptionsBase {
+    categoryList: string[];
+    customTips: {
+        BARCODE?: {
+            topTip?: string;
+            bottomTip?: string;
+        },
+        AR?: {
+            guideTip?: string;
+            resultTitle?: string;
+        }
+    };
+    index?: number;
+    showTitle?: boolean;
+}
+
 interface systemInfo {
     brand: string;
     model: string;

@@ -2,7 +2,8 @@ import {
     swan,
     swanApiOptionsNavigateToSmartProgram,
     swanApiOptionsGetStorage,
-    backgroundAudioManager
+    backgroundAudioManager,
+    swanApiOptionsRecognizeImage
 } from './swan';
 declare global {
     const getApp: () => swanApp;
@@ -28,8 +29,19 @@ export interface marsApis {
     redirectTo: (options?: any) => Promise<any>;
     navigateTo: (options?: any) => Promise<any>;
     navigateBack: (options?: any) => Promise<any>;
-
     chooseImage: (options?: any) => Promise<any>;
+    recognizeImage: (options?: swanApiOptionsRecognizeImage) => Promise<{
+        barcodeResult: {
+            result: string;
+            codeType: string;
+        },
+        imageResult: {
+            data: {
+                resultUrl: string;
+                resultWord: string[];
+            }[];
+        }
+    }>;
 
     createSelectorQuery: () => {
         select: (options?: any) => {
