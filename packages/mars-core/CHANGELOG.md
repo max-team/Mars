@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.19](https://github.com/max-team/Mars/compare/@marsjs/core@0.2.18...@marsjs/core@0.2.19) (2019-08-21)
+
+
+### Features
+
+* **core:** 增加 recognizeImage 类型定义 ([802dec5](https://github.com/max-team/Mars/commit/802dec5))
+* **core:** 补充 ts 定义 ([e86a7db](https://github.com/max-team/Mars/commit/e86a7db))
+* **core & build:** 小程序 SFC 中支持 Vue.extend() 写法 ([#161](https://github.com/max-team/Mars/issues/161)) ([44a6cf5](https://github.com/max-team/Mars/commit/44a6cf5))
+
+
+
+
+
 ## [0.2.18](https://github.com/max-team/Mars/compare/@marsjs/core@0.2.17...@marsjs/core@0.2.18) (2019-08-08)
 
 **Note:** Version bump only for package @marsjs/core

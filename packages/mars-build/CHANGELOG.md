@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.55](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.54...@marsjs/build@0.2.55) (2019-08-21)
+
+
+### Bug Fixes
+
+* **build:** fix h5 app navigationStyle config and borderBottom ([#162](https://github.com/max-team/Mars/issues/162)) ([8910261](https://github.com/max-team/Mars/commit/8910261))
+
+
+### Features
+
+* **core & build:** 小程序 SFC 中支持 Vue.extend() 写法 ([#161](https://github.com/max-team/Mars/issues/161)) ([44a6cf5](https://github.com/max-team/Mars/commit/44a6cf5))
+
+
+
+
+
 ## [0.2.54](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.53...@marsjs/build@0.2.54) (2019-08-08)
 
 
