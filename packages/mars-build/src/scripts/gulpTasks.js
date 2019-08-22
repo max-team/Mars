@@ -16,6 +16,12 @@ const {getPathToCWD} = require('../helper/path');
 const {FILE_SUFFIX} = require('../helper/config');
 const log = require('../helper/log');
 
+let h5Configs = {
+    components: {},
+    routes: {},
+    configs: {}
+};
+
 /**
  * getTaskSFC
  *
@@ -49,6 +55,9 @@ function getTaskSFC(config, options) {
 
     if (target === 'h5') {
         compile = require('../gulp-mars-h5');
+        compileOption.commit = (type, key, val) => {
+            h5Configs[type][key] = val;
+        };
         // for packages
         if (config.packages) {
             const {api, components} = config.packages;
@@ -87,9 +96,9 @@ function getTaskCompileAssets(config, options) {
     const {target} = options;
     const dest = config.dest.path;
     let {assets = [], h5Template} = source;
-    if (target === 'h5' && h5Template) {
-        assets = assets.concat([h5Template]);
-    }
+    // if (target === 'h5' && h5Template) {
+    //     assets = assets.concat([h5Template]);
+    // }
     const compileFile = require('../compiler/file/compiler').gulpPlugin;
     options.fileSuffix = FILE_SUFFIX[target];
     options._config = config;

@@ -1,0 +1,17 @@
+/* csshint-disable */
+* {
+    padding: 0;
+    margin: 0;
+}
+
+html {
+    font-size: 100px;
+}
+
+body {
+    font-size: 15px;
+}
+
+a {
+    text-decoration: none;
+}

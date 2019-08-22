@@ -105,6 +105,10 @@ export default {
             type: String,
             default: 'white'
         },
+        navigationStyle: {
+            type: String,
+            default: 'default'
+        },
         backgroundTextStyle: {
             type: String,
             default: 'dark'
@@ -112,10 +116,6 @@ export default {
         backgroundColor: {
             type: String,
             default: '#fff'
-        },
-        navigationStyle: {
-            type: String,
-            default: 'default'
         },
         onReachBottomDistance: {
             type: Number,
@@ -199,14 +199,11 @@ export default {
     mounted() {
         const {
             list: tabBarList,
-            style: tabBarStyle
-        } = this.tabBars;
-        const {
             backgroundColor,
             borderStyle,
             selectedColor,
             color
-        } = tabBarStyle;
+        } = this.tabBars;
         this.tabList = tabBarList;
         color && (this.tabBarColor = color);
         selectedColor && (this.tabBarSelectedColor = selectedColor);
@@ -259,6 +256,9 @@ export default {
         getPageConfig(currentPath) {
             let currentPathIns = this.tabList.find(item => item.pagePath === currentPath);
             this.showTabBar = !!currentPathIns;
+            if (!this.$root.$data['pageTitleMap'][currentPath]) {
+                return;
+            }
             let {
                 title,
                 enablePullDownRefresh,

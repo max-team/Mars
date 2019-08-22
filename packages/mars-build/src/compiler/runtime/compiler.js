@@ -41,7 +41,10 @@ function compile(options) {
         entry = require.resolve('@marsjs/core/src/h5', {
             paths: [process.cwd()]
         });
-        return fs.copy(entry, path.resolve(coreDestDir, 'index.js'));
+        return Promise.all([
+            fs.copy(entry, coreDestDir + '/index.js'),
+            fs.copy(path.dirname(entry), path.resolve(process.cwd(), destPath))
+        ]);
     }
     else {
         return Promise.resolve();
