@@ -89,7 +89,7 @@
 import TabBar from './app-components/TabBar/TabBar.vue';
 import PullDownRefresh from './app-components/PullDownRefresh/PullDownRefresh.vue';
 import NavigationBar from './app-components/NavigationBar/NavigationBar.vue';
-import customApp from './app.vue';
+import {App as customApp} from './export';
 
 export default {
     name: 'app',

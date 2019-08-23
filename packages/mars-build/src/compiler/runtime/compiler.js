@@ -42,7 +42,7 @@ function compile(options) {
             paths: [process.cwd()]
         });
         return Promise.all([
-            fs.copy(entry, coreDestDir + '/index.js'),
+            // fs.copy(entry, coreDestDir + '/index.js'),
             fs.copy(path.dirname(entry), path.resolve(process.cwd(), destPath))
         ]);
     }

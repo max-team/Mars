@@ -28,7 +28,7 @@ const modules = {
 const H5Modules = {
     '@marsjs/core': {
         needCompile: false,
-        path: './mars-core/index'
+        path: './index'
     }
 };
 

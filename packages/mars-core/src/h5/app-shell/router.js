@@ -6,7 +6,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import browserHistory from './browserHistory';
-import {routes, mode} from './config';
+import {routes, mode} from './export';
 Vue.use(VueRouter);
 
 routes.push({

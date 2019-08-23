@@ -19,7 +19,7 @@ const {getFileCompiler} = require('./base');
 const {isCSS, isJS, changeExt} = require('../../helper/path');
 const log = require('../../helper/log');
 const compileModules = require('./compileModules');
-const modules = compileModules.modules;
+// const modules = compileModules.modules;
 
 /**
  * 编译 JS
@@ -45,6 +45,7 @@ async function compileJS(content, options) {
 
     const destPath = path.resolve(buildConfig.dest.path);
     const rPath = path.relative(path.dirname(file.path), file.base);
+    const modules = target === 'h5' ? compileModules.H5Modules : compileModules.modules;
     let usedModules = {};
     let res = transformSync(content, {
         plugins: [

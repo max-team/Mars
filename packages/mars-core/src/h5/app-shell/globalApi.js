@@ -3,10 +3,7 @@
  * @author mars
  */
 
-import {Mars, directives} from './config';
-
-// const Mars, {directives}
-// import Mars, {directives} from '@marsjs/api';
+import {Mars, directives} from './export';
 
 /**
  * 判断变量是否为对象
