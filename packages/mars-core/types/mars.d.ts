@@ -3,7 +3,8 @@ import {
     swanApiOptionsNavigateToSmartProgram,
     swanApiOptionsGetStorage,
     backgroundAudioManager,
-    swanApiOptionsRecognizeImage
+    swanApiOptionsRecognizeImage,
+    swanApiOptionsSetKeepScreenOn
 } from './swan';
 declare global {
     const getApp: () => swanApp;
@@ -15,11 +16,15 @@ export interface swanApp {
     $api: marsApis;
 }
 
+export {
+    backgroundAudioManager
+} from './swan';
+
 export interface marsApis {
     navigateToSmartProgram: (options: swanApiOptionsNavigateToSmartProgram) => Promise<void>;
     getStorage: (options: swanApiOptionsGetStorage) => Promise<any>;
     setStorage: (options: any) => Promise<any>;
-    getBackgroundAudioManager: () => Promise<backgroundAudioManager>;
+    getBackgroundAudioManager: () => backgroundAudioManager;
     request: (options: any) => Promise<any>;
     login: (options?: any) => Promise<any>;
     showModal: (options?: any) => Promise<any>;
@@ -42,11 +47,11 @@ export interface marsApis {
             }[];
         }
     }>;
-
     createSelectorQuery: () => {
         select: (options?: any) => {
             boundingClientRect: () => void;
         },
         exec: (options?: any) => void;
     };
+    setKeepScreenOn: (options?: swanApiOptionsSetKeepScreenOn) => Promise<any>;
 }
