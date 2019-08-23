@@ -57,6 +57,7 @@ function getFileCompiler(compile, config) {
         source = await process(source, getExtProcessors(preprocessors, lang));
         // compile
         options.path = file.path;
+        options.file = file;
         const result =  await compile(source, options, fileOptions);
         // postprocessors
         let {code, ...rest} = result;

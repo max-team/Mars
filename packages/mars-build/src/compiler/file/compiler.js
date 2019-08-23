@@ -30,7 +30,8 @@ const modules = compileModules.modules;
  */
 async function compileJS(content, options) {
     const {
-        target
+        target,
+        file
     } = options;
     const buildConfig = options._config;
 
@@ -42,16 +43,18 @@ async function compileJS(content, options) {
         JSON.stringify(process.env.NODE_ENV || 'development')
     );
 
+    const destPath = path.resolve(buildConfig.dest.path);
+    const rPath = path.relative(path.dirname(file.path), file.base);
     let usedModules = {};
     let res = transformSync(content, {
         plugins: [
             [
                 path.resolve(__dirname, './babel-plugin-relative-import.js'),
                 {
-                    filePath: options.path,
-                    cwd: path.resolve(process.cwd(), './src'),
+                    rPath,
                     modules,
-                    usedModules
+                    usedModules,
+                    compileNPM: process.env.MARS_ENV_TARGET === 'wx'
                 }
             ],
             'minify-guarded-expressions',
@@ -59,11 +62,14 @@ async function compileJS(content, options) {
         ]
     });
 
-    const destPath = path.resolve(buildConfig.dest.path);
     const usedModuleKeys = Object.keys(usedModules);
     for (let i = 0; i < usedModuleKeys.length; i++) {
-        const item = usedModuleKeys[i];
-        await compileModules.compile(item, usedModules[item], destPath);
+        const key = usedModuleKeys[i];
+        const info = usedModules[key];
+        const {path} = info;
+        // if (!uiModules[modName]) {
+        await compileModules.compile(key, path, destPath);
+        // }
     }
 
     return res;

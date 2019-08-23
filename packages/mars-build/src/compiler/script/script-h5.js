@@ -16,6 +16,7 @@ const transformRouterPlugin = require('../../h5/transform/plugins/transformRoute
 const transformAppPlugin = require('../../h5/transform/plugins/transformAppPlugin');
 const transformGetAppPlugin = require('../../h5/transform/plugins/transformGetAppPlugin');
 const postTransformScriptPlugin = require('./babel-plugin-script-post');
+
 const MARS_ENV = process.env.MARS_ENV_TARGET || 'h5';
 
 exports.preCompile = function (file) {
@@ -138,8 +139,8 @@ exports.compileMain = function (content, options) {
 
 
 const path = require('path');
-const {getUIModules, resolveComponentsPath} = require('./script');
 const compileModules = require('../file/compileModules');
+const {resolveComponentsPath, getUIModules} = compileModules;
 
 exports.compileScript = async function (content, options = {}) {
     if (!content) {
@@ -151,7 +152,6 @@ exports.compileScript = async function (content, options = {}) {
         mpConfig,
         target,
         dest,
-        path: filePath,
         mars
     } = options;
     let baseOptions = {}; // 收集 config 和 components
@@ -185,24 +185,25 @@ exports.compileScript = async function (content, options = {}) {
     content = new Buffer(scriptStr);
 
     const {config = {}, components = {}, enableConfig = null} = baseOptions;
-    const destPath = path.resolve(dest.path);
     const uiModules = getUIModules(components, target);
-    let resolvedPaths = {};
+    const destPath = path.resolve(dest.path);
+    const rPath = path.relative(path.dirname(options.path), destPath);
+
+    let usedMoudles = {};
     content = babel.transform(content, {
         plugins: [
             [
                 path.resolve(__dirname, '../file/babel-plugin-relative-import.js'),
                 {
-                    filePath,
-                    cwd: path.resolve(process.cwd(), dest.path),
+                    rPath,
                     modules: Object.assign(compileModules.H5Modules, uiModules),
-                    resolvedPaths
+                    usedMoudles
                 }
             ]
         ]
     }).code;
 
-    resolveComponentsPath(components, resolvedPaths);
+    resolveComponentsPath(components, usedMoudles);
     await compileModules.compileUIModules(uiModules, destPath);
 
     return {config, components, enableConfig, content};

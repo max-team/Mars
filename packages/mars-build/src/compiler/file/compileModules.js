@@ -11,17 +11,17 @@
 const fs = require('fs-extra');
 const webpack = require('webpack');
 const log = require('../../helper/log');
-const {getPathToCWD} = require('../../helper/path');
+const {getPathToCWD, getModuleName} = require('../../helper/path');
 const path = require('path');
 
 const modules = {
     '@marsjs/core': {
         needCompile: false,
-        path: './mars-core/index'
+        path: './mars-core/index.js'
     },
     'vuex': {
         needCompile: true,
-        path: './mars_modules/vuex/index'
+        path: './mars_modules/vuex/index.js'
     }
 };
 
@@ -34,16 +34,55 @@ const H5Modules = {
 
 const inProcessingModules = new Set();
 
+function getModulePath(modulePath, modules) {
+    const modName = getModuleName(modulePath);
+    if (modules[modName] && modules[modName].path) {
+        return modules[modName].path;
+    }
+    const entry = require.resolve(modulePath, {
+        paths: [process.cwd()]
+    });
+
+    modulePath = './mars_modules' + entry.slice(entry.lastIndexOf('node_modules')).replace('node_modules', '');
+    return modulePath;
+}
+
+function resolveComponentsPath(components, modules) {
+    Object.keys(components).forEach(key => {
+        const name = components[key];
+        components[key] = (modules[name] && modules[name].resolvedPath) || name;
+    });
+}
+
+function getUIModules(components, target) {
+    const modules = {};
+    Object.keys(components).forEach(key => {
+        const mod = components[key];
+        if (mod[0] !== '.') {
+            const name = getModuleName(mod);
+            const path = `./mars_modules/${name}/dist/${target}`;
+            const realName = `${name}/dist/${target}`;
+            modules[name] = {
+                path,
+                realName,
+                type: 'ui'
+            };
+        }
+    });
+    return modules;
+}
+
 /**
  * compile
  *
- * @param {string} val key
- * @param {string} key key
- * @param {string} destPath dest
+ * @param {string} key module key
+ * @param {string} val module output path
+ * @param {string} destPath dest dir path
  * @return {Promise}
  */
-function compile(val, key, destPath) {
-    if (!modules[key].needCompile) {
+function compile(key, val, destPath) {
+    // const {modName, path, resolvedPath} = info;
+    if (modules[key] && !modules[key].needCompile) {
         return Promise.resolve();
     }
 
@@ -51,21 +90,12 @@ function compile(val, key, destPath) {
         paths: [process.cwd()]
     });
 
-    let modulePath;
-    if (val === modules[key].path) {
-        // 直接写的包名，为了能引用到，生成为 index.js
-        modulePath = val + '.js';
-        // modulePath = val + '/index.js';
-    }
-    else {
-        modulePath = './mars_modules' + entry.slice(entry.lastIndexOf('node_modules')).replace('node_modules', '');
-    }
-
+    let modulePath = val.replace(/\.js$/, '') + '.js';
     if (fs.existsSync(path.resolve(destPath, modulePath)) || inProcessingModules.has(entry)) {
         return Promise.resolve();
     }
 
-    log.info('[compile:module]:', getPathToCWD(entry));
+    log.info('[compile:module]:', getPathToCWD(entry), ' => ', modulePath);
 
     inProcessingModules.add(entry);
     return new Promise((resolve, reject) => {
@@ -114,7 +144,7 @@ async function compileUIModules(uiModules, destPath) {
         const entry = coreEntry.replace('mars-core/index.js', '');
         const dest = path.resolve(destPath, modPath);
 
-        log.info('[compile:ui-module]:', getPathToCWD(entry));
+        log.info('[compile:ui-module]:', getPathToCWD(entry), '=>', dest);
         await fs.copy(entry, dest);
 
         const coreDestPath = path.resolve(destPath, 'mars-core');
@@ -131,5 +161,8 @@ module.exports = {
     compile,
     modules,
     H5Modules,
-    compileUIModules
+    compileUIModules,
+    resolveComponentsPath,
+    getUIModules,
+    getModulePath
 };
