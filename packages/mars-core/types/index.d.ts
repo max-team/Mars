@@ -1,14 +1,25 @@
 export {default as Vue, PropType} from './vue/index';
 import Vue from './vue/index';
-import {swanApp, marsApis} from './mars';
-export {swanApp} from './mars';
+import {
+    swanApp,
+    marsApis
+} from './mars';
+export {
+    swanApp,
+    backgroundAudioManager
+} from './mars';
 
 // 补充 this. 上的属性和方法
 declare module './vue/vue' {
     interface Vue {
         $myProperty: string;
         $mpUpdated: (cb?: Function) => Promise<any>;
-        $api: marsApis
+        $api: marsApis;
+        $mp: {
+            options: any;
+            query: any;
+            scope: any;
+        }
     }
 }
 
@@ -18,6 +29,8 @@ declare module './vue/options' {
         onLoad?: Function;
         onReady?: Function;
         onHide?: Function;
-        config?: any
+        onLaunch?: Function;
+        config?: any;
+        onShow?: Function;
     }
 }

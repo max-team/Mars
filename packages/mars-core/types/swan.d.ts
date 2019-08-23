@@ -37,6 +37,10 @@ export interface swanApiOptionsShowLoading extends swanApiOptionsBase {
     mask?: boolean;
 }
 
+export interface swanApiOptionsSetKeepScreenOn extends swanApiOptionsBase {
+    keepScreenOn: boolean;
+}
+
 export interface swanApiOptionsShowToast extends swanApiOptionsBase {
     title: string;
     icon?: string;
