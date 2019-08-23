@@ -4,6 +4,10 @@
  */
 
 const FILE_SUFFIX = {
+    h5: {
+        js: 'js',
+        css: 'css'
+    },
     swan: {
         html: 'swan',
         js: 'js',

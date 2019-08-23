@@ -137,9 +137,7 @@ export default {
                 this.scrollHandler = setTimeout(() => {
                     this.$emit('reach-bottom');
                 }, 50);
-                
             }
-            
         },
         detachScroll() {
             this.scrollHandler = null;

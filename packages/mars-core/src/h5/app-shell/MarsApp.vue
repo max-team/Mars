@@ -150,7 +150,7 @@ export default {
             customShowTabBar: true,
             showTabBar: true,
             enablePullDownRefresh: false,
-            enableReachBottom: false,
+            enableReachBottom: true,
             tabChange: true,
             showRouterView: false,
             transitionDuration: 0,
@@ -262,7 +262,7 @@ export default {
             let {
                 title,
                 enablePullDownRefresh,
-                enableReachBottom,
+                // enableReachBottom,
                 backgroundColor,
                 navigationBarBackgroundColor,
                 navigationBarTextStyle,
@@ -276,7 +276,7 @@ export default {
             } = this;
             this.currentTitle = title;
             this.enablePullDownRefresh = enablePullDownRefresh;
-            this.enableReachBottom = enableReachBottom;
+            // this.enableReachBottom = enableReachBottom;
             this.currentBackgroundColor = backgroundColor || wBackgroundColor;
             this.currentNavigationBarBackgroundColor = navigationBarBackgroundColor || wNavigationBarBackgroundColor;
             this.currentNavigationBarTextStyle = navigationBarTextStyle || wNavigationBarTextStyle;

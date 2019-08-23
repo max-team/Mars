@@ -84,7 +84,7 @@ async function compile(file, options) {
     file.lang = path.extname(file.path).substr(1);
 
     // h5 的没有编译 sfc 中的 style block, assets file 也先不编译保持一致
-    if (isCSS(file.path) && target !== 'h5') {
+    if (isCSS(file.path)) {
         file.type = 'css';
         file.path = changeExt(file.path, fileSuffix.css);
         await cssCompiler(file, options);

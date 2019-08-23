@@ -89,77 +89,6 @@ Vinyl.prototype.writeFileSync = function () {
 // const renderFunctionName = '__renderFunction';
 // const {getFileCompilers} = require('../file/base');
 
-async function compileReal(file, options) {
-    const {template, script, styles, config: configFile} = file;
-    const blockConfig = configFile.$options.config;
-    const mpConfig = blockConfig && blockConfig.config;
-    // const isComponent = mpConfig && mpConfig.component === true;
-
-    const {compilers, isApp, fPath, target, coreRelativePath, baseName} = options;
-    const {
-        templateCompiler,
-        scriptCompiler,
-        scriptPostCompiler,
-        styleCompiler,
-        configCompiler
-    } = getFileCompilers(compilers, options);
-    let {components, config, computedKeys, moduleType} = await scriptCompiler(script, {
-        isApp,
-        mpConfig,
-        coreRelativePath,
-        target,
-        renderStr: !isApp ? renderFunctionName : null,
-        dest: options._config.dest
-    });
-
-    // use configFile.$options.config first
-    config = mpConfig ? mpConfig : config;
-
-    // app.vue has no template
-    if (!isApp) {
-        const {render, componentsInUsed} = await templateCompiler(template, {
-            components,
-            computedKeys,
-            target
-        });
-        await scriptPostCompiler(script, {
-            componentsInUsed
-        });
-        script.appendContent(
-            `;\nfunction ${renderFunctionName}() {return ${render + '.render.bind(this)()'};\n}`
-        );
-        template.writeFileSync();
-    }
-
-    if (config.component === true) {
-        script.path = fPath + '.vue.js';
-        script.writeFileSync();
-
-        script.path = fPath + '.js';
-        const emsImport = `import comp from './${baseName}.vue';\n`
-            + `import {createComponent} from '${coreRelativePath}';\n`
-            + 'Component(createComponent(comp));\n';
-        const cmdRequire = `const comp = require('./${baseName}.vue');\n`
-            + `const {createComponent} = require('${coreRelativePath}');\n`
-            + 'Component(createComponent(comp));\n';
-        script.contents = new Buffer(moduleType === 'esm' ? emsImport : cmdRequire);
-        script.writeFileSync();
-    }
-    else {
-        script.writeFileSync();
-    }
-
-    return Promise.all([
-        configCompiler(configFile, {components, config}).then(_ => {
-            configFile.writeFileSync();
-        }),
-        styleCompiler(styles, options).then(_ => {
-            styles.writeFileSync();
-        })
-    ]);
-};
-
-
 async function compile(file, opt) {
     const rPath = path.relative(file.base, file.path);
     const fPath = slash(path.resolve(file.cwd, opt.dest, rPath).replace(/\.vue$/, ''));
@@ -200,13 +129,12 @@ async function compile(file, opt) {
     } = sfcParser(file, options);
     const blockConfig = configFile.$options.config;
     const mpConfig = blockConfig && blockConfig.config;
-    // const mpConfig = blockConfig && blockConfig.config;    
+    // const mpConfig = blockConfig && blockConfig.config;
     // 处理 script
     let scriptRet = null;
     let config = null;
     // let enableConfig = null;
     // if (script) {
-    // const 
     scriptRet = await scriptCompiler(script, {
         isApp,
         mpConfig,
@@ -303,11 +231,11 @@ async function compile(file, opt) {
         // fs.writeFileSync(options.dest + '/router.js', routerContent);
 
         // 处理入口文件app.vue
-        const appScriptContent = compileApp(scriptRet);
+        // const appScriptContent = compileApp(scriptRet);
 
         // 处理 getApp appApi
         // let appApiContent = fs.readFileSync(__dirname + '/h5/template/appApi.js');
-        fs.writeFileSync(options.dest + '/appApi.js', appScriptContent);
+        // fs.writeFileSync(options.dest + '/appApi.js', appScriptContent);
         // fs.writeFileSync(options.dest + '/main.js', `import main from './mars-core/template/main'`);
         // 处理 globalApi
         // let apiPluginContent = fs.readFileSync(__dirname + '/h5/template/globalApi.js');
@@ -333,7 +261,7 @@ async function compile(file, opt) {
         const API_LIB = packages.api || '@marsjs/api';
         const mode = h5.mode || 'history';
         content += `import Mars, {directives} from '${API_LIB}';\n`;
-        content += `export {Mars, directives};\n`;
+        content += 'export {Mars, directives};\n';
         content += `export const mode = '${mode}';\n`;
 
         if (pagesInfo.app) {
@@ -350,7 +278,7 @@ async function compile(file, opt) {
                 });
                 content += `export const tabBars = ${JSON.stringify(tabBars)};\n\n`;
             }
-    
+
             let routes = [];
             pages.forEach(page => {
                 const name = page.replace(/\//g, '$');
@@ -358,18 +286,18 @@ async function compile(file, opt) {
                 routes.push({
                     path: '/' + page,
                     name
-                })
+                });
             });
-    
+
             content += `export const routes = [${
                 routes.map(({path, name}) => `{path: '${path}', component: ${name}}`).join(',\n')
             }];\n\n`;
 
             let pageTitleMap = {};
             Object.keys(pagesInfo).forEach(key => {
-                if(key !== 'app' && pages.indexOf(key) > -1) {
+                if (key !== 'app' && pages.indexOf(key) > -1) {
                     pageTitleMap[`/${key}`] = Object.assign({}, appWin, pagesInfo[key]);
-                    pageTitleMap[`/${key}`].title =  pageTitleMap[`/${key}`].navigationBarTitleText;
+                    pageTitleMap[`/${key}`].title = pageTitleMap[`/${key}`].navigationBarTitleText;
                 }
             });
 
@@ -405,7 +333,6 @@ async function compile(file, opt) {
     //     mars: options._config.h5 || {}
     // });
     // fs.writeFileSync(options.dest + '/main.js', content);
-    process.env.MARS_PWA = !!(options._config.h5 && options._config.h5.supportPWA);
 
     // 处理style
 //     const h5StylesArr = styles.filter(item =>
