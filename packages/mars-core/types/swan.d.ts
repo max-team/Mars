@@ -8,6 +8,7 @@ export interface swan {
     navigateToSmartProgram: (options: swanApiOptionsNavigateToSmartProgram) => void;
     getStorage: (options: swanApiOptionsGetStorage) => void;
     setNavigationBarTitle: (options: swanApiOptionsSetNavigationBarTitle) => void;
+    isLoginSync: (options?: any) => {isLogin: boolean};
 }
 
 interface swanApiOptionsBase {
@@ -86,7 +87,7 @@ export interface swanApiOptionsRecognizeImage extends swanApiOptionsBase {
     showTitle?: boolean;
 }
 
-interface systemInfo {
+export interface systemInfo {
     brand: string;
     model: string;
     pixelRatio: string;
@@ -115,4 +116,3 @@ export interface backgroundAudioManager {
     pause: () => void;
     src: string;
 }
-

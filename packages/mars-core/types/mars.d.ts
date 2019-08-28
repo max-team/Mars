@@ -4,7 +4,8 @@ import {
     swanApiOptionsGetStorage,
     backgroundAudioManager,
     swanApiOptionsRecognizeImage,
-    swanApiOptionsSetKeepScreenOn
+    swanApiOptionsSetKeepScreenOn,
+    systemInfo
 } from './swan';
 declare global {
     const getApp: () => swanApp;
@@ -54,4 +55,5 @@ export interface marsApis {
         exec: (options?: any) => void;
     };
     setKeepScreenOn: (options?: swanApiOptionsSetKeepScreenOn) => Promise<any>;
+    getSystemInfo: () => Promise<systemInfo>;
 }
