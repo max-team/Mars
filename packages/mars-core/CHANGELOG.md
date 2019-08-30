@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.20](https://github.com/max-team/Mars/compare/@marsjs/core@0.2.19...@marsjs/core@0.2.20) (2019-08-30)
+
+
+### Features
+
+* **core:** support swan lifecycle-2-0 ([#169](https://github.com/max-team/Mars/issues/169)) ([fe655f0](https://github.com/max-team/Mars/commit/fe655f0))
+* **core:** 增加类型定义 ([dc3242d](https://github.com/max-team/Mars/commit/dc3242d))
+* **core:** 增加类型定义 ([9042b34](https://github.com/max-team/Mars/commit/9042b34))
+
+
+### BREAKING CHANGES
+
+* **core:** swan lifecycle-2-0 is a breaking change
+
+
+
+
+
 ## [0.2.19](https://github.com/max-team/Mars/compare/@marsjs/core@0.2.18...@marsjs/core@0.2.19) (2019-08-21)
 
 
