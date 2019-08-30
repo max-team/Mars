@@ -3,6 +3,7 @@
  * @author zhangwentao <winty2013@gmail.com>
  */
 
+/* eslint-disable fecs-camelcase */
 import {normalizeProps} from '../helper/props';
 import {getPageInstance} from '../helper/instance';
 import Vue from './vue/index';
@@ -22,7 +23,16 @@ function mountVue(VueComponent, setData) {
     // 根据 compId 算出父实例的 comId
     // const rootUID = this.data.rootUID;
     // const rootMp = getApp().__pages__[rootUID];
-    const rootMp = getPageInstance(this);
+    // const rootMp = getPageInstance(this);
+    const rootMp = this.$$__page__;
+
+    // for swan new lifecycle-2-0
+    // will create page vm before component vm
+    if (config.$platform === 'swan' && rootMp && !rootMp.$vue) {
+        rootMp.$$__createVue__ && rootMp.$$__createVue__.call(rootMp);
+        delete rootMp.$$__createVue__;
+    }
+
     const currentCompId = properties.compId;
     const parentCompid = currentCompId.slice(0, currentCompId.lastIndexOf(','));
     let parent;
@@ -65,7 +75,9 @@ function mountVue(VueComponent, setData) {
     }
 }
 
-export function makeCreateComponent(handleProxy, handleModel, setData, callHook) {
+export function makeCreateComponent(handleProxy, handleModel, setData, callHook, {
+    $api
+}) {
     return function (options) {
         // TODO initData 包括 vue 实例的 data defaultProps 和 computed
         let initData = typeof options.data === 'function' ? options.data() : (options.data || {});
@@ -78,7 +90,10 @@ export function makeCreateComponent(handleProxy, handleModel, setData, callHook)
             compId: String,
             ref: String,
             rootComputed: Object,
-            rootUID: Number
+            rootUID: {
+                type: Number,
+                value: -1
+            }
         });
 
         let [VueComponent, vueOptions] = initVueComponent(Vue, options);
@@ -87,6 +102,7 @@ export function makeCreateComponent(handleProxy, handleModel, setData, callHook)
             __isComponent__: true,
             // for lifetimes before Vue mount
             $vue: {
+                $api,
                 $options: options
             },
             properties: props,
@@ -113,21 +129,23 @@ export function makeCreateComponent(handleProxy, handleModel, setData, callHook)
             },
             lifetimes: {
                 created(...args) {
+                    const rootMp = getPageInstance(this);
+                    this.$$__page__ = rootMp;
                     if (process.env.NODE_ENV !== 'production' && config.debug && config.debug.lifetimes) {
                         console.log('[debug: mp lifetimes] created', this.data.compId);
                     }
-                    if (config.$platform === 'swan') {
-                        mountVue.call(this, VueComponent, setData);
-                    }
+                    this.$vue.$mp = {
+                        scope: this
+                    };
                     callHook.call(this, this.$vue, 'comp', 'created', args);
                 },
                 attached(...args) {
                     if (process.env.NODE_ENV !== 'production' && config.debug && config.debug.lifetimes) {
                         console.log('[debug: mp lifetimes] attached', this.data.compId);
                     }
-                    if (config.$platform === 'wx') {
-                        mountVue.call(this, VueComponent, setData);
-                    }
+                    // if (config.$platform === 'wx') {
+                    mountVue.call(this, VueComponent, setData);
+                    // }
                     callHook.call(this, this.$vue, 'comp', 'attached', args);
                 },
                 ready(...args) {
@@ -140,7 +158,7 @@ export function makeCreateComponent(handleProxy, handleModel, setData, callHook)
                     if (process.env.NODE_ENV !== 'production' && config.debug && config.debug.lifetimes) {
                         console.log('[debug: mp lifetimes] detached', this.data.compId);
                     }
-                    callHook.call(this, this.$vue, 'comp', 'dettached', args);
+                    callHook.call(this, this.$vue, 'comp', 'detached', args);
                     this.$vue && this.$vue.$destroy();
                     // remove swan binded vue instance from root __vms__
                     const page = getPageInstance(this);
@@ -151,6 +169,8 @@ export function makeCreateComponent(handleProxy, handleModel, setData, callHook)
                         vmData[curSwan] = null;
                         delete vmData[curSwan];
                     }
+                    delete this.$vue;
+                    delete this.$$__page__;
                 }
             }
         };

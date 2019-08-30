@@ -24,17 +24,11 @@ function makeCreatePage(pageMixin, {handleProxy, handleModel}, setData, callHook
             data: {},
             lifetimes: {
                 attached(...args) {
-                    const pages = getApp().__pages__;
-                    const uid = this.__uid__ !== undefined ? this.__uid__ : ++pages.uid;
-                    pages[uid] = this;
-                    this.__uid__ = uid;
+                    createVue.call(this, options, args, {setData});
 
                     if (process.env.NODE_ENV !== 'production' && config.debug && config.debug.lifetimes) {
                         console.log('[debug: mp pageHooks] attached', this.__uid__);
                     }
-
-                    const vm = createVue.call(this, options, args, {setData});
-                    mountVue.call(this, vm);
                 }
             },
             methods: {
@@ -46,6 +40,7 @@ function makeCreatePage(pageMixin, {handleProxy, handleModel}, setData, callHook
                     }
                     // 先 callHook 保证数据可以初始化
                     const ret = callHook.call(this, this.$vue, 'page', 'onLoad', args);
+                    mountVue.call(this, this.$vue);
                     return ret;
                 },
                 onUnload(...args) {

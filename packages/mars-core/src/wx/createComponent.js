@@ -13,12 +13,18 @@ import {
 } from './mixins';
 import {setData} from './data';
 import {callHook} from './lifecycle';
+import $api from './nativeAPI';
+
 import {
     makeCreateComponent,
     makeVueCompCreator
 } from '../base/createComponent';
 
 export const vueCompCreator = makeVueCompCreator(getCompMixin);
-
-
-export default makeCreateComponent(handleProxy, handleModel, setData, callHook);
+export default makeCreateComponent(
+    handleProxy,
+    handleModel,
+    setData,
+    callHook,
+    {$api}
+);
