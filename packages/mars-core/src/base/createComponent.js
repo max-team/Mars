@@ -5,6 +5,7 @@
 
 import {normalizeProps} from '../helper/props';
 import {getPageInstance} from '../helper/instance';
+import config from '../config';
 
 export function makeVueCompCreator(getCompMixin) {
     return function vueCompCreator(options) {
@@ -16,6 +17,12 @@ export function makeVueCompCreator(getCompMixin) {
 export function makeMarkComponent(setData) {
     return function markComponent(callback) {
         const page = getPageInstance(this);
+
+        if (!page.$vue && page.$$__createVue__) {
+            page.$$__createVue__.call(page);
+            delete page.$$__createVue__;
+        }
+
         const vms = page.$vue.__vms__;
         const vmData = vms[this.data.compId];
         if (vmData) {
@@ -40,7 +47,7 @@ export function makeMarkComponent(setData) {
             }
         }
 
-        console.warn('[swan instance mismatch]', this.data.compId, this, vms);
+        // console.warn('[swan instance mismatch]', this.data.compId, this, vms);
         callback();
     };
 }
@@ -57,7 +64,10 @@ export function makeCreateComponent(handleProxy, handleModel, callHook, hooks = 
         props = Object.assign(props, {
             compId: String,
             rootComputed: Object,
-            rootUID: Number
+            rootUID: {
+                type: Number,
+                value: -1
+            }
         });
 
         return {
@@ -80,7 +90,9 @@ export function makeCreateComponent(handleProxy, handleModel, callHook, hooks = 
             },
             lifetimes: {
                 created(...args) {
-                    // console.log('===swan created', this.data.compId);
+                    if (process.env.NODE_ENV !== 'production' && config.debug && config.debug.lifetimes) {
+                        console.log('[debug: mp lifetimes] created', this.data.compId);
+                    }
                     if (hooks.created) {
                         hooks.created.call(this, () => {
                             this.__created__ = true;
@@ -89,7 +101,6 @@ export function makeCreateComponent(handleProxy, handleModel, callHook, hooks = 
                                     this.$vue[handleName] && this.$vue[handleName].apply(this.$vue, args);
                                 });
                             }
-
                             callHook.call(this, this.$vue, 'comp', 'created', args);
                         });
                     }
@@ -98,11 +109,15 @@ export function makeCreateComponent(handleProxy, handleModel, callHook, hooks = 
                     }
                 },
                 attached(...args) {
-                    // console.log('===swan attached', this, this.data.compId);
+                    if (process.env.NODE_ENV !== 'production' && config.debug && config.debug.lifetimes) {
+                        console.log('[debug: mp lifetimes] attached', this.data.compId);
+                    }
                     callHook.call(this, this.$vue, 'comp', 'attached', args);
                 },
                 ready(...args) {
-                    // console.log('===swan ready', this, this.data.compId);
+                    if (process.env.NODE_ENV !== 'production' && config.debug && config.debug.lifetimes) {
+                        console.log('[debug: mp lifetimes] ready', this.data.compId);
+                    }
                     if (hooks.ready) {
                         hooks.ready.call(this, () => {
                             callHook.call(this, this.$vue, 'comp', 'ready', args);
@@ -113,8 +128,10 @@ export function makeCreateComponent(handleProxy, handleModel, callHook, hooks = 
                     }
                 },
                 detached(...args) {
-                    // console.log('===swan detached', this.data.compId);
-                    callHook.call(this, this.$vue, 'comp', 'dettached', args);
+                    if (process.env.NODE_ENV !== 'production' && config.debug && config.debug.lifetimes) {
+                        console.log('[debug: mp lifetimes] detached', this.data.compId);
+                    }
+                    callHook.call(this, this.$vue, 'comp', 'detached', args);
                     this.$vue && this.$vue.$destroy();
                     // remove swan binded vue instance from root __vms__
                     const page = getPageInstance(this);
