@@ -22,6 +22,7 @@ module.exports = {
                 'component',
                 'API',
                 'config',
+                'TypeScript',
                 'examples',
                 'common-questions'
             ],
