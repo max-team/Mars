@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0-alpha.5](https://github.com/max-team/Mars/compare/@marsjs/core@0.3.0-alpha.4...@marsjs/core@0.3.0-alpha.5) (2019-08-01)
+
+
+### Bug Fixes
+
+* **core & build:** $refs 不生效 ([#153](https://github.com/max-team/Mars/issues/153)) ([f5fc087](https://github.com/max-team/Mars/commit/f5fc087))
+
+
+
+
+
 
 ## [0.3.0-alpha.4](https://github.com/max-team/Mars/compare/@marsjs/core@0.3.0-alpha.3...@marsjs/core@0.3.0-alpha.4) (2019-07-25)
 
