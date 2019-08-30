@@ -8,12 +8,18 @@
 /* global getApp */
 
 /* eslint-disable babel/new-cap */
+/* eslint-disable fecs-camelcase */
 import Vue from './vue/index';
 import {mark, measure} from '../helper/perf';
 import config from '../config';
 import {state} from './state';
 
 export function createVue(options, args, {setData}) {
+    const pages = getApp().__pages__;
+    const uid = this.__uid__ !== undefined ? this.__uid__ : ++pages.uid;
+    pages[uid] = this;
+    this.__uid__ = uid;
+
     if (process.env.NODE_ENV !== 'production' && config.performance && mark) {
         const perfTagStart = `${this.route}-start`;
         // const perfTagEnd = `${this.route}-end`;
@@ -70,20 +76,26 @@ export function makeCreatePage(pageMixin, {handleProxy, handleModel}, setData, c
         options.mixins = [pageMixin];
 
         return {
+            $$__createVue__() {
+                return createVue.call(this, options, [], {setData});
+            },
             data: {},
             handleProxy,
             handleModel,
             onLoad(...args) {
-                const pages = getApp().__pages__;
-                const uid = this.__uid__ !== undefined ? this.__uid__ : ++pages.uid;
-                pages[uid] = this;
-                this.__uid__ = uid;
+                let vm = this.$vue;
+                if (!vm) {
+                    vm = createVue.call(this, options, args, {setData});
+                }
+                else {
+                    const query = args[0];
+                    vm.$mp.query = query;
+                    vm.$mp.options = query;
+                }
 
                 if (process.env.NODE_ENV !== 'production' && config.debug && config.debug.lifetimes) {
                     console.log('[debug: mp pageHooks] onLoad', this.__uid__);
                 }
-
-                const vm = createVue.call(this, options, args, {setData});
                 // 先 callHook 保证数据可以初始化
                 const ret = callHook.call(this, this.$vue, 'page', 'onLoad', args);
                 mountVue.call(this, vm);
@@ -107,6 +119,8 @@ export function makeCreatePage(pageMixin, {handleProxy, handleModel}, setData, c
                     }
 
                 });
+                delete this.$vue;
+                delete this.$$__createVue__;
                 return ret;
             },
             onReady(...args) {
