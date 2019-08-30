@@ -4,7 +4,10 @@
  */
 
 export default {
-    performance: false,
-    debug: false,
+    performance: true,
+    debug: {
+        lifetimes: true,
+        events: false
+    },
     framework: process.env.MARS_CONFIG_FRAMEWORK
 };

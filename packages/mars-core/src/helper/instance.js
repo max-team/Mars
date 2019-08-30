@@ -2,12 +2,19 @@
  * @file  props helper
  * @author zhangwentao
  */
-/* global getApp */
+/* global getApp, getCurrentPages */
 
 export function getPageInstance($mp) {
     const uid = $mp.data.rootUID;
-    const pages = getApp().__pages__;
-    const page = pages[uid];
+    let page;
+    if (uid === -1) {
+        const pages = getCurrentPages();
+        page = pages[pages.length - 1];
+    }
+    else {
+        page = getApp().__pages__[uid];
+    }
+
     if (!page) {
         throw new Error(`cannot find page instance for $mp ${$mp.data.compId}`, $mp);
     }

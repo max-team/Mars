@@ -5,6 +5,7 @@
 
 import {getPageInstance} from '../helper/instance';
 import {setObjectData} from '../helper/util';
+import config from '../config';
 
 export function makePageMixin($api) {
     return {
@@ -55,6 +56,9 @@ export function makeGetCompMixin($api) {
                 });
             },
             created() {
+                if (process.env.NODE_ENV !== 'production' && config.debug && config.debug.lifetimes) {
+                    console.log('[debug: Vue] created', this.compId);
+                }
                 // console.log('===vue created', this.compId);
                 // markComponentInVue.call(this, pms, vms);
                 const vms = this.$root.__vms__;
@@ -70,8 +74,10 @@ export function makeGetCompMixin($api) {
 }
 
 export function handleProxy(event) {
+    if (process.env.NODE_ENV !== 'production' && config.debug && config.debug.events) {
+        console.log('[debug: handleProxy]', this.data.compId, event);
+    }
     // get event dataSet
-    // console.log('===handleProxy:', this.data.compId, event);
     const data = event.currentTarget.dataset;
     const eventType = event.type;
 
@@ -130,6 +136,4 @@ export function handleModel(event) {
     else if (type === 'change' && tag === 'switch') {
         setObjectData(this.$vue, model, event.detail.checked);
     }
-
-
 }
