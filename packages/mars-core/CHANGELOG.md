@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0-alpha.6](https://github.com/max-team/Mars/compare/@marsjs/core@0.3.0-alpha.5...@marsjs/core@0.3.0-alpha.6) (2019-08-30)
+
+
+### Features
+
+* **core:** support swan lifecycle-2-0 ([#164](https://github.com/max-team/Mars/issues/164)) ([e075dbb](https://github.com/max-team/Mars/commit/e075dbb))
+
+
+### BREAKING CHANGES
+
+* **core:** swan lifecycle-2-0 is a breaking change
+
+
+
+
+
 # [0.3.0-alpha.5](https://github.com/max-team/Mars/compare/@marsjs/core@0.3.0-alpha.4...@marsjs/core@0.3.0-alpha.5) (2019-08-01)
 
 
