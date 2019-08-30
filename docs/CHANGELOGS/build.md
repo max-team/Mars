@@ -1,5 +1,44 @@
 # @marsjs/build
 
+
+## [0.2.55](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.54...@marsjs/build@0.2.55) (2019-08-21)
+
+
+### Bug Fixes
+
+* **build:** fix h5 app navigationStyle config and borderBottom ([#162](https://github.com/max-team/Mars/issues/162)) ([8910261](https://github.com/max-team/Mars/commit/8910261))
+
+
+### Features
+
+* **core & build:** 小程序 SFC 中支持 Vue.extend() 写法 ([#161](https://github.com/max-team/Mars/issues/161)) ([44a6cf5](https://github.com/max-team/Mars/commit/44a6cf5))
+
+
+
+
+
+## [0.2.54](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.53...@marsjs/build@0.2.54) (2019-08-08)
+
+
+### Features
+
+* **build:** support use npm in wx ([9564c89](https://github.com/max-team/Mars/commit/9564c89))
+
+
+
+
+
+## [0.2.53](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.52...@marsjs/build@0.2.53) (2019-08-05)
+
+
+### Features
+
+* **build:** 引入 sfc 组件时，支持 xxx.vue 写法 ([#155](https://github.com/max-team/Mars/issues/155)) ([e9d5fa5](https://github.com/max-team/Mars/commit/e9d5fa5))
+
+
+
+
+
 ## [0.2.52](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.51...@marsjs/build@0.2.52) (2019-07-19)
 
 

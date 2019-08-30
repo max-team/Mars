@@ -1,5 +1,56 @@
 # @marsjs/core
 
+
+## [0.2.20](https://github.com/max-team/Mars/compare/@marsjs/core@0.2.19...@marsjs/core@0.2.20) (2019-08-30)
+
+
+### Features
+
+* **core:** support swan lifecycle-2-0 ([#169](https://github.com/max-team/Mars/issues/169)) ([fe655f0](https://github.com/max-team/Mars/commit/fe655f0))
+* **core:** 增加类型定义 ([dc3242d](https://github.com/max-team/Mars/commit/dc3242d))
+* **core:** 增加类型定义 ([9042b34](https://github.com/max-team/Mars/commit/9042b34))
+
+
+### BREAKING CHANGES
+
+* **core:** swan lifecycle-2-0 is a breaking change
+
+
+
+
+
+## [0.2.19](https://github.com/max-team/Mars/compare/@marsjs/core@0.2.18...@marsjs/core@0.2.19) (2019-08-21)
+
+
+### Features
+
+* **core:** 增加 recognizeImage 类型定义 ([802dec5](https://github.com/max-team/Mars/commit/802dec5))
+* **core:** 补充 ts 定义 ([e86a7db](https://github.com/max-team/Mars/commit/e86a7db))
+* **core & build:** 小程序 SFC 中支持 Vue.extend() 写法 ([#161](https://github.com/max-team/Mars/issues/161)) ([44a6cf5](https://github.com/max-team/Mars/commit/44a6cf5))
+
+
+
+
+
+## [0.2.18](https://github.com/max-team/Mars/compare/@marsjs/core@0.2.17...@marsjs/core@0.2.18) (2019-08-08)
+
+**Note:** Version bump only for package @marsjs/core
+
+
+
+
+
+## [0.2.17](https://github.com/max-team/Mars/compare/@marsjs/core@0.2.16...@marsjs/core@0.2.17) (2019-08-08)
+
+
+### Features
+
+* **core:** export Vue and config in wx ([87662a3](https://github.com/max-team/Mars/commit/87662a3))
+
+
+
+
+
 ## [0.2.16](https://github.com/max-team/Mars/compare/@marsjs/core@0.2.15...@marsjs/core@0.2.16) (2019-07-19)
 
 
