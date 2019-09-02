@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.21](https://github.com/max-team/Mars/compare/@marsjs/core@0.2.20...@marsjs/core@0.2.21) (2019-09-02)
+
+
+### Bug Fixes
+
+* **core:** remove debug config ([8bef4d6](https://github.com/max-team/Mars/commit/8bef4d6))
+
+
+
+
+
 ## [0.2.20](https://github.com/max-team/Mars/compare/@marsjs/core@0.2.19...@marsjs/core@0.2.20) (2019-08-30)
 
 
