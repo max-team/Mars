@@ -32,5 +32,10 @@ declare module './vue/options' {
         onLaunch?: Function;
         config?: any;
         onShow?: Function;
+        pageLifetimes?: {
+            hide?: Function;
+            show?: Function;
+        },
+        attached?: Function;
     }
 }
