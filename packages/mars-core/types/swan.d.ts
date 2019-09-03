@@ -9,6 +9,7 @@ export interface swan {
     getStorage: (options: swanApiOptionsGetStorage) => void;
     setNavigationBarTitle: (options: swanApiOptionsSetNavigationBarTitle) => void;
     isLoginSync: (options?: any) => {isLogin: boolean};
+    reportAnalytics: (str: string, data: any) => void;
 }
 
 interface swanApiOptionsBase {
