@@ -129,8 +129,8 @@ export function makeCreateComponent(handleProxy, handleModel, setData, callHook,
             },
             lifetimes: {
                 created(...args) {
-                    const rootMp = getPageInstance(this);
-                    this.$$__page__ = rootMp;
+                    const page = getPageInstance(this);
+                    this.$$__page__ = page;
                     if (process.env.NODE_ENV !== 'production' && config.debug && config.debug.lifetimes) {
                         console.log('[debug: mp lifetimes] created', this.data.compId);
                     }
@@ -161,7 +161,7 @@ export function makeCreateComponent(handleProxy, handleModel, setData, callHook,
                     callHook.call(this, this.$vue, 'comp', 'detached', args);
                     this.$vue && this.$vue.$destroy();
                     // remove swan binded vue instance from root __vms__
-                    const page = getPageInstance(this);
+                    const page = this.$$__page__;
                     const vms = page.$vue.__vms__;
                     const vmData = vms[this.data.compId];
                     const curSwan = this.__curSwan__;
