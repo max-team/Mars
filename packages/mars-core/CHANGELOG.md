@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0-alpha.7](https://github.com/max-team/Mars/compare/@marsjs/core@0.3.0-alpha.6...@marsjs/core@0.3.0-alpha.7) (2019-09-03)
+
+
+### Bug Fixes
+
+* **core:** fix navigateBack detached error ([c4289f9](https://github.com/max-team/Mars/commit/c4289f9))
+
+
+
+
+
 # [0.3.0-alpha.6](https://github.com/max-team/Mars/compare/@marsjs/core@0.3.0-alpha.5...@marsjs/core@0.3.0-alpha.6) (2019-08-30)
 
 
