@@ -117,9 +117,8 @@ export function makeCreatePage(pageMixin, {handleProxy, handleModel}, setData, c
                         pages[uid] = null;
                         delete pages[uid];
                     }
-
                 });
-                delete this.$vue;
+                // delete this.$vue;
                 delete this.$$__createVue__;
                 return ret;
             },
