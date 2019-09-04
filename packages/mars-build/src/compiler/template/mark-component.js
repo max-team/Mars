@@ -289,6 +289,47 @@ ${staticRenderFns.map(fn => `function() { ${fn} },)}`)}\
     return {ast, render: code, errors, componentsInUsed};
 };
 
+const delToVueTag = require('../../h5/transform/tag');
+
+module.exports.markH5 = function markH5(source, options) {
+    let {
+        components = {},
+        componentSet = {}
+    } = options;
+
+    let componentsInUsed = {};
+    Object.keys(components).forEach(name => {
+        if (!componentsInUsed[name]) {
+            componentsInUsed[name] = {
+                using: false,
+                declaration: components[name]
+            };
+        }
+    });
+
+    const {
+        ast,
+        errors
+    } = compileTemplate(source, {
+        preserveWhitespace: false,
+        modules: [{
+            preTransformNode(el, options) {
+                let basicCompMap = {};
+                delToVueTag(el, {
+                    basicCompMap,
+                    componentsInUsed
+                });
+                Object.assign(componentSet, basicCompMap);
+            }
+        }]
+    });
+
+    updateComponents(components, componentsInUsed);
+
+    return {ast, errors, componentsInUsed};
+
+};
+
 module.exports.getGenData = getGenData;
 module.exports.isComplexExp = isComplexExp;
 module.exports.isFilter = isFilter;

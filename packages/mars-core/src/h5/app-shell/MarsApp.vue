@@ -89,7 +89,7 @@
 import TabBar from './app-components/TabBar/TabBar.vue';
 import PullDownRefresh from './app-components/PullDownRefresh/PullDownRefresh.vue';
 import NavigationBar from './app-components/NavigationBar/NavigationBar.vue';
-import customApp from './app.vue';
+import {App as customApp} from './export';
 
 export default {
     name: 'app',
@@ -104,6 +104,10 @@ export default {
         navigationBarTextStyle: {
             type: String,
             default: 'white'
+        },
+        navigationStyle: {
+            type: String,
+            default: 'default'
         },
         backgroundTextStyle: {
             type: String,
@@ -146,7 +150,7 @@ export default {
             customShowTabBar: true,
             showTabBar: true,
             enablePullDownRefresh: false,
-            enableReachBottom: false,
+            enableReachBottom: true,
             tabChange: true,
             showRouterView: false,
             transitionDuration: 0,
@@ -195,14 +199,11 @@ export default {
     mounted() {
         const {
             list: tabBarList,
-            style: tabBarStyle
-        } = this.tabBars;
-        const {
             backgroundColor,
             borderStyle,
             selectedColor,
             color
-        } = tabBarStyle;
+        } = this.tabBars;
         this.tabList = tabBarList;
         color && (this.tabBarColor = color);
         selectedColor && (this.tabBarSelectedColor = selectedColor);
@@ -255,10 +256,13 @@ export default {
         getPageConfig(currentPath) {
             let currentPathIns = this.tabList.find(item => item.pagePath === currentPath);
             this.showTabBar = !!currentPathIns;
+            if (!this.$root.$data['pageTitleMap'][currentPath]) {
+                return;
+            }
             let {
                 title,
                 enablePullDownRefresh,
-                enableReachBottom,
+                // enableReachBottom,
                 backgroundColor,
                 navigationBarBackgroundColor,
                 navigationBarTextStyle,
@@ -272,7 +276,7 @@ export default {
             } = this;
             this.currentTitle = title;
             this.enablePullDownRefresh = enablePullDownRefresh;
-            this.enableReachBottom = enableReachBottom;
+            // this.enableReachBottom = enableReachBottom;
             this.currentBackgroundColor = backgroundColor || wBackgroundColor;
             this.currentNavigationBarBackgroundColor = navigationBarBackgroundColor || wNavigationBarBackgroundColor;
             this.currentNavigationBarTextStyle = navigationBarTextStyle || wNavigationBarTextStyle;

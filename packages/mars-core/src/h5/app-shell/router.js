@@ -6,11 +6,16 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import browserHistory from './browserHistory';
-
+import {routes, mode} from './export';
 Vue.use(VueRouter);
+
+routes.push({
+    path: '*',
+    redirect: routes[0].path
+});
+
 const router = new VueRouter({
-    mode: 'history',
-    routes: []
+    mode, routes
 });
 
 function guid() {

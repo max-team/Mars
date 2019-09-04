@@ -19,7 +19,7 @@ const {getFileCompiler} = require('./base');
 const {isCSS, isJS, changeExt} = require('../../helper/path');
 const log = require('../../helper/log');
 const compileModules = require('./compileModules');
-const modules = compileModules.modules;
+// const modules = compileModules.modules;
 
 /**
  * 编译 JS
@@ -45,6 +45,7 @@ async function compileJS(content, options) {
 
     const destPath = path.resolve(buildConfig.dest.path);
     const rPath = path.relative(path.dirname(file.path), file.base);
+    const modules = target === 'h5' ? compileModules.H5Modules : compileModules.modules;
     let usedModules = {};
     let res = transformSync(content, {
         plugins: [
@@ -83,7 +84,7 @@ async function compile(file, options) {
     file.lang = path.extname(file.path).substr(1);
 
     // h5 的没有编译 sfc 中的 style block, assets file 也先不编译保持一致
-    if (isCSS(file.path) && target !== 'h5') {
+    if (isCSS(file.path)) {
         file.type = 'css';
         file.path = changeExt(file.path, fileSuffix.css);
         await cssCompiler(file, options);
