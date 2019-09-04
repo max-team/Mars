@@ -11,6 +11,7 @@ const {compile: compileTemplate} = require('vue-template-compiler/build');
 const transpile = require('vue-template-es2015-compiler');
 const customTemplate = 'template-mars';
 const {generate} = require('./render');
+const {hyphenate} = require('../../helper/util');
 
 function getIterator(node) {
     if (!node) {
@@ -58,6 +59,9 @@ function getMarkNode(options, componentsInUsed = {}) {
     let {components, target} = options;
     let compIdCounter = 0;
     return function markNode(el, options) {
+        // swan doesn't support PascalCase tag name
+        el.tag = hyphenate(el.tag);
+
         const tag = el.tag;
         const isComp = components && components[tag];
         el.isComp = isComp;
@@ -314,6 +318,11 @@ module.exports.markH5 = function markH5(source, options) {
         preserveWhitespace: false,
         modules: [{
             preTransformNode(el, options) {
+                // swan doesn't support PascalCase tag name
+                // componentsInUsed map is hyphenated
+                // so transform h5 tag into hyphenated to match it
+                el.tag = hyphenate(el.tag);
+
                 let basicCompMap = {};
                 delToVueTag(el, {
                     basicCompMap,

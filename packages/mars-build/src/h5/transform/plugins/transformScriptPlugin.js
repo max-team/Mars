@@ -166,7 +166,7 @@ const Property = (t, options) => {
                             const bindPath = path.scope.bindings[p.value.name].path;
                             const bindParentNode = bindPath.parent;
                             const bindVaule = bindParentNode.source;
-                            bindParentNode.source = t.stringLiteral(bindVaule.value + '.vue');
+                            bindParentNode.source = t.stringLiteral(bindVaule.value.replace(/\.vue$/, '') + '.vue');
                             p.value = bindParentNode.source;
                         }
                     });
@@ -352,11 +352,19 @@ module.exports = function getVisitor(options = {}) {
         return {
             visitor: {
                 ExportDefaultDeclaration(path, state) {
-                    if (!t.isObjectExpression(path.node.declaration)) {
-                        return;
+
+                    let declarationPath = path.get('declaration');
+
+                    // 只取 Vue.extend() 的参数部分
+                    if (t.isCallExpression(declarationPath)) {
+                        const objectExpression = declarationPath.get('arguments')[0];
+                        declarationPath.replaceWith(objectExpression);
                     }
 
-                    let properties = path.node.declaration.properties;
+                    // if (!t.isObjectExpression(path.node.declaration)) {
+                    //     return;
+                    // }
+                    let properties = declarationPath.node.properties;
                     options.baseOptions && (options.baseOptions.config = {});
                     options.baseOptions && (options.baseOptions.components = {});
                     options.baseOptions && (options.baseOptions.enableConfig = {});

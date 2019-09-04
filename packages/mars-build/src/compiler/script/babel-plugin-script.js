@@ -101,7 +101,7 @@ const getPropertyVisitor = (t, options) => {
                             const bindNode = bindPath.node;
 
                             if (t.isImportDeclaration(bindParentNode)) {
-                                const bindVaule = bindParentNode.source.value + '.vue';
+                                const bindVaule = bindParentNode.source.value.replace(/\.vue$/, '') + '.vue';
                                 components[keyName] = bindVaule;
                                 bindParentNode.source = t.stringLiteral(bindVaule);
                             }
@@ -112,7 +112,7 @@ const getPropertyVisitor = (t, options) => {
                                 && bindNode.init.callee.name === 'require'
                                 && t.isStringLiteral(bindNode.init.arguments[0])
                             ) {
-                                const bindVaule = bindNode.init.arguments[0].value + '.vue';
+                                const bindVaule = bindNode.init.arguments[0].value.replace(/\.vue$/, '') + '.vue';
                                 components[keyName] = bindVaule;
                                 bindNode.init.arguments[0] = t.stringLiteral(bindVaule);
                             }
@@ -140,7 +140,7 @@ const getPropertyVisitor = (t, options) => {
 
 function transfromSFCExport(t, declarationPath, options) {
     if (!t.isObjectExpression(declarationPath)) {
-        throw declarationPath.buildCodeFrameError('should export plain object in SFC');
+        throw declarationPath.buildCodeFrameError('should export plain object or Vue.extend() in SFC');
     }
 
     declarationPath.traverse(getPropertyVisitor(t, options));
@@ -174,6 +174,13 @@ module.exports = function getVisitor(options = {}) {
             visitor: {
                 ExportDefaultDeclaration(path, state) {
                     declarationPath = path.get('declaration');
+
+                    // 只取 Vue.extend() 的参数部分
+                    if (t.isCallExpression(declarationPath)) {
+                        const objectExpression = declarationPath.get('arguments')[0];
+                        declarationPath.replaceWith(objectExpression);
+                    }
+
                     transfromSFCExport(t, declarationPath, options);
                     exportPath = path;
                     file.moduleType = 'esm';

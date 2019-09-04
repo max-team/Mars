@@ -3,5 +3,7 @@
     "version": "0.3.0-alpha.7",
     "scripts": {
         "test": "jest --coverage"
-    }
+    },
+    "main": "src/index.js",
+    "typings": "types/index.d.ts"
 }
