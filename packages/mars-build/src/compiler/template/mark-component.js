@@ -133,8 +133,14 @@ function getFilters(node) {
         : [];
 
     let vfor = isComplexExp(node.for) ? node.for : undefined;
+
     let vif = isComplexExp(node.if) ? node.if : undefined;
     let velseif = isComplexExp(node.elseif) ? node.elseif : undefined;
+    // let vfori = vfor ? node.iterator1 : undefined;
+    let vfori;
+    if (isInFor(node)) {
+        vfori = getIterator(node);
+    }
 
     const hasFilter = (props.length + texts.filter(t => t).length) > 0;
     return (hasFilter || vfor || vif || velseif)
@@ -142,6 +148,7 @@ function getFilters(node) {
             p: props,
             t: texts,
             vfor,
+            vfori,
             vif,
             velseif
         }
@@ -156,12 +163,17 @@ function getGenData(options) {
             const fid = filterIdCounter++;
             el._fid = fid;
             el._filters = filters;
+
+            const fidStr = filters.vfori
+                ? `'${fid}_' + ${filters.vfori}`
+                : `'${fid}'`;
             let data = [
-                `fid: ${fid}`,
+                `fid: ${fidStr}`,
                 `t: [${filters.t.join(',')}]`,
                 `p: ${JSON.stringify(filters.p)}`
             ];
             filters.vfor && data.push(`for: ${filters.vfor}`);
+            filters.vfori && data.push(`fori: ${filters.vfori}`);
             filters.velseif && data.push('if: true');
             filters.vif && data.push('if: true');
             const dataStr = `f: { ${data.join(', ')} },`;

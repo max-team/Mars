@@ -86,19 +86,19 @@ describe('[swan]directive:events', () => {
         });
     });
 
-    test('v-on:tap="onTap(a, b, $event, c)"', () => {
-        // const key = 'v-on:tap';
-        const param = 'tap';
-        const value = 'onTap(a, b, $event, c)';
-        let attrs = {};
-        dirEvents(param, value, attrs);
+    // test('v-on:tap="onTap(a, b, $event, c)"', () => {
+    //     // const key = 'v-on:tap';
+    //     const param = 'tap';
+    //     const value = 'onTap(a, b, $event, c)';
+    //     let attrs = {};
+    //     dirEvents(param, value, attrs);
 
-        expect(attrs).toEqual({
-            datatapeventproxy: 'onTap',
-            bindtap: 'handleProxy',
-            datatapargumentsproxy: `{{ [ a,b,'_$event_',c ] }}`
-        });
-    });
+    //     expect(attrs).toEqual({
+    //         datatapeventproxy: 'onTap',
+    //         bindtap: 'handleProxy',
+    //         datatapargumentsproxy: `{{ [ a,b,'_$event_',c ] }}`
+    //     });
+    // });
 });
 
 describe('[swan]directive:for', () => {
