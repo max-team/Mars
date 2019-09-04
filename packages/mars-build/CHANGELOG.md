@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.56](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.55...@marsjs/build@0.2.56) (2019-09-04)
+
+
+### Bug Fixes
+
+* **build:** fix filters in v-for and scoped-var in v-on args ([#172](https://github.com/max-team/Mars/issues/172)) ([1918b8a](https://github.com/max-team/Mars/commit/1918b8a))
+
+
+
+
+
 ## [0.2.55](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.54...@marsjs/build@0.2.55) (2019-08-21)
 
 
