@@ -14,15 +14,43 @@ const {
     changeSlotPropsBind
 } = require('./module/scopedSlot');
 
-function attrsFormat(attrs = {}) {
+function attrsFormat(node, attrs = {}) {
     const obj = {};
 
     Object.keys(attrs).forEach(key => {
-        const val = attrs[key];
+        let val = attrs[key];
         key = key.replace(/^@/, 'v-on:').replace(/^:/, 'v-bind:');
+
+        // 支持函数调用带参数 预处理
+        if (key.indexOf('v-on:') === 0) {
+            const [dir, param] = key.split(':');
+            const [eventName] = param.split('.');
+            if (val.indexOf('(') > -1) {
+                const matches = val.match(/([^(]+)\(([^)]+)\)/);
+                if (matches) {
+                    const handlerName = matches[1].trim();
+                    let args = matches[2];
+                    // mark $event to special string
+                    args = args.split(',').map(a => {
+                        a = a.trim();
+                        return a === '$event' ? '\'_$event_\'' : a;
+                    });
+                    args = `[ ${args.join(',')} ]`;
+
+                    // modify handlerName and gen args bind
+                    val = handlerName;
+                    obj[`v-bind:data${eventName}ArgumentsProxy`.toLowerCase()] = args;
+                }
+            }
+        }
 
         obj[key] = val;
     });
+
+    if (node.isComp) {
+        obj['v-bind:rootComputed'] = 'compComputed || rootComputed';
+        obj['v-bind:rootUID'] = 'rootUID';
+    }
 
     return obj;
 }
@@ -94,30 +122,36 @@ function transFilters(node, options) {
     const {_fid: fid, _filters: filters} = node;
     /* eslint-enable fecs-camelcase */
     if (fid !== undefined) {
+        const fidStr = filters.vfori
+                ? `'${fid}_' + ${filters.vfori}`
+                : `'${fid}'`;
+        let fPrefix = `_f_[${fidStr}]`;
+
+        // vfor 节点上的值取 ${fid}_0 上的
+        if (filters.vfori && filters.vfor) {
+            node.for = `_f_['${fid}_0']._for`;
+        }
+
         filters.p.forEach(name => {
-            const val = `_f_[${fid}]._p.${name}`;
+            const val = `${fPrefix}._p.${name}`;
             node.attrsMap['v-bind:' + name] = val;
         });
 
         filters.t.forEach((item, index) => {
             if (item && node.children && node.children[index]) {
                 let child = node.children[index];
-                let token = `_f_[${fid}]._t[${index}]`;
+                let token = `${fPrefix}._t[${index}]`;
                 child.tokens = [{'@binding': token}];
                 child.text = `{{ ${token} }}`;
             }
         });
 
-        if (filters.vfor) {
-            node.for = `_f_[${fid}]._for`;
-        }
-
         if (filters.vif) {
-            node.attrsMap['v-if'] = `_f_[${fid}]._if`;
+            node.attrsMap['v-if'] = `${fPrefix}._if`;
         }
 
         if (filters.velseif) {
-            node.attrsMap['v-else-if'] = `_f_[${fid}]._if`;
+            node.attrsMap['v-else-if'] = `${fPrefix}._if`;
         }
     }
 
@@ -127,7 +161,7 @@ function transFilters(node, options) {
 const nodeProcesser = {
     preProcess(nodeType, node, options) {
         // 格式化 attrsMap
-        node.attrsMap = attrsFormat(node.attrsMap);
+        node.attrsMap = attrsFormat(node, node.attrsMap);
 
         switch (nodeType) {
             // 声明了 slot-scope 变量，内部都要进行替换
@@ -140,7 +174,7 @@ const nodeProcesser = {
                 options.slotScope = node.slotScope;
                 break;
 
-                // slot 标签，需要记录并修改 bind 值
+            // slot 标签，需要记录并修改 bind 值
             case NODE_TYPES.SLOT:
                 node.attrsMap = processScopedSlotAttrs(node.attrsMap);
                 break;
@@ -154,11 +188,6 @@ const nodeProcesser = {
     process(nodeType, node, options) {
         // computed
         const computedKeys = (options && options.computedKeys) || [];
-        if (node.isComp) {
-            node.attrsMap['v-bind:rootComputed'] = 'compComputed || rootComputed';
-            node.attrsMap['v-bind:rootUID'] = 'rootUID';
-        }
-
         if (computedKeys.length > 0) {
             node = modifyBind(node, getComputedModifier(computedKeys));
         }

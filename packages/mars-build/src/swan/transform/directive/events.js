@@ -16,21 +16,21 @@ module.exports = function dirEvents(param, val, attrs) {
     let eventNameKey = (eventNameMap.includes('stop') ? 'catch' : 'bind') + eventName;
     attrs[eventNameKey] = 'handleProxy';
     // 支持函数调用带参数
-    if (val.indexOf('(') > -1) {
-        const matches = val.match(/([^(]+)\(([^)]+)\)/);
-        if (matches) {
-            val = matches[1].trim();
-            let args = matches[2];
-            // mark $event to special string
-            args = args.split(',').map(a => {
-                a = a.trim();
-                return a === '$event' ? '\'_$event_\'' : a;
-            });
-            args = `[ ${args.join(',')} ]`;
+    // if (val.indexOf('(') > -1) {
+    //     const matches = val.match(/([^(]+)\(([^)]+)\)/);
+    //     if (matches) {
+    //         val = matches[1].trim();
+    //         let args = matches[2];
+    //         // mark $event to special string
+    //         args = args.split(',').map(a => {
+    //             a = a.trim();
+    //             return a === '$event' ? '\'_$event_\'' : a;
+    //         });
+    //         args = `[ ${args.join(',')} ]`;
 
-            attrs[`data${eventName}ArgumentsProxy`.toLowerCase()] = `{{ ${args} }}`;
-        }
-    }
+    //         attrs[`data${eventName}ArgumentsProxy`.toLowerCase()] = `{{ ${args} }}`;
+    //     }
+    // }
 
     attrs[`data${eventName}EventProxy`.toLowerCase()] = val;
     // return attrs;
