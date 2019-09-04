@@ -322,6 +322,7 @@ module.exports.markH5 = function markH5(source, options) {
                 // componentsInUsed map is hyphenated
                 // so transform h5 tag into hyphenated to match it
                 el.tag = hyphenate(el.tag);
+
                 let basicCompMap = {};
                 delToVueTag(el, {
                     basicCompMap,
