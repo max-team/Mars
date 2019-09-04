@@ -2,7 +2,8 @@
  * @file global api
  * @author mars
  */
-// import Mars, {directives} from '${apiLibrary}'
+
+import {Mars, directives} from './export';
 
 /**
  * 判断变量是否为对象

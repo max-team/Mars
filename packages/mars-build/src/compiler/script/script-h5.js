@@ -206,7 +206,7 @@ exports.compileScript = async function (content, options = {}) {
     resolveComponentsPath(components, usedMoudles);
     await compileModules.compileUIModules(uiModules, destPath);
 
-    return {config, components, enableConfig, content};
+    return {config, components, enableConfig, code: content};
 };
 
 exports.postCompileScript = function (content, options = {}) {
