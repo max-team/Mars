@@ -1,7 +1,9 @@
 {
   "packages": [
     "packages/mars-core",
-    "packages/mars-build"
+    "packages/mars-build",
+    "packages/mars-cli",
+    "packages/mars-cli-template"
   ],
   "command": {
     "publish": {
