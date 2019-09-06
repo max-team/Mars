@@ -144,7 +144,7 @@ program
             _isPreset: true,
             plugins: {
                 '@marsjs/cli-template': {
-                    version: '~0.1.0',
+                    version: '~0.3.0',
                     noH5: target === 'noH5',
                     needPWA
                 }
