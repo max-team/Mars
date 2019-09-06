@@ -5,5 +5,9 @@
  */
 export {default as Vue} from 'vue';
 export const config = {
-    $platform: 'h5'
+    $platform: 'h5',
+    router: {
+        mode: undefined,
+        base: undefined
+    }
 };

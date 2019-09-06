@@ -3,11 +3,15 @@
  * @author mars
  */
 
-import Vue from 'vue';
+// import {} from 'vue';
+import {config as appConfig, Vue} from '../index';
 import VueRouter from 'vue-router';
 import browserHistory from './browserHistory';
 import {routes, mode} from './export';
 Vue.use(VueRouter);
+
+const {router: routerConfig = {}} = appConfig;
+const {base, mode: runtimeMode} = routerConfig;
 
 routes.push({
     path: '*',
@@ -15,7 +19,9 @@ routes.push({
 });
 
 const router = new VueRouter({
-    mode, routes
+    mode: runtimeMode || mode || 'history',
+    base: base || '/',
+    routes
 });
 
 function guid() {

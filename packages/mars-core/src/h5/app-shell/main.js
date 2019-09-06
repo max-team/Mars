@@ -5,7 +5,8 @@
 
 
 /* globals Vue */
-import Vue from 'vue';
+// import Vue from 'vue';
+import {Vue} from '../index';
 
 // 引入公共样式
 import './mars-base.css';
