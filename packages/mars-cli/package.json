@@ -1,6 +1,6 @@
 {
   "name": "@marsjs/cli",
-  "version": "0.1.25",
+  "version": "0.3.0",
   "bin": {
     "mars": "./bin/mars.js"
   },

@@ -8,6 +8,7 @@ module.exports = function (options = {target: 'swan'}) {
         target,
         env
     } = options;
+
     const config = {
         projectFiles: ['project.swan.json', 'project.config.json'],
         source: ['src/**/*.vue'],

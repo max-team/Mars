@@ -9,6 +9,17 @@ module.exports = function (target) {
             showNavigationBorder: true,
             mode: 'hash',
             useTransition: true
+        },
+        postprocessors: {
+            postcss: {
+                options: {
+                    plugins: [
+                        require('autoprefixer')({
+                            browsers: ['iOS >= 7', 'android >= 2.3']
+                        })
+                    ]
+                }
+            }
         }
     };
 

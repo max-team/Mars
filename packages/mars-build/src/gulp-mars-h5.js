@@ -56,13 +56,13 @@ const compilers = {
 };
 const {parse: sfcParser} = require('./compiler/sfc/parser');
 const {
-    compileScript,
-    postCompileScript,
-    compileRouter,
-    compileMain,
-    compileApp,
+    // compileScript,
+    // postCompileScript,
+    // compileRouter,
+    // compileMain,
+    // compileApp,
     compileComponents,
-    compileApi,
+    // compileApi,
     compileTabBar
 } = require('./compiler/script/script-h5');
 // const delToVueTag = require('./h5/transform/tag');

@@ -10,6 +10,17 @@ module.exports = function (target) {
             mode: 'hash',
             useTransition: true,
             supportPWA: true
+        },
+        postprocessors: {
+            postcss: {
+                options: {
+                    plugins: [
+                        require('autoprefixer')({
+                            browsers: ['iOS >= 7', 'android >= 2.3']
+                        })
+                    ]
+                }
+            }
         }
     };
 
