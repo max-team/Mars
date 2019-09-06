@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.1-alpha.0](https://github.com/max-team/Mars/compare/@marsjs/cli@0.1.25...@marsjs/cli@0.3.1-alpha.0) (2019-09-06)
+
+
+### Features
+
+* update cli and cli-template for 0.3.x ([aae03c1](https://github.com/max-team/Mars/commit/aae03c1))
+
+
+
+
+
 ## [0.1.25](https://github.com/max-team/Mars/compare/@marsjs/cli@0.1.24...@marsjs/cli@0.1.25) (2019-06-27)
 
 
