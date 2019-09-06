@@ -55,10 +55,12 @@ exports.compileRouter = function (content, options) {
     const routes = pages.concat(subPages, envPages);
 
     const mode = mars && mars.mode ? mars.mode : 'history';
+    const base = mars && mars.base ? mars.base : '/';
     const routerRet = babel.transform(content.toString(), {
         plugins: [transformRouterPlugin({
             routes,
-            mode
+            mode,
+            base
         })]
     });
 

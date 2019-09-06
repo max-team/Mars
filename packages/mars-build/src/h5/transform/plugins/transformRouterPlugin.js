@@ -21,7 +21,8 @@ module.exports = function getVisitor(options = {}) {
     return ({types: t}) => {
         const {
             routes,
-            mode
+            mode,
+            base
         } = options;
         return {
             visitor: {
@@ -57,11 +58,19 @@ module.exports = function getVisitor(options = {}) {
                             t.stringLiteral(`/${routes[0]}`)
                         )
                     ]));
-                    // 生成 routes
-                    path.node.arguments[0].properties[1].value.elements = routesArr;
-                    // 根据app.vue 里的 mars.mode 配置 前端路由模式
-                    path.node.arguments[0].properties[0].key.name === 'mode'
-                        && (path.node.arguments[0].properties[0].value = t.stringLiteral(mode));
+
+                    let properties = path.node.arguments[0].properties;
+                    properties.forEach(({key: {name}}, index) => {
+                        if (name === 'mode') {
+                            properties[index].value = t.stringLiteral(mode);
+                        }
+                        else if (name === 'base') {
+                            properties[index].value = t.stringLiteral(base);
+                        }
+                        else if (name === 'routes') {
+                            properties[index].value.elements = routesArr;
+                        }
+                    });
                 },
                 Program: {
                     // 在 exit 时才能拿到 file.config
