@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0-alpha.7](https://github.com/max-team/Mars/compare/@marsjs/build@0.3.0-alpha.6...@marsjs/build@0.3.0-alpha.7) (2019-09-06)
+
+
+### Features
+
+* **build:** build improve ([#174](https://github.com/max-team/Mars/issues/174)) ([e1c8446](https://github.com/max-team/Mars/commit/e1c8446)), closes [#161](https://github.com/max-team/Mars/issues/161)
+* update cli and cli-template for 0.3.x ([aae03c1](https://github.com/max-team/Mars/commit/aae03c1))
+
+
+
+
+
 # [0.3.0-alpha.6](https://github.com/max-team/Mars/compare/@marsjs/build@0.3.0-alpha.5...@marsjs/build@0.3.0-alpha.6) (2019-08-30)
 
 
