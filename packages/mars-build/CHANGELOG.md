@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0-alpha.9](https://github.com/max-team/Mars/compare/@marsjs/build@0.3.0-alpha.8...@marsjs/build@0.3.0-alpha.9) (2019-09-09)
+
+
+### Features
+
+* **build & cli & cli-template:** h5 serve use dest path ([a576ebe](https://github.com/max-team/Mars/commit/a576ebe))
+
+
+
+
+
 # [0.3.0-alpha.8](https://github.com/max-team/Mars/compare/@marsjs/build@0.3.0-alpha.7...@marsjs/build@0.3.0-alpha.8) (2019-09-06)
 
 **Note:** Version bump only for package @marsjs/build
