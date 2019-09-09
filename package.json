@@ -3,7 +3,7 @@
   "version": "0.3.0-alpha.0",
   "private": true,
   "scripts": {
-    "version": "lerna version prerelease --conventional-commits",
+    "version": "lerna version patch --conventional-commits",
     "publish": "lerna publish from-git --dist-tag alpha --registry https://registry.npmjs.org",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs && cp docs/.vuepress/index.html docs/.vuepress/dist",
