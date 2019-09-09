@@ -27,17 +27,23 @@ async function executeCommand(command, args, targetDir) {
     return res;
 }
 
-const dependencyList = [
-    '@marsjs/build',
-    '@marsjs/core'
-];
-const dependencyListH5 = [
-    '@marsjs/components',
-    '@marsjs/api',
-    'atom-web-compiler',
-    'atom2vue-loader',
-    '@marsjs/vue-cli-plugin-mars-web'
-];
+const {
+    dependencyList,
+    dependencyListH5
+} = require('./helper/utils');
+
+// const dependencyList = [
+//     '@marsjs/build',
+//     '@marsjs/core',
+//     '@marsjs/cli-template'
+// ];
+// const dependencyListH5 = [
+//     '@marsjs/components',
+//     '@marsjs/api',
+//     'atom-web-compiler',
+//     'atom2vue-loader',
+//     '@marsjs/vue-cli-plugin-mars-web'
+// ];
 
 function getDependencyList() {
     if (fs.existsSync(process.cwd() + '/vue.config.js')) {

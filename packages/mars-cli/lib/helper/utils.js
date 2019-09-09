@@ -11,7 +11,8 @@ let version;
 
 const dependencyList = [
     '@marsjs/build',
-    '@marsjs/core'
+    '@marsjs/core',
+    '@marsjs/cli-template'
 ];
 const dependencyListH5 = [
     '@marsjs/components',

@@ -29,15 +29,12 @@ async function build(cmd) {
     }
     process.env.MARS_CLI_OPTIONS = JSON.stringify(options);
     process.env.MARS_CLI_TARGET = target;
+    process.env.MARS_CLI_ENV = env;
     // process.env.MARS_CLI_DEST = env ? `./dist-${env}` : './dist-h5';
     process.env.MARS_ENV_TARGET = `${target}${env ? `:${env}` : ''}`;
 
     const {dest} = getBuildConfig(options);
     const servePath = dest.servePath;
-
-    if (env) {
-        process.env.VUE_CLI_SERVICE_CONFIG_PATH = `${process.cwd()}/vue.config.${env}.js`;
-    }
 
     const run = cmd.watch ? watch : build;
 

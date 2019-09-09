@@ -20,16 +20,23 @@ function getProjectConfig(target) {
 
 // 兼容原 Task 的配置格式
 function formatConfig(options) {
-    const target = process.env.MARS_ENV_TARGET || options.target;
-    let config = getProjectConfig(target);
+    const target = options.target;
+    const targetEnv = process.env.MARS_ENV_TARGET || target;
+    let config = getProjectConfig(targetEnv);
 
-    config = merge(getDefaultConf(target), config);
-    const servePath = config.dest.replace(/\/src$/, '');
+    config = merge(getDefaultConf(targetEnv), config);
+    const destPath = config.dest;
     config.dest = {
-        path: servePath + '/src',
-        servePath,
+        path: destPath,
         coreDir: 'mars-core'
     };
+
+    if (target === 'h5') {
+        const servePath = destPath.replace(':', '-').replace(/\/src$/, '');
+        config.dest.path = servePath + '/src';
+        config.dest.servePath = servePath;
+    }
+
     config.source = {
         sfc: config.source,
         assets: config.assets

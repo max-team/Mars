@@ -4,12 +4,13 @@
  */
 
 module.exports = function (target) {
+    const CLI_TARGET = process.env.MARS_CLI_TARGET || target;
 
     const config = {
         projectFiles: ['project.swan.json', 'project.config.json'],
         source: ['src/**/*.vue'],
-        dest: `./dist-${target.replace(':', '-')}`,
-        assets: target === 'h5' ? [
+        dest: `./dist-${target}`,
+        assets: CLI_TARGET === 'h5' ? [
             'src/**/*.!(vue|swan|wxml)'
         ]
         : [
@@ -21,7 +22,7 @@ module.exports = function (target) {
         modules: {
             postcss: {
                 px2units: {
-                    targetUnits: target === 'h5' ? 'rem' : 'rpx'
+                    targetUnits: CLI_TARGET === 'h5' ? 'rem' : 'rpx'
                 }
             }
         },

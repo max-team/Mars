@@ -46,35 +46,41 @@ const context = path.resolve(process.cwd(), args.path);
 
 (async () => {
     // 需要初始化
-    if (!fs.existsSync(context + '/vue.config.js')) {
-        const source = path.resolve(__dirname, '../generator/dist-h5');
-        const globby = require('globby');
+    // if (!fs.existsSync(context + '/vue.config.js')) {
+    //     const source = path.resolve(__dirname, '../generator/dist-h5');
+    //     const globby = require('globby');
 
-        const files = await globby(['**/*'], {cwd: source});
-        for (const rawPath of files) {
-            const targetPath = context + '/' + rawPath.split('/').map(filename => {
-                // dotfiles are ignored when published to npm, therefore in templates
-                // we need to use underscore instead (e.g. "_gitignore")
-                if (filename.charAt(0) === '_' && filename.charAt(1) !== '_') {
-                    return `.${filename.slice(1)}`;
-                }
-                if (filename.charAt(0) === '_' && filename.charAt(1) === '_') {
-                    return `${filename.slice(1)}`;
-                }
-                return filename;
-            }).join('/');
+    //     const files = await globby(['**/*'], {cwd: source});
+    //     for (const rawPath of files) {
+    //         const targetPath = context + '/' + rawPath.split('/').map(filename => {
+    //             // dotfiles are ignored when published to npm, therefore in templates
+    //             // we need to use underscore instead (e.g. "_gitignore")
+    //             if (filename.charAt(0) === '_' && filename.charAt(1) !== '_') {
+    //                 return `.${filename.slice(1)}`;
+    //             }
+    //             if (filename.charAt(0) === '_' && filename.charAt(1) === '_') {
+    //                 return `${filename.slice(1)}`;
+    //             }
+    //             return filename;
+    //         }).join('/');
 
-            const sourcePath = path.resolve(source, rawPath);
+    //         const sourcePath = path.resolve(source, rawPath);
 
-            await fs.copy(sourcePath, targetPath);
-        }
-    }
-
-    if (!fs.existsSync(process.cwd() + '/vue.config.js')) {
+    //         await fs.copy(sourcePath, targetPath);
+    //     }
+    // }
+    const baseConfigPath = process.cwd() + '/vue.config.js';
+    if (!fs.existsSync(baseConfigPath)) {
         console.error(chalk.red('vue.config.js 文件未找到，请确认当前所在工程支持编译到 h5。'));
     }
+
     if (!process.env.VUE_CLI_SERVICE_CONFIG_PATH) {
-        process.env.VUE_CLI_SERVICE_CONFIG_PATH = process.cwd() + '/vue.config.js';
+        const env = process.env.MARS_CLI_ENV;
+        const envConfigPath = env && `${process.cwd()}/vue.config.${env}.js`;
+        const configPath = envConfigPath && fs.existsSync(envConfigPath)
+                            ? envConfigPath
+                            : baseConfigPath;
+        process.env.VUE_CLI_SERVICE_CONFIG_PATH = configPath;
     }
     // await fs.copy(process.cwd() + '/vue.config.js', context + '/vue.config.js');
 

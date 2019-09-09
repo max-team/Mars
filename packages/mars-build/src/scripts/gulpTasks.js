@@ -155,7 +155,8 @@ function getTaskRuntime(config, options) {
  */
 function getTaskClean(config, options) {
     const {projectFiles} = config;
-    let dest = config.dest.path;
+    // clean servePath for h5
+    let dest = config.dest.servePath || config.dest.path;
     return callback => {
         let files = [`${dest}/**`, `!${dest}`].concat(projectFiles
             ? (projectFiles.map(item => `!${dest}/${item}`))
