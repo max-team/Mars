@@ -198,12 +198,12 @@ export default {
     },
     mounted() {
         const {
-            list: tabBarList,
+            list: tabBarList = [],
             backgroundColor,
             borderStyle,
             selectedColor,
             color
-        } = this.tabBars;
+        } = this.tabBars || {};
         this.tabList = tabBarList;
         color && (this.tabBarColor = color);
         selectedColor && (this.tabBarSelectedColor = selectedColor);
