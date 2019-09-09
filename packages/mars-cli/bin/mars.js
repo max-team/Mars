@@ -123,12 +123,12 @@ program
                     message: 'H5 是否需要支持 PWA：',
                     choices: [
                         {
-                            name: '需要',
-                            value: 'need'
-                        },
-                        {
                             name: '不需要',
                             value: 'no'
+                        },
+                        {
+                            name: '需要',
+                            value: 'need'
                         }
                     ]
                 }

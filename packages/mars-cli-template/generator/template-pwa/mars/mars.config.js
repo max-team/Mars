@@ -16,7 +16,7 @@ module.exports = function (target) {
                 options: {
                     plugins: [
                         require('autoprefixer')({
-                            browsers: ['iOS >= 7', 'android >= 2.3']
+                            overrideBrowserslist: ['iOS >= 7', 'android >= 2.3']
                         })
                     ]
                 }
