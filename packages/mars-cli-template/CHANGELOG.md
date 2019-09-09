@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.1-alpha.2](https://github.com/max-team/Mars/compare/@marsjs/cli-template@0.3.1-alpha.1...@marsjs/cli-template@0.3.1-alpha.2) (2019-09-09)
+
+
+### Features
+
+* **build & cli & cli-template:** support target with env ([9a4afe6](https://github.com/max-team/Mars/commit/9a4afe6))
+
+
+
+
+
 ## [0.3.1-alpha.1](https://github.com/max-team/Mars/compare/@marsjs/cli-template@0.3.1-alpha.0...@marsjs/cli-template@0.3.1-alpha.1) (2019-09-09)
 
 
