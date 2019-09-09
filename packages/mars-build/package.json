@@ -21,6 +21,7 @@
         "gulp-util": "^3.0.8",
         "less": "^3.9.0",
         "lodash.merge": "^4.6.1",
+        "md5": "^2.2.1",
         "mkdirp": "^0.5.1",
         "node-sass": "^4.11.0",
         "postcss": "^7.0.14",

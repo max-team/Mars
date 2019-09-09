@@ -25,6 +25,7 @@ const mkdirp = require('mkdirp');
 const Vinyl = require('vinyl');
 const log = require('./helper/log');
 const slash = require('slash');
+const md5 = require('md5');
 
 const {getFileCompilers} = require('./compiler/file/base');
 
@@ -284,7 +285,8 @@ async function compile(file, opt) {
 
             let routes = [];
             pages.forEach(page => {
-                const name = page.replace(/\//g, '$');
+                const name = `_${md5(page).substr(0, 8)}`;
+                // const name = page.replace(/\//g, '$');
                 content += `import ${name} from './${page}.vue';\n`;
                 routes.push({
                     path: '/' + page,
