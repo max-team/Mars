@@ -9,8 +9,9 @@
  *
  */
 /* eslint-disable fecs-camelcase */
+/* eslint-disable babel/new-cap */
 
-const {transform, transformFromAst} = require('babel-core');
+const {transformSync, transformFromAstSync} = require('@babel/core');
 
 const CURLY_BRACE_HAS_REGEXP = /{[\s\S]*}/;
 
@@ -33,10 +34,9 @@ module.exports = function (name, value, attrs, node) {
 
 function transformStyle(value) {
     let source = `(${value})`;
-    const ast = transform(source, {
+    let code = transformSync(source, {
         plugins: [transformPlugin()]
-    }).ast;
-    let code = transformFromAst(ast).code;
+    }).code;
     code = code.replace(/\;$/, '');
     code = code.replace(/^\(|\)$/g, '');
     return code;
@@ -60,7 +60,7 @@ function transformPlugin(options = {}) {
                             ? key.value
                             : key.name.replace(/([A-Z])/g, '-$1').toLowerCase();
 
-                        value = transformFromAst({
+                        value = transformFromAstSync({
                             type: 'Program',
                             body: [value]
                         }).code;

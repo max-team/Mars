@@ -6,15 +6,16 @@
 /* eslint-disable fecs-no-require */
 /* eslint-disable no-native-reassign */
 /* eslint-disable fecs-min-vars-per-destructure */
-const babel = require('babel-core');
+const {transformSync} = require('@babel/core');
+
 const fs = require('fs');
 const mkdirp = require('mkdirp');
 const transformScriptPlugin = require('../../h5/transform/plugins/transformScriptPlugin');
 const transformMainPlugin = require('../../h5/transform/plugins/transformMainPlugin');
 const transformCompPlugin = require('../../h5/transform/plugins/transformCompPlugin');
 const transformRouterPlugin = require('../../h5/transform/plugins/transformRouterPlugin');
-const transformAppPlugin = require('../../h5/transform/plugins/transformAppPlugin');
-const transformGetAppPlugin = require('../../h5/transform/plugins/transformGetAppPlugin');
+// const transformAppPlugin = require('../../h5/transform/plugins/transformAppPlugin');
+// const transformGetAppPlugin = require('../../h5/transform/plugins/transformGetAppPlugin');
 const postTransformScriptPlugin = require('./babel-plugin-script-post');
 
 const MARS_ENV = process.env.MARS_ENV_TARGET || 'h5';
@@ -56,14 +57,13 @@ exports.compileRouter = function (content, options) {
     const routes = pages.concat(subPages, envPages);
 
     const mode = mars && mars.mode ? mars.mode : 'history';
-    const routerRet = babel.transform(content.toString(), {
+    const routerStr = transformSync(content.toString(), {
         plugins: [transformRouterPlugin({
             routes,
             mode
         })]
-    });
+    }).code;
 
-    const routerStr = babel.transformFromAst(routerRet.ast).code;
     content = new Buffer(routerStr);
 
     return content;
@@ -77,13 +77,13 @@ exports.compileComponents = function (file, options) {
     });
     const devCompPath = options.devCompPath;
     file.contents = new Buffer('export default basicComponents;');
-    const componentsRet = babel.transform(file.contents.toString(), {
+    const componentsStr = transformSync(file.contents.toString(), {
         plugins: [transformCompPlugin({
             componentSet,
             devCompPath
         })]
-    });
-    const componentsStr = babel.transformFromAst(componentsRet.ast).code;
+    }).code;
+
     file.contents = new Buffer(componentsStr);
 
     return file;
@@ -114,7 +114,7 @@ exports.compileMain = function (content, options) {
         color,
         selectedColor
     };
-    const mainRet = babel.transform(content.toString(), {
+    const mainStr = transformSync(content.toString(), {
         plugins: [transformMainPlugin({
             routes: list,
             tabBarStyle,
@@ -131,8 +131,7 @@ exports.compileMain = function (content, options) {
             componentSet,
             pagesInfo
         })]
-    });
-    const mainStr = babel.transformFromAst(mainRet.ast).code;
+    }).code;
     content = new Buffer(mainStr);
     return content;
 };
@@ -163,7 +162,7 @@ exports.compileScript = async function (content, options = {}) {
         JSON.stringify(process.env.NODE_ENV || 'development')
     );
     const useAOP = mars.useAOP === undefined ? true : mars.useAOP;
-    const scriptRet = babel.transform(content, {
+    let scriptStr = transformSync(content, {
         plugins: [
             transformScriptPlugin({
                 baseOptions,
@@ -172,17 +171,17 @@ exports.compileScript = async function (content, options = {}) {
                 useAOP
             })
         ]
-    });
-    let scriptStr = babel.transformFromAst(scriptRet.ast).code;
+    }).code;
+    // let scriptStr = babel.transformFromAst(scriptRet.ast).code;
     // 处理完再进行minify，发现minify和定制的插件会有坑
-    const cleanScriptAst = babel.transform(scriptStr, {
+    scriptStr = transformSync(scriptStr, {
         plugins: [
             'minify-guarded-expressions',
             'minify-dead-code-elimination'
         ]
-    });
-    scriptStr = babel.transformFromAst(cleanScriptAst.ast).code;
-    content = new Buffer(scriptStr);
+    }).code;
+    // scriptStr = babel.transformFromAst(cleanScriptAst.ast).code;
+    // content = new Buffer(scriptStr);
 
     const {config = {}, components = {}, enableConfig = null} = baseOptions;
     const uiModules = getUIModules(components, target);
@@ -190,7 +189,7 @@ exports.compileScript = async function (content, options = {}) {
     const rPath = path.relative(path.dirname(options.path), destPath);
 
     let usedMoudles = {};
-    content = babel.transform(content, {
+    content = transformSync(scriptStr, {
         plugins: [
             [
                 path.resolve(__dirname, '../file/babel-plugin-relative-import.js'),
@@ -211,7 +210,7 @@ exports.compileScript = async function (content, options = {}) {
 
 exports.postCompileScript = function (content, options = {}) {
     const {componentsInUsed} = options;
-    return babel.transform(content, {
+    return transformSync(content, {
         plugins: [
             postTransformScriptPlugin({
                 componentsInUsed
@@ -224,7 +223,7 @@ exports.compileApp = function (script) {
     const content = script.content;
     // let customExp = {}; // 收集 用户 自定义 数据和方法
     // console.log(content.toString());
-    // const scriptRet = babel.transform(content, {
+    // const scriptRet = transformSync(content, {
     //     plugins: [
     //         transformAppPlugin({
     //             customExp
@@ -233,13 +232,13 @@ exports.compileApp = function (script) {
     // });
     // let scriptStr = babel.transformFromAst(scriptRet.ast).code;
     // 处理完再进行minify，发现minify和定制的插件会有坑
-    const cleanScriptAst = babel.transform(content, {
+    const scriptStr = transformSync(content, {
         plugins: [
             'minify-guarded-expressions',
             'minify-dead-code-elimination'
         ]
-    });
-    const scriptStr = babel.transformFromAst(cleanScriptAst.ast).code;
+    }).code;
+    // const scriptStr = babel.transformFromAst(cleanScriptAst.ast).code;
 
     // 更新 APP.vue script
     const newContent = `

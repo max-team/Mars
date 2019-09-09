@@ -5,7 +5,7 @@
 
 /* eslint-disable fecs-min-vars-per-destructure */
 
-const {transform, transformFromAst} = require('babel-core');
+const {transformSync} = require('@babel/core');
 const transformPlugin = require('./babel-plugin-computed');
 
 // test cases
@@ -18,12 +18,12 @@ function compile(source, options) {
     }
 
     const {computedKeys} = options;
-    const {ast} = transform(source, {
+    let code = transformSync(source, {
         plugins: [transformPlugin({
             computedKeys
         })]
-    });
-    let code = transformFromAst(ast).code;
+    }).code;
+    // let code = transformFromAst(ast).code;
     code = code.replace(/\;$/, '');
     if (isObj) {
         code = code.replace(/^\(|\)$/g, '');
