@@ -3,16 +3,12 @@
  * @author zhangwentao <winty2013@gmail.com>
  */
 
-module.exports = function (options = {target: 'swan'}) {
-    const {
-        target,
-        env
-    } = options;
+module.exports = function (target) {
 
     const config = {
         projectFiles: ['project.swan.json', 'project.config.json'],
         source: ['src/**/*.vue'],
-        dest: target === 'h5' ? `./dist-${env || 'h5'}/src` : `./dist-${target}`,
+        dest: `./dist-${target.replace(':', '-')}`,
         assets: target === 'h5' ? [
             'src/**/*.!(vue|swan|wxml)'
         ]

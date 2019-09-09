@@ -8,11 +8,11 @@ const fs = require('fs-extra');
 const merge = require('lodash.merge');
 const getDefaultConf = require('./defaultConfig');
 
-function getProjectConfig(options) {
+function getProjectConfig(target) {
     let projectConfig = {};
     const configPath = path.resolve(process.cwd(), './mars.config.js');
     if (fs.existsSync(configPath)) {
-        projectConfig = require(configPath)(process.env.MARS_ENV_TARGET || options.target || 'swan');
+        projectConfig = require(configPath)(target);
     }
 
     return projectConfig;
@@ -20,15 +20,14 @@ function getProjectConfig(options) {
 
 // 兼容原 Task 的配置格式
 function formatConfig(options) {
-    let config = getProjectConfig(options);
-    const {
-        target,
-        env
-    } = options;
-    config = merge(getDefaultConf({target, env}), config);
+    const target = process.env.MARS_ENV_TARGET || options.target;
+    let config = getProjectConfig(target);
 
+    config = merge(getDefaultConf(target), config);
+    const servePath = config.dest.replace(/\/src$/, '');
     config.dest = {
-        path: config.dest,
+        path: servePath + '/src',
+        servePath,
         coreDir: 'mars-core'
     };
     config.source = {

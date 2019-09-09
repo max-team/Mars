@@ -278,6 +278,9 @@ async function compile(file, opt) {
                 });
                 content += `export const tabBars = ${JSON.stringify(tabBars)};\n\n`;
             }
+            else {
+                content += 'export const tabBars = null;\n\n';
+            }
 
             let routes = [];
             pages.forEach(page => {

@@ -16,7 +16,8 @@ async function build(cmd) {
     const {
         build,
         watch,
-        clean
+        clean,
+        getConfig: getBuildConfig
     } = require(buildPath);
 
     const options = {
@@ -28,8 +29,11 @@ async function build(cmd) {
     }
     process.env.MARS_CLI_OPTIONS = JSON.stringify(options);
     process.env.MARS_CLI_TARGET = target;
-    process.env.MARS_CLI_DEST = env ? `./dist-${env}` : './dist-h5';
+    // process.env.MARS_CLI_DEST = env ? `./dist-${env}` : './dist-h5';
     process.env.MARS_ENV_TARGET = `${target}${env ? `:${env}` : ''}`;
+
+    const {dest} = getBuildConfig(options);
+    const servePath = dest.servePath;
 
     if (env) {
         process.env.VUE_CLI_SERVICE_CONFIG_PATH = `${process.cwd()}/vue.config.${env}.js`;
@@ -40,7 +44,10 @@ async function build(cmd) {
     clean(options).once('stop', () => {
         run(options).once('stop', () => {
             if (target === 'h5') {
-                const child = execa('npm', ['run', 'build-dist-h5']);
+                // const child = execa('npm', ['run', 'build-dist-h5']);
+                const args = ['mars-cli-service', 'serve', '--path', servePath];
+                console.log('[serve h5]', args.join(' '));
+                const child = execa('npx', args);
                 child.stdout.pipe(process.stdout);
                 child.stderr.pipe(process.stderr);
             }
