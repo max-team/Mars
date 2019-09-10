@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.2](https://github.com/max-team/Mars/compare/@marsjs/core@0.3.1...@marsjs/core@0.3.2) (2019-09-10)
+
+
+### Bug Fixes
+
+* **core & build:** remove rootComputed ([8913128](https://github.com/max-team/Mars/commit/8913128))
+
+
+
+
+
 ## [0.3.1](https://github.com/max-team/Mars/compare/@marsjs/core@0.3.0...@marsjs/core@0.3.1) (2019-09-10)
 
 
