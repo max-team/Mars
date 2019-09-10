@@ -6,8 +6,8 @@
 /* eslint-disable fecs-min-vars-per-destructure */
 
 const directive = require('./directive');
-const {getComputedModifier} = require('./module/computed');
-const {modifyBind} = require('./module/helper');
+// const {getComputedModifier} = require('./module/computed');
+// const {modifyBind} = require('./module/helper');
 const {judgeNodeType, NODE_TYPES} = require('./nodeTypes');
 const {
     processAttrs: processScopedSlotAttrs,
@@ -48,7 +48,7 @@ function attrsFormat(node, attrs = {}) {
     });
 
     if (node.isComp) {
-        node.attrsMap['v-bind:rootComputed'] = 'compComputed || rootComputed';
+        // node.attrsMap['v-bind:rootComputed'] = 'compComputed || rootComputed';
         node.attrsMap['v-bind:rootUID'] = 'rootUID';
     }
 
@@ -189,11 +189,11 @@ const nodeProcesser = {
     },
     process(nodeType, node, options) {
         // computed
-        const computedKeys = (options && options.computedKeys) || [];
+        // const computedKeys = (options && options.computedKeys) || [];
 
-        if (computedKeys.length > 0) {
-            node = modifyBind(node, getComputedModifier(computedKeys));
-        }
+        // if (computedKeys.length > 0) {
+        //     node = modifyBind(node, getComputedModifier(computedKeys));
+        // }
 
         // scoped slots 变量替换
         if (options.slotScope) {

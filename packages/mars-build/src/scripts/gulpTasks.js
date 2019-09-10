@@ -58,8 +58,6 @@ function getTaskSFC(config, options) {
         compileOption.commit = (type, key, val) => {
             h5Configs[type][key] = val;
         };
-        // for mars-cli-service
-        process.env.MARS_PWA = !!(config.h5 && config.h5.supportPWA);
         // for packages
         if (config.packages) {
             const {api, components} = config.packages;

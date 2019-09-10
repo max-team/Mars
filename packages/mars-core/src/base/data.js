@@ -13,7 +13,7 @@ import deepEqual from '../helper/deepEqual';
 import config from '../config';
 import {getMpUpdatedCallbacks} from './api/mpNextTick';
 
-const {framework = {}} = config;
+// const {framework = {}} = config;
 
 function cleanKeyPath(vm) {
     if (vm.__mpKeyPath) {
@@ -43,8 +43,8 @@ export function setData(vm, $mp, isRoot = false) {
         data = compareInitialData($mp, data);
 
         if (isRoot) {
-            const rootComputed = getAllComputed(vm);
-            data.rootComputed = rootComputed;
+            // const rootComputed = getAllComputed(vm);
+            // data.rootComputed = rootComputed;
             data.rootUID = $mp.__uid__;
         }
     }
@@ -57,34 +57,34 @@ export function setData(vm, $mp, isRoot = false) {
         const computed = getChangedComputed(vm);
         data = Object.assign(data, computed, changed);
         // 如果后续数据更新 需要计算新增的实例上的 computed 值
-        const skipLaterCalc = framework.computed && framework.computed.skipLaterCalc;
-        if (!skipLaterCalc && Object.keys(data).length > 0) {
-            const allComputed = getAllComputed(vm);
-            data = Object.keys(allComputed).length > 0
-                ? Object.assign(data, {
-                    [isRoot ? 'rootComputed' : 'compComputed']: allComputed
-                })
-                : data;
-        }
+        // const skipLaterCalc = framework.computed && framework.computed.skipLaterCalc;
+        // if (!skipLaterCalc && Object.keys(data).length > 0) {
+        //     const allComputed = getAllComputed(vm);
+        //     data = Object.keys(allComputed).length > 0
+        //         ? Object.assign(data, {
+        //             [isRoot ? 'rootComputed' : 'compComputed']: allComputed
+        //         })
+        //         : data;
+        // }
     }
 
     // if vm has _computedWatchers and has new data
     // set __inited__ true to use VM _computedWatchers data
     // need to sync comp rootComputed data
-    if (
-        !$mp.data.__inited__
-        && vm._computedWatchers
-        && Object.keys(vm._computedWatchers).length > 0
-        && Object.keys(data).length > 0
-    ) {
-        data.__inited__ = true;
-        const {rootComputed, compId} = $mp.data;
-        let computedProps = {};
-        if (rootComputed && compId) {
-            computedProps = rootComputed[compId] || {};
-        }
-        data = Object.assign(computedProps, data);
-    }
+    // if (
+    //     !$mp.data.__inited__
+    //     && vm._computedWatchers
+    //     && Object.keys(vm._computedWatchers).length > 0
+    //     && Object.keys(data).length > 0
+    // ) {
+    //     data.__inited__ = true;
+    //     const {rootComputed, compId} = $mp.data;
+    //     let computedProps = {};
+    //     if (rootComputed && compId) {
+    //         computedProps = rootComputed[compId] || {};
+    //     }
+    //     data = Object.assign(computedProps, data);
+    // }
 
     if (process.env.NODE_ENV !== 'production' && config.performance && mark) {
         const perfTagStart = `${perfTagPre}-data-start`;
@@ -129,13 +129,13 @@ export function setData(vm, $mp, isRoot = false) {
  */
 function compareInitialData($mp, data) {
     const mpData = $mp.data;
-    const {rootComputed, compId} = mpData;
-    let computedProps = {};
-    if (rootComputed && compId) {
-        computedProps = rootComputed[compId] || {};
-    }
+    // const {rootComputed, compId} = mpData;
+    // let computedProps = {};
+    // if (rootComputed && compId) {
+    //     computedProps = rootComputed[compId] || {};
+    // }
     Object.keys(data).forEach(key => {
-        let mpVal = mpData[key] !== undefined ? mpData[key] : computedProps[key];
+        let mpVal = mpData[key];
         if (mpVal !== undefined && deepEqual(data[key], mpVal)) {
             delete data[key];
         }
@@ -286,25 +286,25 @@ function getChangedComputed(vm) {
     return data;
 }
 
-function getAllComputed(vm, ret = {}) {
-    const compId = vm.compId;
-    const inited = vm.__swan_inited__;
-    // const inited = vm.$mp && vm.$mp.scope.data.__inited__;
-    // rootVM (Page) 上没有 compId, 也不需要取 _computedWatchers
-    if (compId && !inited) {
-        let keys = Object.keys(vm._computedWatchers || {});
-        if (keys.length > 0) {
-            let data = {};
-            keys.forEach(key => {
-                data[key] = vm[key];
-            });
-            ret[compId] = data;
-        }
-    }
+// function getAllComputed(vm, ret = {}) {
+//     const compId = vm.compId;
+//     const inited = vm.__swan_inited__;
+//     // const inited = vm.$mp && vm.$mp.scope.data.__inited__;
+//     // rootVM (Page) 上没有 compId, 也不需要取 _computedWatchers
+//     if (compId && !inited) {
+//         let keys = Object.keys(vm._computedWatchers || {});
+//         if (keys.length > 0) {
+//             let data = {};
+//             keys.forEach(key => {
+//                 data[key] = vm[key];
+//             });
+//             ret[compId] = data;
+//         }
+//     }
 
-    if (vm.$children) {
-        vm.$children.forEach(c => getAllComputed(c, ret));
-    }
+//     if (vm.$children) {
+//         vm.$children.forEach(c => getAllComputed(c, ret));
+//     }
 
-    return ret;
-}
+//     return ret;
+// }
