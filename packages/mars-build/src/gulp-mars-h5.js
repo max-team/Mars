@@ -266,7 +266,7 @@ async function compile(file, opt) {
         content += `export const mode = '${mode}';\n`;
 
         if (pagesInfo.app) {
-            const {tabBar, pages = [], window: appWin} = pagesInfo.app;
+            const {tabBar, pages = [], window: appWin, subPackages} = pagesInfo.app;
 
             if (tabBar && tabBar.list) {
                 const tabBarList = tabBar.list.map(tab => {
@@ -283,8 +283,19 @@ async function compile(file, opt) {
                 content += 'export const tabBars = null;\n\n';
             }
 
+            // 将 subPackages 添加到 H5 路由里面
+            let subPages = [];
+            if (subPackages && subPackages.length > 0) {
+                subPackages.forEach(item => {
+                    if (item.pages && item.pages.length > 0) {
+                        item.pages.forEach(route => {
+                            subPages.push(`${item.root}/${route}`);
+                        });
+                    }
+                });
+            }
             let routes = [];
-            pages.forEach(page => {
+            pages.concat(subPages).forEach(page => {
                 const name = `_${md5(page).substr(0, 8)}`;
                 // const name = page.replace(/\//g, '$');
                 content += `import ${name} from './${page}.vue';\n`;
