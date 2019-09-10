@@ -14,6 +14,7 @@ program
     .option('-r, --registry <url>', 'Use specified npm registry when installing dependencies (only for npm)')
     .option('-t, --target <target>', 'Build target (swan | h5 | wx, default: swan)')
     .option('-w, --watch', 'Open watch mode')
+    .option('--skipMars', 'Skip mars compile process, directly call vue cli serve')
     .action(cmd => {
         const build = require('../lib/build');
         const options = cleanArgs(cmd);

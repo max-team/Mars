@@ -144,7 +144,7 @@ program
             _isPreset: true,
             plugins: {
                 '@marsjs/cli-template': {
-                    version: '~0.3.0',
+                    version: '^0.3.0',
                     noH5: target === 'noH5',
                     needPWA
                 }
@@ -188,6 +188,7 @@ program
     .option('-r, --registry <url>', 'Use specified npm registry when installing dependencies (only for npm)')
     .option('-t, --target <target>', 'Build target (swan | h5 | wx, default: swan)')
     .option('-w, --watch', 'Open watch mode')
+    .option('--skipMars', 'Skip mars compile process, directly call vue cli serve')
     .action(cmd => {
         const options = cleanArgs(cmd);
         const buildPath = path.resolve(__dirname, './mars-build.js');
@@ -219,6 +220,7 @@ program
     .description('serve project in development mode')
     .option('-r, --registry <url>', 'Use specified npm registry when installing dependencies (only for npm)')
     .option('-t, --target <target>', 'Build target (swan | h5 | wx, default: swan)')
+    .option('--skipMars', 'Skip mars compile process, directly call vue cli serve')
     .action(cmd => {
         const options = cleanArgs(cmd);
         const buildPath = path.resolve(__dirname, './mars-serve.js');
@@ -238,6 +240,7 @@ program
                     }
                 }
             });
+
             execa('node', args, {
                 stdout: 'inherit',
                 stderr: 'inherit'

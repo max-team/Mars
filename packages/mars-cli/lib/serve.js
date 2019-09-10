@@ -32,18 +32,31 @@ async function start(cmd) {
     // process.env.MARS_CLI_DEST = env ? `./dist-${env}` : './dist-h5';
     process.env.MARS_ENV_TARGET = `${target}${env ? `:${env}` : ''}`;
 
-    const {dest} = getBuildConfig(options);
+    const {dest, h5: h5Config} = getBuildConfig(options);
     const servePath = dest.servePath;
+    // for mars-cli-service
+    process.env.MARS_PWA = !!(h5Config && h5Config.supportPWA);
+
+    function serveH5() {
+        // const child = execa('npm', ['run', 'serve-dist-h5']);
+        const args = ['mars-cli-service', 'serve', '--path', servePath];
+        console.log('[serve h5]', args.join(' '));
+        const child = execa('npx', args);
+        child.stdout.pipe(process.stdout);
+        child.stderr.pipe(process.stderr);
+    }
+
+    if (target === 'h5' && cmd.skipMars) {
+        return serveH5();
+    }
 
     clean(options).once('stop', () => {
         watch(options).once('stop', () => {
             if (target === 'h5') {
-                // const child = execa('npm', ['run', 'serve-dist-h5']);
-                const args = ['mars-cli-service', 'serve', '--path', servePath];
-                console.log('[serve h5]', args.join(' '));
-                const child = execa('npx', args);
-                child.stdout.pipe(process.stdout);
-                child.stderr.pipe(process.stderr);
+                serveH5();
+            }
+            else {
+                console.log(`[serve ${target}]`, 'watching...');
             }
         });
     });

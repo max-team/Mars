@@ -41,12 +41,18 @@ module.exports = async (api, options) => {
                 'atom-web-compiler': '^2.2.0',
                 'atom2vue-loader': '^1.0.0',
                 '@marsjs/vue-cli-plugin-mars-web': '^0.0.9',
-                '@marsjs/vue-cli-plugin-pwa': '^0.0.1',
+                // '@marsjs/vue-cli-plugin-pwa': '^0.0.1',
                 '@vue/cli-plugin-babel': '^3.0.0',
                 '@vue/cli-service': '^3.5.0',
                 'less': '^3.0.4',
                 'less-loader': '^4.1.0',
                 'vue-template-compiler': '^2.6.10'
+            }
+        });
+
+        needPWA && api.extendPackage({
+            devDependencies: {
+                '@marsjs/vue-cli-plugin-pwa': '^0.0.1'
             }
         });
     }
@@ -55,8 +61,8 @@ module.exports = async (api, options) => {
         scripts: {
             'serve': 'mars serve',
             'build': 'mars build',
-            'build:swan': 'mars build',
-            'serve:swan': 'mars serve',
+            // 'build:swan': 'mars build',
+            // 'serve:swan': 'mars serve',
             'build:h5': 'mars build -t h5',
             'serve:h5': 'mars serve -t h5',
             'build:wx': 'mars build -t wx',
