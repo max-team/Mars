@@ -3,6 +3,20 @@
  * @author zhangwentao
  */
 
+const mergeWith = require('lodash.mergewith');
+
+function customizerReplaceArray(objValue, srcValue) {
+    if (Array.isArray(objValue)) {
+        return srcValue;
+    }
+}
+
+function getMerge(customizer) {
+    return (object, sources) => mergeWith(object, sources, customizer);
+}
+
+exports.merge = getMerge(customizerReplaceArray);
+
 /**
  * Create a cached version of a pure function.
  */

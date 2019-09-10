@@ -50,7 +50,6 @@ async function build(cmd) {
             }
         });
     });
-
 }
 
 module.exports = (...args) =>

@@ -8,7 +8,8 @@
 const File = require('./File');
 const {parseHTML} = require('../../helper/html-parser');
 const {parseComponent} = require('vue-template-compiler/build');
-const merge = require('lodash.merge');
+// const merge = require('lodash.merge');
+const merge = require('../../helper/util').merge;
 
 /**
  * pre parse SFC content to convert <script type="config"> => <config>

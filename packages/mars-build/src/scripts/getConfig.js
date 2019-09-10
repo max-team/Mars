@@ -5,7 +5,8 @@
 
 const path = require('path');
 const fs = require('fs-extra');
-const merge = require('lodash.merge');
+// const merge = require('lodash.merge');
+const merge = require('../helper/util').merge;
 const getDefaultConf = require('./defaultConfig');
 
 function getProjectConfig(target) {
