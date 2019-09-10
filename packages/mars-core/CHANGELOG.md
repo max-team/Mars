@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.1](https://github.com/max-team/Mars/compare/@marsjs/core@0.3.0...@marsjs/core@0.3.1) (2019-09-10)
+
+
+### Features
+
+* **core:** reportAnalytics 类型定义 ([0c7a1f8](https://github.com/max-team/Mars/commit/0c7a1f8))
+* **core:** 增加 recognizeImage 类型定义 ([281e63b](https://github.com/max-team/Mars/commit/281e63b))
+* **core:** 增加生命周期类型定义 ([82d143d](https://github.com/max-team/Mars/commit/82d143d))
+* **core:** 增加类型定义 ([3c1c4a3](https://github.com/max-team/Mars/commit/3c1c4a3))
+* **core:** 增加类型定义 ([2c4a8c1](https://github.com/max-team/Mars/commit/2c4a8c1))
+* **core:** 补充 ts 定义 ([b791710](https://github.com/max-team/Mars/commit/b791710))
+
+
+
+
+
 ## [0.3.0](https://github.com/max-team/Mars/compare/@marsjs/core@0.3.0-alpha.10...@marsjs/core@0.3.0) (2019-09-09)
 
 **Note:** Version bump only for package @marsjs/core
@@ -130,5 +146,3 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Bug Fixes
 
 * **core:** fix 切换组件 __inited__ 时 computed 数据错误 ([#133](https://github.com/max-team/Mars/issues/133)) ([803bac8](https://github.com/max-team/Mars/commit/803bac8))
-
-

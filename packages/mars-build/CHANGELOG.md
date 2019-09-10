@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.3](https://github.com/max-team/Mars/compare/@marsjs/build@0.3.2...@marsjs/build@0.3.3) (2019-09-10)
+
+
+### Bug Fixes
+
+* **build:** fix merge strategy for array in configs ([8fdce7d](https://github.com/max-team/Mars/commit/8fdce7d))
+
+
+
+
+
 ## [0.3.2](https://github.com/max-team/Mars/compare/@marsjs/build@0.3.1...@marsjs/build@0.3.2) (2019-09-10)
 
 
@@ -155,4 +166,3 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ## [0.2.51](https://github.com/max-team/Mars/compare/@marsjs/build@0.2.50...@marsjs/build@0.2.51) (2019-07-11)
 
 **Note:** Version bump only for package @marsjs/build
-
