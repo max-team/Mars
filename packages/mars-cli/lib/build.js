@@ -42,7 +42,7 @@ async function build(cmd) {
         run(options).once('stop', () => {
             if (target === 'h5') {
                 // const child = execa('npm', ['run', 'build-dist-h5']);
-                const args = ['mars-cli-service', 'serve', '--path', servePath];
+                const args = ['mars-cli-service', 'build', '--path', servePath];
                 console.log('[serve h5]', args.join(' '));
                 const child = execa('npx', args);
                 child.stdout.pipe(process.stdout);
