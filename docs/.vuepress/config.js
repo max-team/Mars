@@ -16,6 +16,7 @@ module.exports = {
         sidebar: {
             '/guide/': [
                 'start',
+                'migrate-0.3.x',
                 'miniprogram',
                 'vue-features',
                 'platforms',
@@ -27,9 +28,15 @@ module.exports = {
                 'common-questions'
             ],
             '/CHANGELOGS/': [
+                'api',
                 'core',
                 'build',
-                'api',
+                'cli',
+                'cli-template'
+            ],
+            '/CHANGELOGS-0.3/': [
+                'core',
+                'build',
                 'cli',
                 'cli-template'
             ]
@@ -37,7 +44,8 @@ module.exports = {
         displayAllHeaders: true,
         nav: [
             {text: '教程', link: '/guide/start'},
-            {text: 'CHANGELOG', link: '/CHANGELOGS/core'}
+            {text: 'CHANGELOG', link: '/CHANGELOGS/core'},
+            {text: '0.3.x CHANGELOG', link: '/CHANGELOGS-0.3/core'}
         ],
         lastUpdated: 'Last Updated',
         repo: 'max-team/Mars',
