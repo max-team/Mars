@@ -14,15 +14,43 @@ const {
     changeSlotPropsBind
 } = require('./module/scopedSlot');
 
-function attrsFormat(attrs = {}) {
+function attrsFormat(node, attrs = {}) {
     const obj = {};
 
     Object.keys(attrs).forEach(key => {
-        const val = attrs[key];
+        let val = attrs[key];
         key = key.replace(/^@/, 'v-on:').replace(/^:/, 'v-bind:');
+
+        // 支持函数调用带参数 预处理
+        if (key.indexOf('v-on:') === 0) {
+            const [dir, param] = key.split(':');
+            const [eventName] = param.split('.');
+            if (val.indexOf('(') > -1) {
+                const matches = val.match(/([^(]+)\(([^)]+)\)/);
+                if (matches) {
+                    const handlerName = matches[1].trim();
+                    let args = matches[2];
+                    // mark $event to special string
+                    args = args.split(',').map(a => {
+                        a = a.trim();
+                        return a === '$event' ? '\'_$event_\'' : a;
+                    });
+                    args = `[ ${args.join(',')} ]`;
+
+                    // modify handlerName and gen args bind
+                    val = handlerName;
+                    obj[`v-bind:data${eventName}ArgumentsProxy`.toLowerCase()] = args;
+                }
+            }
+        }
 
         obj[key] = val;
     });
+
+    if (node.isComp) {
+        node.attrsMap['v-bind:rootComputed'] = 'compComputed || rootComputed';
+        node.attrsMap['v-bind:rootUID'] = 'rootUID';
+    }
 
     return obj;
 }
@@ -99,28 +127,33 @@ function transFilters(node, options) {
 
     Object.keys(filtersList).forEach(fid => {
         const filters = filtersList[fid];
+        const fidStr = filters.vfori
+                ? `'${fid}__' + ${filters.vfori.join('+ \'_\' +')}`
+                : `'${fid}'`;
+        let fPrefix = `_f_[${fidStr}]`;
+
+        if (filters.vfor) {
+            // node.for = `_f_['${fid}_0']._for`;
+            node.for = `${fPrefix}._for`;
+        }
 
         filters.p && filters.p.forEach(name => {
-            const val = `_f_[${fid}]._p.${name}`;
+            const val = `${fPrefix}._p.${name}`;
             node.attrsMap['v-bind:' + name] = val;
         });
 
         if (filters.t) {
-            let token = `_f_[${fid}]._t`;
+            let token = `${fPrefix}._t`;
             node.tokens = [{'@binding': token}];
             node.text = `{{ ${token} }}`;
         }
 
-        if (filters.vfor) {
-            node.for = `_f_[${fid}]._for`;
-        }
-
         if (filters.vif) {
-            node.attrsMap['v-if'] = `_f_[${fid}]._if`;
+            node.attrsMap['v-if'] = `${fPrefix}._if`;
         }
 
         if (filters.velseif) {
-            node.attrsMap['v-else-if'] = `_f_[${fid}]._if`;
+            node.attrsMap['v-else-if'] = `${fPrefix}._if`;
         }
     });
 
@@ -130,7 +163,7 @@ function transFilters(node, options) {
 const nodeProcesser = {
     preProcess(nodeType, node, options) {
         // 格式化 attrsMap
-        node.attrsMap = attrsFormat(node.attrsMap);
+        node.attrsMap = attrsFormat(node, node.attrsMap);
 
         switch (nodeType) {
             // 声明了 slot-scope 变量，内部都要进行替换
@@ -157,10 +190,6 @@ const nodeProcesser = {
     process(nodeType, node, options) {
         // computed
         const computedKeys = (options && options.computedKeys) || [];
-        if (node.isComp) {
-            node.attrsMap['v-bind:rootComputed'] = 'compComputed || rootComputed';
-            node.attrsMap['v-bind:rootUID'] = 'rootUID';
-        }
 
         if (computedKeys.length > 0) {
             node = modifyBind(node, getComputedModifier(computedKeys));

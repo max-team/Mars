@@ -6,7 +6,7 @@
 /* globals test*/
 
 import {generate} from '../../../../src/compiler/template/render';
-import {getGenData, isComplexExp, isFilter} from '../../../../src/compiler/template/mark-component';
+import {getGenData, isComplexExp, isFilter, isInFor, getIterators} from '../../../../src/compiler/template/mark-component';
 import {compile} from 'vue-template-compiler/build';
 
 function gen(template) {
@@ -18,7 +18,9 @@ function gen(template) {
     return generate(ast, {
         processFilterData: getGenData(),
         isComplexExp,
-        isFilter
+        isFilter,
+        isInFor,
+        getIterators
     });
 }
 
@@ -51,7 +53,7 @@ describe('render codegen test', () => {
         </template>`;
 
         const res = gen(template);
-        expect(res.render).toBe('with(this){return [[(_ff({fid: 0,value: (someFnA(aaa))}, \'if\'))?[]:[(_ff({fid: 1,value: (someFnC(ccc))}, \'if\'))?[]:[]]]]}');
+        expect(res.render).toBe('with(this){return [[(_ff({fid: \'0\',value: (someFnA(aaa))}, \'if\'))?[]:[(_ff({fid: \'1\',value: (someFnC(ccc))}, \'if\'))?[]:[]]]]}');
     });
 
     test('slot', () => {
@@ -95,6 +97,6 @@ describe('render codegen test', () => {
         </template>`;
 
         const res = gen(template);
-        expect(res.render).toBe('with(this){return [[,[[{\'b\':aaa,_p:_ff({fid: 0,value: {a: (someFnB(bbb))}}, \'p\')}]]]]}');
+        expect(res.render).toBe('with(this){return [[,[[{\'b\':aaa,_p:_ff({fid: \'0\',value: {a: (someFnB(bbb))}}, \'p\')}]]]]}');
     });
 });

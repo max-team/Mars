@@ -27,6 +27,8 @@ class CodegenState {
         this.processFilterData = options.processFilterData;
         this.isComplexExp = options.isComplexExp;
         this.isFilter = options.isFilter;
+        this.isInFor = options.isInFor;
+        this.getIterators = options.getIterators;
     }
 }
 
@@ -289,19 +291,20 @@ function genDirectives(el, state) {
 function genChildren(el, state, checkSkip) {
     const children = el.children;
     if (children.length) {
-        const el = children[0];
+        const el0 = children[0];
         // optimize single v-for
         if (children.length === 1
-            && el.for
-            && el.tag !== 'template'
-            && el.tag !== 'slot'
+            && el0.for
+            && el0.tag !== 'template'
+            && el0.tag !== 'slot'
         ) {
             const normalizationType = checkSkip
-                ? state.maybeComponent(el) ? ',1' : ',0'
+                ? state.maybeComponent(el0) ? ',1' : ',0'
                 : '';
-            return `${genElement(el, state)}${normalizationType}`;
+            return `${genElement(el0, state)}${normalizationType}`;
         }
-        const code = children.map(c => genNode(c, state)).join(',');
+
+        const code = children.map(c => genNode(c, state, el)).join(',');
         return code ? `[${code}]` : '';
     }
     return '';
@@ -312,9 +315,10 @@ function genChildren(el, state, checkSkip) {
  *
  * @param {ASTNode} node node
  * @param {CodegenState} state state
+ * @param {ASTNode} parentNode parentNode
  * @return {string}
  */
-function genNode(node, state) {
+function genNode(node, state, parentNode) {
     if (node.type === 1) {
         return genElement(node, state);
     }
@@ -322,7 +326,7 @@ function genNode(node, state) {
         return '';
     }
 
-    return genText(node, state);
+    return genText(node, state, parentNode);
 }
 
 /**
@@ -330,10 +334,14 @@ function genNode(node, state) {
  *
  * @param {ASTText | ASTExpression} text text
  * @param {CodegenState} state state
+ * @param {ASTNode} parentNode parentNode
  * @return {string}
  */
-function genText(text, state) {
+function genText(text, state, parentNode) {
     if (text.type === 2) {
+        if (state.isInFor(parentNode)) {
+            text.vfori = state.getIterators(parentNode);
+        }
         return state.processFilterData(text, 't', text);
     }
     return '';

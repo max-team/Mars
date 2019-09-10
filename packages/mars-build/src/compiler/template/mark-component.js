@@ -15,10 +15,18 @@ const {hyphenate} = require('../../helper/util');
 
 function getIterator(node) {
     if (!node) {
-        return 'index';
+        return undefined;
     }
 
     return node.iterator1 || getIterator(node.parent);
+}
+
+function getIterators(node, ret = []) {
+    if (node.iterator1) {
+        ret.push(node.iterator1);
+    }
+
+    return node.parent ? getIterators(node.parent, ret) : ret;
 }
 
 function isInFor(el) {
@@ -121,104 +129,119 @@ function isFilter(value) {
     return value.indexOf('_f(') >= 0;
 }
 
-function getFilters(node) {
-    const props = '{' + Object.keys(node.attrsMap).reduce((res, name) => {
-        const value = node.attrsMap[name];
-        if (name.indexOf(':') >= 0 && (isFilter(value) || isComplexExp(value))) {
-            const nName = name.replace(/^(v-bind)?:/, '');
-            res += `${nName}: ${value},`;
-        }
-        return res;
-    }, '').slice(0, -1) + '}';
+// function getFilters(node) {
+//     const props = '{' + Object.keys(node.attrsMap).reduce((res, name) => {
+//         const value = node.attrsMap[name];
+//         if (name.indexOf(':') >= 0 && (isFilter(value) || isComplexExp(value))) {
+//             const nName = name.replace(/^(v-bind)?:/, '');
+//             res += `${nName}: ${value},`;
+//         }
+//         return res;
+//     }, '').slice(0, -1) + '}';
 
-    let vfor = isComplexExp(node.for) ? node.for : undefined;
-    let vif = isComplexExp(node.if) ? node.if : undefined;
-    let velseif = isComplexExp(node.elseif) ? node.elseif : undefined;
+//     let vfor = isComplexExp(node.for) ? node.for : undefined;
+//     let vif = isComplexExp(node.if) ? node.if : undefined;
+//     let velseif = isComplexExp(node.elseif) ? node.elseif : undefined;
 
-    const hasFilter = props !== '{}';
-    return (hasFilter || vfor || vif || velseif)
-        ? {
-            p: props,
-            vfor,
-            vif,
-            velseif
-        }
-        : null;
-}
+//     const hasFilter = props !== '{}';
+//     return (hasFilter || vfor || vif || velseif)
+//         ? {
+//             p: props,
+//             vfor,
+//             vif,
+//             velseif
+//         }
+//         : null;
+// }
 
 function getGenData(options) {
     let filterIdCounter = 0;
     return function markNode(value, type, el) {
-        if (type === 'if') {
-            // if 里面不会有 filter
-            if (!isComplexExp(value)) {
-                return value;
-            }
 
-            const fid = filterIdCounter++;
-            const data = [
-                `fid: ${fid}`,
-                `value: ${value}`
-            ];
-            const kind = el.if ? 'vif' : (el.elseif ? 'velseif' : '');
-            if (kind) {
-                el._filters = el._filters || {};
-                el._filters[fid] = {
-                    [kind]: true
-                };
-            }
-            return `_ff({${data.join(',')}}, '${type}')`;
+        if (
+            (type === 'if' || type === 'for')
+            && !isComplexExp(value)
+        ) {
+            return value;
         }
 
-        if (type === 'p') {
-            const fid = filterIdCounter++;
+        let tIsComplex;
+        let tIsFilter;
+        let tExpression;
+        if (type === 't') {
+            tIsComplex = value.tokens.some(token => typeof token === 'object' && isComplexExp(token['@binding']));
+            tIsFilter = value.expression.indexOf('_s(_f(') >= 0;
+            tExpression = value.expression.replace('_s', '');
+            if (!(tIsComplex || tIsFilter)) {
+                return tExpression;
+            }
+        }
+
+        // for text Node we pre set vfori on el
+        let vfori = el.vfori;
+        if (isInFor(el.parent)) {
+            vfori = getIterators(el.parent);
+        }
+
+        const fid = filterIdCounter++;
+        const fidStr = vfori
+            ? `'${fid}__' + ${vfori.join('+ \'_\' +')}`
+            : `'${fid}'`;
+
+        el._filters = el._filters || {};
+
+        if (type === 't') {
             const data = [
-                `fid: ${fid}`,
-                `value: {${value.map(item => `${item[0]}: ${item[1]}`).join(',')}}`
+                `fid: ${fidStr}`,
+                `value: ${tExpression}`
             ];
 
-            el._filters = el._filters || {};
             el._filters[fid] = {
-                p: value.map(item => item[0])
+                t: true,
+                vfori
             };
 
             return `_ff({${data.join(',')}}, '${type}')`;
         }
 
-        if (type === 't') {
-            const isComplex = value.tokens.some(token => typeof token === 'object' && isComplexExp(token['@binding']));
-            const isFilter = value.expression.indexOf('_s(_f(') >= 0;
-            const expression = value.expression.replace('_s', '');
-            if (isComplex || isFilter) {
-                const fid = filterIdCounter++;
-                const data = [
-                    `fid: ${fid}`,
-                    `value: ${expression}`
-                ];
-
-                el._filters = el._filters || {};
+        if (type === 'if') {
+            const data = [
+                `fid: ${fidStr}`,
+                `value: ${value}`
+            ];
+            const kind = el.if ? 'vif' : (el.elseif ? 'velseif' : '');
+            if (kind) {
                 el._filters[fid] = {
-                    t: true
+                    [kind]: true,
+                    vfori
                 };
-
-                return `_ff({${data.join(',')}}, '${type}')`;
             }
-            return expression;
+            return `_ff({${data.join(',')}}, '${type}')`;
         }
 
         if (type === 'for') {
-            if (!isComplexExp(value)) {
-                return value;
-            }
-            const fid = filterIdCounter++;
             const data = [
-                `fid: ${fid}`,
+                `fid: ${fidStr}`,
                 `value: ${value}`
             ];
 
-            el._filters = el._filters || {};
             el._filters[fid] = {
-                vfor: true
+                vfor: true,
+                vfori
+            };
+
+            return `_ff({${data.join(',')}}, '${type}')`;
+        }
+
+        if (type === 'p') {
+            const data = [
+                `fid: ${fidStr}`,
+                `value: {${value.map(item => `${item[0]}: ${item[1]}`).join(',')}}`
+            ];
+
+            el._filters[fid] = {
+                p: value.map(item => item[0]),
+                vfori
             };
 
             return `_ff({${data.join(',')}}, '${type}')`;
@@ -281,7 +304,9 @@ module.exports = function mark(source, options) {
     const render = generate(ast, {
         processFilterData: getGenData(),
         isComplexExp,
-        isFilter
+        isFilter,
+        isInFor,
+        getIterators
     });
 
     updateComponents(components, componentsInUsed);
@@ -342,3 +367,6 @@ module.exports.markH5 = function markH5(source, options) {
 module.exports.getGenData = getGenData;
 module.exports.isComplexExp = isComplexExp;
 module.exports.isFilter = isFilter;
+module.exports.isInFor = isInFor;
+module.exports.getIterators = getIterators;
+
