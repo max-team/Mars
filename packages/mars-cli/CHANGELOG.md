@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.4](https://github.com/max-team/Mars/compare/@marsjs/cli@0.3.3...@marsjs/cli@0.3.4) (2019-09-10)
+
+
+### Bug Fixes
+
+* **cli:** fix mars build command ([72e0c20](https://github.com/max-team/Mars/commit/72e0c20))
+
+
+
+
+
 ## [0.3.3](https://github.com/max-team/Mars/compare/@marsjs/cli@0.3.2...@marsjs/cli@0.3.3) (2019-09-10)
 
 
