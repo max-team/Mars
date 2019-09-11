@@ -4,6 +4,17 @@
  */
 
 /* eslint-disable fecs-min-vars-per-destructure */
+const {transformSync} = require('@babel/core');
+
+exports.transformExpression = function transformExpression(exp, options) {
+    let source = `(${exp})`;
+    let code = transformSync(source, options).code;
+    code = code.replace(/\;$/, '');
+    if (/^\([\s\S]+\)$/.test(code)) {
+        code.replace(/^\(|\)$/g, '');
+    }
+    return code;
+};
 
 exports.modifyBind = function modifyBind(node, modifier) {
     const {
@@ -33,6 +44,7 @@ exports.modifyBind = function modifyBind(node, modifier) {
             if (key === 'v-if'
                 || key === 'v-else-if'
                 || key === 'v-for'
+                || key === 'v-show'
                 || key.indexOf('v-bind:') === 0
             ) {
                 if (key === 'v-for' && node.for) {

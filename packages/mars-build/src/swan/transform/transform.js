@@ -7,7 +7,7 @@
 
 const directive = require('./directive');
 // const {getComputedModifier} = require('./module/computed');
-// const {modifyBind} = require('./module/helper');
+const {modifyBind, transformExpression} = require('./module/helper');
 const {judgeNodeType, NODE_TYPES} = require('./nodeTypes');
 const {
     processAttrs: processScopedSlotAttrs,
@@ -164,6 +164,16 @@ const nodeProcesser = {
     preProcess(nodeType, node, options) {
         // 格式化 attrsMap
         node.attrsMap = attrsFormat(node, node.attrsMap);
+        // transform template literals Expressions
+        node = modifyBind(node, val => {
+            return transformExpression(val, {
+                plugins: [
+                    ['@babel/plugin-transform-template-literals', {
+                        loose: true
+                    }]
+                ]
+            });
+        });
 
         switch (nodeType) {
             // 声明了 slot-scope 变量，内部都要进行替换

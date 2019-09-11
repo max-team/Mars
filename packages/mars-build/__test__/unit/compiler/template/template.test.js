@@ -69,7 +69,7 @@ describe('[swan]template basic', () => {
         const {render, code} = templateCompiler(source, {});
 
         const expectRet = {
-            code: `<test><div>{{ text.text }}</div><view slot=\"aaa\" aaa=\"{{ slotProps['ccc'] }}\">
+            code: `<test><div>{{text.text}}</div><view slot=\"aaa\" aaa=\"{{ slotProps['ccc'] }}\">
                     {{slotProps.bbb}}
                     <view>{{slotProps.ccc}}</view></view></test>`,
             render: '({ render: function() {'
