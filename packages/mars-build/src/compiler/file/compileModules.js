@@ -143,16 +143,17 @@ async function compileUIModules(uiModules, destPath) {
         });
         const entry = coreEntry.replace('mars-core/index.js', '');
         const dest = path.resolve(destPath, modPath);
-
-        log.info('[compile:ui-module]:', getPathToCWD(entry), '=>', dest);
-        await fs.copy(entry, dest);
-
         const coreDestPath = path.resolve(destPath, 'mars-core');
         const uiCoreDestPath = path.resolve(dest, 'mars-core');
         const coreRelativePath = path.relative(
             uiCoreDestPath,
             coreDestPath
         );
+        if (fs.existsSync(uiCoreDestPath + '/index.js')) {
+            return;
+        }
+        log.info('[compile:ui-module]:', getPathToCWD(entry), ' => ', getPathToCWD(dest));
+        await fs.copy(entry, dest);
         fs.outputFileSync(uiCoreDestPath + '/index.js', `export * from '${coreRelativePath}';`);
     }
 }

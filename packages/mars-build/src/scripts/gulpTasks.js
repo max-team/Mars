@@ -77,7 +77,7 @@ function getTaskSFC(config, options) {
         return gulp.src(source.sfc)
             .pipe(changed(dest, changedOptions))
             .pipe(intercept(file => {
-                log.info('[compile:sfc]:', getPathToCWD(file.path));
+                file.isBuffer() && log.info('[compile:sfc]:', getPathToCWD(file.path));
                 return file;
             }))
             .pipe(compile(compileOption));
@@ -106,7 +106,7 @@ function getTaskCompileAssets(config, options) {
         return gulp.src(assets)
             .pipe(changed(dest))
             .pipe(intercept(file => {
-                log.info('[compile:assets]:', getPathToCWD(file.path));
+                file.isBuffer() && log.info('[compile:assets]:', getPathToCWD(file.path));
                 return file;
             }))
             .pipe(compileFile(options))
