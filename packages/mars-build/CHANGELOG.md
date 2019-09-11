@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.6-beta.0](https://github.com/max-team/Mars/compare/@marsjs/build@0.3.5...@marsjs/build@0.3.6-beta.0) (2019-09-11)
+
+
+### Features
+
+* **build:** support template literals ([8bcf885](https://github.com/max-team/Mars/commit/8bcf885))
+
+
+
+
+
 ## [0.3.5](https://github.com/max-team/Mars/compare/@marsjs/build@0.3.4...@marsjs/build@0.3.5) (2019-09-10)
 
 
