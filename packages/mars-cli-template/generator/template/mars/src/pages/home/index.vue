@@ -1,7 +1,7 @@
 <template>
     <view class="home-wrap">
         <view class="home-text">Vue 驱动的多端开发框架</view>
-        <hello></hello>
+        <Hello></Hello>
     </view>
 </template>
 

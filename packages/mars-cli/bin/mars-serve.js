@@ -13,7 +13,7 @@ program
     .description('serve project in development mode')
     .option('-r, --registry <url>', 'Use specified npm registry when installing dependencies (only for npm)')
     .option('-t, --target <target>', 'Build target (swan | h5 | wx, default: swan)')
-    .option('--skipMars', 'Skip mars compile process, only call vue cli serve')
+    .option('--skipMars', 'Skip mars compile process, directly call vue cli serve')
     .action(cmd => {
         const start = require('../lib/serve');
         const options = cleanArgs(cmd);
