@@ -2,7 +2,29 @@
 
 ## What's new
 
-`0.3.x` 版本最主要的更新是去掉运行时中 Vue 渲染和更新过程生成 VNode 和 patch 的过程，使得运行时无需创建 VNode 以及进行 VNode 的 DIFF，从而大幅提升了运行时性能，因为去除了 VNode，也简化了 Vue 的 render 函数，从而减小了包大小。
+`0.3.x` 版本最主要的更新是去掉运行时中 Vue 渲染和更新过程生成 VNode 和 patch 的过程，使得运行时无需创建 VNode 以及进行 VNode 的 DIFF，从而大幅提升了运行时性能，因为去除了 VNode，也简化了 Vue 的 render 函数，从而减小了包大小。对于 H5 的构建流程和运行时架构也进行了简化和重构，便于扩展新的功能。
+
+其他的更新或 Bug 修复：
+
+### Features
+
+* **core:** 支持从 `@marsjs/core` 导出 `$platform`/`config`
+* **core:** 支持通过运行时 `config` 配置 H5 路由 `mode`/`base`
+* **core:** 增加 TypeScript 类型定义
+* **build:** 组件名支持 PascalCase
+* **build:** 模版中支持使用模版字符串
+* **build:** 引入 SFC 组件时，支持 `*.vue` 后缀写法
+* **build:** SFC script 导出支持 `Vue.extend()` 写法
+* **cli & cli-template:** 支持跳过 Mars 编译用直接 serve H5 dest 目录
+
+
+### Bug Fixes
+
+* **build:** 修复 v-for 中的过滤器和复杂表达式取值错误
+* **build:** 修复 v-on 中事件参数绑定 scoped 变量错误
+* **build:** 修复 config 合并策略
+* **cli & cli-template:** 修复 serve 自定义 H5 dest 目录时 path 错误
+
 
 ## 是否兼容
 
@@ -41,5 +63,6 @@
 
 2、从现有项目迁移
 
-- 升级 `@marsjs/cli` 版本到 `0.3.x`
-- 升级本地的 `@marsjs/core` `@marsjs/build` `@marsjs/cli-template` 版本到 `0.3.x`
+- 升级全局和本地安装的 `@marsjs/cli` 版本到 `0.3.x`
+- 升级本地的 `@marsjs/core` `@marsjs/build` 版本到 `0.3.x`
+- 升级本地的 `@marsjs/cli-template` 版本到 `0.3.x` （H5 项目）

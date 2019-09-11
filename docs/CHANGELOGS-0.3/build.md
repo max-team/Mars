@@ -3,14 +3,54 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+
+## [0.3.6-beta.0](https://github.com/max-team/Mars/compare/@marsjs/build@0.3.5...@marsjs/build@0.3.6-beta.0) (2019-09-11)
+
+
+### Features
+
+* **build:** support template literals ([8bcf885](https://github.com/max-team/Mars/commit/8bcf885))
+
+
+
+
+## [0.3.5](https://github.com/max-team/Mars/compare/@marsjs/build@0.3.4...@marsjs/build@0.3.5) (2019-09-10)
+
+
+### Bug Fixes
+
+* **core & build:** remove rootComputed ([8913128](https://github.com/max-team/Mars/commit/8913128))
+
+
+
+
+
+## [0.3.4](https://github.com/max-team/Mars/compare/@marsjs/build@0.3.3...@marsjs/build@0.3.4) (2019-09-10)
+
+
+### Bug Fixes
+
+* **build:** fix filters in v-for and scoped-var in v-on args ([ba5a20b](https://github.com/max-team/Mars/commit/ba5a20b))
+
+
+
+
+
+## [0.3.3](https://github.com/max-team/Mars/compare/@marsjs/build@0.3.2...@marsjs/build@0.3.3) (2019-09-10)
+
+
+### Bug Fixes
+
+* **build:** fix merge strategy for array in configs ([8fdce7d](https://github.com/max-team/Mars/commit/8fdce7d))
+
+
+
 ## [0.3.2](https://github.com/max-team/Mars/compare/@marsjs/build@0.3.1...@marsjs/build@0.3.2) (2019-09-10)
 
 
 ### Bug Fixes
 
 * **build:** add subPackages to h5 routes ([affd764](https://github.com/max-team/Mars/commit/affd764))
-
-
 
 
 
