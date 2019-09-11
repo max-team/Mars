@@ -11,3 +11,5 @@ export const config = {
         base: undefined
     }
 };
+
+export const $platform = 'h5';

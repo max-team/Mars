@@ -4,6 +4,7 @@
  */
 import config from '../config';
 config.$platform = 'wx';
+export const $platform = 'wx';
 
 export {config};
 export {default as createApp} from './createApp';
