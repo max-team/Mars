@@ -57,11 +57,28 @@
 
 ## 如何迁移
 
+
+
 1、新建项目并转移业务代码
+
+```sh
+# 安装 0.3.x mars-cli
+npm install -g @marsjs/cli@next
+```
 
 安装 `0.3.x` 版本的 `@marsjs/cli`，创建一个新项目，然后将业务代码和配置文件合并转移到项目中。
 
 2、从现有项目迁移
+
+```sh
+# 安装 0.3.x 依赖包, 非 H5 项目
+npm install @marsjs/cli@next @marsjs/cli-build@next @marsjs/cli-core@next -D
+
+# 安装 0.3.x 依赖包, H5 项目
+npm install @marsjs/cli@next @marsjs/cli-core@next @marsjs/cli-build@next @marsjs/cli-template@next -D
+
+```
+
 
 - 升级全局和本地安装的 `@marsjs/cli` 版本到 `0.3.x`
 - 升级本地的 `@marsjs/core` `@marsjs/build` 版本到 `0.3.x`
