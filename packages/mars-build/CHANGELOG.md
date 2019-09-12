@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.7](https://github.com/max-team/Mars/compare/@marsjs/build@0.3.6...@marsjs/build@0.3.7) (2019-09-12)
+
+
+### Bug Fixes
+
+* **build:** fix missing subPackages page info ([e1623cf](https://github.com/max-team/Mars/commit/e1623cf))
+
+
+
+
+
 ## [0.3.6](https://github.com/max-team/Mars/compare/@marsjs/build@0.3.6-beta.2...@marsjs/build@0.3.6) (2019-09-12)
 
 
