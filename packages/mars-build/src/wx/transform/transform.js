@@ -6,18 +6,46 @@
 /* eslint-disable fecs-min-vars-per-destructure */
 
 const directive = require('./directive');
-const {getComputedModifier} = require('./module/computed');
-const {modifyBind} = require('./module/helper');
+// const {getComputedModifier} = require('./module/computed');
+const {modifyBind, transformExpression} = require('./module/helper');
 
-function attrsFormat(attrs = {}) {
+function attrsFormat(node, attrs = {}) {
     const obj = {};
 
     Object.keys(attrs).forEach(key => {
-        const val = attrs[key];
+        let val = attrs[key];
         key = key.replace(/^@/, 'v-on:').replace(/^:/, 'v-bind:');
+
+        // 支持函数调用带参数 预处理
+        if (key.indexOf('v-on:') === 0) {
+            const [dir, param] = key.split(':');
+            const [eventName] = param.split('.');
+            if (val.indexOf('(') > -1) {
+                const matches = val.match(/([^(]+)\(([^)]+)\)/);
+                if (matches) {
+                    const handlerName = matches[1].trim();
+                    let args = matches[2];
+                    // mark $event to special string
+                    args = args.split(',').map(a => {
+                        a = a.trim();
+                        return a === '$event' ? '\'_$event_\'' : a;
+                    });
+                    args = `[ ${args.join(',')} ]`;
+
+                    // modify handlerName and gen args bind
+                    val = handlerName;
+                    obj[`v-bind:data-${eventName}ArgumentsProxy`.toLowerCase()] = args;
+                }
+            }
+        }
 
         obj[key] = val;
     });
+
+    if (node.isComp) {
+        // node.attrsMap['v-bind:rootComputed'] = 'compComputed || rootComputed';
+        node.attrsMap['v-bind:rootUID'] = 'rootUID';
+    }
 
     return obj;
 }
@@ -99,28 +127,33 @@ function transFilters(node, options) {
 
     Object.keys(filtersList).forEach(fid => {
         const filters = filtersList[fid];
+        const fidStr = filters.vfori
+                ? `'${fid}__' + ${filters.vfori.join('+ \'_\' +')}`
+                : `'${fid}'`;
+        let fPrefix = `_f_[${fidStr}]`;
+
+        if (filters.vfor) {
+            // node.for = `_f_['${fid}_0']._for`;
+            node.for = `${fPrefix}._for`;
+        }
 
         filters.p && filters.p.forEach(name => {
-            const val = `_f_[${fid}]._p.${name}`;
+            const val = `${fPrefix}._p.${name}`;
             node.attrsMap['v-bind:' + name] = val;
         });
 
         if (filters.t) {
-            let token = `_f_[${fid}]._t`;
+            let token = `${fPrefix}._t`;
             node.tokens = [{'@binding': token}];
             node.text = `{{ ${token} }}`;
         }
 
-        if (filters.vfor) {
-            node.for = `_f_[${fid}]._for`;
-        }
-
         if (filters.vif) {
-            node.attrsMap['v-if'] = `_f_[${fid}]._if`;
+            node.attrsMap['v-if'] = `${fPrefix}._if`;
         }
 
         if (filters.velseif) {
-            node.attrsMap['v-else-if'] = `_f_[${fid}]._if`;
+            node.attrsMap['v-else-if'] = `${fPrefix}._if`;
         }
     });
 
@@ -135,20 +168,30 @@ function transform(node, options) {
         tag
     } = node;
 
-    const isComp = options && options.components && options.components[tag];
-    node.isComp = isComp;
+    // const isComp = options && options.components && options.components[tag];
+    // node.isComp = isComp;
     // const ast = Object.assign({}, node);
-    node.attrsMap = attrsFormat(attrsMap);
+    node.attrsMap = attrsFormat(node, attrsMap);
+    node = modifyBind(node, val => {
+        // quick test
+        if (!/`[\s\S]*`/.test(val)) {
+            return val;
+        }
+        return transformExpression(val, {
+            plugins: [
+                ['@babel/plugin-transform-template-literals', {
+                    loose: true
+                }]
+            ]
+        });
+    });
 
-    const computedKeys = (options && options.computedKeys) || [];
-    if (isComp) {
-        node.attrsMap['v-bind:rootComputed'] = 'compComputed || rootComputed';
-        node.attrsMap['v-bind:rootUID'] = 'rootUID';
-    }
+    // const computedKeys = (options && options.computedKeys) || [];
 
-    if (computedKeys.length > 0) {
-        node = modifyBind(node, getComputedModifier(computedKeys));
-    }
+
+    // if (computedKeys.length > 0) {
+    //    node = modifyBind(node, getComputedModifier(computedKeys));
+    // }
 
     node = transFilters(node, options);
     node.attrsMap = transAttrs(node, options);

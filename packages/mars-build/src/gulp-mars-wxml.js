@@ -25,7 +25,7 @@ const {
     generate,
     mark
 } = require('./compiler/template/index');
-const {transform} = require('./wx/compiler/index');
+const {transform} = require('./wx/transform/index');
 
 const templateCompiler = getCompiler(mark, transform, generate, 'wx');
 const styleCompiler = require('./compiler/style/style').compile;

@@ -14,9 +14,9 @@
 // 5, 不需要在wxml上表现出来，可直接清除
 
 const dirFor = require('./for');
-const dirEvents = require('./events');
 const dirShow = require('./show');
 const dirModel = require('./model');
+const dirEvents = require('./events');
 const bindClass = require('./class');
 const bindStyle = require('./style');
 

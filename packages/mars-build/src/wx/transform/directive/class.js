@@ -1,5 +1,8 @@
 /**
  * @file transform class
+ * @author mars
+ *
+ * TODO 改成用 babel 实现
  * eg
  * 1. :class={ active: isActive }   ->    class={{[isActive ? 'active' : '']}}
  * 2. class="static" :class="{ active: isActive, 'text-danger': hasError }"  ->  class="static {{[isActive ? 'active' : '', hasError ? 'text-danger' : '']}}"
@@ -7,11 +10,10 @@
  * 4. class="static" :class="[isActive ? activeClass : '', errorClass]"  ->  class="static {{[isActive ? activeClass : '', errorClass]}}"
  * 5. class="static" :class="[{ active: isActive }, errorClass]" -> class="static {{[isActive ? 'active' : '', errorClass]}}
  *
- * @author sharonzd
  */
 
 const PLAIN_OBJECT_REGEXP = /^{[\s\S]*}$/;
-const SQUARE_BRACKETS_REGEXP = /^\[.*\]$/;
+const SQUARE_BRACKETS_REGEXP = /^\[[\s\S]*\]$/;
 
 module.exports = function (name, value, attrs, node) {
     // let value = attrs[name];
@@ -60,11 +62,12 @@ function transformObjClass(value, objToStr) {
         // const arr = item.split(':');
         const index = item.indexOf(':');
         const arr = [item.slice(0, index), item.slice(index + 1)];
+        let [name, value] = arr;
 
-        if (!arr[0].includes('\'')) {
-            arr[0] = `'${arr[0]}'`;
+        if (name.indexOf('\"') < 0 && name.indexOf('\'') < 0) {
+            name = `'${name}'`;
         }
-        let result = `(${arr[1]})?${arr[0]}:''`;
+        let result = `(${value})?${name}:''`;
 
         return objToStr ? `(${result})` : result;
     });
