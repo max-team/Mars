@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.3](https://github.com/max-team/Mars/compare/@marsjs/core@0.3.3-beta.1...@marsjs/core@0.3.3) (2019-09-12)
+
+
+### Bug Fixes
+
+* **core:** support wx ([e9133f2](https://github.com/max-team/Mars/commit/e9133f2))
+
+
+
 
 ## [0.3.3-beta.1](https://github.com/max-team/Mars/compare/@marsjs/core@0.3.3-beta.0...@marsjs/core@0.3.3-beta.1) (2019-09-12)
 

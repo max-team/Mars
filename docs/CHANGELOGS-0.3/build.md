@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.6](https://github.com/max-team/Mars/compare/@marsjs/build@0.3.6-beta.2...@marsjs/build@0.3.6) (2019-09-12)
+
+
+### Bug Fixes
+
+* **build:** fix swan transformExpression and class ([2509a3e](https://github.com/max-team/Mars/commit/2509a3e))
+
+
+### Features
+
+* **build:** 0.3.x support wx ([a80fa7f](https://github.com/max-team/Mars/commit/a80fa7f))
+
+
+
 
 ## [0.3.6-beta.0](https://github.com/max-team/Mars/compare/@marsjs/build@0.3.5...@marsjs/build@0.3.6-beta.0) (2019-09-11)
 

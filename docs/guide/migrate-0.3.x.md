@@ -72,10 +72,11 @@ npm install -g @marsjs/cli@next
 
 ```sh
 # 安装 0.3.x 依赖包, 非 H5 项目
-npm install @marsjs/cli@next @marsjs/cli-build@next @marsjs/cli-core@next -D
+npm install @marsjs/cli@next @marsjs/build@next @marsjs/core@next -D
 
-# 安装 0.3.x 依赖包, H5 项目
-npm install @marsjs/cli@next @marsjs/cli-core@next @marsjs/cli-build@next @marsjs/cli-template@next -D
+# H5 项目
+npm install @marsjs/cli@next @marsjs/build@next @marsjs/core@next -D
+npm install @marsjs/cli-template@next -D
 
 ```
 
