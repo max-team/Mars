@@ -295,7 +295,8 @@ async function compile(file, opt) {
                 });
             }
             let routes = [];
-            pages.concat(subPages).forEach(page => {
+            const allPages = pages.concat(subPages);
+            allPages.forEach(page => {
                 const name = `_${md5(page).substr(0, 8)}`;
                 // const name = page.replace(/\//g, '$');
                 content += `import ${name} from './${page}.vue';\n`;
@@ -311,7 +312,7 @@ async function compile(file, opt) {
 
             let pageTitleMap = {};
             Object.keys(pagesInfo).forEach(key => {
-                if (key !== 'app' && pages.indexOf(key) > -1) {
+                if (key !== 'app' && allPages.indexOf(key) > -1) {
                     pageTitleMap[`/${key}`] = Object.assign({}, appWin, pagesInfo[key]);
                     pageTitleMap[`/${key}`].title = pageTitleMap[`/${key}`].navigationBarTitleText;
                 }
