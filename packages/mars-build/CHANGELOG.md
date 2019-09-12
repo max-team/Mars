@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.6-beta.2](https://github.com/max-team/Mars/compare/@marsjs/build@0.3.6-beta.1...@marsjs/build@0.3.6-beta.2) (2019-09-12)
+
+
+### Bug Fixes
+
+* **build & cli:** runtime copy error and h5skip option ([21ad540](https://github.com/max-team/Mars/commit/21ad540))
+
+
+
+
+
 ## [0.3.6-beta.1](https://github.com/max-team/Mars/compare/@marsjs/build@0.3.6-beta.0...@marsjs/build@0.3.6-beta.1) (2019-09-11)
 
 **Note:** Version bump only for package @marsjs/build
