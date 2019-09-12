@@ -47,7 +47,7 @@ async function build(cmd) {
         child.stderr.pipe(process.stderr);
     }
 
-    if (target === 'h5' && cmd.skipMars) {
+    if (target === 'h5' && cmd.h5skip === 'mars') {
         return serveH5();
     }
 
@@ -55,7 +55,7 @@ async function build(cmd) {
 
     clean(options).once('stop', () => {
         run(options).once('stop', () => {
-            if (target === 'h5') {
+            if (target === 'h5' && cmd.h5skip !== 'vue') {
                 serveH5();
             }
             else {

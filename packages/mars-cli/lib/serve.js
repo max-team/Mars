@@ -46,13 +46,13 @@ async function start(cmd) {
         child.stderr.pipe(process.stderr);
     }
 
-    if (target === 'h5' && cmd.skipMars) {
+    if (target === 'h5' && cmd.h5skip === 'mars') {
         return serveH5();
     }
 
     clean(options).once('stop', () => {
         watch(options).once('stop', () => {
-            if (target === 'h5') {
+            if (target === 'h5' && cmd.h5skip !== 'vue') {
                 serveH5();
             }
             else {
