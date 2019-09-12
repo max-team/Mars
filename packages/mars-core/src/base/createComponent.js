@@ -129,20 +129,23 @@ export function makeCreateComponent(handleProxy, handleModel, setData, callHook,
             },
             lifetimes: {
                 created(...args) {
-                    const page = getPageInstance(this);
-                    this.$$__page__ = page;
+                    // console.log(this.$vue);
                     if (process.env.NODE_ENV !== 'production' && config.debug && config.debug.lifetimes) {
                         console.log('[debug: mp lifetimes] created', this.data.compId);
                     }
-                    this.$vue.$mp = {
-                        scope: this
-                    };
+                    if (this.$vue) {
+                        this.$vue.$mp = {
+                            scope: this
+                        };
+                    }
                     callHook.call(this, this.$vue, 'comp', 'created', args);
                 },
                 attached(...args) {
                     if (process.env.NODE_ENV !== 'production' && config.debug && config.debug.lifetimes) {
                         console.log('[debug: mp lifetimes] attached', this.data.compId);
                     }
+                    const page = getPageInstance(this);
+                    this.$$__page__ = page;
                     // if (config.$platform === 'wx') {
                     mountVue.call(this, VueComponent, setData);
                     // }
