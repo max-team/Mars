@@ -1,13 +1,10 @@
 {
   "packages": [
-    "packages/mars-core",
-    "packages/mars-build",
-    "packages/mars-cli",
-    "packages/mars-cli-template"
+    "packages/*"
   ],
   "command": {
     "publish": {
-      "ignoreChanges": ["__test__/**", "**/*.md"],
+      "ignoreChanges": ["__test__/**", "**/*.md", "*.md"],
       "message": "chore: publish"
     }
   },

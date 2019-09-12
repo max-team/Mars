@@ -13,7 +13,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
-
 ## [0.3.6-beta.1](https://github.com/max-team/Mars/compare/@marsjs/build@0.3.6-beta.0...@marsjs/build@0.3.6-beta.1) (2019-09-11)
 
 **Note:** Version bump only for package @marsjs/build
