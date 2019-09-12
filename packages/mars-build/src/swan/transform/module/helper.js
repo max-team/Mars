@@ -11,7 +11,7 @@ exports.transformExpression = function transformExpression(exp, options) {
     let code = transformSync(source, options).code;
     code = code.replace(/\;$/, '');
     if (/^\([\s\S]+\)$/.test(code)) {
-        code.replace(/^\(|\)$/g, '');
+        code = code.replace(/^\(|\)$/g, '');
     }
     return code;
 };

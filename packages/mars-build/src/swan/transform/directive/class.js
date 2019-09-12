@@ -13,7 +13,7 @@
  */
 
 const PLAIN_OBJECT_REGEXP = /^{[\s\S]*}$/;
-const SQUARE_BRACKETS_REGEXP = /^\[.*\]$/;
+const SQUARE_BRACKETS_REGEXP = /^\[[\s\S]*\]$/;
 
 module.exports = function (name, value, attrs, node) {
     // let value = attrs[name];
