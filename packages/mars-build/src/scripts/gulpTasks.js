@@ -77,7 +77,7 @@ function getTaskSFC(config, options) {
         return gulp.src(source.sfc)
             .pipe(changed(dest, changedOptions))
             .pipe(intercept(file => {
-                file.isBuffer() && log.info('[compile:sfc]:', getPathToCWD(file.path));
+                file.isBuffer() && log.write('[compile:sfc]:', getPathToCWD(file.path));
                 return file;
             }))
             .pipe(compile(compileOption));
@@ -106,7 +106,7 @@ function getTaskCompileAssets(config, options) {
         return gulp.src(assets)
             .pipe(changed(dest))
             .pipe(intercept(file => {
-                file.isBuffer() && log.info('[compile:assets]:', getPathToCWD(file.path));
+                file.isBuffer() && log.write('[compile:assets]:', getPathToCWD(file.path));
                 return file;
             }))
             .pipe(compileFile(options))
@@ -135,7 +135,7 @@ function getTaskRuntime(config, options) {
     const compileFile = require('../compiler/runtime/compiler').compile;
 
     return () => {
-        log.info('[compile:runtime]:', options.target);
+        log.write('[compile:runtime]:', options.target);
         return compileFile({
             framework,
             target: options.target,
