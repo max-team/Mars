@@ -217,7 +217,6 @@ async function compile(file, opt) {
         }
     }
 
-
     // 处理 app.vue 生成 对应 router.js ，处理框架入口App.vue，并合并app.vue的生命周期
     if (isApp) {
         // 获取小程序 app.vue里的config eg.onReachBottomDistance
@@ -384,7 +383,7 @@ ${styles.contents.toString() || ''}
 `;
     const templateFile = new Vinyl({
         path: `${fPath}.vue`,
-        contents: new Buffer(sfcContent || '')
+        contents: Buffer.from(sfcContent || '')
     });
     templateFile.writeFileSync();
 

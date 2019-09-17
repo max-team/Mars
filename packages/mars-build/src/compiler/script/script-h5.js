@@ -64,7 +64,7 @@ exports.compileRouter = function (content, options) {
         })]
     }).code;
 
-    content = new Buffer(routerStr);
+    content = Buffer.from(routerStr);
 
     return content;
 };
@@ -76,7 +76,7 @@ exports.compileComponents = function (file, options) {
         'mars-navigator': 'MarsNavigator'
     });
     const devCompPath = options.devCompPath;
-    file.contents = new Buffer('export default basicComponents;');
+    file.contents = Buffer.from('export default basicComponents;');
     const componentsStr = transformSync(file.contents.toString(), {
         plugins: [transformCompPlugin({
             componentSet,
@@ -84,7 +84,7 @@ exports.compileComponents = function (file, options) {
         })]
     }).code;
 
-    file.contents = new Buffer(componentsStr);
+    file.contents = Buffer.from(componentsStr);
 
     return file;
 };
@@ -132,7 +132,7 @@ exports.compileMain = function (content, options) {
             pagesInfo
         })]
     }).code;
-    content = new Buffer(mainStr);
+    content = Buffer.from(mainStr);
     return content;
 };
 
@@ -181,7 +181,7 @@ exports.compileScript = async function (content, options = {}) {
         ]
     }).code;
     // scriptStr = babel.transformFromAst(cleanScriptAst.ast).code;
-    // content = new Buffer(scriptStr);
+    // content = Buffer.from(scriptStr);
 
     const {config = {}, components = {}, enableConfig = null} = baseOptions;
     const uiModules = getUIModules(components, target);
@@ -245,7 +245,7 @@ exports.compileApp = function (script) {
 import app from './appApi.js';
 export default app;    
     `;
-    script.content = new Buffer(newContent);
+    script.content = Buffer.from(newContent);
 
     return scriptStr;
 };
@@ -257,7 +257,7 @@ exports.compileApi = function (content, options) {
 import Mars, {directives} from '${apiLibrary}';
 ${contentStr}
     `;
-    content = new Buffer(contentStr);
+    content = Buffer.from(contentStr);
     return content;
 };
 
@@ -267,7 +267,7 @@ exports.compileTabBar = function (options, {dest, baseDir}) {
     function dealIconPath(path) {
         let pathArr = path.split('/');
         let newPath = `${pathArr[pathArr.length - 1]}`;
-        let iconContent = fs.readFileSync(`${baseDir}${path}`);
+        let iconContent = fs.readFileSync(`${baseDir}/${path}`);
         fs.writeFileSync(process.cwd() + `/${dest}/tabBarIcons/${newPath}`, iconContent);
         return newPath;
     }

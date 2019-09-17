@@ -59,7 +59,7 @@ exports.compile = async function compile(file, options) {
         const cmdRequire = `const comp = require('./${baseName}.vue');\n`
             + `const {createComponent} = require('${coreRelativePath}');\n`
             + 'Component(createComponent(comp));\n';
-        script.contents = new Buffer(moduleType === 'esm' ? emsImport : cmdRequire);
+        script.contents = Buffer.from(moduleType === 'esm' ? emsImport : cmdRequire);
         script.writeFileSync();
     }
     else {

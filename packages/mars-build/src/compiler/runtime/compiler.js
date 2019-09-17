@@ -107,7 +107,7 @@ function compile(options) {
     //         'minify-dead-code-elimination'
     //     ]
     // });
-    // file.contents = new Buffer(ret.code || '');
+    // file.contents = Buffer.from(ret.code || '');
     // return file;
 }
 

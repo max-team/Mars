@@ -121,7 +121,7 @@ function wrapFiles(ret, options) {
         type: 'js',
         lang: getLang(script, 'js'),
         path: fPath + `.${fileSuffix.js}`,
-        contents: new Buffer(script ? script.content : ''),
+        contents: Buffer.from(script ? script.content : ''),
         $options: {
             attrs: script ? script.attrs : {}
         }
@@ -138,7 +138,7 @@ ${content}
         type: 'css',
         lang: getLang(styleWithLang, 'css'),
         path: fPath + `.${fileSuffix.css}`,
-        contents: new Buffer(styleContent || ''),
+        contents: Buffer.from(styleContent || ''),
         $options: {
             attrs: styleWithLang ? styleWithLang.attrs : {}
         }
@@ -148,7 +148,7 @@ ${content}
         type: 'html',
         lang: getLang(template, 'html'),
         path: fPath + `.${fileSuffix.html}`,
-        contents: new Buffer(template ? template.content : ''),
+        contents: Buffer.from(template ? template.content : ''),
         $options: {
             attrs: template ? template.attrs : {}
         }

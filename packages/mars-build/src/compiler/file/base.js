@@ -63,7 +63,7 @@ function getFileCompiler(compile, config) {
         let {code, ...rest} = result;
         code = await process(code, getExtProcessors(postprocessors, lang));
         // overwrite file contents
-        file.contents = new Buffer(code || '');
+        file.contents = Buffer.from(code || '');
         return rest;
     };
 }
