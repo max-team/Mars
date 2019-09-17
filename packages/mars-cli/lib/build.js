@@ -55,11 +55,9 @@ async function build(cmd) {
 
     clean(options).once('stop', () => {
         run(options).once('stop', () => {
+            console.log(`[build ${target}]`, cmd.watch ? 'watching...' : 'done!');
             if (target === 'h5' && cmd.h5skip !== 'vue') {
                 serveH5();
-            }
-            else {
-                console.log(`[build ${target}]`, cmd.watch ? 'watching...' : 'done!');
             }
         });
     });

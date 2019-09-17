@@ -83,8 +83,12 @@ const context = path.resolve(process.cwd(), args.path);
         process.env.VUE_CLI_SERVICE_CONFIG_PATH = configPath;
     }
     // await fs.copy(process.cwd() + '/vue.config.js', context + '/vue.config.js');
-
-    const plugins = JSON.parse(process.env.MARS_PWA)
+    let pwaSupport = false;
+    try {
+        pwaSupport = JSON.parse(process.env.MARS_PWA);
+    }
+    catch (e) {}
+    const plugins = pwaSupport
         ? [
             idToPlugin('@marsjs/vue-cli-plugin-mars-web'),
             idToPlugin('@vue/cli-plugin-babel'),

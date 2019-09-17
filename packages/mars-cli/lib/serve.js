@@ -52,11 +52,9 @@ async function start(cmd) {
 
     clean(options).once('stop', () => {
         watch(options).once('stop', () => {
+            console.log(`[serve ${target}]`, 'watching...');
             if (target === 'h5' && cmd.h5skip !== 'vue') {
                 serveH5();
-            }
-            else {
-                console.log(`[serve ${target}]`, 'watching...');
             }
         });
     });
