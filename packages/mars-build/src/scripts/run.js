@@ -5,6 +5,8 @@
 
 /* eslint-disable fecs-min-vars-per-destructure */
 const gulp = require('gulp');
+const EventEmitter = require('events');
+
 const {
     getTaskSFC,
     getTaskRuntime,
@@ -39,15 +41,31 @@ function getBuildTasks(config = {}, options = {}) {
     buildTasks.push('compile:runtime');
     // // }
 
-    return buildTasks;
+    return gulp.parallel(buildTasks.map(t => gulp.task(t)));
+    // return buildTasks;
+}
+
+// a wrapper for gulp 3 task
+// and act as gulp.start
+function taskWrapper(task) {
+    const emitter = new EventEmitter();
+    return () => {
+        const cb = err => {
+            emitter.emit(err ? 'error' : 'stop');
+        };
+        const ret = task(cb);
+        ret && ret.then && ret.then(_ => cb());
+        return emitter;
+    };
 }
 
 function clean(options = {}) {
     const config = getConfig(options);
-    gulp.task('clean', getTaskClean(config, options));
-
+    const taskClean = getTaskClean(config, options);
+    // gulp.task('clean', );
     log.info('[start task]', 'clean');
-    return gulp.start('clean');
+    return taskWrapper(taskClean)();
+    // return gulp.start('clean');
 }
 
 /**
@@ -59,19 +77,24 @@ function clean(options = {}) {
 function build(options = {}) {
     const config = getConfig(options);
     const buildTasks = getBuildTasks(config, options);
-    gulp.task('build', buildTasks);
+    // gulp.task('build', buildTasks);
     log.info('[start task]', 'build');
-    return gulp.start('build');
+    return taskWrapper(buildTasks)();
+    // return gulp.start('build');
 }
+
 
 function watch(options = {}) {
     const config = getConfig(options);
-    const buildTasks = getBuildTasks(config, options);
-    gulp.task('build', buildTasks);
-    gulp.task('watch', ['build'], getTaskWatch(config, options));
+    const {watch: watchConfig} = config;
 
-    log.info('[start task]', 'watch');
-    return gulp.start('watch');
+    const buildTasks = getBuildTasks(config, options);
+
+    log.info('[start task]', 'build && watch');
+
+    gulp.watch(watchConfig, buildTasks);
+    return taskWrapper(buildTasks)();
+    // return gulp.start('watch');
 }
 
 module.exports = {
