@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.8](https://github.com/max-team/Mars/compare/@marsjs/build@0.3.7...@marsjs/build@0.3.8) (2019-09-18)
+
+
+### Features
+
+* **build:** simplify compile log ([2a0a4da](https://github.com/max-team/Mars/commit/2a0a4da))
+* **build:** support appConfig and processor for json config ([da24cef](https://github.com/max-team/Mars/commit/da24cef))
+* **build:** support verbose for log ([fd5a58e](https://github.com/max-team/Mars/commit/fd5a58e))
+* **build:** upgrade to gulp 4 ([3482631](https://github.com/max-team/Mars/commit/3482631))
+
+
+
+
+
 ## [0.3.7](https://github.com/max-team/Mars/compare/@marsjs/build@0.3.6...@marsjs/build@0.3.7) (2019-09-12)
 
 
