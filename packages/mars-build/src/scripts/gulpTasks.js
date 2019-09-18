@@ -73,11 +73,12 @@ function getTaskSFC(config, options) {
     const changedOptions = target !== 'h5' ? {
         extension: '.js'
     } : {};
+    const logger = config.verbose ? log.info : log.write;
     return () => {
         return gulp.src(source.sfc)
             .pipe(changed(dest, changedOptions))
             .pipe(intercept(file => {
-                file.isBuffer() && log.write('[compile:sfc]:', getPathToCWD(file.path));
+                file.isBuffer() && logger('[compile:sfc]:', getPathToCWD(file.path));
                 return file;
             }))
             .pipe(compile(compileOption));
@@ -102,11 +103,13 @@ function getTaskCompileAssets(config, options) {
     const compileFile = require('../compiler/file/compiler').gulpPlugin;
     options.fileSuffix = FILE_SUFFIX[target];
     options._config = config;
+    const logger = config.verbose ? log.info : log.write;
+
     return () => {
         return gulp.src(assets)
             .pipe(changed(dest))
             .pipe(intercept(file => {
-                file.isBuffer() && log.write('[compile:assets]:', getPathToCWD(file.path));
+                file.isBuffer() && logger('[compile:assets]:', getPathToCWD(file.path));
                 return file;
             }))
             .pipe(compileFile(options))
@@ -133,9 +136,9 @@ function getTaskRuntime(config, options) {
     }
 
     const compileFile = require('../compiler/runtime/compiler').compile;
-
+    const logger = config.verbose ? log.info : log.write;
     return () => {
-        log.write('[compile:runtime]:', options.target);
+        logger('[compile:runtime]:', options.target);
         return compileFile({
             framework,
             target: options.target,

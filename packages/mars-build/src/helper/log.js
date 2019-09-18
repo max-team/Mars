@@ -1,11 +1,12 @@
 /**
  * @file log
- * @author wukaifang
+ * @author zhangwentao
  */
+
 const chalk = require('chalk');
 const readline = require('readline');
 
-const WRITE_MAGIC_CODE = '\u001b[0m\u001b[0m\u001b[0m';
+const WRITE_MAGIC_CODE = '\u001b[0m\u001b[0m\u001b[0m ...';
 
 // hook stdout to get last line write
 let lastLineStr = '';
@@ -45,6 +46,7 @@ function print(args, level, labelColor) {
 }
 
 module.exports = {
+    verbose: undefined,
     error(...args) {
         print(args, 'error', chalk.red);
     },
