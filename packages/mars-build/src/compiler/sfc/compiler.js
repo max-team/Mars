@@ -10,6 +10,7 @@ exports.compile = async function compile(file, options) {
     const {template, script, styles, config: configFile} = file;
     const blockConfig = configFile.$options.config;
     const mpConfig = blockConfig && blockConfig.config;
+    const marsConfig = options._config;
     // const isComponent = mpConfig && mpConfig.component === true;
 
     const {compilers, isApp, fPath, target, coreRelativePath, baseName} = options;
@@ -26,11 +27,16 @@ exports.compile = async function compile(file, options) {
         coreRelativePath,
         target,
         renderStr: !isApp ? renderFunctionName : null,
-        dest: options._config.dest
+        dest: marsConfig.dest
     });
 
     // use configFile.$options.config first
     config = mpConfig ? mpConfig : config;
+    // prefer appConfig in marsConfig
+    if (isApp) {
+        const appConfig = marsConfig.appConfig && marsConfig.appConfig.config;
+        config = appConfig || config;
+    }
 
     // app.vue has no template
     if (!isApp) {

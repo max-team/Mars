@@ -112,6 +112,7 @@ async function compile(file, opt) {
         fileSuffix,
         fPath
     }, opt);
+    const marsConfig = options._config;
 
     const {
         templateCompiler,
@@ -141,11 +142,17 @@ async function compile(file, opt) {
         mpConfig,
         target: options.target,
         path: fPath + '.vue',
-        dest: options._config.dest,
-        mars: options._config.h5 || {}
+        dest: marsConfig.dest,
+        mars: marsConfig.h5 || {}
     });
     // use blockConfig first
     config = mpConfig ? mpConfig : (scriptRet && scriptRet.config);
+    // prefer appConfig in marsConfig
+    if (isApp) {
+        const appConfig = marsConfig.appConfig && marsConfig.appConfig.config;
+        config = appConfig || config;
+    }
+
     // if (config && config.pages) {
     //     config.pages = config.pages.filter(item => !/\.(swan|mp)$/.test(item));
     // }
@@ -226,7 +233,7 @@ async function compile(file, opt) {
         // let routerContent = fs.readFileSync(__dirname + '/h5/template/router.js');
         // routerContent = compileRouter(routerContent, {
         //     config,
-        //     mars: options._config.h5 || null
+        //     mars: marsConfig.h5 || null
         // });
         // fs.writeFileSync(options.dest + '/router.js', routerContent);
 
@@ -346,7 +353,7 @@ async function compile(file, opt) {
     // content = compileMain(content, {
     //     mainOptions,
     //     componentSet,
-    //     mars: options._config.h5 || {}
+    //     mars: marsConfig.h5 || {}
     // });
     // fs.writeFileSync(options.dest + '/main.js', content);
 
@@ -387,6 +394,9 @@ ${styles.contents.toString() || ''}
     });
     templateFile.writeFileSync();
 
+    // just compile configFile
+    // to involve processors
+    await configCompiler(configFile, {components: scriptRet.components, config});
     return file;
 }
 

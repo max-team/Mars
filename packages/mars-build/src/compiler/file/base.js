@@ -8,11 +8,11 @@
 
 const buildInProcessors = require('./processor');
 
-async function process(source, processors) {
+async function process(source, processors, file) {
     for (const processor of processors) {
         const {name, options = {}, process} = processor;
         if (typeof process === 'function') {
-            source = await process(source, options);
+            source = await process(source, options, file);
         }
         else if (buildInProcessors[name]) {
             source = await buildInProcessors[name](source, options);
@@ -54,14 +54,14 @@ function getFileCompiler(compile, config) {
         const lang = file.lang || file.type;
         let source = (file.contents && file.contents.toString()) || '';
         // preprocessors
-        source = await process(source, getExtProcessors(preprocessors, lang));
+        source = await process(source, getExtProcessors(preprocessors, lang), file);
         // compile
         options.path = file.path;
         options.file = file;
         const result =  await compile(source, options, fileOptions);
         // postprocessors
         let {code, ...rest} = result;
-        code = await process(code, getExtProcessors(postprocessors, lang));
+        code = await process(code, getExtProcessors(postprocessors, lang), file);
         // overwrite file contents
         file.contents = Buffer.from(code || '');
         return rest;
