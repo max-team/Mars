@@ -209,6 +209,44 @@ export default {
 </style>
 ```
 
+
+## 实例扩展 API
+
+### $mpUpdated( [callback, context] )
+
+在 App、Page、Component 实例上新增扩展 `$mpUpdated` API，来注册小程序数据更新视图渲染完成后的回调。
+
+在下次小程序渲染结束之后执行延迟回调，在修改数据之后立即使用这个方法，可以获取数据修改到渲染结束的时间。
+
+- 参数：
+
+    - {Function} [callback]
+    - {Object} [context]
+
+- 用法：
+
+
+```javascript
+// 在实例内使用
+// 修改数据
+this.msg = 'Hello';
+// 小程序内容还没有更新
+this.$mpUpdated(function () {
+    // 小程序视图更新完成
+});
+
+// 作为一个 Promise 使用
+this.$mpUpdated()
+    .then(function () {
+        // DOM 更新了
+    });
+
+// 在其他位置使用
+const app = getApp();
+app.$mpUpdated(...);
+```
+
+
 ## 小程序特性支持
 
 ### 自定义组件特性
@@ -302,10 +340,10 @@ Mars 支持完整的 Vue 生命周期和小程序生命周期及事件方法（�
 注意：swan 的视图在 Page onReady 时或 Component (lifetimes) ready 时才创建完成，使用视图相关 API 时要注意。
 
 
-## 组件
+## 小程序内置组件
 框架的组件规范使用百度智能小程序和微信小程序组件规范，使用时按照小程序的组件名、属性名和事件名使用，属性和事件绑定使用 vue 语法，如：`<input :value="value" @input="onInput" />`
 
-## API
+## 小程序内置 API
 Mars 的 API 规范使用百度智能小程序和微信小程序 API 规范，为了实现多端兼容，框架会在 App 实例及 Page/Component 实例上通过 `$api` 字段来挂载原生 API，即可以在实例上通过 `this.$api` 或者在其他 js 文件中通过 `app.$api` (`app = getApp()`) 来访问小程序 API。
 
 另外，为了开发方便，通过上述方式调用 API 时框架会自动将原生的异步 API 转换为 Promise API，可以直接用 Promise 方式使用，如
@@ -330,38 +368,25 @@ app.$api.request().then();
 
 ```
 
-## 扩展 API
+## @marsjs/core
 
-### $mpUpdated( [callback, context] )
+运行时可以从 `@marsjs/core` 引入以下模块
 
-在 App、Page、Component 新增扩展 `$mpUpdated` API，来注册小程序数据更新视图渲染完成后的回调。
+### `Vue`
 
-在下次小程序渲染结束之后执行延迟回调，在修改数据之后立即使用这个方法，可以获取数据修改到渲染结束的时间。
+运行时使用的 Vue，用于使用 `vuex` 或定义全局过滤器等。
 
-- 参数：
+### `config`
+Since：`@marsjs/core@0.3.0`
 
-    - {Function} [callback]
-    - {Object} [context]
+运行时配置接口
 
-- 用法：
+#### `config.router.base`
 
+设置 H5 router 的 base 选项。
 
-```javascript
-// 在实例内使用
-// 修改数据
-this.msg = 'Hello';
-// 小程序内容还没有更新
-this.$mpUpdated(function () {
-    // 小程序视图更新完成
-});
+#### `config.router.mode`
 
-// 作为一个 Promise 使用
-this.$mpUpdated()
-    .then(function () {
-        // DOM 更新了
-    });
+Type: enum('history', 'hash')
 
-// 在其他位置使用
-const app = getApp();
-app.$mpUpdated(...);
-```
+设置 H5 router 的 mode 选项，优先级高于 `mars.config.js` 中的配置。

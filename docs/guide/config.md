@@ -11,16 +11,23 @@ Type：`(target: string) => Object`
 ## 配置项
 
 ### `projectFiles`
-小程序配置文件列表，每次编译时时不会从 `dest` 删除
+小程序配置文件列表，每次编译时时不会从 `dest` 删除。
+
+### `appConfig`
+Since：`@marsjs/build@0.3.8`
+
+Type: `{config: Object appJsonConfig}`
+
+配置 app 入口配置项，支持根据 target 动态配置能力。
 
 ### `source`
-需要编译的单文件组件(SFC)源代码文件 glob
+需要编译的单文件组件(SFC)源代码文件 glob。
 
 ### `dest`  
 编译产出目录
 
 ### `assets`
-需要复制到 `dest` 的文件 glob
+需要复制到 `dest` 的文件 glob。
 
 ### `watch`
 需要监听的文件 glob
@@ -45,11 +52,13 @@ options 配置请参考 [postcss-px2units](https://www.npmjs.com/package/postcss
 ### `preprocessors`
 Type: `{[name: string]: processor}`
 
-Type of `processor`: `{ extnames: Array<lang> [, options: Object, process: process]}`
+Type of `processor`: `{ extnames: Array<string lang> [, options: Object, process: process]}`
 
-Type of `process`: `(source: string, options: Object) => string`
+Type of `process`: `(source: string, options: Object, file: Object) => string`
 
-预处理器，可以为 SFC 中各种语言类型的 block 设置预处理器（其语言类型由 `lang` 属性指定），预处理器将在 SFC 每一个 `block` 编译之前调用。
+Type of `file`: `{path: string fileDestPath}`
+
+预处理器，可以为各种语言类型的 SFC block 以及 assets 文件设置预处理器（其语言类型由 `lang` 属性指定，对于 App、Page、Component 的相关配置，也可以设置处理器，其语言类型为  `json`），预处理器将在 SFC 每一个 `block` 编译之前调用。
 
 调用内置处理器可以通过 `name` 来指定要调用的处理器名称，通过 `extnames` 来设置处理器生效的语言类型，通过 `processor.options` 来设置传给处理器的选项。
 
@@ -62,7 +71,7 @@ Type of `process`: `(source: string, options: Object) => string`
 - `postcss`
 - `typescript`
 
-如果内置处理器不能满足需求，也可以通过 `processor.process` 来设置自定义处理器。
+如果内置处理器不能满足需求，也可以通过 `processor.process` 函数来设置自定义处理器。
 
 ### `postprocessors`
 后处理器，配置同 `preprocessors`。后处理器将在 SFC 每一个 `block` 编译之后调用。
@@ -86,14 +95,14 @@ Type: enum('history', 'hash')
 
 设置 vue-router 的 mode，默认 `history`。
 
-## 默认配置
+## 默认配置示例
 ```js
 
 module.exports = function (target) {
     const config = {
         projectFiles: ['project.swan.json', 'project.config.json'],
         source: ['src/**/*.vue'],
-        dest: target === 'h5' ? './dist-h5/src' : `./dist-${target}`,
+        dest: `./dist-${target}`,
         assets: [
             'src/**/*.!(vue)'
         ],
@@ -133,11 +142,15 @@ module.exports = function (target) {
 
 ```
 
-## 配置示例
+## 自定义配置示例
 
 ```js
 
 module.exports = function (target) {
+    const overrideBrowserslist = target === 'h5'
+        ? ['iOS >= 7', 'android >= 2.3']
+        : ['last 2 versions'];
+
     const config = {
         designWidth: 640,
         modules: {
@@ -149,9 +162,12 @@ module.exports = function (target) {
         },
         postprocessors: {
             postcss: {
-                extnames: ['less', 'sass', 'scss', 'stylus', 'styl'],
                 options: {
-                    plugins: [require('autoprefixer')]
+                    plugins: [
+                        require('autoprefixer')({
+                            overrideBrowserslist
+                        })
+                    ]
                 }
             }
         }
