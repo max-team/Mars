@@ -6,7 +6,7 @@
 /* eslint-disable fecs-no-require */
 /* eslint-disable no-native-reassign */
 /* eslint-disable fecs-min-vars-per-destructure */
-const {transformSync} = require('@babel/core');
+const {transformSync, transformFromAstSync} = require('../../helper/babel');
 
 const fs = require('fs');
 const mkdirp = require('mkdirp');
@@ -44,7 +44,9 @@ exports.compileScript = async function (content, options = {}) {
         JSON.stringify(process.env.NODE_ENV || 'development')
     );
     const useAOP = mars.useAOP === undefined ? true : mars.useAOP;
-    let scriptStr = transformSync(content, {
+    let scriptAST = transformSync(content, {
+        ast: true,
+        code: false,
         plugins: [
             transformScriptPlugin({
                 baseOptions,
@@ -53,15 +55,17 @@ exports.compileScript = async function (content, options = {}) {
                 useAOP
             })
         ]
-    }).code;
+    }).ast;
     // let scriptStr = babel.transformFromAst(scriptRet.ast).code;
     // 处理完再进行minify，发现minify和定制的插件会有坑
-    scriptStr = transformSync(scriptStr, {
-        plugins: [
-            'minify-guarded-expressions',
-            'minify-dead-code-elimination'
-        ]
-    }).code;
+    // scriptAST = transformFromAstSync(scriptStr, content, {
+    //     ast: true,
+    //     code: false,
+    //     plugins: [
+    //         'minify-guarded-expressions',
+    //         'minify-dead-code-elimination'
+    //     ]
+    // }).ast;
     // scriptStr = babel.transformFromAst(cleanScriptAst.ast).code;
     // content = Buffer.from(scriptStr);
 
@@ -71,7 +75,7 @@ exports.compileScript = async function (content, options = {}) {
     const rPath = path.relative(path.dirname(options.path), destPath);
 
     let usedMoudles = {};
-    content = transformSync(scriptStr, {
+    content = transformFromAstSync(scriptAST, content, {
         plugins: [
             [
                 path.resolve(__dirname, '../file/babel-plugin-relative-import.js'),
@@ -80,7 +84,9 @@ exports.compileScript = async function (content, options = {}) {
                     modules: Object.assign(compileModules.H5Modules, uiModules),
                     usedMoudles
                 }
-            ]
+            ],
+            'minify-guarded-expressions',
+            'minify-dead-code-elimination'
         ]
     }).code;
 

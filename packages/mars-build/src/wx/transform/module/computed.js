@@ -4,7 +4,7 @@
  */
 
 /* eslint-disable fecs-min-vars-per-destructure */
-const {transformSync} = require('@babel/core');
+const {transformSync} = require('../../../helper/babel');
 const transformPlugin = require('./babel-plugin-computed');
 
 // test cases

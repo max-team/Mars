@@ -11,7 +11,7 @@
 /* eslint-disable fecs-camelcase */
 /* eslint-disable babel/new-cap */
 
-const {transformSync, transformFromAstSync} = require('@babel/core');
+const {transformSync, transformFromAstSync} = require('../../../helper/babel');
 
 const CURLY_BRACE_HAS_REGEXP = /{[\s\S]*}/;
 

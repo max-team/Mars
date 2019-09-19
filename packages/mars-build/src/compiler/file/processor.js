@@ -5,7 +5,7 @@
 
 /* eslint-disable fecs-min-vars-per-destructure */
 
-const {transformSync} = require('@babel/core');
+const {transformSync} = require('../../helper/babel');
 const post = require('postcss');
 const accord = require('accord');
 

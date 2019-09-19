@@ -8,9 +8,9 @@
 /* eslint-disable fecs-min-vars-per-destructure */
 
 const path = require('path');
-const {transformSync} = require('@babel/core');
+const {transformSync, transformFromAstSync} = require('../../helper/babel');
 
-const {getModuleName} = require('../../helper/path');
+// const {getModuleName} = require('../../helper/path');
 const transformPlugin = require('./babel-plugin-script');
 const postTransformPlugin = require('./babel-plugin-script-post');
 const compileModules = require('../file/compileModules');
@@ -41,7 +41,9 @@ async function compile(source, options) {
         /process\.env\.NODE_ENV/g,
         JSON.stringify(process.env.NODE_ENV || 'development')
     );
-    const scriptRet = transformSync(source, {
+    const scriptAST = transformSync(source, {
+        ast: true,
+        code: false,
         plugins: [
             transformPlugin({
                 file: ret,
@@ -52,8 +54,8 @@ async function compile(source, options) {
                 target
             })
         ]
-    });
-    let code = scriptRet.code;
+    }).ast;
+    // let code = scriptRet.code;
     const {
         config = {},
         components = {},
@@ -66,7 +68,7 @@ async function compile(source, options) {
     const destPath = path.resolve(dest.path);
     const rPath = path.relative(path.dirname(options.path), destPath);
     let usedModules = {};
-    const minifyScriptRet = transformSync(code, {
+    const minifyScriptRet = transformFromAstSync(scriptAST, source, {
         plugins: [
             [
                 path.resolve(__dirname, '../file/babel-plugin-relative-import.js'),
@@ -81,7 +83,7 @@ async function compile(source, options) {
             'minify-dead-code-elimination'
         ]
     });
-    code = minifyScriptRet.code;
+    const code = minifyScriptRet.code;
 
     const usedModuleKeys = Object.keys(usedModules);
     for (let i = 0; i < usedModuleKeys.length; i++) {

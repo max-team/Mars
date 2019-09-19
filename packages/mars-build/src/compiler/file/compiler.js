@@ -12,7 +12,7 @@ const PluginError = gutil.PluginError;
 const PLUGIN_NAME = 'file-compiler';
 const path = require('path');
 
-const {transformSync} = require('@babel/core');
+const {transformSync} = require('../../helper/babel');
 
 const {compile: compileStyle} = require('../style/style');
 const {getFileCompiler} = require('./base');
