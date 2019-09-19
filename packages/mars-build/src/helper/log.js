@@ -9,13 +9,20 @@ const readline = require('readline');
 const WRITE_MAGIC_CODE = '\u001b[0m\u001b[0m\u001b[0m ...';
 
 // hook stdout to get last line write
+// const util = require('util');
+// util.debug('stdout: ' + util.inspect(string));
 let lastLineStr = '';
 hookStdout(string => {
     lastLineStr = /\n$/.test(string) ? string : lastLineStr;
+}, () => {
+    // when stderr reset lastLineStr
+    lastLineStr = '';
 });
 
-function hookStdout(callback) {
+// hookStdout from https://gist.github.com/pguillory/729616
+function hookStdout(callback, callbackErr = callback) {
     const oldWrite = process.stdout.write;
+    const oldWriteErr = process.stderr.write;
     process.stdout.write = (function hookStdoutWrite(write) {
         return function hookedStdoutWrite(...args) {
             write.apply(process.stdout, args);
@@ -23,8 +30,17 @@ function hookStdout(callback) {
         };
     })(process.stdout.write);
 
+    // hook stderr
+    process.stderr.write = (function hookStderrWrite(write) {
+        return function hookedStderrWrite(...args) {
+            write.apply(process.stdout, args);
+            callbackErr.apply(null, args);
+        };
+    })(process.stderr.write);
+
     return function unhook() {
         process.stdout.write = oldWrite;
+        process.stderr.write = oldWriteErr;
     };
 }
 
