@@ -37,9 +37,22 @@ const {
 } = require('./compiler/template/index');
 const templateCompiler = getCompiler(mark, transform, generate, 'h5');
 
+// const {
+//     compileScript: scriptCompiler
+// } = require('./compiler/script/script-h5');
+
+const {parse: sfcParser} = require('./compiler/sfc/parser');
 const {
-    compileScript: scriptCompiler
+    compileScript: scriptCompiler,
+    // postCompileScript,
+    // compileRouter,
+    // compileMain,
+    // compileApp,
+    compileComponents,
+    // compileApi,
+    compileTabBar
 } = require('./compiler/script/script-h5');
+
 const scriptPostCompiler = require('./compiler/script/script').postCompile;
 
 // // const scriptCompiler = require('./compiler/script/script').compile;
@@ -55,17 +68,7 @@ const compilers = {
     scriptCompiler,
     configCompiler
 };
-const {parse: sfcParser} = require('./compiler/sfc/parser');
-const {
-    // compileScript,
-    // postCompileScript,
-    // compileRouter,
-    // compileMain,
-    // compileApp,
-    compileComponents,
-    // compileApi,
-    compileTabBar
-} = require('./compiler/script/script-h5');
+
 // const delToVueTag = require('./h5/transform/tag');
 // // const generate = require('./compiler/template/generate');
 
