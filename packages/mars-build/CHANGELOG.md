@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.9](https://github.com/max-team/Mars/compare/@marsjs/build@0.3.8...@marsjs/build@0.3.9) (2019-09-20)
+
+
+### Bug Fixes
+
+* **build:** downgrade webpack version to match vue-cli ([e5c8849](https://github.com/max-team/Mars/commit/e5c8849))
+* **build:** fix log write when errer ([3a4f50e](https://github.com/max-team/Mars/commit/3a4f50e))
+
+
+### Features
+
+* **build:** omit babel configFile, optimize continuous transform ([1ef7a40](https://github.com/max-team/Mars/commit/1ef7a40))
+
+
+
+
+
 ## [0.3.8](https://github.com/max-team/Mars/compare/@marsjs/build@0.3.7...@marsjs/build@0.3.8) (2019-09-18)
 
 
