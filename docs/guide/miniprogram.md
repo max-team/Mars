@@ -327,7 +327,7 @@ Mars 支持完整的 Vue 生命周期和小程序生命周期及事件方法（�
 
 生命周期图示及顺序
 
-![生命周期图示](../assets/lifecycle.png)
+![生命周期图示](../assets/framework-lifecycle.png)
 
 如图示，Vue 生命周期与 swan 生命周期触发顺序为：
 

@@ -75,8 +75,12 @@ type 只能是以下这些：
 
 ![框架原理](./docs/assets/framework.png)
 
-#### 运行时
-![运行时](./docs/assets/runtime.png)
+#### 小程序运行时
+![运行时](./docs/assets/framework-runtime.png)
+
+#### H5 运行时
+![运行时](./docs/assets/framework-h5.png)
+
 
 #### 编译和构建
-![编译和构建](./docs/assets/compile.png)
+![编译和构建](./docs/assets/framework-build.png)
