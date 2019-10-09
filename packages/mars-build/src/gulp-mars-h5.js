@@ -308,7 +308,12 @@ async function compile(file, opt) {
             allPages.forEach(page => {
                 const name = `_${md5(page).substr(0, 8)}`;
                 // const name = page.replace(/\//g, '$');
-                content += `import ${name} from './${page}.vue';\n`;
+                if (options._config.h5 && options._config.h5.useLazyRoute) {
+                    content += `const ${name} = () => import('./${page}.vue');\n`;
+                }
+                else {
+                    content += `import ${name} from './${page}.vue';\n`;
+                }
                 routes.push({
                     path: '/' + page,
                     name
