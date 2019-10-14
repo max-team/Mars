@@ -50,9 +50,10 @@ describe('[swan]directive', () => {
 
         expect(directive(key, value, attrs, node)).toBeTruthy();
         expect(node.attrsMap.class).toBe(undefined);
-        expect(attrs).toEqual({ class: `{{[(isActive)?'active':'',(hasError)?'text-danger':'']}}`});
+        expect(attrs).toEqual({ class: `{{[(isActive) ? 'active' : '', (hasError) ? 'text-danger' : '']}}`});
     });
 });
+
 
 describe('[swan]directive:events', () => {
     test('directive function exists', () => {
@@ -163,30 +164,6 @@ describe('[swan]directive:for', () => {
         });
     });
 });
-
-describe('[swan]directive:bindClass', () => {
-    test('directive function exists', () => {
-        expect(bindClass).not.toBe(undefined);
-        expect(bindClass).not.toBe(null);
-    });
-
-    test('v-bind:class', () => {
-        const value = `{ active: isActive, 'text-danger': hasError }`;
-        let attrs = {};
-        const node = {
-            staticClass: 'static',
-            attrsMap: { 
-                class: 'static'
-            }
-        };
-        bindClass(undefined, value, attrs, node);
-        expect(attrs).toEqual({ 
-            class: `static {{[(isActive)?'active':'',(hasError)?'text-danger':'']}}`
-        });
-        expect(node.attrsMap.class).toBe(undefined);
-    });
-});
-
 
 describe('[swan]directive:vShow', () => {
     test('directive function exists', () => {

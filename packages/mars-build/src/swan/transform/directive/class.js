@@ -49,6 +49,7 @@ module.exports = function (name, value, attrs, node) {
     delete node.attrsMap.class;
 };
 
+
 /**
  * transform object syntax class
  * eg: { active: isActive } -> [isActive ? 'active' : '']
@@ -58,20 +59,23 @@ module.exports = function (name, value, attrs, node) {
  * @return {string} transformed result
  */
 function transformObjClass(value, objToStr) {
-    value = value.replace(/[\s*{}]/g, '').split(',').map(item => {
+    value = value.replace(/[\n{}]/g, '').split(',').map(item => {
+        item = item.trim();
         // const arr = item.split(':');
         const index = item.indexOf(':');
         const arr = [item.slice(0, index), item.slice(index + 1)];
         let [name, value] = arr;
 
+        name = name.trim();
+        value = value.trim();
         if (name.indexOf('\"') < 0 && name.indexOf('\'') < 0) {
             name = `'${name}'`;
         }
-        let result = `(${value})?${name}:''`;
+        let result = `(${value}) ? ${name} : ''`;
 
         return objToStr ? `(${result})` : result;
     });
-    return value.join(objToStr ? ' + \' \' + ' : ',');
+    return value.join(objToStr ? ' + \' \' + ' : ', ');
 }
 
 /**
@@ -83,7 +87,8 @@ function transformObjClass(value, objToStr) {
  * @return {string} transformed result
  */
 function transformArrayClass(value, arrToStr) {
-    return value.replace(/[\s*[\]]/g, '').split(',').map(item => {
+    return value.replace(/[\n[\]]/g, '').split(',').map(item => {
+        item = item.trim();
         if (/^{.*}$/.test(item)) {
             return transformObjClass(item, arrToStr);
         }
@@ -92,5 +97,5 @@ function transformArrayClass(value, arrToStr) {
         }
 
         return item;
-    }).join(arrToStr ? ' + \' \' + ' : ',');
+    }).join(arrToStr ? ' + \' \' + ' : ', ');
 }
