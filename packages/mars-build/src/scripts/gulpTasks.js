@@ -75,7 +75,10 @@ function getTaskSFC(config, options) {
     } : {};
     const logger = config.verbose ? log.info : log.write;
     return () => {
-        return gulp.src(source.sfc)
+        if (!source.sfc || (Array.isArray(source.sfc) && source.sfc.length === 0)) {
+            return Promise.resolve('[warning] empty sfc globs');
+        }
+        return gulp.src(source.sfc, {allowEmpty: true})
             .pipe(changed(dest, changedOptions))
             .pipe(intercept(file => {
                 file.isBuffer() && logger('[compile:sfc]:', getPathToCWD(file.path));
@@ -106,7 +109,10 @@ function getTaskCompileAssets(config, options) {
     const logger = config.verbose ? log.info : log.write;
 
     return () => {
-        return gulp.src(assets)
+        if (!assets || (Array.isArray(assets) && assets.length === 0)) {
+            return Promise.resolve('[warning] empty assets globs');
+        }
+        return gulp.src(assets, {allowEmpty: true})
             .pipe(changed(dest))
             .pipe(intercept(file => {
                 file.isBuffer() && logger('[compile:assets]:', getPathToCWD(file.path));
