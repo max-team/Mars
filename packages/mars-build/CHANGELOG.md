@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.10](https://github.com/max-team/Mars/compare/@marsjs/build@0.3.9...@marsjs/build@0.3.10) (2019-10-14)
+
+
+### Bug Fixes
+
+* **build:** fix class bind space unexpected removed ([85b2c71](https://github.com/max-team/Mars/commit/85b2c71))
+* **build:** fix Error when empty assets glob ([541dfe0](https://github.com/max-team/Mars/commit/541dfe0))
+
+
+### Features
+
+* **build:** support lazy-load route in h5 ([#182](https://github.com/max-team/Mars/issues/182)) ([90edcd1](https://github.com/max-team/Mars/commit/90edcd1))
+
+
+
+
+
 ## [0.3.9](https://github.com/max-team/Mars/compare/@marsjs/build@0.3.8...@marsjs/build@0.3.9) (2019-09-20)
 
 
