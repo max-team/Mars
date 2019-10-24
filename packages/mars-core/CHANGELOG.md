@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.4](https://github.com/max-team/Mars/compare/@marsjs/core@0.3.3...@marsjs/core@0.3.4) (2019-10-24)
+
+
+### Bug Fixes
+
+* **core:** fix page initData ([f735d2d](https://github.com/max-team/Mars/commit/f735d2d))
+
+
+### Features
+
+* **core:** export API ([a591116](https://github.com/max-team/Mars/commit/a591116))
+
+
+
+
+
 ## [0.3.3](https://github.com/max-team/Mars/compare/@marsjs/core@0.3.3-beta.1...@marsjs/core@0.3.3) (2019-09-12)
 
 
