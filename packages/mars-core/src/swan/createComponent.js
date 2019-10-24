@@ -27,5 +27,7 @@ export default makeCreateComponent(
     handleModel,
     setData,
     callHook,
-    {$api}
+    {
+        $api
+    }
 );

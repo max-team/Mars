@@ -41,7 +41,12 @@ function mountVue(VueComponent, setData) {
     }
     else {
         const vmList = rootMp.$vue.__vms__[parentCompid];
-        parent = vmList[vmList.cur];
+        if (!vmList) {
+            console.warn('cannot find Vue parent component for: ', this);
+        }
+        else {
+            parent = vmList[vmList.cur];
+        }
     }
 
     const options = {
@@ -162,18 +167,23 @@ export function makeCreateComponent(handleProxy, handleModel, setData, callHook,
                         console.log('[debug: mp lifetimes] detached', this.data.compId);
                     }
                     callHook.call(this, this.$vue, 'comp', 'detached', args);
-                    this.$vue && this.$vue.$destroy();
-                    // remove swan binded vue instance from root __vms__
-                    const page = this.$$__page__;
-                    const vms = page.$vue.__vms__;
-                    const vmData = vms[this.data.compId];
-                    const curSwan = this.__curSwan__;
-                    if (vms && vmData && vmData[curSwan]) {
-                        vmData[curSwan] = null;
-                        delete vmData[curSwan];
+                    try {
+                        this.$vue && this.$vue.$destroy();
+                        // remove swan binded vue instance from root __vms__
+                        const page = this.$$__page__;
+                        const vms = page.$vue.__vms__;
+                        const vmData = vms[this.data.compId];
+                        const curSwan = this.__curSwan__;
+                        if (vms && vmData && vmData[curSwan]) {
+                            vmData[curSwan] = null;
+                            delete vmData[curSwan];
+                        }
+                        delete this.$vue;
+                        delete this.$$__page__;
                     }
-                    delete this.$vue;
-                    delete this.$$__page__;
+                    catch (e) {
+                        console.warn('component detached error', e, this);
+                    }
                 }
             }
         };

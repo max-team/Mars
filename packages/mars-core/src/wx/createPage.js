@@ -9,6 +9,7 @@
 import pageMixin, {handleProxy, handleModel} from './mixins';
 import {setData} from './data';
 import {callHook} from './lifecycle';
+import $api from './nativeAPI';
 
 import Vue from '../base/vue/index';
 import {state} from '../base/state';
@@ -20,8 +21,12 @@ function makeCreatePage(pageMixin, {handleProxy, handleModel}, setData, callHook
     return function (options) {
         options.mixins = [pageMixin];
 
+        let initData = typeof options.data === 'function' ? options.data.call({
+            $api
+        }) : (options.data || {});
+
         return {
-            data: {},
+            data: initData,
             lifetimes: {
                 attached(...args) {
                     createVue.call(this, options, args, {setData});

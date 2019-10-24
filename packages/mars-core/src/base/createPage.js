@@ -71,15 +71,21 @@ export function mountVue(vm) {
     }
 }
 
-export function makeCreatePage(pageMixin, {handleProxy, handleModel}, setData, callHook) {
+export function makeCreatePage(pageMixin, {handleProxy, handleModel}, setData, callHook, {
+    $api
+}) {
     return function (options) {
         options.mixins = [pageMixin];
+
+        let initData = typeof options.data === 'function' ? options.data.call({
+            $api
+        }) : (options.data || {});
 
         return {
             $$__createVue__() {
                 return createVue.call(this, options, [], {setData});
             },
-            data: {},
+            data: initData,
             handleProxy,
             handleModel,
             onLoad(...args) {
