@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.5](https://github.com/max-team/Mars/compare/@marsjs/core@0.3.4...@marsjs/core@0.3.5) (2019-10-28)
+
+
+### Bug Fixes
+
+* **core:** fix props update before created ([b82ef33](https://github.com/max-team/Mars/commit/b82ef33))
+
+
+### Features
+
+* **core:** export native api with ([2e78071](https://github.com/max-team/Mars/commit/2e78071))
+
+
+
+
+
 ## [0.3.4](https://github.com/max-team/Mars/compare/@marsjs/core@0.3.3...@marsjs/core@0.3.4) (2019-10-24)
 
 
