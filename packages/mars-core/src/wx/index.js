@@ -8,7 +8,7 @@ export const $platform = 'wx';
 
 export {config};
 
-export {default as API} from './nativeAPI';
+export {default as $api} from './nativeAPI';
 export {default as createApp} from './createApp';
 export {default as createPage} from './createPage';
 export {default as createComponent, vueCompCreator} from './createComponent';
