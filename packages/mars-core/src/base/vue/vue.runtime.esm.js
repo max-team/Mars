@@ -1996,6 +1996,30 @@ function initLifecycle (vm) {
   vm._isMounted = false;
   vm._isDestroyed = false;
   vm._isBeingDestroyed = false;
+
+  // apply cache propsData
+  var cachePropsData = parent && parent._cachePropsData && parent._cachePropsData[options.compId];
+  if (cachePropsData && Array.isArray(cachePropsData) && cachePropsData.length > 0) {
+    // vm.$options.
+    options.mounted = options.mounted || [];
+    options.mounted.unshift(function() {
+      vm.$nextTick(function () {
+        if (process.env.NODE_ENV !== 'production') {
+          isUpdatingChildComponent = true;
+        }
+
+        cachePropsData.forEach(function (propsData) {
+          updateVMProps(vm, propsData);
+        });
+
+        if (process.env.NODE_ENV !== 'production') {
+          isUpdatingChildComponent = false;
+        }
+      });
+    });
+
+    delete parent._cachePropsData[options.compId];
+  }
 }
 
 function lifecycleMixin (Vue) {
@@ -2154,6 +2178,30 @@ function mountComponent (
   return vm
 }
 
+function updateVMProps(vm, propsData) {
+
+  toggleObserving(false);
+  var props = vm._props;
+  var propKeys = vm.$options._propKeys || [];
+
+  for (var i = 0; i < propKeys.length; i++) {
+    var key = propKeys[i];
+    var altKey = hyphenate(key);
+    var res = {};
+    if (hasOwn(propsData, key)) {
+      res[key] = propsData[key];
+    } else if (hasOwn(propsData, altKey)) {
+      res[key] = propsData[altKey];
+    }
+    // props[key] = propsData[key]
+    var propOptions = vm.$options.props; // wtf flow?
+    props[key] = validateProp(key, propOptions, res, vm);
+  }
+  toggleObserving(true);
+  // keep a copy of raw propsData
+  vm.$options.propsData = propsData;
+
+}
 
 // for @marsjs/core used for update Child Props
 function updateChildProps() {
@@ -2170,31 +2218,18 @@ function updateChildProps() {
   }
 
   Object.keys(_pData).forEach(function (compId) {
-    var vmList = this$1.$root.__vms__[compId];
-    var vm = vmList && vmList[vmList.cur];
+    var vm = this$1.$root.__vms__[compId];
+    var propsData = _pData[compId];
+    // const vm = vmList && vmList[vmList.cur]
     // update props
     if (vm && vm.$options.props) {
-      toggleObserving(false);
-      var props = vm._props;
-      var propKeys = vm.$options._propKeys || [];
-      var propsData = _pData[compId];
-      for (var i = 0; i < propKeys.length; i++) {
-        
-        var key = propKeys[i];
-        var altKey = hyphenate(key);
-        var res = {};
-        if (hasOwn(propsData, key)) {
-          res[key] = propsData[key];
-        } else if (hasOwn(propsData, altKey)) {
-          res[key] = propsData[altKey];
-        }
-        // props[key] = propsData[key]
-        var propOptions = vm.$options.props; // wtf flow?
-        props[key] = validateProp(key, propOptions, res, vm);
-      }
-      toggleObserving(true);
-      // keep a copy of raw propsData
-      vm.$options.propsData = propsData;
+      updateVMProps(vm, propsData);
+    }
+    // if child not created yet, cache propsData
+    else {
+      this$1._cachePropsData = this$1._cachePropsData || {};
+      this$1._cachePropsData[compId] = this$1._cachePropsData[compId] || [];
+      this$1._cachePropsData[compId].push(propsData);
     }
   });
 

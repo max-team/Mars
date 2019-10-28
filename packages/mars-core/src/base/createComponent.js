@@ -40,12 +40,9 @@ function mountVue(VueComponent, setData) {
         parent = rootMp.$vue;
     }
     else {
-        const vmList = rootMp.$vue.__vms__[parentCompid];
-        if (!vmList) {
+        parent = rootMp.$vue.__vms__[parentCompid];
+        if (!parent) {
             console.warn('cannot find Vue parent component for: ', this);
-        }
-        else {
-            parent = vmList[vmList.cur];
         }
     }
 
@@ -53,7 +50,8 @@ function mountVue(VueComponent, setData) {
         mpType: 'component',
         mpInstance: this,
         propsData: properties,
-        parent
+        parent,
+        compId: currentCompId
     };
 
     // TODO: check if is ok when swan instance reused with trackBy
@@ -172,12 +170,7 @@ export function makeCreateComponent(handleProxy, handleModel, setData, callHook,
                         // remove swan binded vue instance from root __vms__
                         const page = this.$$__page__;
                         const vms = page.$vue.__vms__;
-                        const vmData = vms[this.data.compId];
-                        const curSwan = this.__curSwan__;
-                        if (vms && vmData && vmData[curSwan]) {
-                            vmData[curSwan] = null;
-                            delete vmData[curSwan];
-                        }
+                        vms[this.data.compId] = null;
                         delete this.$vue;
                         delete this.$$__page__;
                     }

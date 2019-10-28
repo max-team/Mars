@@ -49,12 +49,13 @@ export function makeGetCompMixin($api) {
                 }
 
                 const vms = this.$root.__vms__;
-                vms[this.compId] = vms[this.compId] || {cur: -1, curSwan: -1};
-                const curIndex = ++vms[this.compId].cur;
-                vms[this.compId][curIndex] = this;
+                vms[this.compId] = this;
+                // vms[this.compId] = vms[this.compId] || {cur: -1, curSwan: -1};
+                // const curIndex = ++vms[this.compId].cur;
+                // vms[this.compId][curIndex] = this;
 
                 // 此时还没有 .$mp
-                this.$options.mpInstance.__curSwan__ = curIndex;
+                // this.$options.mpInstance.__curSwan__ = curIndex;
 
                 registerRef(this, this.ref);
             },
