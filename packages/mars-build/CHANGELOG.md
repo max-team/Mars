@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.12](https://github.com/max-team/Mars/compare/@marsjs/build@0.3.11...@marsjs/build@0.3.12) (2019-10-31)
+
+
+### Bug Fixes
+
+* **build:** fix process binary files ([47fbb39](https://github.com/max-team/Mars/commit/47fbb39))
+
+
+
+
+
 ## [0.3.11](https://github.com/max-team/Mars/compare/@marsjs/build@0.3.10...@marsjs/build@0.3.11) (2019-10-31)
 
 
