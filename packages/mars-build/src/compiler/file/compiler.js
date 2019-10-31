@@ -76,27 +76,38 @@ async function compileJS(content, options) {
     return res;
 }
 
+function compileDefault(code, options) {
+    return {
+        code
+    };
+}
+
 async function compile(file, options) {
     const {fileSuffix, target} = options;
     const buildConfig = options._config || {};
-    const cssCompiler = getFileCompiler(compileStyle, buildConfig);
-    const jsCompiler = getFileCompiler(compileJS, buildConfig);
     file.lang = path.extname(file.path).substr(1);
 
-    // h5 的没有编译 sfc 中的 style block, assets file 也先不编译保持一致
     if (isCSS(file.path)) {
         file.type = 'css';
         file.path = changeExt(file.path, fileSuffix.css);
+        const cssCompiler = getFileCompiler(compileStyle, buildConfig);
         await cssCompiler(file, options);
     }
-    if (isJS(file.path)) {
+    else if (isJS(file.path)) {
         file.type = 'js';
         // TODO: H5 支持 ts 文件编译
         if (target !== 'h5') {
             file.path = changeExt(file.path, fileSuffix.js);
         }
+        const jsCompiler = getFileCompiler(compileJS, buildConfig);
         await jsCompiler(file, options);
     }
+    else {
+        // for other files, use default compiler
+        const compiler = getFileCompiler(compileDefault, buildConfig);
+        await compiler(file, options);
+    }
+
     return file;
 }
 
