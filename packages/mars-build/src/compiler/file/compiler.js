@@ -76,12 +76,6 @@ async function compileJS(content, options) {
     return res;
 }
 
-function compileDefault(code, options) {
-    return {
-        code
-    };
-}
-
 async function compile(file, options) {
     const {fileSuffix, target} = options;
     const buildConfig = options._config || {};
@@ -104,7 +98,7 @@ async function compile(file, options) {
     }
     else {
         // for other files, use default compiler
-        const compiler = getFileCompiler(compileDefault, buildConfig);
+        const compiler = getFileCompiler(null, buildConfig);
         await compiler(file, options);
     }
 

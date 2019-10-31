@@ -46,13 +46,26 @@ function getExtProcessors(processors, lang) {
     return ret;
 }
 
+function defaultCompile(bufferOrString) {
+    return { code: bufferOrString };
+}
+
+function getFileSource(file) {
+    return file.isBinary && file.isBinary()
+        ? file.contents
+        : file.contents
+            ? file.contents.toString()
+            : '';
+}
+
 function getFileCompiler(compile, config) {
     const {preprocessors = {}, postprocessors = {}} = config;
+    compile = compile || defaultCompile;
 
     return async function fileCompiler(file, options) {
         const fileOptions = file.$options;
         const lang = file.lang || file.type;
-        let source = (file.contents && file.contents.toString()) || '';
+        let source = getFileSource(file);
         // preprocessors
         source = await process(source, getExtProcessors(preprocessors, lang), file);
         // compile
@@ -63,7 +76,10 @@ function getFileCompiler(compile, config) {
         let {code, ...rest} = result;
         code = await process(code, getExtProcessors(postprocessors, lang), file);
         // overwrite file contents
-        file.contents = Buffer.from(code || '');
+        file.contents = typeof code === 'string'
+            ? Buffer.from(code || '')
+            : code;
+
         return rest;
     };
 }

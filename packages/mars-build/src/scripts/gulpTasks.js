@@ -96,6 +96,7 @@ function getTaskSFC(config, options) {
  * @return {Function}
  */
 function getTaskCompileAssets(config, options) {
+    const isBinary = require('gulp-is-binary');
     const {source} = config;
     const {target} = options;
     const dest = config.dest.path;
@@ -118,6 +119,7 @@ function getTaskCompileAssets(config, options) {
                 file.isBuffer() && logger('[compile:assets]:', getPathToCWD(file.path));
                 return file;
             }))
+            .pipe(isBinary())
             .pipe(compileFile(options))
             .pipe(gulp.dest(dest));
     };

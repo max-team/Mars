@@ -19,6 +19,7 @@
         "gulp": "^4.0.2",
         "gulp-changed": "^3.2.0",
         "gulp-intercept": "^0.1.0",
+        "gulp-is-binary": "^0.1.2",
         "gulp-util": "^3.0.8",
         "less": "^3.9.0",
         "lodash.merge": "^4.6.1",
