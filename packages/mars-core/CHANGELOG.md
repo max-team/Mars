@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.23](https://github.com/max-team/Mars/compare/@marsjs/core@0.2.22...@marsjs/core@0.2.23) (2019-11-06)
+
+
+### Bug Fixes
+
+* **core:** fix v-model not working when val is empty ([5ce1354](https://github.com/max-team/Mars/commit/5ce1354))
+
+
+### Features
+
+* **core:** reportAnalytics 类型定义 ([e962263](https://github.com/max-team/Mars/commit/e962263))
+
+
+
+
+
 ## [0.2.22](https://github.com/max-team/Mars/compare/@marsjs/core@0.2.21...@marsjs/core@0.2.22) (2019-09-03)
 
 
