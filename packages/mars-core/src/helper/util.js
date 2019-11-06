@@ -40,7 +40,7 @@ export function setObjectData(target, model, value) {
     const modelArr = stringToPath(model);
     let parent = target;
     let key;
-    while (parent[key = modelArr.shift()]) {
+    while (parent[key = modelArr.shift()] !== undefined) {
         if (modelArr.length > 0) {
             parent = parent[key];
         }
