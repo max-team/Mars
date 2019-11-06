@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.6](https://github.com/max-team/Mars/compare/@marsjs/core@0.3.5...@marsjs/core@0.3.6) (2019-11-06)
+
+
+### Bug Fixes
+
+* **core:** fix v-model not working when val is empty ([5f2fe81](https://github.com/max-team/Mars/commit/5f2fe81))
+
+
+
+
+
 ## [0.3.5](https://github.com/max-team/Mars/compare/@marsjs/core@0.3.4...@marsjs/core@0.3.5) (2019-10-28)
 
 
