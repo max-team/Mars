@@ -155,8 +155,6 @@ export function handleModel(event) {
     else if (type === 'change' && tag === 'switch') {
         setObjectData(this.$vue, model, event.detail.checked);
     }
-
-
 }
 
 function registerRef(vm, key, isRemoval) {
