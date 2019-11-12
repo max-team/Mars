@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.13](https://github.com/max-team/Mars/compare/@marsjs/build@0.3.12...@marsjs/build@0.3.13) (2019-11-12)
+
+
+### Bug Fixes
+
+* **build:** fix compId gen in nested loops ([ff1911f](https://github.com/max-team/Mars/commit/ff1911f))
+
+
+
+
+
 ## [0.3.12](https://github.com/max-team/Mars/compare/@marsjs/build@0.3.11...@marsjs/build@0.3.12) (2019-10-31)
 
 
