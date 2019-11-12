@@ -3,6 +3,48 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+
+## [0.3.6](https://github.com/max-team/Mars/compare/@marsjs/core@0.3.5...@marsjs/core@0.3.6) (2019-11-06)
+
+
+### Bug Fixes
+
+* **core:** fix v-model not working when val is empty ([5f2fe81](https://github.com/max-team/Mars/commit/5f2fe81))
+
+
+
+
+
+## [0.3.5](https://github.com/max-team/Mars/compare/@marsjs/core@0.3.4...@marsjs/core@0.3.5) (2019-10-28)
+
+
+### Bug Fixes
+
+* **core:** fix props update before created ([b82ef33](https://github.com/max-team/Mars/commit/b82ef33))
+
+
+### Features
+
+* **core:** export native api with ([2e78071](https://github.com/max-team/Mars/commit/2e78071))
+
+
+
+
+
+## [0.3.4](https://github.com/max-team/Mars/compare/@marsjs/core@0.3.3...@marsjs/core@0.3.4) (2019-10-24)
+
+
+### Bug Fixes
+
+* **core:** fix page initData ([f735d2d](https://github.com/max-team/Mars/commit/f735d2d))
+
+
+### Features
+
+* **core:** export API ([a591116](https://github.com/max-team/Mars/commit/a591116))
+
+
+
 ## [0.3.3](https://github.com/max-team/Mars/compare/@marsjs/core@0.3.3-beta.1...@marsjs/core@0.3.3) (2019-09-12)
 
 

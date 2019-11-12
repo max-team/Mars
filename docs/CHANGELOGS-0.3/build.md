@@ -4,6 +4,61 @@ All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
 
+## [0.3.12](https://github.com/max-team/Mars/compare/@marsjs/build@0.3.11...@marsjs/build@0.3.12) (2019-10-31)
+
+
+### Bug Fixes
+
+* **build:** fix process binary files ([47fbb39](https://github.com/max-team/Mars/commit/47fbb39))
+
+
+
+
+
+## [0.3.11](https://github.com/max-team/Mars/compare/@marsjs/build@0.3.10...@marsjs/build@0.3.11) (2019-10-31)
+
+
+### Bug Fixes
+
+* **build:** enable file compiler for all assets ([c04bbbe](https://github.com/max-team/Mars/commit/c04bbbe))
+
+
+
+
+
+## [0.3.10](https://github.com/max-team/Mars/compare/@marsjs/build@0.3.9...@marsjs/build@0.3.10) (2019-10-14)
+
+
+### Bug Fixes
+
+* **build:** fix class bind space unexpected removed ([85b2c71](https://github.com/max-team/Mars/commit/85b2c71))
+* **build:** fix Error when empty assets glob ([541dfe0](https://github.com/max-team/Mars/commit/541dfe0))
+
+
+### Features
+
+* **build:** support lazy-load route in h5 ([#182](https://github.com/max-team/Mars/issues/182)) ([90edcd1](https://github.com/max-team/Mars/commit/90edcd1))
+
+
+
+
+
+## [0.3.9](https://github.com/max-team/Mars/compare/@marsjs/build@0.3.8...@marsjs/build@0.3.9) (2019-09-20)
+
+
+### Bug Fixes
+
+* **build:** downgrade webpack version to match vue-cli ([e5c8849](https://github.com/max-team/Mars/commit/e5c8849))
+* **build:** fix log write when errer ([3a4f50e](https://github.com/max-team/Mars/commit/3a4f50e))
+
+
+### Features
+
+* **build:** omit babel configFile, optimize continuous transform ([1ef7a40](https://github.com/max-team/Mars/commit/1ef7a40))
+
+
+
+
 ## [0.3.8](https://github.com/max-team/Mars/compare/@marsjs/build@0.3.7...@marsjs/build@0.3.8) (2019-09-18)
 
 
