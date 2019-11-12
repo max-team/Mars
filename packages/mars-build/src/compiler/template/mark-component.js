@@ -86,11 +86,14 @@ function getMarkNode(options, componentsInUsed = {}) {
             // TODO：如果用户自己设置了 comId，报 warning
             let value;
             if (isInFor(el)) {
-                const iterator = getIterator(el);
-                value = '(compId ? compId : \'$root\') + ' + '\',' + compIdCounter + '-\' + ' + iterator;
+                const iterators = getIterators(el);
+                const iteratorsIdExpr = iterators.join(' + \'_\' + ');
+                // value = '(compId ? compId : \'$root\') + ' + '\',' + compIdCounter + '-\' + ' + iterators.join(` + '_' + `);
+                value = `(compId ? compId : '$root') + ',${compIdCounter}-' + ${iteratorsIdExpr}`;
             }
             else {
-                value = '(compId ? compId : \'$root\') + ' + '\',' + compIdCounter + '\'';
+                // value = '(compId ? compId : \'$root\') + ' + '\',' + compIdCounter + '\'';
+                value = `(compId ? compId : '$root') + ',${compIdCounter}'`;
             }
             el.attrsList.push({
                 name: ':compId',
