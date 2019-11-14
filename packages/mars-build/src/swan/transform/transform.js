@@ -49,7 +49,7 @@ function attrsFormat(node, attrs = {}) {
 
     if (node.isComp) {
         // node.attrsMap['v-bind:rootComputed'] = 'compComputed || rootComputed';
-        node.attrsMap['v-bind:rootUID'] = 'rootUID';
+        obj['v-bind:rootUID'] = 'rootUID';
     }
 
     return obj;
@@ -162,6 +162,11 @@ function transFilters(node, options) {
 
 const nodeProcesser = {
     preProcess(nodeType, node, options) {
+        // 设置 isComp
+        if (nodeType & NODE_TYPES.COMPONENTS) {
+            node.isComp = true;
+        }
+
         // 格式化 attrsMap
         node.attrsMap = attrsFormat(node, node.attrsMap);
         // transform template literals Expressions
@@ -191,11 +196,6 @@ const nodeProcesser = {
                 node.attrsMap = processScopedSlotAttrs(node.attrsMap);
                 break;
         }
-
-        if (nodeType & NODE_TYPES.COMPONENTS) {
-            node.isComp = true;
-        }
-
     },
     process(nodeType, node, options) {
         // computed
