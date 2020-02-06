@@ -13,11 +13,11 @@
             }"
             class="mars-pull-refresh-header"
         >
-            <div class="mars-pull-refresh-loading">
+            <div v-if="enablePullDownRefresh" class="mars-pull-refresh-loading">
                 <span class="mars-pull-refresh-pulling-text mars-gap-left-small">松手加载</span>
                 <span class="mars-pull-refresh-loading-text mars-gap-left-small">Loading...</span>
             </div>
-            <div class="mars-pull-refresh-loaded">
+            <div v-if="enablePullDownRefresh" class="mars-pull-refresh-loaded">
                 <span class="mars-pull-refresh-loaded-text mars-gap-left-middle">
                     刷新完毕
                 </span>
