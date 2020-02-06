@@ -1,7 +1,7 @@
 /* eslint-disable */
 /*!
  * Vue.js v2.5.21
- * (c) 2014-2019 Evan You
+ * (c) 2014-2020 Evan You
  * Released under the MIT License.
  */
 // This file is a copy of: https://github.com/max-team/mars-vue/blob/v2_5_21_fork/dist/vue.runtime.esm.js
@@ -2359,6 +2359,10 @@ function flushSchedulerQueue () {
   // call component updated and activated hooks
   callActivatedHooks(activatedQueue);
   callUpdatedHooks(updatedQueue);
+
+  // trigger updatedQueueFlushed on root vm
+  var rootVM = watcher && watcher.vm && watcher.vm.$root;
+  rootVM && rootVM.$emit('scheduler.updatedQueueFlushed');
 
   // devtool hook
   /* istanbul ignore if */

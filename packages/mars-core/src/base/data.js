@@ -49,9 +49,8 @@ export function setData(vm, $mp, isRoot = false) {
         }
     }
     else {
-        setTimeout(() => {
-            cleanKeyPath(vm);
-        }, 0);
+        // call cleanKeyPath immediately when scheduler.updatedQueueFlushed
+        vm.$root.$once('scheduler.updatedQueueFlushed', () => cleanKeyPath(vm));
 
         const changed = getChangedData(vm, vm._data);
         const computed = getChangedComputed(vm);
