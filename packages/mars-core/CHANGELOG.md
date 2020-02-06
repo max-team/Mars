@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.7](https://github.com/max-team/Mars/compare/@marsjs/core@0.3.6...@marsjs/core@0.3.7) (2020-02-06)
+
+
+### Bug Fixes
+
+* **core:** 修复 cleanKeyPath 时机问题导致部分情况下新数据无法更新 ([add05fd](https://github.com/max-team/Mars/commit/add05fd))
+* **core:** 当 enablePullDownRefresh 时才渲染相关文本提示 ([9edc41e](https://github.com/max-team/Mars/commit/9edc41e))
+
+
+
+
+
 ## [0.3.6](https://github.com/max-team/Mars/compare/@marsjs/core@0.3.5...@marsjs/core@0.3.6) (2019-11-06)
 
 
