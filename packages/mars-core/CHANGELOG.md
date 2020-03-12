@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.8](https://github.com/max-team/Mars/compare/@marsjs/core@0.3.7...@marsjs/core@0.3.8) (2020-03-12)
+
+
+### Bug Fixes
+
+* **core:** 修复TabBarBadge,TabBarRedDot在h5下动态设置不生效,并迭代样式,与小程序保持一致 ([fbe67e0](https://github.com/max-team/Mars/commit/fbe67e0))
+* **core:** 修复TabBarBadge,TabBarRedDot在h5下动态设置不生效,并迭代样式,与小程序保持一致 ([3e6eaa7](https://github.com/max-team/Mars/commit/3e6eaa7))
+
+
+
+
+
 
 ## [0.3.7](https://github.com/max-team/Mars/compare/@marsjs/core@0.3.6...@marsjs/core@0.3.7) (2020-02-06)
 
