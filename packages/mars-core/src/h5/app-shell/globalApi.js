@@ -229,7 +229,7 @@ function initGlobalApi(Vue, vm) {
                     typeof text, 'string', fail, complete);
             }
             text.length > 4 && (text = text.substring(0, 4) + '...');
-            marsAppInstance.tabList[index] && (marsAppInstance.tabList[index].badge = text);
+            marsAppInstance.tabList[index] && Vue.set(marsAppInstance.tabList[index], 'badge', text);
             typeof success === 'function' && success(resInfo);
             typeof complete === 'function' && complete(resInfo);
         },
@@ -242,7 +242,7 @@ function initGlobalApi(Vue, vm) {
                     resInfo, 'removeTabBarBadge', 'index',
                     typeof index, 'number', fail, complete);
             }
-            marsAppInstance.tabList[index] && (marsAppInstance.tabList[index].badge = '');
+            marsAppInstance.tabList[index] && Vue.set(marsAppInstance.tabList[index], 'badge', '');
             typeof success === 'function' && success(resInfo);
             typeof complete === 'function' && complete(resInfo);
         },
@@ -255,7 +255,7 @@ function initGlobalApi(Vue, vm) {
                     resInfo, 'showTabBarRedDot', 'index',
                     typeof index, 'number', fail, complete);
             }
-            marsAppInstance.tabList[index] && (marsAppInstance.tabList[index].showRedDot = true);
+            marsAppInstance.tabList[index] && Vue.set(marsAppInstance.tabList[index], 'showRedDot', true);
             typeof success === 'function' && success(resInfo);
             typeof complete === 'function' && complete(resInfo);
         },
@@ -268,7 +268,7 @@ function initGlobalApi(Vue, vm) {
                     resInfo, 'hideTabBarRedDot', 'index',
                     typeof index, 'number', fail, complete);
             }
-            marsAppInstance.tabList[index] && (marsAppInstance.tabList[index].showRedDot = false);
+            marsAppInstance.tabList[index] && Vue.set(marsAppInstance.tabList[index], 'showRedDot', false);
             typeof success === 'function' && success(resInfo);
             typeof complete === 'function' && complete(resInfo);
         },

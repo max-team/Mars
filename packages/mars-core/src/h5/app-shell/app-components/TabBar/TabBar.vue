@@ -125,10 +125,10 @@ export default {
 }
 
 .tab-item-badge {
-    position: relative;
+    position: absolute;
     display: inline-block;
-    top: -5px;
-    left: 10px;
+    top: -2px;
+    right: -5px;
     color: #fff;
     background-color: red;
     border-radius: 5px;
@@ -136,17 +136,18 @@ export default {
     white-space: nowrap;
 }
 .tab-item-red-dot {
-    position: relative;
-    display: inline-block;
+    position: absolute;
+    display: block;
     top: 0px;
-    left: 10px;
+    right: -3px;
     color: #fff;
     background-color: red;
     border-radius: 5px;
-    width: 10px;
-    height: 10px;
+    width: 5px;
+    height: 5px;
 }
 .tab-item-icon {
+    position: relative;
     width: 20px;
     height: 20px;
     background-position: center;
