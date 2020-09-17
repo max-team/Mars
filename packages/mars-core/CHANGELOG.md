@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.9](https://github.com/keyiran/Mars/compare/@marsjs/core@0.3.8...@marsjs/core@0.3.9) (2020-09-17)
+
+
+### Features
+
+* **build & core:** support swan lifecycle onInit ([d83d1ea](https://github.com/keyiran/Mars/commit/d83d1ea))
+
+
+
+
+
 ## [0.3.8](https://github.com/max-team/Mars/compare/@marsjs/core@0.3.7...@marsjs/core@0.3.8) (2020-03-12)
 
 
