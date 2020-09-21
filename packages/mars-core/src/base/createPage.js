@@ -88,6 +88,24 @@ export function makeCreatePage(pageMixin, {handleProxy, handleModel}, setData, c
             data: initData,
             handleProxy,
             handleModel,
+            onInit(...args) {
+                let vm = this.$vue;
+                if (!vm) {
+                    vm = createVue.call(this, options, args, {setData});
+                }
+                else {
+                    const query = args[0];
+                    vm.$mp.query = query;
+                    vm.$mp.options = query;
+                }
+
+                if (process.env.NODE_ENV !== 'production' && config.debug && config.debug.lifetimes) {
+                    console.log('[debug: mp pageHooks] onInit', this.__uid__);
+                }
+                // 先 callHook 保证数据可以初始化
+                const ret = callHook.call(this, this.$vue, 'page', 'onInit', args);
+                return ret;
+            },
             onLoad(...args) {
                 let vm = this.$vue;
                 if (!vm) {
