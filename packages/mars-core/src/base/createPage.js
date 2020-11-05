@@ -76,7 +76,7 @@ export function makeCreatePage(pageMixin, {handleProxy, handleModel}, setData, c
 }) {
     return function (options) {
         // 如果 options(vue页面的代码)中已有 mixins，则同时保留 options中的 mixins
-        options.mixins = (options.mixins || []).concat(pageMixin);
+        options.mixins = [pageMixin, ...options.mixins || []];
 
         let initData = typeof options.data === 'function' ? options.data.call({
             $api
