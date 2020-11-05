@@ -11,7 +11,8 @@ import config from '../config';
 
 export function makeVueCompCreator(getCompMixin) {
     return function vueCompCreator(options) {
-        options.mixins = [getCompMixin(options)];
+        // 如果 options(vue组件的代码)中已有 mixins，则同时保留 options中的 mixins
+        options.mixins = [getCompMixin(options), ...options.mixins || []];
         return options;
     };
 }

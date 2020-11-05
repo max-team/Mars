@@ -141,14 +141,16 @@ async function compileUIModules(uiModules, destPath) {
         const coreEntry = require.resolve(realName + '/mars-core', {
             paths: [process.cwd()]
         });
-        const entry = coreEntry.replace('mars-core/index.js', '');
+        // 获取当前操作系统的路径分隔符，否则windwos环境替换不成功
+        const entry = coreEntry.replace(`mars-core${path.sep}index.js`, '');
         const dest = path.resolve(destPath, modPath);
         const coreDestPath = path.resolve(destPath, 'mars-core');
         const uiCoreDestPath = path.resolve(dest, 'mars-core');
+        // 修改windows环境反斜杠为斜杠
         const coreRelativePath = path.relative(
             uiCoreDestPath,
             coreDestPath
-        );
+        ).replace(/\\/g, '/');
         if (fs.existsSync(uiCoreDestPath + '/index.js')) {
             return;
         }

@@ -260,7 +260,8 @@ async function compile(file, opt) {
     }
 
     // 持续集成 main.js pageTitleMap
-    let filePathKey = rPath.replace(/\.vue$/, '');
+    // windwos环境下的反斜杠替换为斜杠，否则输出的pageTitleMap为空
+    let filePathKey = rPath.replace(/\.vue$/, '').replace(/\\/g, '/');
     const isComp = config.component;
     if (!isComp) {
         pagesInfo[filePathKey] = config;
