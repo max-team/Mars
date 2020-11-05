@@ -108,9 +108,7 @@ module.exports = function (key, value, attrs, node) {
         // so only bind values when is not components
         // if (type === 3 && !isComp) {
         if (type === 3) {
-            // 如果 mars中的 props里使用模板字符串，经过 bable转换之后 value会变成带双引号的字符串拼接
-            // 导致小程序中的 props结构是双引号嵌套双引号，最终效果是该 props的值是"{{"
-            attrs[param] = `{{ ${value} }}`.replace(/"/g, "'");
+            attrs[param] = `{{ ${value} }}`;
         }
 
         return true;
