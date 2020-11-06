@@ -3,11 +3,8 @@
 ## 安装和使用
 
 ```bash
-# 安装 mars-cli 0.2.x
+# 安装 mars-cli
 npm install -g @marsjs/cli
-
-# 0.3.x
-npm install -g @marsjs/cli@next
 
 # 创建项目
 mars create [projectName]
