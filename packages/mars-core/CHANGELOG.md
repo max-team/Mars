@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.9](https://github.com/max-team/Mars/compare/@marsjs/core@0.3.8...@marsjs/core@0.3.9) (2020-11-06)
+
+
+### Bug Fixes
+
+* windows环境反斜杠导致的几个问题; 使用mixins小程序中无效的问题; ([#199](https://github.com/max-team/Mars/issues/199)) ([53e92a4](https://github.com/max-team/Mars/commit/53e92a4))
+
+
+### Features
+
+* **build & core:** support swan lifecycle onInit ([#198](https://github.com/max-team/Mars/issues/198)) ([bf86aad](https://github.com/max-team/Mars/commit/bf86aad))
+
+
+
+
+
 ## [0.3.8](https://github.com/max-team/Mars/compare/@marsjs/core@0.3.7...@marsjs/core@0.3.8) (2020-03-12)
 
 
