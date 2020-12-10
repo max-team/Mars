@@ -293,6 +293,10 @@ function mapSwanLifeTime(properties, t, lifeKey, lifeItem, lifeMapKey, options) 
         : type === 'ObjectProperty'
             ? lifeItem.value.params[0] && lifeItem.value.params[0].name || 'option'
             : 'option';
+    // 判断async函数
+    const isAsync = type === 'ObjectMethod' && lifeItem.async
+        || type === 'ObjectProperty' && lifeItem.value.type === 'FunctionExpression' && lifeItem.value.async
+        || false;
     // 生成匿名函数调用
     const anonymousFuncExpression = t.expressionStatement(
         t.callExpression(
@@ -300,7 +304,9 @@ function mapSwanLifeTime(properties, t, lifeKey, lifeItem, lifeMapKey, options) 
                 t.functionExpression(
                     null,
                     [t.identifier(timeMethodParamName)],
-                    timeMethodBlock
+                    timeMethodBlock,
+                    false,
+                    isAsync
                 ),
                 t.identifier('call')
             ),
