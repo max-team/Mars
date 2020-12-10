@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.16](https://github.com/max-team/Mars/compare/@marsjs/build@0.3.15...@marsjs/build@0.3.16) (2020-12-10)
+
+
+### Bug Fixes
+
+* **build:** 修复H5下生命周期函数不支持async语法 ([902c497](https://github.com/max-team/Mars/commit/902c497))
+
+
+
+
+
 ### Bug Fixes
 * 修复H5下生命周期函数不支持async语法([902c497eb](https://github.com/max-team/Mars/commit/902c497eb7cb57dbdb27111b7312b7a832371c33))
 
