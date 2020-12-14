@@ -14,11 +14,13 @@ const nativeEvent = {
     '@touchmove': '@touchmove',
     '@touchend': '@touchend',
     '@touchcancel': '@touchcancel',
+    '@transitionend': '@transitionend',
     '@tap': '@click',
     'v-on:touchstart': 'v-on:touchstart',
     'v-on:touchmove': 'v-on:touchmove',
     'v-on:touchend': 'v-on:touchend',
     'v-on:touchcancel': 'v-on:touchcancel',
+    'v-on:transitionend': 'v-on:transitionend',
     'v-on:tap': 'v-on:click'
 };
 
