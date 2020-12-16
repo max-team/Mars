@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.17](https://github.com/max-team/Mars/compare/@marsjs/build@0.3.16...@marsjs/build@0.3.17) (2020-12-16)
+
+
+### Bug Fixes
+
+* **build:** 修复H5下transitionend事件不触发问题 ([c528b4c](https://github.com/max-team/Mars/commit/c528b4c))
+* **build:** 修复H5下transitionend事件不触发问题 ([f3bf3a3](https://github.com/max-team/Mars/commit/f3bf3a3))
+* **build:** 修复小程序下下radio、checkbox组件无法添加slot问题 ([4492b7b](https://github.com/max-team/Mars/commit/4492b7b))
+
+
+
+
+
 ## [0.3.16](https://github.com/max-team/Mars/compare/@marsjs/build@0.3.15...@marsjs/build@0.3.16) (2020-12-10)
 
 
