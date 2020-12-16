@@ -50,7 +50,7 @@ module.exports = function generate(obj, options = {}) {
     const ifText = ifConditionsArr.join('');
 
     let spaceLine = process.env.NODE_ENV === 'dev' ? '\n' : '';
-    const tags = ['progress', 'checkbox', 'switch', 'input', 'radio', 'slider', 'textarea'];
+    const tags = ['progress', 'switch', 'input', 'slider', 'textarea'];
     if (tags.indexOf(tag) > -1) {
         return `${spaceLine}<${tag}${attrs ? ' ' + attrs : ''} />${ifText}`;
     }
