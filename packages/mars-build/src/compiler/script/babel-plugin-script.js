@@ -125,13 +125,13 @@ const getPropertyVisitor = (t, options) => {
                     options.file && (options.file.components = components);
                 }
             }
-
-            if (propName === 'computed') {
-                if (t.isObjectExpression(path.node.value)) {
-                    const keys = path.node.value.properties.map(p => p.key.name);
-                    options.file && (options.file.computedKeys = keys);
-                }
-            }
+            // computedKeys方案已被废弃，不需要处理computed属性
+            // if (propName === 'computed') {
+            //     if (t.isObjectExpression(path.node.value)) {
+            //         const keys = path.node.value.properties.map(p => p.key.name);
+            //         options.file && (options.file.computedKeys = keys);
+            //     }
+            // }
             // skip child traverse
             path.skip();
         }
