@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.18](https://github.com/max-team/Mars/compare/@marsjs/build@0.3.17...@marsjs/build@0.3.18) (2020-12-22)
+
+
+### Bug Fixes
+
+* **build:** 修复小程序编译mapState报错问题 ([28eb9da](https://github.com/max-team/Mars/commit/28eb9da))
+
+
+
+
+
 ## [0.3.17](https://github.com/max-team/Mars/compare/@marsjs/build@0.3.16...@marsjs/build@0.3.17) (2020-12-16)
 
 
