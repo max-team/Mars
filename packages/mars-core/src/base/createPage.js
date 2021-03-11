@@ -82,6 +82,32 @@ export function makeCreatePage(pageMixin, {handleProxy, handleModel}, setData, c
             $api
         }) : (options.data || {});
 
+        /**
+         * 执行挂载vue实例上的小程序生命周期函数
+         * Note: onPrefetch（百度小程序专属）、onInit（百度小程序专属）、onLoad里均会涉及到初始化vue实例
+         *
+         * @param {Array} args 小程序原生生命周期透传过来的参数
+         * @param {string} hook 小程序原生生命周期名字
+        */
+        function doCallHook(args, hook) {
+            let vm = this.$vue;
+
+            if (!vm) {
+                vm = createVue.call(this, options, args, {setData});
+            }
+            else {
+                const query = args[0];
+                vm.$mp.query = query;
+                vm.$mp.options = query;
+            }
+
+            if (process.env.NODE_ENV !== 'production' && config.debug && config.debug.lifetimes) {
+                console.log(`[debug: mp pageHooks] ${hook}`, this.__uid__);
+            }
+
+            return callHook.call(this, this.$vue, 'page', hook, args);
+        }
+
         return {
             $$__createVue__() {
                 return createVue.call(this, options, [], {setData});
@@ -89,41 +115,15 @@ export function makeCreatePage(pageMixin, {handleProxy, handleModel}, setData, c
             data: initData,
             handleProxy,
             handleModel,
+            onPrefetch(...args) {
+                return doCallHook.call(this, args, 'onPrefetch');
+            },
             onInit(...args) {
-                let vm = this.$vue;
-                if (!vm) {
-                    vm = createVue.call(this, options, args, {setData});
-                }
-                else {
-                    const query = args[0];
-                    vm.$mp.query = query;
-                    vm.$mp.options = query;
-                }
-
-                if (process.env.NODE_ENV !== 'production' && config.debug && config.debug.lifetimes) {
-                    console.log('[debug: mp pageHooks] onInit', this.__uid__);
-                }
-                // 先 callHook 保证数据可以初始化
-                const ret = callHook.call(this, this.$vue, 'page', 'onInit', args);
-                return ret;
+                return doCallHook.call(this, args, 'onInit');
             },
             onLoad(...args) {
-                let vm = this.$vue;
-                if (!vm) {
-                    vm = createVue.call(this, options, args, {setData});
-                }
-                else {
-                    const query = args[0];
-                    vm.$mp.query = query;
-                    vm.$mp.options = query;
-                }
-
-                if (process.env.NODE_ENV !== 'production' && config.debug && config.debug.lifetimes) {
-                    console.log('[debug: mp pageHooks] onLoad', this.__uid__);
-                }
-                // 先 callHook 保证数据可以初始化
-                const ret = callHook.call(this, this.$vue, 'page', 'onLoad', args);
-                mountVue.call(this, vm);
+                const ret = doCallHook.call(this, args, 'onLoad');
+                mountVue.call(this, this.$vue);
                 return ret;
             },
             onUnload(...args) {
