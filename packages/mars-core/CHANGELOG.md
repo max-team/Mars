@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.10](https://github.com/max-team/Mars/compare/@marsjs/core@0.3.9...@marsjs/core@0.3.10) (2021-03-11)
+
+
+### Features
+
+* **core:** support swan lifecycle onPrefetch ([5e2aa3e](https://github.com/max-team/Mars/commit/5e2aa3e))
+
+
+
+
+
 ## [0.3.9](https://github.com/max-team/Mars/compare/@marsjs/core@0.3.8...@marsjs/core@0.3.9) (2020-11-06)
 
 
