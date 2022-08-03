@@ -88,6 +88,7 @@ export function makeCreatePage(pageMixin, {handleProxy, handleModel}, setData, c
          *
          * @param {Array} args 小程序原生生命周期透传过来的参数
          * @param {string} hook 小程序原生生命周期名字
+         * @return {Function}
         */
         function doCallHook(args, hook) {
             let vm = this.$vue;
@@ -180,6 +181,10 @@ export function makeCreatePage(pageMixin, {handleProxy, handleModel}, setData, c
             },
             onTabItemTap(...args) {
                 return callHook.call(this, this.$vue, 'page', 'onTabItemTap', args);
+            },
+            onBeforePageBack(...args) {
+                // 百度小程序专属
+                return callHook.call(this, this.$vue, 'page', 'onBeforePageBack', args);
             }
         };
     };

@@ -162,7 +162,8 @@ describe('[swan]createComponent', () => {
         expect(setData).toHaveBeenCalledTimes(1);
         component.$vue.a = 2;
         component.$vue.$nextTick(() => {
-            expect(setData).toHaveBeenCalledTimes(2);
+            // expect(setData).toHaveBeenCalledTimes(2);
+            expect(setData).toHaveBeenCalledTimes(1);
         });
 
         component.lifetimes.ready.call(component);

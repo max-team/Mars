@@ -116,6 +116,7 @@ Mars (在 Page 和 Componet 上)支持完整的 Vue 生命周期和小程序生�
 | onReachBottom | 支持 | 支持 |
 | onPageScroll | 支持 | 支持 |
 | onTabItemTap | 支持 | 支持 |
+| onBeforePageBack | 仅安卓支持 | 暂不支持 |
 | onForceReLaunch | 支持 | 暂不支持 |
 | onShareAppMessage | 支持 | 暂不支持 |
 

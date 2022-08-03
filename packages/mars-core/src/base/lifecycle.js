@@ -15,7 +15,8 @@ const PAGE_LIFECYCLE_HOOKS = {
     'onReachBottom': true,
     'onShareAppMessage': true,
     'onPageScroll': true,
-    'onTabItemTap': true
+    'onTabItemTap': true,
+    'onBeforePageBack': true
 };
 
 // 小程序component生命周期

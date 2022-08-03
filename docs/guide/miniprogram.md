@@ -125,6 +125,7 @@ export default {
     onShareAppMessage() {},
     onPageScroll() {},
     onTabItemTap() {},
+    onBeforePageBack() {},
     // ...
 }
 
