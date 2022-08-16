@@ -12,6 +12,7 @@ function copyAndResetCb(key) {
 
     if (cbs.length > 0) {
         const copies = cbs.slice(0);
+        callbacks.delete(key);
         cbs.length = 0;
         return copies;
     }
