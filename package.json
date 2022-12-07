@@ -62,7 +62,7 @@
     "jest-localstorage-mock": "^2.4.0",
     "lerna": "^3.4.3",
     "lerna-changelog": "^0.8.2",
-    "lint-staged": "^8.1.0",
+    "lint-staged": "^13.1.0",
     "mock-socket": "^8.0.5",
     "vuepress": "^1.0.0-alpha.47"
   },
